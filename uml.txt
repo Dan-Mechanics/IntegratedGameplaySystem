@@ -1,0 +1,147 @@
+@startuml
+
+class FSM<T>
+{
+    - states: readonly Dictionary<Type, T>
+    -current: T
+    + void AddState(name: string, state: T)
+    + void RemoveState(name: string)
+    + void TransitionTo(name: string)
+    + void Update()
+    + List<T> GetStates()
+}
+
+interface IDamagable
+{
+    + void Damage(amount: float)
+}
+
+interface IState 
+{
+    + OnTransitionRequest: event Action<string>
+    + void EnterState()
+    + void Update()
+    + void ExitState()
+}
+
+interface IWeapon 
+{
+    + string GetName()
+    + float GetReloadTime()
+    + int GetMaxBullets()
+    + float GetDamage()
+    + float GetShootInterval()
+    + float GetMaxBulletRange()
+    + float GetSpread()
+    + AudioClip GetShootSound()
+    + AudioClip GetReloadSound()
+}
+
+class WeaponState implements IState
+{
+    + OnTransitionRequest: event Action<string>
+    # fsm: FSM<WeaponState>
+    # inputHandler: InputHandler 
+    # weapon: IWeapon
+    # source: AudioSource 
+    + void SetupBase()
+    + virutal void EnterState()
+    + virutal void Update()
+    + virutal void ExitState()
+    + void UpdateWeapon(weapon: IWeapon)
+}
+
+class BaseWeapon implements ScriptableObject, IWeapon
+{
+    + maxBullets: int
+    + damage: float
+    + shootInterval: float
+    + maxBulletRange: float
+    + shootSound: AudioClip
+    + reloadSound: AudioClip
+}
+
+class WeaponDecorator implements ScriptableObject, IWeapon
+{
+    - weapon: IWeapon
+    + IWeapon GetUnderlyingWeapon()
+    + WeaponDecorator Decorate(weapon: IWeapon)
+}
+
+class SilencerDecorator implements WeaponDecorator
+{
+    + newSound: AudioClip
+}
+
+class ExtendedMagDecorator implements WeaponDecorator
+{
+    + bulletsGained: int
+}
+
+class SpreadDecorator implements WeaponDecorator
+{
+    + spread: float
+}
+
+class ReadyWeaponState implements WeaponState
+{
+    + void EnterState()
+    + void Update()
+    + void ExitState()
+    + void Reload()
+}
+
+class ReloadingWeaponState implements WeaponState
+{
+    + onReload : event Action
+    + void EnterState()
+    + void Update()
+    + void ExitState()
+}
+
+class ToggleDecoratorWeaponState implements WeaponState
+{
+    - removableDecorator: WeaponDecorator
+    + onNewWeapon : event Action
+}
+
+class InputHandler
+{
+    + void Update()
+    + InputEvents GetInputEvents(playerAction: PlayerAction)
+    + AddBinding(binding: Binding)
+    + RemoveBinding(binding: Binding)
+}
+
+class GameObjectPool
+{
+    + void GiveToPool(go: GameOjbect)
+    + GameObject GetFromPool()
+    + void DumpAll()
+}
+
+class PoolableGameObject
+{
+    + void Setup(pool: GameObjectPool)
+}
+
+class Timer
+{
+    + bool Tick()
+    + void SetValue(value: float)
+}
+
+PoolableGameObject --* GameObjectPool
+GameObjectPool ..> PoolableGameObject
+WeaponDecorator --* ToggleDecoratorWeaponState
+Timer --* ToggleDecoratorWeaponState
+Timer --* ReloadingWeaponState
+IWeapon --* WeaponDecorator
+FSM --* WeaponState
+FSM ..> IState
+InputHandler --* WeaponState
+IWeapon --* WeaponState
+ReadyWeaponState ..> IDamagable
+GameObjectPool ..* ReadyWeaponState
+
+@enduml

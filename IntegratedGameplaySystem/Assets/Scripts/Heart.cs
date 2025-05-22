@@ -22,6 +22,8 @@ namespace IntegratedGameplaySystem
         private void Register(BaseBehaviour behaviour) 
         {
             GameObject go = Instantiate(behaviour.prefab, behaviour.prefab.transform.position, behaviour.prefab.transform.rotation);
+            go.name = behaviour.prefab.name;
+
             behaviour.Setup(go);
             subscribers.Add(behaviour);
         }

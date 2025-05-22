@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// And this would then be where we have our like input handler classes and such.
+    /// </summary>
     [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlayerContext), fileName = "New " + nameof(PlayerContext))]
     public class PlayerContext : BaseBehaviour
     {
@@ -11,14 +14,14 @@ namespace IntegratedGameplaySystem
         public override void Start()
         {
             base.Start();
-            rb = Fetch<Rigidbody>();
+            rb = trans.GetComponent<Rigidbody>();
+
+
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
-            print(pos.ToString());
             rb.velocity = Vector3.right * speed;
         }
     }

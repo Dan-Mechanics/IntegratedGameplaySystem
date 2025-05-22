@@ -15,8 +15,6 @@ namespace IntegratedGameplaySystem
         {
             base.Start();
             rb = trans.GetComponent<Rigidbody>();
-
-
         }
 
         public override void FixedUpdate()

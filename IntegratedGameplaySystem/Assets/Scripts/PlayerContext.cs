@@ -3,13 +3,14 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// And this would then be where we have our like input handler classes and such.
+    /// And this would then be where we have our like input handler classes and such. Component pattern perchange ??? !!
     /// </summary>
     [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlayerContext), fileName = "New " + nameof(PlayerContext))]
     public class PlayerContext : BaseBehaviour
     {
         public ForcesMovement.Settings settings;
         public ForcesMovement.GroundedConfiguration grounded;
+        public float eyeHeight;
 
         private Rigidbody rb;
         private Transform eyes;
@@ -22,7 +23,11 @@ namespace IntegratedGameplaySystem
         {
             base.Start();
             rb = trans.GetComponent<Rigidbody>();
-            eyes = trans.GetChild(0);
+            //eyes = GetChild(0, "eyes");
+
+            eyes = new GameObject("eyes").transform;
+            eyes.SetParent(trans);
+            eyes.localPosition = Vector3.up * eyeHeight;
 
             ForcesMovement.References references = new ForcesMovement.References(rb, eyes, trans);
             movement = new ForcesMovement(grounded, settings, references);

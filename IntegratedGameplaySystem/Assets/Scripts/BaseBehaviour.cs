@@ -19,6 +19,37 @@ namespace IntegratedGameplaySystem
             trans = go.transform;
         }
 
+        /*protected Transform GetChild(int index, string expected) 
+        {
+            if(index < 0)
+            {
+                Debug.LogError("invalid index");
+                return null;
+            }
+
+            if(trans.childCount <= 0) 
+            {
+                Debug.LogError("if(trans.childCount <= 0) ");
+                return null;
+            }
+
+            if (index >= trans.childCount) 
+            {
+                Debug.LogError("if (index >= trans.childCount) ");
+                return null;
+            }
+
+            Transform child = trans.GetChild(index);
+            if (child.name != expected) 
+            {
+                Debug.LogError("if (child.name != expected) ");
+                return null;
+            }
+
+            Debug.Log($"found {expected}.");
+            return child;
+        }*/
+
         public virtual void Start() { }
         public virtual void Update() { }
         public virtual void FixedUpdate() { }

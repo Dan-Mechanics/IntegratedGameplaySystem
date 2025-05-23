@@ -1,0 +1,6 @@
+fun stuff:
+
+make physicsautosimulate
+
+make config with inputhandler. --> servicelocator whereby the service is files ??
+also insta sens in that config

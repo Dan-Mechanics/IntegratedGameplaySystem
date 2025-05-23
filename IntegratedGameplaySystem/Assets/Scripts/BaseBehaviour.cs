@@ -2,6 +2,10 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// Could we technically consider this subclass sandbox? i dont think so.
+    /// Maybe research subclass sandbox again ?
+    /// </summary>
     public abstract class BaseBehaviour : ScriptableObject
     {
         public GameObject prefab;

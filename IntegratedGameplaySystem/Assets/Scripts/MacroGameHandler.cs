@@ -5,10 +5,11 @@ namespace IntegratedGameplaySystem
 {
     public class MacroGameHandler : MonoBehaviour
     {
-        private void Start()
-        {
-            Application.targetFrameRate = 300;
-        }
+        /// <summary>
+        /// Make sure this happens in all the scenes.
+        /// ( And all the games I make ).
+        /// </summary>
+        private void Start() => Application.targetFrameRate = 300;
 
         private void Update()
         {

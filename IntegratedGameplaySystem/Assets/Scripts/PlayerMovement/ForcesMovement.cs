@@ -24,39 +24,38 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// This code fucking sux. Fit it!
         /// 
-        /// consider using update meme.
+        /// consider using update (physics.autosimualte) meme.
+        /// 
+        /// REFACTOR !!
         /// </summary>
         public CameraHandler.Tick DoMovement(Vector3 input) 
         {
             bool isGrounded = GetIsGrounded(groundedConfig, player.trans.position);
-
             player.rb.velocity = Vector3.ClampMagnitude(player.rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
 
-            currentTick.Set(player.eyes.position, player.rb.velocity, Time.time);
+            float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.airborneAccelMult;
+            Vector3 mov = GetMovement(input, player);
 
-            float acceleration = isGrounded ? settings.movAccel : settings.movAccel * settings.airborneAccelMult;
-
-            Vector3 movement = GetMovement(input, player);
-
-            Vector3 velocity = player.rb.velocity;
-            velocity.y = 0f;
-            float mag = velocity.magnitude;
+            Vector3 flatVel = player.rb.velocity;
+            flatVel.y = 0f;
+            float mag = flatVel.magnitude;
 
             if (mag < settings.walkSpeed)
             {
-                player.rb.AddForce(Vector3.ClampMagnitude(acceleration * Time.fixedDeltaTime * movement, settings.walkSpeed - mag), ForceMode.VelocityChange);
+                player.rb.AddForce(Vector3.ClampMagnitude(accel * Time.fixedDeltaTime * mov, settings.walkSpeed - mag), ForceMode.VelocityChange);
             }
             else if (isGrounded)
             {
-                player.rb.AddForce(Vector3.ClampMagnitude(acceleration * Time.fixedDeltaTime * -velocity.normalized, mag - settings.walkSpeed), ForceMode.VelocityChange);
+                player.rb.AddForce(Vector3.ClampMagnitude(accel * Time.fixedDeltaTime * -flatVel.normalized, mag - settings.walkSpeed), ForceMode.VelocityChange);
             }
 
-            Vector3 counterMovement = acceleration * Time.fixedDeltaTime * settings.airborneAccelMult * -(velocity.normalized - movement);
+            Vector3 counterMovement = accel * Time.fixedDeltaTime * settings.airborneAccelMult * -(flatVel.normalized - mov);
             if (mag != 0f && counterMovement.magnitude > mag)
-                counterMovement = -velocity;
+                counterMovement = -flatVel;
 
             player.rb.AddForce(counterMovement, ForceMode.VelocityChange);
 
+            currentTick.Set(player.eyes.position, player.rb.velocity, Time.time);
             return currentTick;
         }
 
@@ -73,14 +72,14 @@ namespace IntegratedGameplaySystem
 
         private bool GetIsGrounded(GroundedConfiguration config, Vector3 playerPosition)
         {
-            RaycastHit[] hits = Physics.SphereCastAll(playerPosition, config.groundColliderRadius, Vector3.down, config.groundColliderDownward, config.groundMask, QueryTriggerInteraction.Ignore);
+            RaycastHit[] hits = Physics.SphereCastAll(playerPosition, config.radius, Vector3.down, config.reach, config.mask, QueryTriggerInteraction.Ignore);
 
             foreach (RaycastHit hit in hits)
             {
                 if (hit.distance == 0f)
                     continue;
 
-                if (Vector3.Angle(Vector3.up, hit.normal) <= config.maxGroundedAngle)
+                if (Vector3.Angle(Vector3.up, hit.normal) <= config.maxAngle)
                     return true;
             }
 
@@ -90,21 +89,12 @@ namespace IntegratedGameplaySystem
         [Serializable]
         public class GroundedConfiguration 
         {
-            public LayerMask groundMask;
-            public float groundColliderRadius;
-            public float groundColliderDownward;
-            public float maxGroundedAngle;
-
-            public GroundedConfiguration(LayerMask groundMask, float groundColliderRadius, float groundColliderDownward, float maxGroundedAngle)
-            {
-                this.groundMask = groundMask;
-                this.groundColliderRadius = groundColliderRadius;
-                this.groundColliderDownward = groundColliderDownward;
-                this.maxGroundedAngle = maxGroundedAngle;
-            }
+            public LayerMask mask;
+            public float radius;
+            public float reach;
+            public float maxAngle;
         }
 
-        [Serializable]
         public class References 
         {
             public Rigidbody rb;
@@ -131,14 +121,14 @@ namespace IntegratedGameplaySystem
             public float movAccel;
             public float airborneAccelMult;
 
-            public Settings(float walkSpeed, float runSpeed, float flySpeed, float movAccel, float airborneAccelMult)
+            /*public Settings(float walkSpeed, float runSpeed, float flySpeed, float movAccel, float airborneAccelMult)
             {
                 this.walkSpeed = walkSpeed;
                 this.runSpeed = runSpeed;
                 this.flySpeed = flySpeed;
                 this.movAccel = movAccel;
                 this.airborneAccelMult = airborneAccelMult;
-            }
+            }*/
         }
     }
 }

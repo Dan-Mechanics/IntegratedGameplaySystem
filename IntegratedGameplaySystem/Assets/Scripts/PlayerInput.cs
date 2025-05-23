@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// In the future this should be with InputHandler but ok.
+    /// Make it more general to give the string names.
+    /// It would be cool if i had aaaaaaaaaaaaaaaaa config system POGGG
+    /// that might also be fun #noburnout divas.
+    /// </summary>
     public class PlayerInput
     {
         /// <summary>

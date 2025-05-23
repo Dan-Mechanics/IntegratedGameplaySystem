@@ -16,31 +16,17 @@ namespace IntegratedGameplaySystem
             }
         }
 
-        /// <summary>
-        /// Something like this idk ??
-        /// </summary>
-        private void Register(BaseBehaviour behaviour) 
+        private void Start() => subscribers.ForEach(x => x.Start());
+        private void Update() => subscribers.ForEach(x => x.Update());
+        private void FixedUpdate() => subscribers.ForEach(x => x.FixedUpdate());
+
+        private void Register(BaseBehaviour behaviour)
         {
             GameObject go = Instantiate(behaviour.prefab, behaviour.prefab.transform.position, behaviour.prefab.transform.rotation);
             go.name = behaviour.prefab.name;
 
             behaviour.Setup(go);
             subscribers.Add(behaviour);
-        }
-
-        private void Start()
-        {
-            subscribers.ForEach(x => x.Start());
-        }
-
-        private void Update()
-        {
-            subscribers.ForEach(x => x.Update());
-        }
-
-        private void FixedUpdate()
-        {
-            subscribers.ForEach(x => x.FixedUpdate());
         }
     }
 }

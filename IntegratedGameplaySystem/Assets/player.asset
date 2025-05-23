@@ -13,4 +13,16 @@ MonoBehaviour:
   m_Name: player
   m_EditorClassIdentifier: 
   prefab: {fileID: 1656650772884970686, guid: 6f7db1ccb32e6424eaaa8c2cca893bbc, type: 3}
-  speed: 1
+  config:
+    groundMask:
+      serializedVersion: 2
+      m_Bits: 1
+    groundColliderRadius: 0.55
+    groundColliderDownward: 0.5
+    maxGroundedAngle: 42.5
+  settings:
+    walkSpeed: 6
+    runSpeed: 12
+    flySpeed: 24
+    movAccel: 30
+    airborneAccelMult: 0.35

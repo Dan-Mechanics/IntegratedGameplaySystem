@@ -13,8 +13,8 @@ namespace IntegratedGameplaySystem
         }
 
         public void Update() => camera.position = tick.CalculatePos();
-
         public void UpdateRot(Quaternion rot) => camera.rotation = rot;
+        public void SetTick(Tick tick) => this.tick = tick;
 
         public struct Tick
         {

@@ -12,48 +12,50 @@ namespace IntegratedGameplaySystem
         private CameraHandler.Tick currentTick;
         private readonly GroundedConfiguration groundedConfig;
         private readonly Settings settings;
-        private readonly References references;
+        private readonly References player;
 
-        public ForcesMovement(GroundedConfiguration groundedConfig, Settings settings, References references)
+        public ForcesMovement(GroundedConfiguration groundedConfig, Settings settings, References player)
         {
             this.groundedConfig = groundedConfig;
             this.settings = settings;
-            this.references = references;
+            this.player = player;
         }
 
         /// <summary>
         /// This code fucking sux. Fit it!
+        /// 
+        /// consider using update meme.
         /// </summary>
         public CameraHandler.Tick DoMovement(Vector3 input) 
         {
-            bool isGrounded = GetIsGrounded(groundedConfig, references.trans.position);
+            bool isGrounded = GetIsGrounded(groundedConfig, player.trans.position);
 
-            references.rb.velocity = Vector3.ClampMagnitude(references.rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
+            player.rb.velocity = Vector3.ClampMagnitude(player.rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
 
-            currentTick.Set(references.eyes.position, references.rb.velocity, Time.time);
+            currentTick.Set(player.eyes.position, player.rb.velocity, Time.time);
 
             float acceleration = isGrounded ? settings.movAccel : settings.movAccel * settings.airborneAccelMult;
 
-            Vector3 movement = GetMovement(input, references);
+            Vector3 movement = GetMovement(input, player);
 
-            Vector3 velocity = references.rb.velocity;
+            Vector3 velocity = player.rb.velocity;
             velocity.y = 0f;
             float mag = velocity.magnitude;
 
             if (mag < settings.walkSpeed)
             {
-                references.rb.AddForce(Vector3.ClampMagnitude(acceleration * Time.fixedDeltaTime * movement, settings.walkSpeed - mag), ForceMode.VelocityChange);
+                player.rb.AddForce(Vector3.ClampMagnitude(acceleration * Time.fixedDeltaTime * movement, settings.walkSpeed - mag), ForceMode.VelocityChange);
             }
             else if (isGrounded)
             {
-                references.rb.AddForce(Vector3.ClampMagnitude(acceleration * Time.fixedDeltaTime * -velocity.normalized, mag - settings.walkSpeed), ForceMode.VelocityChange);
+                player.rb.AddForce(Vector3.ClampMagnitude(acceleration * Time.fixedDeltaTime * -velocity.normalized, mag - settings.walkSpeed), ForceMode.VelocityChange);
             }
 
             Vector3 counterMovement = acceleration * Time.fixedDeltaTime * settings.airborneAccelMult * -(velocity.normalized - movement);
             if (mag != 0f && counterMovement.magnitude > mag)
                 counterMovement = -velocity;
 
-            references.rb.AddForce(counterMovement, ForceMode.VelocityChange);
+            player.rb.AddForce(counterMovement, ForceMode.VelocityChange);
 
             return currentTick;
         }

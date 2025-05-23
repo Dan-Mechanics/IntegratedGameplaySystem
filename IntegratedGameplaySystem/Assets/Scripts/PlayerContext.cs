@@ -8,13 +8,12 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlayerContext), fileName = "New " + nameof(PlayerContext))]
     public class PlayerContext : BaseBehaviour
     {
-        [Min(1f)] public float speed;
         public ForcesMovement.GroundedConfiguration config;
         public ForcesMovement.Settings settings;
 
         private Rigidbody rb;
         private Transform eyes;
-        private PlayerInput playerInput;
+        private readonly PlayerInput playerInput = new PlayerInput();
         private CameraHandler handler;
         private MouseMovement mouseMovement;
         private ForcesMovement movement;
@@ -35,17 +34,15 @@ namespace IntegratedGameplaySystem
         {
             base.Update();
 
-            handler.Update();
             mouseMovement.Update(playerInput.GetMouseInput());
             handler.UpdateRot(eyes.rotation);
+            handler.Update();
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            
-            // handler.
+            handler.SetTick(movement.DoMovement(playerInput.GetMovementDirection()));
         }
-
     }
 }

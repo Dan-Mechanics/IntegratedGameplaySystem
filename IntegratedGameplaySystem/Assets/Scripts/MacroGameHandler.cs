@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Equilibrium
+namespace IntegratedGameplaySystem
 {
     public class MacroGameHandler : MonoBehaviour
     {

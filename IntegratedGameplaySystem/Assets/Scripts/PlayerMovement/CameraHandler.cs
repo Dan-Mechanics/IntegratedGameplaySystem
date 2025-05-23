@@ -4,7 +4,7 @@ namespace IntegratedGameplaySystem
 {
     public class CameraHandler
     {
-        private Transform camera;
+        private readonly Transform camera;
         private Tick tick;
 
         public CameraHandler(Transform camera)

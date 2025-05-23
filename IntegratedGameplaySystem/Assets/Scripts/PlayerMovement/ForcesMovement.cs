@@ -3,6 +3,9 @@ using System;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// refactor like all of this but #no overthinking
+    /// </summary>
     public class ForcesMovement
     {
         /// <summary>
@@ -32,7 +35,7 @@ namespace IntegratedGameplaySystem
         {
             bool isGrounded = GetIsGrounded(groundedConfig, player.trans.position);
             player.rb.velocity = Vector3.ClampMagnitude(player.rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
-
+            
             float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.airborneAccelMult;
             Vector3 mov = GetMovement(input, player);
 

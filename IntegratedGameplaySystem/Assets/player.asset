@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4775cc579baa1934e8db1e021ae1f05e, type: 3}
   m_Name: player
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1656650772884970686, guid: 6f7db1ccb32e6424eaaa8c2cca893bbc, type: 3}
-  config:
-    groundMask:
-      serializedVersion: 2
-      m_Bits: 1
-    groundColliderRadius: 0.55
-    groundColliderDownward: 0.5
-    maxGroundedAngle: 42.5
+  prefab: {fileID: 4437024385587191265, guid: 6f7db1ccb32e6424eaaa8c2cca893bbc, type: 3}
   settings:
     walkSpeed: 6
     runSpeed: 12
     flySpeed: 24
     movAccel: 30
     airborneAccelMult: 0.35
+  grounded:
+    mask:
+      serializedVersion: 2
+      m_Bits: 1
+    radius: 0.55
+    reach: 0.5
+    maxAngle: 42.5

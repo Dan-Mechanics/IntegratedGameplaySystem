@@ -8,8 +8,8 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlayerContext), fileName = "New " + nameof(PlayerContext))]
     public class PlayerContext : BaseBehaviour
     {
-        public ForcesMovement.GroundedConfiguration config;
         public ForcesMovement.Settings settings;
+        public ForcesMovement.GroundedConfiguration grounded;
 
         private Rigidbody rb;
         private Transform eyes;
@@ -25,7 +25,7 @@ namespace IntegratedGameplaySystem
             eyes = trans.GetChild(0);
 
             ForcesMovement.References references = new ForcesMovement.References(rb, eyes, trans);
-            movement = new ForcesMovement(config, settings, references);
+            movement = new ForcesMovement(grounded, settings, references);
             mouseMovement = new MouseMovement(eyes, trans);
             handler = new CameraHandler(Camera.main.transform);
         }

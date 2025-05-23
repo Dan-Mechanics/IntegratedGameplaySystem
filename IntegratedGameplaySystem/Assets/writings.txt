@@ -4,3 +4,8 @@ make physicsautosimulate
 
 make config with inputhandler. --> servicelocator whereby the service is files ??
 also insta sens in that config
+
+config fun bit:
+parse both string of key and the thing and make my own little fun language
+#hacker hacker yipiie fun life i am havign. #servicelocator. that is also one 
+i havent done yet.

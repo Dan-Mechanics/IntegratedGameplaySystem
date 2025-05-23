@@ -5,28 +5,42 @@ namespace IntegratedGameplaySystem
 {
     public class Heart : MonoBehaviour
     {
-        [SerializeField] private BaseBehaviour[] behaviours = default;
-        private readonly List<BaseBehaviour> subscribers = new List<BaseBehaviour>();
+        public const int MAX_FPS = 300;
         
-        private void Awake()
+        [SerializeField] private bool locked = default;
+        [SerializeField] private BaseBehaviour[] sceneBehaviours = default;
+
+        private readonly List<BaseBehaviour> subscribers = new List<BaseBehaviour>();
+
+        private void Start()
         {
-            for (int i = 0; i < behaviours.Length; i++)
+            for (int i = 0; i < sceneBehaviours.Length; i++)
             {
-                Register(behaviours[i]);
+                Register(sceneBehaviours[i]);
             }
+
+            Application.targetFrameRate = MAX_FPS;
+            Cursor.visible = !locked;
+            Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
+
+            subscribers.ForEach(x => x.Start());
         }
 
-        private void Start() => subscribers.ForEach(x => x.Start());
         private void Update() => subscribers.ForEach(x => x.Update());
         private void FixedUpdate() => subscribers.ForEach(x => x.FixedUpdate());
+        private void OnApplicationQuit() => EventManager.RaiseEvent(Occasion.CLOSE_GAME);
 
         private void Register(BaseBehaviour behaviour)
         {
+            subscribers.Add(behaviour);
+
+            if (behaviour.prefab == null)
+                return;
+
             GameObject go = Instantiate(behaviour.prefab, behaviour.prefab.transform.position, behaviour.prefab.transform.rotation);
             go.name = behaviour.prefab.name;
 
             behaviour.Setup(go);
-            subscribers.Add(behaviour);
         }
     }
 }

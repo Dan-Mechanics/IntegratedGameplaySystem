@@ -22,16 +22,16 @@ namespace IntegratedGameplaySystem
         public override void Start()
         {
             base.Start();
-            rb = trans.GetComponent<Rigidbody>();
+            rb = transform.GetComponent<Rigidbody>();
             //eyes = GetChild(0, "eyes");
 
             eyes = new GameObject("eyes").transform;
-            eyes.SetParent(trans);
+            eyes.SetParent(transform);
             eyes.localPosition = Vector3.up * eyeHeight;
 
-            ForcesMovement.References references = new ForcesMovement.References(rb, eyes, trans);
+            ForcesMovement.References references = new ForcesMovement.References(rb, eyes, transform);
             movement = new ForcesMovement(grounded, settings, references);
-            mouseMovement = new MouseMovement(eyes, trans);
+            mouseMovement = new MouseMovement(eyes, transform);
             handler = new CameraHandler(Camera.main.transform);
         }
 

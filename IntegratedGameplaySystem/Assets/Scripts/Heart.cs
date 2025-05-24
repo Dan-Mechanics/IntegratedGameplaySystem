@@ -15,31 +15,35 @@ namespace IntegratedGameplaySystem
         [SerializeField] private BaseBehaviour[] sceneBehaviours = default;
 
         private readonly List<BaseBehaviour> subscribers = new List<BaseBehaviour>();
-        private readonly FixedTicks fixedTicks = new FixedTicks(1f / INTERVAL);
-        private int count;
-
+        private float timer;
+        
         private void Start()
         {
+            Setup();
+
             for (int i = 0; i < sceneBehaviours.Length; i++)
             {
                 Register(sceneBehaviours[i]);
             }
-
-            Setup();
-            subscribers.ForEach(x => x.Start());
+            
+            //subscribers.ForEach(x => x.Start());
         }
 
-        private void Register(BaseBehaviour behaviour)
+        private void Register(BaseBehaviour blueprint)
         {
-            subscribers.Add(behaviour);
+            for (int i = 0; i < blueprint.count; i++)
+            {   
+                subscribers.Add(blueprint);
 
-            if (behaviour.prefab == null)
-                return;
+                if (blueprint.prefab == null)
+                    return;
 
-            GameObject go = Instantiate(behaviour.prefab, behaviour.prefab.transform.position, behaviour.prefab.transform.rotation);
-            go.name = behaviour.prefab.name;
+                GameObject go = Instantiate(blueprint.prefab, blueprint.prefab.transform.position, blueprint.prefab.transform.rotation);
+                go.name = blueprint.prefab.name;
 
-            behaviour.Setup(go);
+                subscribers[subscribers.Count - 1].Setup(go);
+                subscribers[subscribers.Count - 1].Start();
+            }
         }
 
         private void Setup()
@@ -52,21 +56,25 @@ namespace IntegratedGameplaySystem
             Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
         }
 
+        /// <summary>
+        /// https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Physics.Simulate.html
+        /// </summary>
         private void Update() 
         {
             subscribers.ForEach(x => x.Update());
-            count = fixedTicks.GetTicksCount(Time.deltaTime);
 
-            for (int i = 0; i < count; i++)
+            timer += Time.deltaTime;
+            while (timer >= Time.fixedDeltaTime)
             {
+                timer -= Time.fixedDeltaTime;
+
                 subscribers.ForEach(x => x.FixedUpdate());
-            }
-
-            for (int i = 0; i < count; i++)
-            {
+                Physics.Simulate(Time.fixedDeltaTime);
                 subscribers.ForEach(x => x.LateFixedUpdate());
             }
         }
+
+        private void OnDisable() => subscribers.ForEach(x => x.Disable());
 
         private void OnApplicationQuit() => EventManager.RaiseEvent(Occasion.CLOSE_GAME);
     }

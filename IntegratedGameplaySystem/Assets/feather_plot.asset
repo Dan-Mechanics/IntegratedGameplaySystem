@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31d734035da401f4aa5703d7b43ac106, type: 3}
-  m_Name: New PlotBehaviour
+  m_Name: feather_plot
   m_EditorClassIdentifier: 
   prefab: {fileID: 6449396283023709861, guid: 9d7f42bdfa682c7498c81cfdaf397b4a, type: 3}
   growOddsPerTick: 7
@@ -20,4 +20,3 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 51bf8a489a473e447a8b27ef8f733e65, type: 2}
   - {fileID: 2100000, guid: 64b06bdd4e9fdde469840ae4e4900a9c, type: 2}
   - {fileID: 2100000, guid: ae5fbfa166a8e9d47b54c12c7ef4065a, type: 2}
-  preferredPlantSpacing: 0

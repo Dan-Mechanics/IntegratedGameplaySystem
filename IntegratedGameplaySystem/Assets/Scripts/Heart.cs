@@ -5,6 +5,9 @@ namespace IntegratedGameplaySystem
 {
     public class Heart : MonoBehaviour
     {
+        /// <summary>
+        /// YOu could outsource this but why would you ??
+        /// </summary>
         public const int MAX_FPS = 300;
         public const float INTERVAL = 64f;
 
@@ -12,6 +15,8 @@ namespace IntegratedGameplaySystem
         [SerializeField] private BaseBehaviour[] sceneBehaviours = default;
 
         private readonly List<BaseBehaviour> subscribers = new List<BaseBehaviour>();
+        private readonly FixedTicks fixedTicks = new FixedTicks(1f / INTERVAL);
+        private int count;
 
         private void Start()
         {
@@ -39,6 +44,7 @@ namespace IntegratedGameplaySystem
 
         private void Setup()
         {
+            Physics.autoSimulation = false;
             Time.fixedDeltaTime = 1f / INTERVAL;
             Application.targetFrameRate = MAX_FPS;
 
@@ -46,8 +52,22 @@ namespace IntegratedGameplaySystem
             Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
         }
 
-        private void Update() => subscribers.ForEach(x => x.Update());
-        private void FixedUpdate() => subscribers.ForEach(x => x.FixedUpdate());
+        private void Update() 
+        {
+            subscribers.ForEach(x => x.Update());
+            count = fixedTicks.GetTicksCount(Time.deltaTime);
+
+            for (int i = 0; i < count; i++)
+            {
+                subscribers.ForEach(x => x.FixedUpdate());
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                subscribers.ForEach(x => x.LateFixedUpdate());
+            }
+        }
+
         private void OnApplicationQuit() => EventManager.RaiseEvent(Occasion.CLOSE_GAME);
     }
 }

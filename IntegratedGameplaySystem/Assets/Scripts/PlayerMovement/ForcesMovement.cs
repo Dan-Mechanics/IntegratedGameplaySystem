@@ -31,7 +31,7 @@ namespace IntegratedGameplaySystem
         /// 
         /// REFACTOR !! --> consider splitting into smaller things.
         /// </summary>
-        public CameraHandler.Tick DoMovement(Vector3 input) 
+        public void DoMovement(Vector3 input) 
         {
             bool isGrounded = GetIsGrounded(groundedConfig, player.trans.position);
             player.rb.velocity = Vector3.ClampMagnitude(player.rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
@@ -57,7 +57,10 @@ namespace IntegratedGameplaySystem
                 counterMovement = -flatVel;
 
             player.rb.AddForce(counterMovement, ForceMode.VelocityChange);
+        }
 
+        public CameraHandler.Tick GetTick() 
+        {
             currentTick.Set(player.eyes.position, player.rb.velocity, Time.time);
             return currentTick;
         }

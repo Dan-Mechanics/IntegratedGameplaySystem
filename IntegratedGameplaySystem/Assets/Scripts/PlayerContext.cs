@@ -47,7 +47,13 @@ namespace IntegratedGameplaySystem
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            handler.SetTick(movement.DoMovement(playerInput.GetMovementDirection()));
+            movement.DoMovement(playerInput.GetMovementDirection());
+        }
+
+        public override void LateFixedUpdate()
+        {
+            base.LateFixedUpdate();
+            handler.SetTick(movement.GetTick());
         }
     }
 }

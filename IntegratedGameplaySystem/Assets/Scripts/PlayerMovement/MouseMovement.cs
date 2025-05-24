@@ -6,6 +6,10 @@ namespace IntegratedGameplaySystem
     {
         private const float MIN_CAM_ANGLE = -90f;
         private const float MAX_CAM_ANGLE = 90f;
+
+        /// <summary>
+        /// Yeah yeah
+        /// </summary>
         private const float SENS = 0.33f;
 
         private readonly Transform eyes;

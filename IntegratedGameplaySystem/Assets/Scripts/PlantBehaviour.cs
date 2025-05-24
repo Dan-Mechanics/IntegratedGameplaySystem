@@ -5,8 +5,7 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// And this would then be where we have our like input handler classes and such. Component pattern perchange ??? !!
     /// </summary>
-    [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlantBehaviour), fileName = "New " + nameof(PlantBehaviour))]
-    public class PlantBehaviour : BaseBehaviour
+    public class PlantBehaviour : Test
     {
         [Tooltip("One in ...")]
         public int growOddsPerTick;

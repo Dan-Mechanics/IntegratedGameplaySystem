@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
     {
         //public Action<BaseBehaviour> OnSubscribeRequest;
         public GameObject prefab;
-        [Min(1)] public int count = 1;
+        //[Min(1)] public int count = 1;
 
         protected Transform transform;
         protected GameObject gameObject;

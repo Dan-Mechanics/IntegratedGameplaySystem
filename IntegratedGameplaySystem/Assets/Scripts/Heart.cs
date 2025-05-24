@@ -29,21 +29,17 @@ namespace IntegratedGameplaySystem
             //subscribers.ForEach(x => x.Start());
         }
 
-        private void Register(BaseBehaviour blueprint)
+        private void Register(BaseBehaviour behaviour)
         {
-            for (int i = 0; i < blueprint.count; i++)
-            {   
-                subscribers.Add(blueprint);
+            subscribers.Add(behaviour);
 
-                if (blueprint.prefab == null)
-                    return;
+            if (behaviour.prefab == null)
+                return;
 
-                GameObject go = Instantiate(blueprint.prefab, blueprint.prefab.transform.position, blueprint.prefab.transform.rotation);
-                go.name = blueprint.prefab.name;
+            GameObject go = Instantiate(behaviour.prefab, behaviour.prefab.transform.position, behaviour.prefab.transform.rotation);
+            go.name = behaviour.prefab.name;
 
-                subscribers[subscribers.Count - 1].Setup(go);
-                subscribers[subscribers.Count - 1].Start();
-            }
+            behaviour.Setup(go);
         }
 
         private void Setup()

@@ -31,13 +31,13 @@ namespace IntegratedGameplaySystem
         /// 
         /// REFACTOR !! --> consider splitting into smaller things.
         /// </summary>
-        public void DoMovement(Vector3 input) 
+        public void DoMovement(float vert, float hori) 
         {
             bool isGrounded = GetIsGrounded(groundedConfig, player.trans.position);
             player.rb.velocity = Vector3.ClampMagnitude(player.rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
             
             float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.airborneAccelMult;
-            Vector3 mov = GetMovement(input, player);
+            Vector3 mov = GetMovement(vert, hori, player);
 
             Vector3 flatVel = player.rb.velocity;
             flatVel.y = 0f;
@@ -65,12 +65,12 @@ namespace IntegratedGameplaySystem
             return currentTick;
         }
 
-        private Vector3 GetMovement(Vector3 input, References references) 
+        private Vector3 GetMovement(float vert, float hori, References references) 
         {
             Vector3 mov = Vector3.zero;
 
-            mov += references.trans.right * input.x;
-            mov += references.trans.forward * input.z;
+            mov += references.trans.right * hori;
+            mov += references.trans.forward * vert;
             mov.Normalize();
 
             return mov;

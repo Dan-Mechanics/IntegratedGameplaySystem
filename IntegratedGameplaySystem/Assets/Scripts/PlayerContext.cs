@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace IntegratedGameplaySystem
@@ -12,9 +13,15 @@ namespace IntegratedGameplaySystem
         public ForcesMovement.GroundedConfiguration grounded;
         public float eyeHeight;
 
+        /// <summary>
+        /// Service locator to filesystem to load config.
+        /// </summary>
+        public List<InputHandler.Binding> bindings;
+
+        private InputHandler inputHandler;
         private Rigidbody rb;
         private Transform eyes;
-        private readonly PlayerInput playerInput = new PlayerInput();
+        private PlayerInput playerInput;
         private CameraHandler handler;
         private MouseMovement mouseMovement;
         private ForcesMovement movement;
@@ -29,6 +36,9 @@ namespace IntegratedGameplaySystem
             eyes.SetParent(transform);
             eyes.localPosition = Vector3.up * eyeHeight;
 
+            inputHandler = new InputHandler(bindings);
+            playerInput = new PlayerInput(inputHandler);
+
             ForcesMovement.References references = new ForcesMovement.References(rb, eyes, transform);
             movement = new ForcesMovement(grounded, settings, references);
             mouseMovement = new MouseMovement(eyes, transform);
@@ -39,7 +49,9 @@ namespace IntegratedGameplaySystem
         {
             base.Update();
 
+            inputHandler.Update();
             mouseMovement.Update(playerInput.GetMouseInput());
+
             handler.UpdateRot(eyes.rotation);
             handler.Update();
         }
@@ -47,13 +59,19 @@ namespace IntegratedGameplaySystem
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            movement.DoMovement(playerInput.GetMovementDirection());
+            movement.DoMovement(playerInput.Vertical(), playerInput.Horizontal());
         }
 
         public override void LateFixedUpdate()
         {
             base.LateFixedUpdate();
             handler.SetTick(movement.GetTick());
+        }
+
+        public override void Disable()
+        {
+            base.Disable();
+            playerInput.Disable();
         }
     }
 }

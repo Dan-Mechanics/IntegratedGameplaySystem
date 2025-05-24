@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DesignPatterns
+namespace IntegratedGameplaySystem
 {
     public class InputHandler
     {

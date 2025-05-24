@@ -9,23 +9,6 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlotBehaviour), fileName = "New " + nameof(PlotBehaviour))]
     public class PlotBehaviour : BaseBehaviour
     {
-        public int count;
-
-        private readonly List<Test> plants = new List<Test>();
-
-        public override void Start()
-        {
-            base.Start();
-
-            for (int i = 0; i < count; i++)
-            {
-                plants.Add(new PlantBehaviour().Setup(prefab));
-            }
-        }
-
-        public override void Disable()
-        {
-            base.Disable();
-        }
+        
     }
 }

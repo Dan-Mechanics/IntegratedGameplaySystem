@@ -26,3 +26,13 @@ MonoBehaviour:
     radius: 0.55
     reach: 0.5
     maxAngle: 42.5
+  eyeHeight: 0.2
+  bindings:
+  - key: 119
+    playerAction: 2
+  - key: 115
+    playerAction: 3
+  - key: 97
+    playerAction: 4
+  - key: 100
+    playerAction: 5

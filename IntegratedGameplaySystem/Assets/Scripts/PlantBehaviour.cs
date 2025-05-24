@@ -5,7 +5,8 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// And this would then be where we have our like input handler classes and such. Component pattern perchange ??? !!
     /// </summary>
-    public class PlantBehaviour : Test
+    [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlantBehaviour), fileName = "New " + nameof(PlantBehaviour))]
+    public class PlantBehaviour : BaseBehaviour
     {
         [Tooltip("One in ...")]
         public int growOddsPerTick;
@@ -32,7 +33,7 @@ namespace IntegratedGameplaySystem
             EventManager.RemoveListener(Occasion.TICK, Tick);
         }
 
-        private void Disperse() 
+        private void Disperse()
         {
             Vector2 rand = Random.insideUnitCircle * preferredPlantSpacing;
 

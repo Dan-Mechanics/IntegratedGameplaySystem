@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: New PlantBehaviour
   m_EditorClassIdentifier: 
   prefab: {fileID: 6319714984396151695, guid: 048e399419656db4b9c9aa6ae6023c6f, type: 3}
-  count: 3
   growOddsPerTick: 7
   materials:
   - {fileID: 2100000, guid: 98e4f45ecd07b7b47a584cdd16c8f91a, type: 2}

@@ -26,7 +26,7 @@ namespace IntegratedGameplaySystem
                 Register(sceneBehaviours[i]);
             }
             
-            //subscribers.ForEach(x => x.Start());
+            subscribers.ForEach(x => x.Start());
         }
 
         private void Register(BaseBehaviour behaviour)

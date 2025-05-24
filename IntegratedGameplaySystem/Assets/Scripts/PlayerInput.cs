@@ -14,26 +14,65 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class PlayerInput
     {
-        /// <summary>
-        /// Or you could cahce ??
-        /// </summary>
-        public Vector3 GetMovementDirection() 
+        private readonly InputHandler inputHandler;
+
+        private bool forward;
+        private bool back;
+        private bool left;
+        private bool right;
+
+        public PlayerInput(InputHandler inputHandler)
         {
-            return new Vector3(
-                Input.GetAxisRaw("Horizontal"),
+            this.inputHandler = inputHandler;
 
-                (Input.GetKey(KeyCode.Space) ? 1f : 0f) +
-                (Input.GetKey(KeyCode.LeftShift) ? -1f : 0f),
-
-                Input.GetAxisRaw("Vertical"));;
+            inputHandler.GetInputEvents(PlayerAction.Forward).OnChange += OnForward;
+            inputHandler.GetInputEvents(PlayerAction.Backward).OnChange += OnBack;
+            inputHandler.GetInputEvents(PlayerAction.Left).OnChange += OnLeft;
+            inputHandler.GetInputEvents(PlayerAction.Right).OnChange += OnRight;
         }
 
-        /// <summary>
-        /// Or you could cahce ??
-        /// </summary>
+        private void OnForward(bool value) => forward = value;
+        private void OnBack(bool value) => back = value;
+        private void OnLeft(bool value) => left = value;
+        private void OnRight(bool value) => right = value;
+
+        public float Vertical() 
+        {
+            float z = 0f;
+
+            if (forward)
+                z++;
+
+            if (back)
+                z--;
+
+            return z;
+        }
+
+        public float Horizontal()
+        {
+            float x = 0f;
+
+            if (right)
+                x++;
+
+            if (left)
+                x--;
+
+            return x;
+        }
+
         public Vector2 GetMouseInput() 
         {
             return new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
+        }
+
+        public void Disable() 
+        {
+            inputHandler.GetInputEvents(PlayerAction.Forward).OnChange -= OnForward;
+            inputHandler.GetInputEvents(PlayerAction.Backward).OnChange -= OnBack;
+            inputHandler.GetInputEvents(PlayerAction.Left).OnChange -= OnLeft;
+            inputHandler.GetInputEvents(PlayerAction.Right).OnChange -= OnRight;
         }
     }
 }

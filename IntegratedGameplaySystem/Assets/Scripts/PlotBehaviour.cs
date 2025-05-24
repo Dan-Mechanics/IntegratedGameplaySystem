@@ -24,7 +24,10 @@ namespace IntegratedGameplaySystem
 
             for (int i = 0; i < transform.childCount; i++)
             {
-                plants.Add(new PlantBehaviour(transform.GetChild(i), this));
+                Transform child = transform.GetChild(i);
+
+                plants.Add(new PlantBehaviour(child, this));
+                child.name = i.ToString();
             }
         }
 

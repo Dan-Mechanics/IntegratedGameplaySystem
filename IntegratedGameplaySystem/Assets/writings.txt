@@ -1,3 +1,9 @@
+next todos:
+ . add more stuff
+ . make raycasting work --> #SOLID !!.
+
+===
+
 fun stuff:
 
 make physicsautosimulate

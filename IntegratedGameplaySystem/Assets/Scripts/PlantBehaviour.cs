@@ -2,44 +2,41 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// And this would then be where we have our like input handler classes and such. Component pattern perchange ??? !!
-    /// </summary>
-    [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlantBehaviour), fileName = "New " + nameof(PlantBehaviour))]
-    public class PlantBehaviour : BaseBehaviour
+    public class PlantBehaviour
     {
-        [Tooltip("One in ...")]
+        /*[Tooltip("One in ...")]
         public int growOddsPerTick;
         public Material[] materials;
-        public float preferredPlantSpacing;
+        public float preferredPlantSpacing;*/
+        private Transform transform;
+        private PlotBehaviour plotBehaviour;
 
         private int progression;
         private MeshRenderer[] meshRenderers;
 
-        public override void Start()
+        public PlantBehaviour(Transform transform, PlotBehaviour plotBehaviour)
         {
-            base.Start();
+            this.transform = transform;
+            this.plotBehaviour = plotBehaviour;
+
             EventManager.AddListener(Occasion.TICK, Tick);
 
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
             RefreshVisuals();
-
-            Disperse();
         }
 
-        public override void Disable()
+        public void Dispose()
         {
-            base.Disable();
             EventManager.RemoveListener(Occasion.TICK, Tick);
         }
 
-        private void Disperse()
+        /*private void Disperse()
         {
-            Vector2 rand = Random.insideUnitCircle * preferredPlantSpacing;
+            Vector2 rand = Random.insideUnitCircle * plotBehaviour.preferredPlantSpacing;
 
             transform.position += Vector3.forward * rand.y;
             transform.position += Vector3.right * rand.x;
-        }
+        }*/
 
         private void Tick()
         {
@@ -48,7 +45,7 @@ namespace IntegratedGameplaySystem
                 return;
 
             progression++;
-            progression = Mathf.Clamp(progression, 0, materials.Length - 1);
+            progression = Mathf.Clamp(progression, 0, plotBehaviour.materials.Length - 1);
             RefreshVisuals();
         }
 
@@ -56,7 +53,7 @@ namespace IntegratedGameplaySystem
         {
             for (int i = 0; i < meshRenderers.Length; i++)
             {
-                meshRenderers[i].material = materials[progression];
+                meshRenderers[i].material = plotBehaviour.materials[progression];
             }
         }
 

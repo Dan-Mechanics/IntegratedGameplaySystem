@@ -67,7 +67,7 @@ namespace IntegratedGameplaySystem
             return new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         }
 
-        public void Disable() 
+        public void Dispose() 
         {
             inputHandler.GetInputEvents(PlayerAction.Forward).OnChange -= OnForward;
             inputHandler.GetInputEvents(PlayerAction.Backward).OnChange -= OnBack;

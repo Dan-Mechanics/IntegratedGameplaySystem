@@ -71,7 +71,7 @@ namespace IntegratedGameplaySystem
         public override void Disable()
         {
             base.Disable();
-            playerInput.Disable();
+            playerInput.Dispose();
         }
     }
 }

@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// Perhaps make this a service locatior? might be smart.
+    /// </summary>
     public class InputHandler
     {
         /// <summary>

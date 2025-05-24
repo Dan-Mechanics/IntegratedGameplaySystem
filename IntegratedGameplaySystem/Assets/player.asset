@@ -36,3 +36,5 @@ MonoBehaviour:
     playerAction: 4
   - key: 100
     playerAction: 5
+  - key: 323
+    playerAction: 1

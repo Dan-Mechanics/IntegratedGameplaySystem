@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
         public const float INTERVAL = 64f;
 
         [SerializeField] private bool locked = default;
-        [SerializeField] private BaseBehaviour[] sceneBehaviours = default;
+        [SerializeField] private List<BaseBehaviour> scene = default;
 
         private readonly List<BaseBehaviour> subscribers = new List<BaseBehaviour>();
         private float timer;
@@ -21,9 +21,9 @@ namespace IntegratedGameplaySystem
         {
             Setup();
 
-            for (int i = 0; i < sceneBehaviours.Length; i++)
+            for (int i = 0; i < scene.Count; i++)
             {
-                Register(sceneBehaviours[i]);
+                Register(scene[i]);
             }
             
             subscribers.ForEach(x => x.Start());

@@ -23,6 +23,7 @@ namespace IntegratedGameplaySystem
             transform = gameObject.transform;
         }
 
+        [Obsolete("Make your own GameObjects instead of finding them.")]
         protected Transform GetChild(int index, string expected)
         {
             if (index < 0)

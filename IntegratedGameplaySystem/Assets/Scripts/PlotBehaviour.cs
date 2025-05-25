@@ -12,6 +12,7 @@ namespace IntegratedGameplaySystem
         [Tooltip("One in ...")]
         public int growOddsPerTick;
         public Material[] materials;
+        public Sprite itemSprite;
        // public float preferredPlantSpacing;
 
         private readonly List<PlantBehaviour> plants = new List<PlantBehaviour>();

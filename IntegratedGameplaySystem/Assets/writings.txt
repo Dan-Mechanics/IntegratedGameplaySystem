@@ -5,6 +5,8 @@ next todos:
 i think it would be cool to have like gameintioat type beat.
 so there is basically only one gameobject in the scene which is a prefab with one thing in it.
 
+convert to neweer unity because of the order of shit.
+
 ===
 
 fun stuff:

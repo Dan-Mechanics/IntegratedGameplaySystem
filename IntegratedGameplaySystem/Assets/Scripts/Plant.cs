@@ -19,7 +19,7 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// Still working on this.
         /// </summary>
-        private bool isWet; // for example.
+        private bool isWet = false; // for example.
         private MeshRenderer[] meshRenderers;
 
         public Plant(PlantBlueprint blueprint, Transform transform)

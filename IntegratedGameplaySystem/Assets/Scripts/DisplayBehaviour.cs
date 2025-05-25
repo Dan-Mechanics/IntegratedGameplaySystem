@@ -23,10 +23,10 @@ namespace IntegratedGameplaySystem
             // create some shit here.
 
             itemSlot = Instantiate(itemSlotPrefab).GetComponent<Image>();
-            Place(itemSlot.transform, Vector3.down * 1000f);
+            Place(itemSlot.transform, Vector3.down * 200f);
 
             selectionText = Instantiate(textPrefab).GetComponent<TMP_Text>();
-            Place(selectionText.transform, Vector3.down * 1000f);
+            Place(selectionText.transform, Vector3.down * 200f);
 
             playerContext.wallet.OnMoneyChanged += WriteText;
             //playerContext.

@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31d734035da401f4aa5703d7b43ac106, type: 3}
-  m_Name: __Feathercup
+  m_Script: {fileID: 11500000, guid: d42157468810afb4ba59bb04fb831b33, type: 3}
+  m_Name: clock
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6449396283023709861, guid: 9d7f42bdfa682c7498c81cfdaf397b4a, type: 3}
+  prefab: {fileID: 0}
+  interval: 0.5

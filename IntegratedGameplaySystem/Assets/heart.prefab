@@ -44,9 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 1
-  sceneBehaviours:
-  - {fileID: 11400000, guid: fd48821c71af8b947810caaa52da7039, type: 2}
-  - {fileID: 11400000, guid: 3d493575da540434aa186135ccc52b84, type: 2}
-  - {fileID: 11400000, guid: 617879e9d4e5af647a04291427cfecf4, type: 2}
+  scene:
+  - {fileID: 11400000, guid: 2d51157a9219b6044a5e30e911771341, type: 2}
+  - {fileID: 11400000, guid: 69182449813a6454bbc3a87cb2f6c7c0, type: 2}
+  - {fileID: 11400000, guid: 53a0fdaacbfedfe4c892729d2d9043b3, type: 2}
+  - {fileID: 11400000, guid: 8a7b6259e2863f044a8c0f02f0a717c8, type: 2}
   - {fileID: 11400000, guid: f412b2478e013c943850e4f5612a9e6f, type: 2}
-  - {fileID: 11400000, guid: 135b118e43d62c24c8b20dc51a6fbe24, type: 2}
+  - {fileID: 11400000, guid: 590d39a4560737640bdf40aca5758b6f, type: 2}
+  - {fileID: 11400000, guid: c45c0f4c52125bd4197c597a39780a9d, type: 2}

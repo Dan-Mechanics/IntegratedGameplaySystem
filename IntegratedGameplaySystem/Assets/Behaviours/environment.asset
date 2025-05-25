@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d42157468810afb4ba59bb04fb831b33, type: 3}
-  m_Name: time_handler
+  m_Script: {fileID: 11500000, guid: b8a73e48c4bd3f4419dbdc739fec06f3, type: 3}
+  m_Name: environment
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  interval: 0.5
+  prefab: {fileID: 4710450936777699201, guid: a569a48a02f66514486790d7fee81b52, type: 3}

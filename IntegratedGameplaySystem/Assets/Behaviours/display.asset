@@ -16,4 +16,4 @@ MonoBehaviour:
   itemSlotPrefab: {fileID: 1700105925091483714, guid: 7796d28cfcd241d49885a24ab68ba2ea, type: 3}
   textPrefab: {fileID: 6794886773799165308, guid: d2b1ee8c61df5f04499dabf123b8ca12, type: 3}
   emptySprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  playerContext: {fileID: 11400000, guid: fd48821c71af8b947810caaa52da7039, type: 2}
+  playerContext: {fileID: 11400000, guid: 53a0fdaacbfedfe4c892729d2d9043b3, type: 2}

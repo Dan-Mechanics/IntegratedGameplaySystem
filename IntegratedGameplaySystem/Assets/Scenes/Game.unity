@@ -896,24 +896,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8097411516312560829, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: sceneBehaviours.Array.size
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8097411516312560829, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: sceneBehaviours.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: a1e5c121c9cc81348be03751cd061f40, type: 2}
+      objectReference: {fileID: 11400000, guid: f412b2478e013c943850e4f5612a9e6f, type: 2}
     - target: {fileID: 8097411516312560829, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: sceneBehaviours.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 292c29801ec398c408f498d938678953, type: 2}
+      objectReference: {fileID: 11400000, guid: 135b118e43d62c24c8b20dc51a6fbe24, type: 2}
     - target: {fileID: 8097411516312560829, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: sceneBehaviours.Array.data[5]
       value: 
-      objectReference: {fileID: 11400000, guid: 326bdc8783321134083ee8c7f587d0dc, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8097411516312560829, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: sceneBehaviours.Array.data[6]
       value: 
-      objectReference: {fileID: 11400000, guid: 135b118e43d62c24c8b20dc51a6fbe24, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8097411516312560830, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

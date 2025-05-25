@@ -5,6 +5,8 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// And this would then be where we have our like input handler classes and such. Component pattern perchange ??? !!
+    /// 
+    /// PlayerBehaviour??
     /// </summary>
     [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlayerContext), fileName = "New " + nameof(PlayerContext))]
     public class PlayerContext : BaseBehaviour
@@ -25,6 +27,7 @@ namespace IntegratedGameplaySystem
         private CameraHandler handler;
         private MouseMovement mouseMovement;
         private ForcesMovement movement;
+        public Wallet wallet;
 
         public override void Start()
         {
@@ -38,6 +41,7 @@ namespace IntegratedGameplaySystem
 
             inputHandler = new InputHandler(bindings);
             playerInput = new PlayerInput(inputHandler);
+            wallet = new Wallet(1000);
 
             ForcesMovement.References references = new ForcesMovement.References(rb, eyes, transform);
             movement = new ForcesMovement(grounded, settings, references);

@@ -2,6 +2,9 @@ next todos:
  . add more stuff
  . make raycasting work --> #SOLID !!.
 
+i think it would be cool to have like gameintioat type beat.
+so there is basically only one gameobject in the scene which is a prefab with one thing in it.
+
 ===
 
 fun stuff:

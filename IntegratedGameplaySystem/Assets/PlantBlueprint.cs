@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// For more than one plant.
+    /// </summary>
     public class PlantBlueprint 
     {
         public string name;
@@ -11,8 +14,11 @@ namespace IntegratedGameplaySystem
         public Material[] materials;
         public Sprite itemSprite;
 
-        public void Setup() { }
+        private void Setup() { }
 
+        /// <summary>
+        /// Builder pattern.
+        /// </summary>
         public class Builder
         {
             private readonly PlantBlueprint blueprint;
@@ -49,12 +55,15 @@ namespace IntegratedGameplaySystem
                 return this;
             }
 
+            /// <summary>
+            /// BUG: dont have to add file extention ??
+            /// </summary>
             public Builder SetMaterials(string name)
             {
                 Material[] materials = new Material[5];
                 for (int i = 0; i < materials.Length; i++)
                 {
-                    materials[i] = Resources.Load<Material>($"{name}/stage_{i + 1}_mat.mat");
+                    materials[i] = Resources.Load<Material>($"{name}/stage_{i + 1}_mat");
                 }
 
                 blueprint.materials = materials;

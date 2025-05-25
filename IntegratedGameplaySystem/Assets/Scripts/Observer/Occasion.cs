@@ -4,6 +4,7 @@
     {
         OPEN_GAME = 0,
         TICK = 1,
-        CLOSE_GAME = 2,
+        GAME_OVER = 2,
+        CLOSE_GAME = 3
     }
 }

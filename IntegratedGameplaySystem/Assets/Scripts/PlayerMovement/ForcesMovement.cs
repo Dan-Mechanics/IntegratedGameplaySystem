@@ -16,6 +16,7 @@ namespace IntegratedGameplaySystem
         private readonly GroundedConfiguration groundedConfig;
         private readonly Settings settings;
         private readonly References player;
+        private bool isGrounded;
 
         public ForcesMovement(GroundedConfiguration groundedConfig, Settings settings, References player)
         {
@@ -25,16 +26,13 @@ namespace IntegratedGameplaySystem
         }
 
         /// <summary>
-        /// This code fucking sux. Fit it!
-        /// 
-        /// consider using update (physics.autosimualte) meme.
-        /// 
+        /// This code sux. Fit it!
         /// REFACTOR !! --> consider splitting into smaller things.
         /// </summary>
         public void DoMovement(float vert, float hori) 
         {
-            bool isGrounded = GetIsGrounded(groundedConfig, player.trans.position);
-            player.rb.velocity = Vector3.ClampMagnitude(player.rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
+            isGrounded = GetIsGrounded(groundedConfig, player.trans.position);
+            //player.rb.velocity = Vector3.ClampMagnitude(player.rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
             
             float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.airborneAccelMult;
             Vector3 mov = GetMovement(vert, hori, player);
@@ -61,6 +59,7 @@ namespace IntegratedGameplaySystem
 
         public CameraHandler.Tick GetTick() 
         {
+            player.rb.velocity = Vector3.ClampMagnitude(player.rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
             currentTick.Set(player.eyes.position, player.rb.velocity, Time.time);
             return currentTick;
         }
@@ -115,9 +114,6 @@ namespace IntegratedGameplaySystem
             }
         }
 
-        /// <summary>
-        /// Consider making these scriptable objects too.
-        /// </summary>
         [Serializable]
         public class Settings 
         {
@@ -126,15 +122,6 @@ namespace IntegratedGameplaySystem
             public float flySpeed;
             public float movAccel;
             public float airborneAccelMult;
-
-            /*public Settings(float walkSpeed, float runSpeed, float flySpeed, float movAccel, float airborneAccelMult)
-            {
-                this.walkSpeed = walkSpeed;
-                this.runSpeed = runSpeed;
-                this.flySpeed = flySpeed;
-                this.movAccel = movAccel;
-                this.airborneAccelMult = airborneAccelMult;
-            }*/
         }
     }
 }

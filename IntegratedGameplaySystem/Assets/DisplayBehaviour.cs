@@ -23,24 +23,25 @@ namespace IntegratedGameplaySystem
             // create some shit here.
 
             itemSlot = Instantiate(itemSlotPrefab).GetComponent<Image>();
-            Place(itemSlot.transform);
+            Place(itemSlot.transform, Vector3.down * 1000f);
 
             selectionText = Instantiate(textPrefab).GetComponent<TMP_Text>();
-            Place(selectionText.transform);
+            Place(selectionText.transform, Vector3.down * 1000f);
 
+            playerContext.wallet.OnMoneyChanged += WriteText;
             //playerContext.
         }
 
-        private void Place(Transform some)
+        private void Place(Transform trans, Vector3 pos)
         {
-            some.SetParent(transform);
-            some.localPosition = Vector3.zero;
-            some.localRotation = Quaternion.identity;
-            some.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+            trans.SetParent(transform);
+            trans.localPosition = Vector3.zero;
+            trans.localRotation = Quaternion.identity;
+            trans.GetComponent<RectTransform>().anchoredPosition = pos;
         }
 
-        public void WriteText(string mess) => selectionText.text = mess;    
-        public void WriteItemSlot(PlotBehaviour plotBehaviour) => WriteImage(plotBehaviour.itemSprite);
+        public void WriteText(int mess, int b) => selectionText.text = mess.ToString();    
+        public void WriteItemSlot(PlantBlueprint blueprint) => WriteImage(blueprint.itemSprite);
         public void WriteImage(Sprite sprite) 
         {
             itemSlot.sprite = sprite == null ? emptySprite : sprite;

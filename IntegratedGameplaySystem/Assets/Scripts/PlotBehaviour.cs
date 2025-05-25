@@ -9,25 +9,24 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlotBehaviour), fileName = "New " + nameof(PlotBehaviour))]
     public class PlotBehaviour : BaseBehaviour
     {
-        [Tooltip("One in ...")]
-        public int growOddsPerTick;
-        public Material[] materials;
-        public Sprite itemSprite;
-       // public float preferredPlantSpacing;
-
-        private readonly List<PlantBehaviour> plants = new List<PlantBehaviour>();
-        /*private int progression;
-        private MeshRenderer[] meshRenderers;*/
-
+        private readonly List<Plant> plants = new List<Plant>();
+        
         public override void Start()
         {
             base.Start();
+
+            PlantBlueprint blueprint = new PlantBlueprint.Builder()
+                .SetName(name)
+                .SetGrowOdds(7) // inspector exposed ??
+                .SetMaterials(name)
+                .SetItemSprite(name)
+                .Build();
 
             for (int i = 0; i < transform.childCount; i++)
             {
                 Transform child = transform.GetChild(i);
 
-                plants.Add(new PlantBehaviour(child, this));
+                plants.Add(new Plant(blueprint, child));
                 child.name = i.ToString();
             }
         }

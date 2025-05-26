@@ -28,7 +28,9 @@ namespace IntegratedGameplaySystem
         private CameraHandler handler;
         private MouseMovement mouseMovement;
         private ForcesMovement movement;
+        private Interactor interactor;
         public Wallet wallet;
+        public Raycaster.RaycastData data;
 
         public readonly Dictionary<string, PatchBehaviour> plantConversions = new Dictionary<string, PatchBehaviour>();
 
@@ -55,6 +57,7 @@ namespace IntegratedGameplaySystem
             movement = new ForcesMovement(grounded, settings, references);
             mouseMovement = new MouseMovement(eyes, transform);
             handler = new CameraHandler(Camera.main.transform);
+            interactor = new Interactor(inputHandler, new Raycaster(data), eyes, this);
         }
 
         public override void Update()

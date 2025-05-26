@@ -25,11 +25,14 @@ namespace IntegratedGameplaySystem
 
         private void Interact() 
         {
+            Debug.Log("1");
+            
             Transform hit = raycaster.Raycast(eyes.position, eyes.forward);
 
             if (!hit)
                 return;
 
+            Debug.Log("2");
             string[] split = hit.name.Split(SPLITTER);
             Plant plant = playerContext.plantConversions[split[0]].GetPlant(int.Parse(split[1]));
             plant.Interact();

@@ -38,3 +38,13 @@ MonoBehaviour:
     playerAction: 5
   - key: 323
     playerAction: 1
+  patchBehaviours:
+  - {fileID: 11400000, guid: f412b2478e013c943850e4f5612a9e6f, type: 2}
+  data:
+    range: 3
+    mask:
+      serializedVersion: 2
+      m_Bits: 513
+    triggerInteraction: 1
+    tags:
+    - Plant

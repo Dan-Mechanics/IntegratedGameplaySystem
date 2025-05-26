@@ -14,12 +14,12 @@ namespace IntegratedGameplaySystem
         public ForcesMovement.Settings settings;
         public ForcesMovement.GroundedConfiguration grounded;
         public float eyeHeight;
+        public InteractBehaviour interactBehaviour;
 
         /// <summary>
         /// Service locator to filesystem to load config.
         /// </summary>
         public List<InputHandler.Binding> bindings;
-        public PatchBehaviour[] patchBehaviours;
 
         private InputHandler inputHandler;
         private Rigidbody rb;
@@ -28,22 +28,14 @@ namespace IntegratedGameplaySystem
         private CameraHandler handler;
         private MouseMovement mouseMovement;
         private ForcesMovement movement;
-        private Interactor interactor;
+        //private Interactor interactor;
         public Wallet wallet;
-        public Raycaster.RaycastData data;
 
-        public readonly Dictionary<string, PatchBehaviour> plantConversions = new Dictionary<string, PatchBehaviour>();
 
         public override void Start()
         {
             base.Start();
             rb = transform.GetComponent<Rigidbody>();
-            //eyes = GetChild(0, "eyes");
-
-            for (int i = 0; i < patchBehaviours.Length; i++)
-            {
-                plantConversions.Add(patchBehaviours[i].name, patchBehaviours[i]);
-            }
 
             eyes = new GameObject("eyes").transform;
             eyes.SetParent(transform);
@@ -57,7 +49,8 @@ namespace IntegratedGameplaySystem
             movement = new ForcesMovement(grounded, settings, references);
             mouseMovement = new MouseMovement(eyes, transform);
             handler = new CameraHandler(Camera.main.transform);
-            interactor = new Interactor(inputHandler, new Raycaster(data), eyes, this);
+
+            interactBehaviour.SetInputHandler(inputHandler);
         }
 
         public override void Update()

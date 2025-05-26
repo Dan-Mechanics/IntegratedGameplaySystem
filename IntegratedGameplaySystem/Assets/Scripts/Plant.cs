@@ -65,6 +65,10 @@ namespace IntegratedGameplaySystem
 
         public void Interact()
         {
+            // cant cut when full.
+            if (progression < blueprint.materials.Length - 1)
+                return;
+
             progression = 0;
             OnEarnMoney?.Invoke(1 * (isWet ? 2 : 1));
             RefreshVisuals();

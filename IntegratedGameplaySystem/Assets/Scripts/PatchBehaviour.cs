@@ -30,7 +30,7 @@ namespace IntegratedGameplaySystem
             for (int i = 0; i < count; i++)
             {
                 Transform plant = Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity).transform;
-                plant.name = $"{name}{Interactor.SPLITTER}{i}";
+                plant.name = $"{name}{InteractBehaviour.SPLITTER}{i}";
                 // we can use the name for inforamtion.
 
                 var newPlant = new Plant(blueprint, plant);

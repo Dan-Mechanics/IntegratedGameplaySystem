@@ -50,7 +50,7 @@ namespace IntegratedGameplaySystem
 
         private void Setup()
         {
-            Physics.autoSimulation = false;
+            Physics.simulationMode = SimulationMode.Script;
             Time.fixedDeltaTime = 1f / INTERVAL;
             Application.targetFrameRate = MAX_FPS;
 

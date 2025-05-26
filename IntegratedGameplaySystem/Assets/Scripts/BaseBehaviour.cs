@@ -10,9 +10,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public abstract class BaseBehaviour : ScriptableObject
     {
-        //public Action<BaseBehaviour> OnSubscribeRequest;
         public GameObject prefab;
-        //[Min(1)] public int count = 1;
 
         protected Transform transform;
         protected GameObject gameObject;

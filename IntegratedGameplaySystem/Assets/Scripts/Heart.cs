@@ -22,6 +22,8 @@ namespace IntegratedGameplaySystem
         
         private void Start()
         {
+            // ServiceLocator<IInputService>.Provide(new InputHandler());
+            
             Setup();
 
             for (int i = 0; i < scene.Count; i++)

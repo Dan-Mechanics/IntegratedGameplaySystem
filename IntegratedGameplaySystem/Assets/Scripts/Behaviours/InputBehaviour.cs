@@ -14,6 +14,9 @@ namespace IntegratedGameplaySystem
         public List<InputHandler.Binding> bindings;
         public InputHandler inputHandler;
 
+        /// <summary>
+        /// https://stackoverflow.com/questions/16100/convert-a-string-to-an-enum-in-c-sharp
+        /// </summary>
         public override void Start()
         {
             base.Start();

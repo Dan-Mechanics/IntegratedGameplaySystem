@@ -25,10 +25,10 @@ namespace IntegratedGameplaySystem
         {
             this.inputHandler = inputHandler;
 
-            inputHandler.GetInputEvents(PlayerAction.Forward).OnChange += OnForward;
-            inputHandler.GetInputEvents(PlayerAction.Backward).OnChange += OnBack;
-            inputHandler.GetInputEvents(PlayerAction.Left).OnChange += OnLeft;
-            inputHandler.GetInputEvents(PlayerAction.Right).OnChange += OnRight;
+            inputHandler.GetAction(PlayerAction.Forward).OnChange += OnForward;
+            inputHandler.GetAction(PlayerAction.Backward).OnChange += OnBack;
+            inputHandler.GetAction(PlayerAction.Left).OnChange += OnLeft;
+            inputHandler.GetAction(PlayerAction.Right).OnChange += OnRight;
         }
 
         private void OnForward(bool value) => forward = value;
@@ -69,10 +69,10 @@ namespace IntegratedGameplaySystem
 
         public void Dispose() 
         {
-            inputHandler.GetInputEvents(PlayerAction.Forward).OnChange -= OnForward;
-            inputHandler.GetInputEvents(PlayerAction.Backward).OnChange -= OnBack;
-            inputHandler.GetInputEvents(PlayerAction.Left).OnChange -= OnLeft;
-            inputHandler.GetInputEvents(PlayerAction.Right).OnChange -= OnRight;
+            inputHandler.GetAction(PlayerAction.Forward).OnChange -= OnForward;
+            inputHandler.GetAction(PlayerAction.Backward).OnChange -= OnBack;
+            inputHandler.GetAction(PlayerAction.Left).OnChange -= OnLeft;
+            inputHandler.GetAction(PlayerAction.Right).OnChange -= OnRight;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace IntegratedGameplaySystem
             raycaster = new Raycaster(data);
             cam = Camera.main.transform;
 
-            inputBehaviour.GetInputEvents(PlayerAction.PrimaryFire).OnDown += Interact;
+            inputBehaviour.GetAction(PlayerAction.PrimaryFire).OnDown += Interact;
         }
 
         private void Interact() 
@@ -47,7 +47,7 @@ namespace IntegratedGameplaySystem
         public override void Disable()
         {
             base.Disable();
-            inputBehaviour.GetInputEvents(PlayerAction.PrimaryFire).OnDown -= Interact;
+            inputBehaviour.GetAction(PlayerAction.PrimaryFire).OnDown -= Interact;
         }
     }
 }

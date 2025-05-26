@@ -24,12 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8097411516312560828}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8097411516312560829
 MonoBehaviour:
@@ -44,12 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locked: 1
-  priorityBehaviours:
+  scene:
+  - {fileID: 11400000, guid: 124a903cd7cae74468aa2ad26e81ae6a, type: 2}
   - {fileID: 11400000, guid: 2d51157a9219b6044a5e30e911771341, type: 2}
   - {fileID: 11400000, guid: 53a0fdaacbfedfe4c892729d2d9043b3, type: 2}
-  behaviours:
-  - {fileID: 11400000, guid: 8a7b6259e2863f044a8c0f02f0a717c8, type: 2}
-  - {fileID: 11400000, guid: f412b2478e013c943850e4f5612a9e6f, type: 2}
-  - {fileID: 11400000, guid: 69182449813a6454bbc3a87cb2f6c7c0, type: 2}
   - {fileID: 11400000, guid: 590d39a4560737640bdf40aca5758b6f, type: 2}
   - {fileID: 11400000, guid: c45c0f4c52125bd4197c597a39780a9d, type: 2}
+  - {fileID: 11400000, guid: 69182449813a6454bbc3a87cb2f6c7c0, type: 2}
+  - {fileID: 11400000, guid: f412b2478e013c943850e4f5612a9e6f, type: 2}
+  - {fileID: 11400000, guid: ce27dbfd7323f2044800a7c81c6ef824, type: 2}
+  - {fileID: 11400000, guid: 8a7b6259e2863f044a8c0f02f0a717c8, type: 2}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ProjectWitchGarden
 {
-    [CreateAssetMenu(menuName = "Magical Plant", fileName = "New Magical Plant")]
+    //[CreateAssetMenu(menuName = "Magical Plant", fileName = "New Magical Plant")]
     public class MagicalPlant : ScriptableObject
     {
         public enum Season { Spring, Summer, Fall, Winter }

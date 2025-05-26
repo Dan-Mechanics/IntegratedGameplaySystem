@@ -5,6 +5,7 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
+    /// We could wrap a behaviour around this??
     /// Perhaps make this a service locatior? might be smart.
     /// </summary>
     public class InputHandler

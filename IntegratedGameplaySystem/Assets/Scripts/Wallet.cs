@@ -3,17 +3,13 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    [Serializable]
     public class Wallet 
     {
         public Action<int, int> OnMoneyChanged;
         
-        public readonly int moneyToWin;
+        public int moneyToWin;
         private int money;
-
-        public Wallet(int moneyToWin)
-        {
-            this.moneyToWin = moneyToWin;
-        }
 
         public void EarnMoney(int incoming) 
         {

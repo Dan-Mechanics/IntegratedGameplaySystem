@@ -15,10 +15,8 @@ namespace IntegratedGameplaySystem
         public ForcesMovement.GroundedConfiguration grounded;
         public float eyeHeight;
         public InteractBehaviour interactBehaviour;
-
-        /// <summary>
-        /// Service locator to filesystem to load config.
-        /// </summary>
+        public Wallet wallet;
+        [Tooltip("Service locator to filesystem to load config.")]
         public List<InputHandler.Binding> bindings;
 
         private InputHandler inputHandler;
@@ -28,9 +26,6 @@ namespace IntegratedGameplaySystem
         private CameraHandler handler;
         private MouseMovement mouseMovement;
         private ForcesMovement movement;
-        //private Interactor interactor;
-        public Wallet wallet;
-
 
         public override void Start()
         {
@@ -43,7 +38,6 @@ namespace IntegratedGameplaySystem
 
             inputHandler = new InputHandler(bindings);
             playerInput = new PlayerInput(inputHandler);
-            wallet = new Wallet(1000);
 
             ForcesMovement.References references = new ForcesMovement.References(rb, eyes, transform);
             movement = new ForcesMovement(grounded, settings, references);

@@ -19,6 +19,7 @@ namespace IntegratedGameplaySystem
         /// Service locator to filesystem to load config.
         /// </summary>
         public List<InputHandler.Binding> bindings;
+        public PatchBehaviour[] patchBehaviours;
 
         private InputHandler inputHandler;
         private Rigidbody rb;
@@ -29,11 +30,18 @@ namespace IntegratedGameplaySystem
         private ForcesMovement movement;
         public Wallet wallet;
 
+        public readonly Dictionary<string, PatchBehaviour> plantConversions = new Dictionary<string, PatchBehaviour>();
+
         public override void Start()
         {
             base.Start();
             rb = transform.GetComponent<Rigidbody>();
             //eyes = GetChild(0, "eyes");
+
+            for (int i = 0; i < patchBehaviours.Length; i++)
+            {
+                plantConversions.Add(patchBehaviours[i].name, patchBehaviours[i]);
+            }
 
             eyes = new GameObject("eyes").transform;
             eyes.SetParent(transform);

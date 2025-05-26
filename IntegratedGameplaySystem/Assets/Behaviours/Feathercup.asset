@@ -15,5 +15,5 @@ MonoBehaviour:
   prefab: {fileID: 4529399288556888371, guid: 2e32b4054af5efd4a9808cd04845cc2e, type: 3}
   count: 50
   dispersal: 10
-  plant: {fileID: 6319714984396151695, guid: 048e399419656db4b9c9aa6ae6023c6f, type: 3}
+  plantPrefab: {fileID: 6319714984396151695, guid: 048e399419656db4b9c9aa6ae6023c6f, type: 3}
   playerContext: {fileID: 11400000, guid: 53a0fdaacbfedfe4c892729d2d9043b3, type: 2}

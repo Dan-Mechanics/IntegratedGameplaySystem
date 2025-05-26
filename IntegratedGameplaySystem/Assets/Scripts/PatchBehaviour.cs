@@ -11,7 +11,7 @@ namespace IntegratedGameplaySystem
     {
         public int count;
         public float dispersal;
-        public GameObject plant;
+        public GameObject plantPrefab;
         public PlayerContext playerContext;
 
         private readonly List<Plant> plants = new List<Plant>();
@@ -29,8 +29,8 @@ namespace IntegratedGameplaySystem
 
             for (int i = 0; i < count; i++)
             {
-                Transform plant = Instantiate(this.plant, GetRandomPos(), Quaternion.identity).transform;
-                plant.name = name;
+                Transform plant = Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity).transform;
+                plant.name = $"{name}{Interactor.SPLITTER}{i}";
                 // we can use the name for inforamtion.
 
                 var newPlant = new Plant(blueprint, plant);
@@ -55,5 +55,7 @@ namespace IntegratedGameplaySystem
             base.Disable();
             plants.ForEach(x => x.Dispose());
         }
+
+        public Plant GetPlant(int index) => plants[index];
     }
 }

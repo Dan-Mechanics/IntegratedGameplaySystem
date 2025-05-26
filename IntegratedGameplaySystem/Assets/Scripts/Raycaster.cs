@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace IntegratedGameplaySystem
@@ -8,31 +9,31 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Raycaster
     {
-        private readonly float range;
-        private readonly LayerMask mask;
-        private readonly QueryTriggerInteraction triggerInteraction;
-        private readonly List<string> tags;
+        private readonly RaycastData data;
 
-        public Raycaster(float range, LayerMask mask, QueryTriggerInteraction triggerInteraction = QueryTriggerInteraction.Ignore, List<string> tags = null)
+        public Raycaster(RaycastData data)
         {
-            if (range <= 0f)
-                range = 1f;
-            
-            this.range = range;
-            this.mask = mask;
-            this.triggerInteraction = triggerInteraction;
-            this.tags = tags ?? new List<string>() { "Default" };
+            this.data = data;
         }
 
         public Transform Raycast(Vector3 pos, Vector3 dir) 
         {
-            if (!Physics.Raycast(pos, dir, out RaycastHit hit, range, mask, triggerInteraction))
+            if (!Physics.Raycast(pos, dir, out RaycastHit hit, data.range, data.mask, data.triggerInteraction))
                 return null;
 
-            if (!tags.Contains(hit.transform.tag))
+            if (!data.tags.Contains(hit.transform.tag))
                 return null;
 
             return hit.transform;
+        }
+
+        [Serializable]
+        public struct RaycastData 
+        {
+            public float range;
+            public LayerMask mask;
+            public QueryTriggerInteraction triggerInteraction;
+            public List<string> tags;
         }
     }
 }

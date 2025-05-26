@@ -1,3 +1,9 @@
+project ethos:
+the code yaps with eachother via scriptable object inspector references.
+or via some other bullshit.
+i am currently consideringmaking interactor a speerate behaviour
+that has static references to the plots and such. lets try that on a different branch.
+
 next todos:
  . add more stuff
  . make raycasting work --> #SOLID !!.

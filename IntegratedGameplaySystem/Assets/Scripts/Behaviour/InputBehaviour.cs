@@ -12,18 +12,24 @@ namespace IntegratedGameplaySystem
     public class InputBehaviour : BaseBehaviour
     {
         public List<InputHandler.Binding> bindings;
-        private InputHandler inputHandler;
+        public InputHandler inputHandler;
 
         public override void Start()
         {
             base.Start();
+            inputHandler = new InputHandler();
 
             for (int i = 0; i < bindings.Count; i++)
             {
                 bindings[i].keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), bindings[i].key);
+                inputHandler.AddBinding(bindings[i]);
             }
+        }
 
-            inputHandler = new InputHandler(bindings);
+        public override void Update()
+        {
+            base.Update();
+            inputHandler.Update();
         }
 
         public InputHandler.InputEvents GetAction(PlayerAction playerAction) => inputHandler?.GetAction(playerAction);

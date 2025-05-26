@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// SINGLE MONOBEHAVIOUR HERE !!
+    /// </summary>
     public class Heart : MonoBehaviour
     {
         /// <summary>

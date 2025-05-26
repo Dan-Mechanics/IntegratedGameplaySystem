@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 namespace IntegratedGameplaySystem
 {
-    [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(TestingEase), fileName = "New " + nameof(TestingEase))]
-    public class TestingEase : BaseBehaviour
+    [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(TestingBehaviour), fileName = "New " + nameof(TestingBehaviour))]
+    public class TestingBehaviour : BaseBehaviour
     {
         public override void Update()
         {

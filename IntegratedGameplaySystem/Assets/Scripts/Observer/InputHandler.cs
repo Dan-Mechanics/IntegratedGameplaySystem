@@ -20,7 +20,7 @@ namespace IntegratedGameplaySystem
         {
             this.bindings = bindings ?? new List<Binding>();
             conversion = new Dictionary<PlayerAction, InputEvents>();
-            Debug.Log("HELLO!!");
+
             // Or we could generate them as they are needed, but this is a little smoother.
             for (int i = 0; i < Enum.GetValues(typeof(PlayerAction)).Length; i++)
             {
@@ -48,6 +48,8 @@ namespace IntegratedGameplaySystem
             }
 
             bindings.Add(binding);
+
+            Debug.Log($"added binding {binding.key}");
         }
 
         public void RemoveBinding(Binding binding) => bindings.Remove(binding);

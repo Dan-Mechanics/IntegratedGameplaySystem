@@ -102,5 +102,4 @@ namespace IntegratedGameplaySystem
             public Action<bool> OnChange;
         }
     }
-
 }

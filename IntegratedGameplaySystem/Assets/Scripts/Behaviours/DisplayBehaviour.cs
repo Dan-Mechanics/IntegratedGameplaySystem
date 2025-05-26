@@ -40,6 +40,7 @@ namespace IntegratedGameplaySystem
             trans.GetComponent<RectTransform>().anchoredPosition = pos;
         }
 
+        public void WriteText(string msg) => selectionText.text = msg;
         public void WriteText(int mess, int b) => selectionText.text = mess.ToString();    
         public void WriteItemSlot(PlantBlueprint blueprint) => WriteImage(blueprint.itemSprite);
         public void WriteImage(Sprite sprite) 

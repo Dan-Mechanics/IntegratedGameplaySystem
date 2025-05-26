@@ -21,6 +21,7 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private bool isWet = false; // for example.
         private MeshRenderer[] meshRenderers;
+        private SphereCollider sphereCollider;
 
         public Plant(PlantBlueprint blueprint, Transform transform)
         {
@@ -30,8 +31,9 @@ namespace IntegratedGameplaySystem
 
             // You could add some funny scale variation hereo n the meshrenderer.
 
+            sphereCollider = transform.gameObject.AddComponent<SphereCollider>();
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
-            RefreshVisuals();
+            Refresh();
         }
 
         public void Dispose()
@@ -52,26 +54,28 @@ namespace IntegratedGameplaySystem
 
             progression++;
             progression = Mathf.Clamp(progression, 0, blueprint.materials.Length - 1);
-            RefreshVisuals();
+            Refresh();
         }
 
-        private void RefreshVisuals() 
+        private void Refresh() 
         {
             for (int i = 0; i < meshRenderers.Length; i++)
             {
                 meshRenderers[i].material = blueprint.materials[progression];
             }
+
+            sphereCollider.enabled = progression >= blueprint.materials.Length - 1;
         }
 
         public void Interact()
         {
             // cant cut when full.
-            if (progression < blueprint.materials.Length - 1)
-                return;
+            /*if (progression < blueprint.materials.Length - 1)
+                return;*/
 
             progression = 0;
             OnEarnMoney?.Invoke(1 * (isWet ? 2 : 1));
-            RefreshVisuals();
+            Refresh();
         }
     }
 }

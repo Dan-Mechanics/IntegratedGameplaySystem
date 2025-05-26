@@ -10,6 +10,7 @@ namespace IntegratedGameplaySystem
         public const char SPLITTER = '_';
 
         public InputBehaviour inputBehaviour;
+        public DisplayBehaviour displayBehaviour;
         public PatchBehaviour[] patchBehaviours;
         public Raycaster.RaycastData data;
 
@@ -32,6 +33,13 @@ namespace IntegratedGameplaySystem
             inputBehaviour.GetAction(PlayerAction.PrimaryFire).OnDown += Interact;
         }
 
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            Hover();
+        }
+
         private void Interact() 
         {
             Transform hit = raycaster.Raycast(cam.position, cam.forward);
@@ -42,6 +50,16 @@ namespace IntegratedGameplaySystem
             string[] split = hit.name.Split(SPLITTER);
             Plant plant = plantConversions[split[0]].GetPlant(int.Parse(split[1]));
             plant.Interact();
+        }
+
+        private void Hover()
+        {
+            Transform hit = raycaster.Raycast(cam.position, cam.forward);
+
+            if (!hit)
+                return;
+
+            displayBehaviour.WriteText(hit.name);
         }
 
         public override void Disable()

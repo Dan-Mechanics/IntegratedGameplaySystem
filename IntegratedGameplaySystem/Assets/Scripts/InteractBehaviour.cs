@@ -9,11 +9,11 @@ namespace IntegratedGameplaySystem
     {
         public const char SPLITTER = '_';
 
-        public Raycaster.RaycastData data;
+        public InputBehaviour inputBehaviour;
         public PatchBehaviour[] patchBehaviours;
-        private readonly Dictionary<string, PatchBehaviour> plantConversions = new Dictionary<string, PatchBehaviour>();
+        public Raycaster.RaycastData data;
 
-        private InputHandler inputHandler; // need from somewhere.
+        private readonly Dictionary<string, PatchBehaviour> plantConversions = new();
         private Raycaster raycaster;
         private Transform cam;
 
@@ -28,7 +28,8 @@ namespace IntegratedGameplaySystem
 
             raycaster = new Raycaster(data);
             cam = Camera.main.transform;
-            //inputHandler.GetInputEvents(PlayerAction.PrimaryFire).OnDown += Interact;
+
+            inputBehaviour.GetInputEvents(PlayerAction.PrimaryFire).OnDown += Interact;
         }
 
         private void Interact() 
@@ -43,16 +44,10 @@ namespace IntegratedGameplaySystem
             plant.Interact();
         }
 
-        public void SetInputHandler(InputHandler inputHandler) 
-        {
-            this.inputHandler = inputHandler;
-            inputHandler.GetInputEvents(PlayerAction.PrimaryFire).OnDown += Interact;
-        }
-
         public override void Disable()
         {
             base.Disable();
-            inputHandler.GetInputEvents(PlayerAction.PrimaryFire).OnDown -= Interact;
+            inputBehaviour.GetInputEvents(PlayerAction.PrimaryFire).OnDown -= Interact;
         }
     }
 }

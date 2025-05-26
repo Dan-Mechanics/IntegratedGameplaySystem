@@ -8,18 +8,23 @@ namespace IntegratedGameplaySystem
     /// We could wrap a behaviour around this??
     /// Perhaps make this a service locatior? might be smart.
     /// </summary>
-    [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(InputHandler), fileName = "New " + nameof(InputHandler))]
-    public class InputHandler : BaseBehaviour
+    [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(InputBehaviour), fileName = "New " + nameof(InputBehaviour))]
+    public class InputBehaviour : BaseBehaviour
     {
         /// <summary>
         /// Ideally we load this in via config file.
         /// </summary>
         [SerializeField] private List<Binding> bindings = default;
-        private readonly Dictionary<PlayerAction, InputEvents> conversion = new Dictionary<PlayerAction, InputEvents>();
+        private readonly Dictionary<PlayerAction, InputEvents> conversion = new();
 
         public override void Start()
         {
             base.Start();
+
+            for (int i = 0; i < bindings.Count; i++)
+            {
+                bindings[i].keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), bindings[i].key);
+            }
 
             // Or we could generate them as they are needed, but this is a little smoother.
             for (int i = 0; i < Enum.GetValues(typeof(PlayerAction)).Length; i++)
@@ -45,7 +50,7 @@ namespace IntegratedGameplaySystem
         {
             for (int i = bindings.Count - 1; i >= 0; i--)
             {
-                if (bindings[i].key == key)
+                if (bindings[i].keyCode == key)
                     bindings.RemoveAt(i);
             }
         }
@@ -66,13 +71,13 @@ namespace IntegratedGameplaySystem
                 if (!conversion.ContainsKey(binding.playerAction))
                     continue;
 
-                if (Input.GetKeyDown(binding.key))
+                if (Input.GetKeyDown(binding.keyCode))
                 {
                     conversion[binding.playerAction].OnDown?.Invoke();
                     conversion[binding.playerAction].OnChange?.Invoke(true);
                 }
 
-                if (Input.GetKeyUp(binding.key)) 
+                if (Input.GetKeyUp(binding.keyCode)) 
                 {
                     conversion[binding.playerAction].OnUp?.Invoke();
                     conversion[binding.playerAction].OnChange?.Invoke(false);
@@ -85,14 +90,9 @@ namespace IntegratedGameplaySystem
         [Serializable]
         public class Binding
         {
-            public KeyCode key;
+            public string key;
             public PlayerAction playerAction;
-
-            public Binding(KeyCode key, PlayerAction playerAction)
-            {
-                this.key = key;
-                this.playerAction = playerAction;
-            }
+            [HideInInspector] public KeyCode keyCode;
         }
 
         public class InputEvents 

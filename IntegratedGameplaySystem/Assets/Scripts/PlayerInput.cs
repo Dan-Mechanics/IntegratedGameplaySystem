@@ -14,14 +14,14 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class PlayerInput
     {
-        private readonly InputHandler inputHandler;
+        private readonly InputBehaviour inputHandler;
 
         private bool forward;
         private bool back;
         private bool left;
         private bool right;
 
-        public PlayerInput(InputHandler inputHandler)
+        public PlayerInput(InputBehaviour inputHandler)
         {
             this.inputHandler = inputHandler;
 

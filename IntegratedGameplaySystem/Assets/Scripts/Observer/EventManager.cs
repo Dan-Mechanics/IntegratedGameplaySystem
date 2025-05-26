@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// Welcome to C# !!
         /// </summary>
-        private static readonly Dictionary<Occasion, Action> events = new Dictionary<Occasion, Action>();
+        private static readonly Dictionary<Occasion, Action> events = new();
 
         public static void RaiseEvent(Occasion occasian)
         {

@@ -2,6 +2,10 @@
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// I wanna use this for input and config loading.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public static class ServiceLocator<T>
     {
         public static T instance;

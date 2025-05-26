@@ -9,10 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fccd6c84046f3940815229386d8661f, type: 3}
+  m_Script: {fileID: 11500000, guid: 34b602a4d930523479815cd0ea1c4718, type: 3}
   m_Name: input
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
   bindings:
-  - key: 119
+  - key: W
+    keyCode: 0
     playerAction: 2
+  - key: S
+    keyCode: 0
+    playerAction: 3
+  - key: A
+    keyCode: 0
+    playerAction: 4
+  - key: D
+    keyCode: 0
+    playerAction: 5
+  - key: Mouse0
+    keyCode: 0
+    playerAction: 1

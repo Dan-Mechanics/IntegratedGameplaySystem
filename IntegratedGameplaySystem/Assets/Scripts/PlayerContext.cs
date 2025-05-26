@@ -16,15 +16,12 @@ namespace IntegratedGameplaySystem
         public float eyeHeight;
         public InteractBehaviour interactBehaviour;
         public Wallet wallet;
-        
-        //[Tooltip("Service locator to filesystem to load config.")]
-        //public List<InputHandler.Binding> bindings;
+        public InputBehaviour inputBehaviour;
 
-        public InputHandler inputHandler;
         private Rigidbody rb;
         private Transform eyes;
         private PlayerInput playerInput;
-        private CameraHandler handler;
+        private CameraHandler cameraHandler;
         private MouseMovement mouseMovement;
         private ForcesMovement movement;
 
@@ -36,27 +33,23 @@ namespace IntegratedGameplaySystem
             eyes = new GameObject("eyes").transform;
             eyes.SetParent(transform);
             eyes.localPosition = Vector3.up * eyeHeight;
+            playerInput = new PlayerInput(inputBehaviour);
 
-            //inputHandler = new InputHandler(bindings);
-            playerInput = new PlayerInput(inputHandler);
-
-            ForcesMovement.References references = new ForcesMovement.References(rb, eyes, transform);
-            movement = new ForcesMovement(grounded, settings, references);
+            ForcesMovement.References player = new ForcesMovement.References(rb, eyes, transform);
+            movement = new ForcesMovement(grounded, settings, player);
             mouseMovement = new MouseMovement(eyes, transform);
-            handler = new CameraHandler(Camera.main.transform);
-
-            interactBehaviour.SetInputHandler(inputHandler);
+            cameraHandler = new CameraHandler(Camera.main.transform);
         }
 
         public override void Update()
         {
             base.Update();
 
-            inputHandler.Update();
+            inputBehaviour.Update();
             mouseMovement.Update(playerInput.GetMouseInput());
 
-            handler.UpdateRot(eyes.rotation);
-            handler.Update();
+            cameraHandler.UpdateRot(eyes.rotation);
+            cameraHandler.Update();
         }
 
         public override void FixedUpdate()
@@ -68,7 +61,7 @@ namespace IntegratedGameplaySystem
         public override void LateFixedUpdate()
         {
             base.LateFixedUpdate();
-            handler.SetTick(movement.GetTick());
+            cameraHandler.SetTick(movement.GetTick());
         }
 
         public override void Disable()

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4775cc579baa1934e8db1e021ae1f05e, type: 3}
-  m_Name: player_context
+  m_Name: player
   m_EditorClassIdentifier: 
   prefab: {fileID: 4437024385587191265, guid: 6f7db1ccb32e6424eaaa8c2cca893bbc, type: 3}
   settings:
@@ -30,4 +30,4 @@ MonoBehaviour:
   interactBehaviour: {fileID: 11400000, guid: ce27dbfd7323f2044800a7c81c6ef824, type: 2}
   wallet:
     moneyToWin: 1000
-  inputHandler: {fileID: 11400000, guid: 124a903cd7cae74468aa2ad26e81ae6a, type: 2}
+  inputBehaviour: {fileID: 11400000, guid: 124a903cd7cae74468aa2ad26e81ae6a, type: 2}

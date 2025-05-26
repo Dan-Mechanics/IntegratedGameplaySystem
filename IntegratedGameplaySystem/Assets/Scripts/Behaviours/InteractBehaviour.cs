@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
     {
         public const char SPLITTER = '_';
 
-        public InputBehaviour inputBehaviour;
+        //public InputBehaviour inputBehaviour;
         public DisplayBehaviour displayBehaviour;
         public PatchBehaviour[] patchBehaviours;
         public Raycaster.RaycastData data;
@@ -30,7 +30,7 @@ namespace IntegratedGameplaySystem
             raycaster = new Raycaster(data);
             cam = Camera.main.transform;
 
-            inputBehaviour.GetAction(PlayerAction.PrimaryFire).OnDown += Interact;
+            ServiceLocator<IInputService>.Locate().GetAction(PlayerAction.PrimaryFire).OnDown += Interact;
         }
 
         public override void FixedUpdate()
@@ -65,7 +65,7 @@ namespace IntegratedGameplaySystem
         public override void Disable()
         {
             base.Disable();
-            inputBehaviour.GetAction(PlayerAction.PrimaryFire).OnDown -= Interact;
+            ServiceLocator<IInputService>.Locate().GetAction(PlayerAction.PrimaryFire).OnDown -= Interact;
         }
     }
 }

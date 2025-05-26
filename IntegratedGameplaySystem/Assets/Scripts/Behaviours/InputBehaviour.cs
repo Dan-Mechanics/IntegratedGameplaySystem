@@ -11,7 +11,7 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(InputBehaviour), fileName = "New " + nameof(InputBehaviour))]
     public class InputBehaviour : BaseBehaviour
     {
-        public List<InputHandler.Binding> bindings;
+        public List<Binding> bindings;
         public InputHandler inputHandler;
 
         /// <summary>
@@ -35,6 +35,6 @@ namespace IntegratedGameplaySystem
             inputHandler.Update();
         }
 
-        public InputHandler.InputEvents GetAction(PlayerAction playerAction) => inputHandler?.GetAction(playerAction);
+        public InputEvents GetAction(PlayerAction playerAction) => inputHandler?.GetAction(playerAction);
     }
 }

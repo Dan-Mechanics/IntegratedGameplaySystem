@@ -1,3 +1,8 @@
+for tomorrow:
+finish the service locator for input and see if it works,
+then, commit back to main and make the whole ass project not HAVE to use scritpable objects
+use cool interfaces make more solid, use resources.load stuffs.
+
 project ethos:
 the code yaps with eachother via scriptable object inspector references.
 or via some other bullshit.

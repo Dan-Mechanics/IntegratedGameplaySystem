@@ -8,7 +8,7 @@ namespace IntegratedGameplaySystem
     /// We could wrap a behaviour around this??
     /// Perhaps make this a service locatior? might be smart.
     /// </summary>
-    public class InputHandler
+    public class InputHandler : IInputService
     {
         /// <summary>
         /// Ideally we load this in via config file.
@@ -95,7 +95,7 @@ namespace IntegratedGameplaySystem
 
         public InputEvents GetAction(PlayerAction playerAction) => conversion[playerAction];
 
-        [Serializable]
+        /*[Serializable]
         public class Binding
         {
             public string key;
@@ -114,6 +114,6 @@ namespace IntegratedGameplaySystem
             public Action OnDown;
             public Action OnUp;
             public Action<bool> OnChange;
-        }
+        }*/
     }
 }

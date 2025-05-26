@@ -11,5 +11,7 @@ namespace IntegratedGameplaySystem
         {
             return Random.Range(0, x + 1) == 0;
         }
+
+        // load by type or something here. get prefabs.
     }
 }

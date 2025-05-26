@@ -22,8 +22,20 @@ namespace IntegratedGameplaySystem
         
         private void Start()
         {
-            // ServiceLocator<IInputService>.Provide(new InputHandler());
-            
+            ServiceLocator<IInputService>.Provide(new InputHandler());
+
+            List<System.Object> list = new List<object>()
+            {
+                new Plant(null, null)
+            };
+
+            // this might be really cool.
+            /*for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i] is IInteractable interactable)
+                    subscribers.Add(interactable);
+            }*/
+
             Setup();
 
             for (int i = 0; i < scene.Count; i++)

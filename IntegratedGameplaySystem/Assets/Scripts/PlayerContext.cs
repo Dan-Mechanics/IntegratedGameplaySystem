@@ -16,10 +16,11 @@ namespace IntegratedGameplaySystem
         public float eyeHeight;
         public InteractBehaviour interactBehaviour;
         public Wallet wallet;
-        [Tooltip("Service locator to filesystem to load config.")]
-        public List<InputHandler.Binding> bindings;
+        
+        //[Tooltip("Service locator to filesystem to load config.")]
+        //public List<InputHandler.Binding> bindings;
 
-        private InputHandler inputHandler;
+        public InputHandler inputHandler;
         private Rigidbody rb;
         private Transform eyes;
         private PlayerInput playerInput;
@@ -36,7 +37,7 @@ namespace IntegratedGameplaySystem
             eyes.SetParent(transform);
             eyes.localPosition = Vector3.up * eyeHeight;
 
-            inputHandler = new InputHandler(bindings);
+            //inputHandler = new InputHandler(bindings);
             playerInput = new PlayerInput(inputHandler);
 
             ForcesMovement.References references = new ForcesMovement.References(rb, eyes, transform);

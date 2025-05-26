@@ -142,6 +142,14 @@ PrefabInstance:
       propertyPath: priorityBehaviours.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: ce27dbfd7323f2044800a7c81c6ef824, type: 2}
+    - target: {fileID: 8097411516312560829, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
+      propertyPath: priorityBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 53a0fdaacbfedfe4c892729d2d9043b3, type: 2}
+    - target: {fileID: 8097411516312560829, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
+      propertyPath: priorityBehaviours.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2d51157a9219b6044a5e30e911771341, type: 2}
     - target: {fileID: 8097411516312560830, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

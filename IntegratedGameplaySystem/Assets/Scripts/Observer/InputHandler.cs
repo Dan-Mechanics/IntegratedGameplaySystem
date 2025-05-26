@@ -8,18 +8,18 @@ namespace IntegratedGameplaySystem
     /// We could wrap a behaviour around this??
     /// Perhaps make this a service locatior? might be smart.
     /// </summary>
-    public class InputHandler
+    [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(InputHandler), fileName = "New " + nameof(InputHandler))]
+    public class InputHandler : BaseBehaviour
     {
         /// <summary>
         /// Ideally we load this in via config file.
         /// </summary>
-        private readonly List<Binding> bindings;
-        private readonly Dictionary<PlayerAction, InputEvents> conversion;
+        [SerializeField] private List<Binding> bindings = default;
+        private readonly Dictionary<PlayerAction, InputEvents> conversion = new Dictionary<PlayerAction, InputEvents>();
 
-        public InputHandler(List<Binding> bindings = null)
+        public override void Start()
         {
-            this.bindings = bindings ?? new List<Binding>();
-            conversion = new Dictionary<PlayerAction, InputEvents>();
+            base.Start();
 
             // Or we could generate them as they are needed, but this is a little smoother.
             for (int i = 0; i < Enum.GetValues(typeof(PlayerAction)).Length; i++)
@@ -30,17 +30,6 @@ namespace IntegratedGameplaySystem
 
         public void AddBinding(Binding binding) 
         {
-            // This is where you can define the rules for which bindings are allowed.
-
-            // Right now: A --> PrimaryFire AND A --> SecondaryFire
-            // but not A AND B --> PrimaryFire.
-
-            // Or we can have it that only one key is allowed to do one thing
-            // but then multible keys can point to the same action still.
-
-            // Or we have it that one key does one thing and an action can only have
-            // one key associated with it, but what's the fun in that ?
-
             if (bindings.Find(x => x.playerAction == binding.playerAction) != null)
             {
                 Debug.LogWarning("if (bindings.Find(x => x.playerAction == binding.playerAction) != null)");
@@ -70,7 +59,7 @@ namespace IntegratedGameplaySystem
             }
         }
 
-        public void Update()
+        public override void Update()
         {
             foreach (var binding in bindings)
             {

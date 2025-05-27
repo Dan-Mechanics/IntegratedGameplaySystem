@@ -7,20 +7,12 @@ namespace IntegratedGameplaySystem
     {
         private readonly Dictionary<GameObject, List<object>> world = new();
 
-        public List<object> GetObjects(GameObject go) 
-        {
-            if (!world.ContainsKey(go))
-                return null;
-
-            return world[go];
-        }
-
         public T GetComponent<T>(GameObject go) 
         {
-            if (GetObjects(go) is not List<object> objects)
+            if (!world.ContainsKey(go))
                 return default;
 
-            foreach (object obj in objects)
+            foreach (object obj in world[go])
             {
                 if (obj is T t)
                     return t;
@@ -28,10 +20,5 @@ namespace IntegratedGameplaySystem
 
             return default;
         }
-    }
-
-    public interface IWorldService 
-    {
-        T GetComponent<T>(GameObject go);
     }
 }

@@ -10,6 +10,5 @@
         Right = 5,
         Reload = 6,
         Escape = 7
-            // Etc, etc ...
     }
 }

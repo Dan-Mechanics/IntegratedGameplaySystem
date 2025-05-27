@@ -1,3 +1,17 @@
+ok, i would like to move my project away from scriptable objects lol.
+
+my vision, as described before:
+
+if we want to add something new to the game we do that by making a class, just
+a simple class it may not inhertiet from anything. next we define the interfaces
+it has, and then the heart script ( not yet mono ?? ) then is like yo we have
+our scene prefabs which dont have associated behaviour ( yet ) 
+i basically ideally want the single monobehavuour to be called the gamecontext or something,
+kindal ike that. 
+
+anyway, that is called heart. 
+
+
 we could have a system wherbey we have dictionary whereby the gamboect is the key
 and then we have an array of behaviours.
 and then we have some replacement for get componenet or something.

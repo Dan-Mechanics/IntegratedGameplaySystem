@@ -19,10 +19,28 @@ namespace IntegratedGameplaySystem
 
         private readonly List<BaseBehaviour> subscribers = new();
         private float timer;
-        
+        private readonly List<IUpdatable> updatables = new();
+
         private void Start()
         {
             Setup();
+
+            List<IStartable> startables = new();
+
+            List<object> scripts = new List<object>()
+            {
+                new Interactor(),
+
+            };
+
+            foreach (object obj in scripts)
+            {
+                if (obj is IStartable startable)
+                    startables.Add(startable);
+
+                if (obj is IUpdatable updatable)
+                    updatables.Add(updatable);
+            }
 
             GameWorld gameWorld = new GameWorld();
 

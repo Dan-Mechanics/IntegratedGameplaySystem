@@ -10,8 +10,8 @@ namespace IntegratedGameplaySystem
         {
             base.Start();
 
-            ServiceLocator<IInputService>.Locate().GetAction(PlayerAction.Reload).OnDown += Reload;
-            ServiceLocator<IInputService>.Locate().GetAction(PlayerAction.Escape).OnDown += Quit;
+            ServiceLocator<IInputService>.Locate().GetInputSource(PlayerAction.Reload).OnDown += Reload;
+            ServiceLocator<IInputService>.Locate().GetInputSource(PlayerAction.Escape).OnDown += Quit;
         }
 
         private void Reload() 
@@ -28,8 +28,8 @@ namespace IntegratedGameplaySystem
         {
             base.Disable();
 
-            ServiceLocator<IInputService>.Locate().GetAction(PlayerAction.Reload).OnDown -= Reload;
-            ServiceLocator<IInputService>.Locate().GetAction(PlayerAction.Escape).OnDown -= Quit;
+            ServiceLocator<IInputService>.Locate().GetInputSource(PlayerAction.Reload).OnDown -= Reload;
+            ServiceLocator<IInputService>.Locate().GetInputSource(PlayerAction.Escape).OnDown -= Quit;
         }
     }
 }

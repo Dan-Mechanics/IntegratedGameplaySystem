@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// Basically does raycasts. Make component instead??
-    /// </summary>
     public class Raycaster
     {
         private readonly RaycastData data;
@@ -25,15 +20,6 @@ namespace IntegratedGameplaySystem
                 return null;
 
             return hit.transform;
-        }
-
-        [Serializable]
-        public struct RaycastData 
-        {
-            public float range;
-            public LayerMask mask;
-            public QueryTriggerInteraction triggerInteraction;
-            public List<string> tags;
         }
     }
 }

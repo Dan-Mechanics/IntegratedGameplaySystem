@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
     /// 
     /// TEMP FILE !!
     /// </summary>
-    public class PlayerInput
+    public class PlayerInput : IMouseInput // so now we can give all the shit this.
     {
         private readonly IInputService inputService;
 
@@ -25,10 +25,10 @@ namespace IntegratedGameplaySystem
         {
             inputService = ServiceLocator<IInputService>.Locate();
 
-            inputService.GetAction(PlayerAction.Forward).OnChange += OnForward;
-            inputService.GetAction(PlayerAction.Backward).OnChange += OnBack;
-            inputService.GetAction(PlayerAction.Left).OnChange += OnLeft;
-            inputService.GetAction(PlayerAction.Right).OnChange += OnRight;
+            inputService.GetInputSource(PlayerAction.Forward).OnChange += OnForward;
+            inputService.GetInputSource(PlayerAction.Backward).OnChange += OnBack;
+            inputService.GetInputSource(PlayerAction.Left).OnChange += OnLeft;
+            inputService.GetInputSource(PlayerAction.Right).OnChange += OnRight;
         }
 
         private void OnForward(bool value) => forward = value;
@@ -69,10 +69,10 @@ namespace IntegratedGameplaySystem
 
         public void Dispose() 
         {
-            inputService.GetAction(PlayerAction.Forward).OnChange -= OnForward;
-            inputService.GetAction(PlayerAction.Backward).OnChange -= OnBack;
-            inputService.GetAction(PlayerAction.Left).OnChange -= OnLeft;
-            inputService.GetAction(PlayerAction.Right).OnChange -= OnRight;
+            inputService.GetInputSource(PlayerAction.Forward).OnChange -= OnForward;
+            inputService.GetInputSource(PlayerAction.Backward).OnChange -= OnBack;
+            inputService.GetInputSource(PlayerAction.Left).OnChange -= OnLeft;
+            inputService.GetInputSource(PlayerAction.Right).OnChange -= OnRight;
         }
     }
 }

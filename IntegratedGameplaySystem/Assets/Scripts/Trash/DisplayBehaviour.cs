@@ -1,6 +1,6 @@
-﻿using TMPro;
+﻿//using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 
 namespace IntegratedGameplaySystem
 {
@@ -13,7 +13,7 @@ namespace IntegratedGameplaySystem
         public PlayerContext playerContext;
         // basically we create some bullshit.
 
-        private Image itemSlot;  
+        /*private Image itemSlot;  
         private TMP_Text selectionText;
 
         public override void Start()
@@ -30,7 +30,7 @@ namespace IntegratedGameplaySystem
 
             playerContext.wallet.OnMoneyChanged += WriteText;
             //playerContext.
-        }
+        }*/
 
         private void Place(Transform trans, Vector3 pos)
         {
@@ -40,12 +40,18 @@ namespace IntegratedGameplaySystem
             trans.GetComponent<RectTransform>().anchoredPosition = pos;
         }
 
-        public void WriteText(string msg) => selectionText.text = msg;
+        public void WriteText(string msg) { }
+        public void WriteText(int mess, int b) { }
+        public void WriteItemSlot(PlantBlueprint blueprint) => WriteImage(blueprint.itemSprite);
+        public void WriteImage(Sprite sprite)
+        { }
+
+        /*public void WriteText(string msg) => selectionText.text = msg;
         public void WriteText(int mess, int b) => selectionText.text = mess.ToString();    
         public void WriteItemSlot(PlantBlueprint blueprint) => WriteImage(blueprint.itemSprite);
         public void WriteImage(Sprite sprite) 
         {
             itemSlot.sprite = sprite == null ? emptySprite : sprite;
-        }
+        }*/
     }
 }

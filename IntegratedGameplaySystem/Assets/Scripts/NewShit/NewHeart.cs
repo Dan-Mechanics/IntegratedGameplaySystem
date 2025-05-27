@@ -7,7 +7,7 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// because we want to favor compositon over inhertience.
     /// </summary>
-    public class Heart : MonoBehaviour
+    public class NewHeart : MonoBehaviour
     {
         /// <summary>
         /// YOu could outsource this but why would you ??

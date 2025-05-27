@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
 
 namespace IntegratedGameplaySystem
 {
-    [Serializable]
     public class Binding
     {
-        public string key;
         public PlayerAction playerAction;
-        [HideInInspector] public KeyCode keyCode;
+        public KeyCode key;
 
-        public Binding(KeyCode keyCode, PlayerAction playerAction)
+        public Binding(PlayerAction playerAction, KeyCode keyCode)
         {
-            this.keyCode = keyCode;
             this.playerAction = playerAction;
+            this.key = keyCode;
         }
     }
 }

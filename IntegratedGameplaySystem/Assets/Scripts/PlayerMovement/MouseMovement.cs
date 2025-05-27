@@ -2,6 +2,15 @@
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// NEED: 
+    /// sens data
+    /// cam
+    /// transform
+    /// IPlayerInput basically.
+    /// 
+    /// and then we just update and done.
+    /// </summary>
     public class MouseMovement 
     {
         private const float MIN_CAM_ANGLE = -90f;

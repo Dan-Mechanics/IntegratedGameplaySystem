@@ -11,39 +11,43 @@ namespace IntegratedGameplaySystem
     /// that might also be fun #noburnout divas.
     /// 
     /// TEMP FILE !!
+    /// 
+    /// you need to make this work for the new shit.
+    /// 
+    /// and then we add another alyer of abstraction onto this AGIAN !!! 
     /// </summary>
-    public class PlayerInput : IMouseInput // so now we can give all the shit this.
+    public class PlayerInput
     {
-        private readonly IInputService inputService;
-
-        private bool forward;
-        private bool back;
-        private bool left;
-        private bool right;
+        //private readonly IInputService inputService;
+        
+        private readonly InputSource forward;
+        private readonly InputSource back;
+        private readonly InputSource left;
+        private readonly InputSource right;
 
         public PlayerInput()
         {
-            inputService = ServiceLocator<IInputService>.Locate();
+            IInputService inputService = ServiceLocator<IInputService>.Locate();
 
-            inputService.GetInputSource(PlayerAction.Forward).OnChange += OnForward;
-            inputService.GetInputSource(PlayerAction.Backward).OnChange += OnBack;
-            inputService.GetInputSource(PlayerAction.Left).OnChange += OnLeft;
-            inputService.GetInputSource(PlayerAction.Right).OnChange += OnRight;
+            forward = inputService.GetInputSource(PlayerAction.Forward);
+            back = inputService.GetInputSource(PlayerAction.Backward);
+            left = inputService.GetInputSource(PlayerAction.Left);
+            right = inputService.GetInputSource(PlayerAction.Right);
         }
 
-        private void OnForward(bool value) => forward = value;
+        /*private void OnForward(bool value) => forward = value;
         private void OnBack(bool value) => back = value;
         private void OnLeft(bool value) => left = value;
-        private void OnRight(bool value) => right = value;
+        private void OnRight(bool value) => right = value;*/
 
         public float Vertical() 
         {
             float z = 0f;
 
-            if (forward)
+            if (forward.IsPressed)
                 z++;
 
-            if (back)
+            if (back.IsPressed)
                 z--;
 
             return z;
@@ -53,10 +57,10 @@ namespace IntegratedGameplaySystem
         {
             float x = 0f;
 
-            if (right)
+            if (right.IsPressed)
                 x++;
 
-            if (left)
+            if (left.IsPressed)
                 x--;
 
             return x;
@@ -67,12 +71,12 @@ namespace IntegratedGameplaySystem
             return new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         }
 
-        public void Dispose() 
+        /*public void Dispose() 
         {
             inputService.GetInputSource(PlayerAction.Forward).OnChange -= OnForward;
             inputService.GetInputSource(PlayerAction.Backward).OnChange -= OnBack;
             inputService.GetInputSource(PlayerAction.Left).OnChange -= OnLeft;
             inputService.GetInputSource(PlayerAction.Right).OnChange -= OnRight;
-        }
+        }*/
     }
 }

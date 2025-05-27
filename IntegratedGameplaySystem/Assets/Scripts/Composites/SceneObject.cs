@@ -5,21 +5,17 @@ using System.Collections.Generic;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// because we want to favor compositon over inhertience.
+    /// Because we favor compositon over inhertience.
     /// </summary>
     public class SceneObject
     {
-        public GameObject go;
+        public GameObject gameObject;
         public Transform trans;
 
         public SceneObject(string prefabName)
         {
-            GameObject prefab = Resources.Load<GameObject>($"Prefabs/{prefabName}");
-
-            // add debug here.
-
-            go = Object.Instantiate(prefab, prefab.transform.position, prefab.transform.rotation);
-            trans = go.transform;
+            gameObject = Utils.SpawnPrefab(Utils.LoadPrefab(prefabName));
+            trans = gameObject.transform;
         }
     }
 }

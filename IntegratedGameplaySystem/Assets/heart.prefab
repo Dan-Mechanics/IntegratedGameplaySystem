@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8097411516312560830}
-  - component: {fileID: 8097411516312560829}
+  - component: {fileID: 7194501001463481828}
   m_Layer: 0
   m_Name: heart
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8097411516312560829
+--- !u!114 &7194501001463481828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,17 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8097411516312560828}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da7425478963aa4e9c3c96d28dde1ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f8a8891766c414438651318a6001f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locked: 1
-  scene:
-  - {fileID: 11400000, guid: 124a903cd7cae74468aa2ad26e81ae6a, type: 2}
-  - {fileID: 11400000, guid: 2d51157a9219b6044a5e30e911771341, type: 2}
-  - {fileID: 11400000, guid: 53a0fdaacbfedfe4c892729d2d9043b3, type: 2}
-  - {fileID: 11400000, guid: 590d39a4560737640bdf40aca5758b6f, type: 2}
-  - {fileID: 11400000, guid: c45c0f4c52125bd4197c597a39780a9d, type: 2}
-  - {fileID: 11400000, guid: 69182449813a6454bbc3a87cb2f6c7c0, type: 2}
-  - {fileID: 11400000, guid: f412b2478e013c943850e4f5612a9e6f, type: 2}
-  - {fileID: 11400000, guid: ce27dbfd7323f2044800a7c81c6ef824, type: 2}
-  - {fileID: 11400000, guid: 8a7b6259e2863f044a8c0f02f0a717c8, type: 2}
+  gameContext:
+    sceneSetup: {fileID: 0}
+    scenePrefabs: []

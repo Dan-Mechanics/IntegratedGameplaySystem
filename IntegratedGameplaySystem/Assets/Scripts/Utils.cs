@@ -14,9 +14,11 @@ namespace IntegratedGameplaySystem
 
         public static GameObject SpawnPrefab(GameObject prefab) 
         {
-            return Object.Instantiate(prefab, prefab.transform.position, prefab.transform.rotation);
+            GameObject go = Object.Instantiate(prefab, prefab.transform.position, prefab.transform.rotation);
+            go.name = prefab.name;
+            return go;
         }
-
+        
         public static GameObject LoadPrefab(string name) 
         {
             GameObject prefab = Resources.Load<GameObject>($"Prefabs/{name}");

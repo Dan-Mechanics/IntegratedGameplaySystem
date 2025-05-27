@@ -1,10 +1,13 @@
 ﻿namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// What's the occasion ?
+    /// </summary>
     public enum Occasion
     {
-        OPEN_GAME = 0,
-        TICK = 1,
+        CLOSE_GAME = 1,
         GAME_OVER = 2,
-        CLOSE_GAME = 3
+        TICK = 3,
+        EARN_MONEY = 4
     }
 }

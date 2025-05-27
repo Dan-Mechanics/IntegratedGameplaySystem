@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// Only use this for shit that needs it basically.
+    /// 
+    /// keep to: YAGNI here.
+    /// </summary>
     public class GameWorld : IWorldService
     {
         private readonly Dictionary<GameObject, List<object>> world = new();
@@ -20,5 +25,15 @@ namespace IntegratedGameplaySystem
 
             return default;
         }
+
+        public void Add(GameObject go) 
+        {
+            if (world.ContainsKey(go))
+                return;
+
+            world.Add(go, new List<object>());
+        }
+
+        public void Remove(GameObject go) { world.Remove(go); }
     }
 }

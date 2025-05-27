@@ -2,8 +2,10 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlayerContext), fileName = "New " + nameof(PlayerContext))]
-    public class PlayerContext : BaseBehaviour
+    /// <summary>
+    /// I want the context classes to load shit from memory basically.
+    /// </summary>
+    public class PlayerContext : IStartable, IUpdatable
     {
         public ForcesMovement.Settings settings;
         public ForcesMovement.GroundedConfiguration grounded;
@@ -17,48 +19,45 @@ namespace IntegratedGameplaySystem
         private MouseMovement mouseMovement;
         private ForcesMovement movement;
 
-        public override void Start()
+        private readonly SceneObject obj;
+
+        public PlayerContext()
         {
-            base.Start();
-            rb = transform.GetComponent<Rigidbody>();
+            obj = new SceneObject("player");
+        }
+
+        public void Start()
+        {
+            rb = obj.trans.GetComponent<Rigidbody>();
 
             eyes = new GameObject("eyes").transform;
-            eyes.SetParent(transform);
+            eyes.SetParent(obj.trans);
             eyes.localPosition = Vector3.up * eyeHeight;
+
             playerInput = new PlayerInput();
 
-            ForcesMovement.References player = new ForcesMovement.References(rb, eyes, transform);
+            ForcesMovement.References player = new ForcesMovement.References(rb, eyes, obj.trans);
             movement = new ForcesMovement(grounded, settings, player);
-            mouseMovement = new MouseMovement(eyes, transform);
+            mouseMovement = new MouseMovement(eyes, obj.trans);
             cameraHandler = new CameraHandler(Camera.main.transform);
         }
 
-        public override void Update()
+        public void Update()
         {
-            base.Update();
-
             mouseMovement.Update(playerInput.GetMouseInput());
 
             cameraHandler.UpdateRot(eyes.rotation);
             cameraHandler.Update();
         }
 
-        public override void FixedUpdate()
+        public void FixedUpdate()
         {
-            base.FixedUpdate();
             movement.DoMovement(playerInput.Vertical(), playerInput.Horizontal());
         }
 
-        public override void LateFixedUpdate()
+        public void LateFixedUpdate()
         {
-            base.LateFixedUpdate();
             cameraHandler.SetTick(movement.GetTick());
-        }
-
-        public override void Disable()
-        {
-            base.Disable();
-            playerInput.Dispose();
         }
     }
 }

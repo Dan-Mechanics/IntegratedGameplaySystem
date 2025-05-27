@@ -13,7 +13,6 @@ namespace IntegratedGameplaySystem
     {
         private readonly List<Binding> bindings = new();
         private readonly Dictionary<PlayerAction, InputSource> conversion;
-
         private readonly IBindingRule[] rules;
 
         public InputHandler(IBindingRule[] rules)
@@ -29,7 +28,6 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// It would be cool if these rules worked with a func<> type beat.
         /// </summary>
-        /// <param name="binding"></param>
         public void AddBinding(Binding binding)
         {
             foreach (IBindingRule rule in rules)
@@ -44,21 +42,15 @@ namespace IntegratedGameplaySystem
 
         public void RemoveBinding(Binding binding) => bindings.Remove(binding);
 
-        /// <summary>
-        /// use linq.
-        /// </summary>
         public void RemoveByKey(KeyCode key)
         {
             for (int i = bindings.Count - 1; i >= 0; i--)
             {
-                if (bindings[i].keyCode == key)
+                if (bindings[i].key == key)
                     bindings.RemoveAt(i);
             }
         }
 
-        /// <summary>
-        /// use linq.
-        /// </summary>
         public void RemoveByPlayerAction(PlayerAction playerAction)
         {
             for (int i = bindings.Count - 1; i >= 0; i--)
@@ -75,7 +67,7 @@ namespace IntegratedGameplaySystem
                 if (!conversion.ContainsKey(binding.playerAction))
                     continue;
 
-                conversion[binding.playerAction].SetPressed(Input.GetKey(binding.keyCode));
+                conversion[binding.playerAction].SetPressed(Input.GetKey(binding.key));
             }
         }
 
@@ -93,26 +85,26 @@ namespace IntegratedGameplaySystem
 
             // Or we have it that one key does one thing and an action can only have
             // one key associated with it, but what's the fun in that ?
-            bool AllowBinding(List<Binding> pool, Binding binding);
+            bool AllowBinding(List<Binding> bindings, Binding binding);
         }
 
         public class DisallowMultiblePlayerAction : IBindingRule 
         {
-            public bool AllowBinding(List<Binding> pool, Binding binding)
+            public bool AllowBinding(List<Binding> bindings, Binding binding)
             {
                 // we dont find it.
                 return binding.playerAction == PlayerAction.None ||
-                    pool.Find(x => x.playerAction == binding.playerAction) == null;
+                    bindings.Find(x => x.playerAction == binding.playerAction) == null;
             }
         }
 
         public class DisallowMultibleKeyCode : IBindingRule
         {
-            public bool AllowBinding(List<Binding> pool, Binding binding)
+            public bool AllowBinding(List<Binding> bindings, Binding binding)
             {
                 // we dont find it.
-                return binding.keyCode == KeyCode.None || 
-                    pool.Find(x => x.keyCode == binding.keyCode) == null;
+                return binding.key == KeyCode.None || 
+                    bindings.Find(x => x.key == binding.key) == null;
             }
         }
     }

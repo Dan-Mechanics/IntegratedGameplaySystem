@@ -10,6 +10,10 @@ namespace IntegratedGameplaySystem
     public static class ServiceLocator<T>
     {
         public static T instance;
+
+        /// <summary>
+        /// Please cache. Or dont.
+        /// </summary>
         public static T Locate()
         {
             if (instance == null)

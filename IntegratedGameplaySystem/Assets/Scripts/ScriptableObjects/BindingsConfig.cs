@@ -1,38 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace IntegratedGameplaySystem
 {
-    public class BindingsConfig : IStartable
+    /// <summary>
+    /// Temp solution to TXT file vibes.
+    /// </summary>
+    [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(BindingsConfig), fileName = "New " + nameof(BindingsConfig))]
+    public class BindingsConfig : ScriptableObject
     {
-        /// <summary>
-        /// CONFIG!!
-        /// </summary>
         public List<Binding> bindings;
 
-
-
-        private InputHandler inputHandler;
-
-        public BindingsConfig(string path)
+        public List<Binding> GetBindings() 
         {
-        }
+            bindings.ForEach(x => x.keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), x.key));
 
-        /// <summary>
-        /// https://stackoverflow.com/questions/16100/convert-a-string-to-an-enum-in-c-sharp
-        /// </summary>
-        public void Start()
-        {
-            //inputHandler = new InputHandler();
-
-            /*for (int i = 0; i < bindings.Count; i++)
-            {
-                bindings[i].key = (KeyCode)Enum.Parse(typeof(KeyCode), bindings[i].key);
-                inputHandler.AddBinding(bindings[i]);
-            }*/
-
-            ServiceLocator<IInputService>.Provide(inputHandler);
+            return bindings;
         }
     }
 }

@@ -8,12 +8,17 @@ namespace IntegratedGameplaySystem
     {
         public SceneSetup sceneSetup;
         public List<GameObject> scenePrefabs;
+        public AssetScratchpad assetScratchpad;
 
-        private float timer;
+        /// <summary>
+        /// what happens when shit needs to be deleted? this breaks basically.
+        /// </summary>
         private readonly List<IUpdatable> updatables = new();
         private readonly List<IFixedUpdatable> fixedUpdatables = new();
         private readonly List<ILateFixedUpdatable> lateFixedUpdatables = new();
         private readonly List<IDisposable> disposables = new();
+
+        private float timer;
 
         /// <summary>
         /// You could feed the components in here but i think it makes sense here.
@@ -21,24 +26,37 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Start()
         {
-            List<IStartable> startables = new();
+            assetScratchpad.Start();
+            ServiceLocator<IAssetService>.Provide(assetScratchpad);
 
-            // welcome to c# !!
-            InputHandler inputHandler = new InputHandler(new InputHandler.IBindingRule[] { new InputHandler.DisallowMultiblePlayerAction() });
+            scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
 
+            // INPUT ==========
+            IBindingRule[] rules = { new DisallowMultiblePlayerAction() };
+            InputHandler inputHandler = new InputHandler(rules);
+            List<Binding> bindings = assetScratchpad.FindAsset<BindingsConfig>("config").GetBindings();
+
+            //return;
+
+            bindings.ForEach(x => inputHandler.AddBinding(x));
+            
+            // We provide the InputHandler after we create it.
+            // I think that is correct but I am not certain.
             ServiceLocator<IInputService>.Provide(inputHandler);
             ServiceLocator<IWorldService>.Provide(new GameWorld());
 
-            // the order of this is importnat.
+            // The order of this is important.
             List<object> components = new List<object>()
             {
                 sceneSetup,
                 inputHandler,
                 new Interactor(),
                 new EasyDebug(),
-                new PlayerContext()
+                //new PlayerContext()
+                // gotta add plants.
             };
 
+            List<IStartable> startables = new();
             foreach (object component in components)
             {
                 if (component is IStartable startable)

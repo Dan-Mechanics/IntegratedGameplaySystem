@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8097411516312560828, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: m_Name
-      value: heart
+      value: single_monobehaviour
       objectReference: {fileID: 0}
     - target: {fileID: 8097411516312560830, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: m_LocalPosition.x

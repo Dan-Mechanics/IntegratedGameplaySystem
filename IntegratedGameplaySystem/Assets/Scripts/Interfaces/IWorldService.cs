@@ -7,7 +7,7 @@ namespace IntegratedGameplaySystem
     public interface IWorldService
     {
         T GetComponent<T>(GameObject go);
-        void Add(GameObject go);
+        void Add(GameObject go, object obj);
         void Remove(GameObject go);
     }
 }

@@ -19,15 +19,28 @@ namespace IntegratedGameplaySystem
             return go;
         }
         
+        [System.Obsolete]
         public static GameObject LoadPrefab(string name) 
         {
             GameObject prefab = Resources.Load<GameObject>($"Prefabs/{name}");
 
             // ????
-            if (!prefab)
+            if (prefab == null)
                 throw new System.Exception("Can't find that prefab!");
 
             return prefab;
+        }
+
+        [System.Obsolete]
+        public static T LoadData<T>(string name) where T : Object
+        {
+            T data = Resources.Load<T>($"Data/{name}");
+
+            // ????
+            if (data == null)
+                throw new System.Exception("Can't find that data!");
+
+            return data;
         }
     }
 }

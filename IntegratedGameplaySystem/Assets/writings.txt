@@ -1,3 +1,10 @@
+idea: instead of using resources.load, use like a blackboard technique 
+with unity serialized fields. so we basically pass a list of shit in via inspector
+and then we say pipe thati nto a dictionary and then make the names correct
+and then dumb that shit into a service locator called something like
+IAssetService, and then we have AssetScratchpad. wherbey the key is the name and such.
+and then we just need to be really fricking disciplined aobut the naming of the stuff in the game.
+
 ok, i would like to move my project away from scriptable objects lol.
 
 my vision, as described before:

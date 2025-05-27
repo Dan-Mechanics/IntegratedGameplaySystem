@@ -11,15 +11,15 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Interactor : IStartable, IDisposable
     {
-        private Raycaster raycaster;
-        private Transform cam;
-        private IInputService inputService;
-        private IWorldService worldService;
-
+        private readonly Raycaster raycaster;
+        private readonly Transform cam;
+        private readonly IInputService inputService;
+        private readonly IWorldService worldService;
+        
         public Interactor()
         {
             // or something idk.
-            raycaster = new Raycaster(Resources.Load<RaycastData>("Data/interactor_raycast"));
+            //raycaster = new Raycaster(Utils.LoadData<RaycastData>("interactor_raycast"));
             cam = Camera.main.transform;
 
             inputService = ServiceLocator<IInputService>.Locate();

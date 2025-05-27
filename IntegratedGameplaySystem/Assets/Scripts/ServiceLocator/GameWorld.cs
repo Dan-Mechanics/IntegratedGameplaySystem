@@ -10,28 +10,25 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class GameWorld : IWorldService
     {
-        private readonly Dictionary<GameObject, List<object>> world = new();
+        private readonly Dictionary<GameObject, object> world = new();
 
         public T GetComponent<T>(GameObject go) 
         {
             if (!world.ContainsKey(go))
                 return default;
 
-            foreach (object obj in world[go])
-            {
-                if (obj is T t)
-                    return t;
-            }
+            if (world[go] is T t)
+                return t;
 
             return default;
         }
 
-        public void Add(GameObject go) 
+        public void Add(GameObject go, object obj) 
         {
             if (world.ContainsKey(go))
                 return;
 
-            world.Add(go, new List<object>());
+            world.Add(go, obj);
         }
 
         public void Remove(GameObject go) { world.Remove(go); }

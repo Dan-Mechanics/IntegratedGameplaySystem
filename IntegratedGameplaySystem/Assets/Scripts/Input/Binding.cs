@@ -2,15 +2,17 @@
 
 namespace IntegratedGameplaySystem
 {
+    [System.Serializable]
     public class Binding
     {
+        public string key;
         public PlayerAction playerAction;
-        public KeyCode key;
+        [HideInInspector] public KeyCode keyCode;
 
         public Binding(PlayerAction playerAction, KeyCode keyCode)
         {
             this.playerAction = playerAction;
-            this.key = keyCode;
+            this.keyCode = keyCode;
         }
     }
 }

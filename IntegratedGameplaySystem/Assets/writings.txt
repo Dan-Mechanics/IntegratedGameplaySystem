@@ -1,3 +1,24 @@
+we could have a system wherbey we have dictionary whereby the gamboect is the key
+and then we have an array of behaviours.
+and then we have some replacement for get componenet or something.
+
+misschien moet ik ook gewoon de hele game maken met me shiity
+ass SOAP en dan kijken waar dit ass is basically / dependancies vermijden.
+
+ok ik zie het nu een beetje dat ik gekke patterns gebruik
+om te laten zien dat ik het kan maar ik kan ook scriptable objects
+voor ease of ease ofzo. kan ook uitiendelijk massive jump over maken maar we kijken er wel ff naar.
+kan ook een soort blackboard ding maken met de inspector. dat je like shit get based on the name ofzo idk.
+
+ok so consider you could amke it with scriptable boejcts and shit.
+and then that would be cool but it would aslo add like 30000 other
+rpboems.
+
+consider that you could still implemnt the interfaces regardles so that the heart.cs also becomes more reusable in general.
+heres my plan:
+we make a static config thing for the files.
+then we make a GameSetupBehaviour.
+
 for tomorrow:
 finish the service locator for input and see if it works,
 then, commit back to main and make the whole ass project not HAVE to use scritpable objects

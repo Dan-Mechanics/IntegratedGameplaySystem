@@ -14,21 +14,21 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class PlayerInput
     {
-        private readonly InputBehaviour inputBehaviour;
+        private readonly IInputService inputService;
 
         private bool forward;
         private bool back;
         private bool left;
         private bool right;
 
-        public PlayerInput(InputBehaviour inputBehaviour)
+        public PlayerInput()
         {
-            this.inputBehaviour = inputBehaviour;
+            inputService = ServiceLocator<IInputService>.Locate();
 
-            inputBehaviour.GetAction(PlayerAction.Forward).OnChange += OnForward;
-            inputBehaviour.GetAction(PlayerAction.Backward).OnChange += OnBack;
-            inputBehaviour.GetAction(PlayerAction.Left).OnChange += OnLeft;
-            inputBehaviour.GetAction(PlayerAction.Right).OnChange += OnRight;
+            inputService.GetAction(PlayerAction.Forward).OnChange += OnForward;
+            inputService.GetAction(PlayerAction.Backward).OnChange += OnBack;
+            inputService.GetAction(PlayerAction.Left).OnChange += OnLeft;
+            inputService.GetAction(PlayerAction.Right).OnChange += OnRight;
         }
 
         private void OnForward(bool value) => forward = value;
@@ -69,10 +69,10 @@ namespace IntegratedGameplaySystem
 
         public void Dispose() 
         {
-            inputBehaviour.GetAction(PlayerAction.Forward).OnChange -= OnForward;
-            inputBehaviour.GetAction(PlayerAction.Backward).OnChange -= OnBack;
-            inputBehaviour.GetAction(PlayerAction.Left).OnChange -= OnLeft;
-            inputBehaviour.GetAction(PlayerAction.Right).OnChange -= OnRight;
+            inputService.GetAction(PlayerAction.Forward).OnChange -= OnForward;
+            inputService.GetAction(PlayerAction.Backward).OnChange -= OnBack;
+            inputService.GetAction(PlayerAction.Left).OnChange -= OnLeft;
+            inputService.GetAction(PlayerAction.Right).OnChange -= OnRight;
         }
     }
 }

@@ -1,11 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 
 namespace IntegratedGameplaySystem
 {
-    public class InputEvents
+    public class InputState
     {
         public Action OnDown;
         public Action OnUp;
@@ -16,7 +13,7 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// They call me the coder.
         /// </summary>
-        public InputEvents()
+        public InputState()
         {
             OnChange += (bool value) => isPressed = value;
         }

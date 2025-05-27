@@ -6,6 +6,6 @@ namespace IntegratedGameplaySystem
 {
     public interface IInputService 
     {
-        InputEvents GetAction(PlayerAction playerAction);
+        InputState GetAction(PlayerAction playerAction);
     }
 }

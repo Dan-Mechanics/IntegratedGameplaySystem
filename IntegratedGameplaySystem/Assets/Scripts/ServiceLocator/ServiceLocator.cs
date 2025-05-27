@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 namespace IntegratedGameplaySystem
 {
@@ -9,15 +10,12 @@ namespace IntegratedGameplaySystem
     public static class ServiceLocator<T>
     {
         public static T instance;
-        public static T GetService
+        public static T Locate()
         {
-            get
-            {
-                if (instance == null)
-                    Debug.LogError("No instance provided yet !!");
+            if (instance == null)
+                throw new Exception("No instance provided yet !!");
 
-                return instance;
-            }
+            return instance;
         }
 
         public static void Provide(T service) 

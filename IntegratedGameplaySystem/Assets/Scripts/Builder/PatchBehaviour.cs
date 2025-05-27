@@ -12,6 +12,10 @@ namespace IntegratedGameplaySystem
         public int count;
         public float dispersal;
         public GameObject plantPrefab;
+
+        /// <summary>
+        /// Here we see one bullshit reference.
+        /// </summary>
         public PlayerContext playerContext;
 
         private readonly List<Plant> plants = new List<Plant>();

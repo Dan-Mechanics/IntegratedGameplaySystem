@@ -2,4 +2,4 @@ Mouse0 Interact
 Mouse1 Interact
 E Interact
 R Reload
-B Reload
+Escape Escape

@@ -1,22 +1,14 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// And this would then be where we have our like input handler classes and such. Component pattern perchange ??? !!
-    /// 
-    /// PlayerBehaviour??
-    /// </summary>
     [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PlayerContext), fileName = "New " + nameof(PlayerContext))]
     public class PlayerContext : BaseBehaviour
     {
         public ForcesMovement.Settings settings;
         public ForcesMovement.GroundedConfiguration grounded;
         public float eyeHeight;
-        public InteractBehaviour interactBehaviour;
         public Wallet wallet;
-        public InputBehaviour inputBehaviour;
 
         private Rigidbody rb;
         private Transform eyes;
@@ -33,7 +25,7 @@ namespace IntegratedGameplaySystem
             eyes = new GameObject("eyes").transform;
             eyes.SetParent(transform);
             eyes.localPosition = Vector3.up * eyeHeight;
-            playerInput = new PlayerInput(inputBehaviour);
+            playerInput = new PlayerInput();
 
             ForcesMovement.References player = new ForcesMovement.References(rb, eyes, transform);
             movement = new ForcesMovement(grounded, settings, player);
@@ -45,7 +37,6 @@ namespace IntegratedGameplaySystem
         {
             base.Update();
 
-            inputBehaviour.Update();
             mouseMovement.Update(playerInput.GetMouseInput());
 
             cameraHandler.UpdateRot(eyes.rotation);

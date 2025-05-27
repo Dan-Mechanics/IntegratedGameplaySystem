@@ -11,8 +11,14 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(InputBehaviour), fileName = "New " + nameof(InputBehaviour))]
     public class InputBehaviour : BaseBehaviour
     {
-        public List<InputHandler.Binding> bindings;
-        public InputHandler inputHandler;
+        /// <summary>
+        /// CONFIG!!
+        /// </summary>
+        public List<Binding> bindings;
+
+
+
+        private InputHandler inputHandler;
 
         /// <summary>
         /// https://stackoverflow.com/questions/16100/convert-a-string-to-an-enum-in-c-sharp
@@ -27,6 +33,8 @@ namespace IntegratedGameplaySystem
                 bindings[i].keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), bindings[i].key);
                 inputHandler.AddBinding(bindings[i]);
             }
+
+            ServiceLocator<IInputService>.Provide(inputHandler);
         }
 
         public override void Update()
@@ -35,6 +43,6 @@ namespace IntegratedGameplaySystem
             inputHandler.Update();
         }
 
-        public InputHandler.InputEvents GetAction(PlayerAction playerAction) => inputHandler?.GetAction(playerAction);
+        //public InputEvents GetAction(PlayerAction playerAction) => inputHandler?.GetAction(playerAction);
     }
 }

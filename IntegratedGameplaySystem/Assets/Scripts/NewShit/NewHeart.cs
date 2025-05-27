@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// SINGLE MONOBEHAVIOUR HERE !!
+    /// because we want to favor compositon over inhertience.
     /// </summary>
     public class Heart : MonoBehaviour
     {
@@ -19,7 +20,7 @@ namespace IntegratedGameplaySystem
 
         private readonly List<BaseBehaviour> subscribers = new();
         private float timer;
-        
+
         private void Start()
         {
             Setup();
@@ -60,7 +61,7 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Physics.Simulate.html
         /// </summary>
-        private void Update() 
+        private void Update()
         {
             subscribers.ForEach(x => x.Update());
 

@@ -7,7 +7,9 @@
         Forward = 2,
         Backward = 3,
         Left = 4,
-        Right = 5
+        Right = 5,
+        Reload = 6,
+        Escape = 7
             // Etc, etc ...
     }
 }

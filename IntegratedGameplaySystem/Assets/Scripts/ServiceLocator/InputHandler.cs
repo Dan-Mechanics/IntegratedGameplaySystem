@@ -8,23 +8,23 @@ namespace IntegratedGameplaySystem
     /// We could wrap a behaviour around this??
     /// Perhaps make this a service locatior? might be smart.
     /// </summary>
-    public class InputHandler
+    public class InputHandler : IInputService
     {
         /// <summary>
         /// Ideally we load this in via config file.
         /// </summary>
         private readonly List<Binding> bindings;
-        private readonly Dictionary<PlayerAction, InputEvents> conversion;
+        private readonly Dictionary<PlayerAction, InputState> conversion;
 
         public InputHandler(List<Binding> bindings = null)
         {
             this.bindings = bindings ?? new List<Binding>();
-            conversion = new Dictionary<PlayerAction, InputEvents>();
+            conversion = new Dictionary<PlayerAction, InputState>();
 
             // Or we could generate them as they are needed, but this is a little smoother.
             for (int i = 0; i < Enum.GetValues(typeof(PlayerAction)).Length; i++)
             {
-                conversion.Add((PlayerAction)i, new InputEvents());
+                conversion.Add((PlayerAction)i, new InputState());
             }
         }
 
@@ -93,9 +93,9 @@ namespace IntegratedGameplaySystem
             }
         }
 
-        public InputEvents GetAction(PlayerAction playerAction) => conversion[playerAction];
+        public InputState GetAction(PlayerAction playerAction) => conversion[playerAction];
 
-        [Serializable]
+        /*[Serializable]
         public class Binding
         {
             public string key;
@@ -114,6 +114,6 @@ namespace IntegratedGameplaySystem
             public Action OnDown;
             public Action OnUp;
             public Action<bool> OnChange;
-        }
+        }*/
     }
 }

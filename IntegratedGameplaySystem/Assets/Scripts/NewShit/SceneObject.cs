@@ -12,12 +12,9 @@ namespace IntegratedGameplaySystem
         public GameObject go;
         public Transform trans;
 
-        public SceneObject(string name)
+        public SceneObject(string prefabName)
         {
-            name = name.ToLower();
-            
-            // or something.
-            GameObject prefab = Resources.Load<GameObject>($"Prefabs/{name}");
+            GameObject prefab = Resources.Load<GameObject>($"Prefabs/{prefabName}");
 
             // add debug here.
 

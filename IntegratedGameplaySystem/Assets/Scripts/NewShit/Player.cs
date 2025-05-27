@@ -11,8 +11,6 @@ namespace IntegratedGameplaySystem
         public Player()
         {
             sceneObject = new SceneObject(nameof(Player));
-
-
         }
 
         public void Start()

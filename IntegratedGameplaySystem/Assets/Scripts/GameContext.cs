@@ -6,6 +6,9 @@ namespace IntegratedGameplaySystem
     [System.Serializable]
     public class GameContext : IStartable, IUpdatable, IDisposable
     {
+        public const string ASSET_SCRATCHPAD_PATH = "assets";
+        public const string SCENE_SETUP_PATH = "scene_setup";
+
         [SerializeField] private List<GameObject> scenePrefabs = default;
 
         /// <summary>
@@ -25,24 +28,10 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
+            Resources.Load<SceneSetup>(SCENE_SETUP_PATH).Start();
 
-            AssetScratchpad scratchpad = Resources.Load<AssetScratchpad>("assets");
-            scratchpad.Start();
-            ServiceLocator<IAssetService>.Provide(scratchpad);
-
-            Resources.Load<SceneSetup>("scene_setup").Start();
-
-            // INPUT ==========
-
-            // nooit een ontkenning in je code, altijd is iets en niet not iets.
-            // noem het exception.
-            InputHandler inputHandler = new InputHandler(new DefaultBindingRules());
-            List<Binding> bindings = scratchpad.FindAsset<BindingsConfig>("config").GetBindings();
-            bindings.ForEach(x => inputHandler.AddBinding(x));
-            
-            // We provide the InputHandler after we create it.
-            // I think that is correct but I am not certain.
-            ServiceLocator<IInputService>.Provide(inputHandler);
+            AssetScratchpad scratchpad = InitializeAssets();
+            InputHandler inputHandler = InitializeInput(scratchpad);
 
             ServiceLocator<IWorldService>.Provide(new GameWorld());
 
@@ -73,6 +62,24 @@ namespace IntegratedGameplaySystem
             }
 
             startables.ForEach(x => x.Start());
+        }
+
+        private static AssetScratchpad InitializeAssets()
+        {
+            AssetScratchpad scratchpad = Resources.Load<AssetScratchpad>(ASSET_SCRATCHPAD_PATH);
+            scratchpad.Start();
+            ServiceLocator<IAssetService>.Provide(scratchpad);
+            return scratchpad;
+        }
+
+        private InputHandler InitializeInput(AssetScratchpad scratchpad)
+        {
+            InputHandler inputHandler = new InputHandler(new DefaultBindingRules());
+            List<Binding> bindings = scratchpad.FindAsset<BindingsConfig>("config").GetBindings();
+            bindings.ForEach(x => inputHandler.AddBinding(x));
+            ServiceLocator<IInputService>.Provide(inputHandler);
+
+            return inputHandler;
         }
 
         private void SortComponent<T>(object component, List<T> list)

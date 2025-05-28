@@ -32,6 +32,9 @@ namespace IntegratedGameplaySystem
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
 
             // INPUT ==========
+
+            // nooit een ontkenning in je code, altijd is iets en niet not iets.
+            // noem het exception.
             IBindingRule[] rules = { new DisallowMultiblePlayerAction() };
             InputHandler inputHandler = new InputHandler(rules);
             List<Binding> bindings = assetScratchpad.FindAsset<BindingsConfig>("config").GetBindings();
@@ -45,6 +48,12 @@ namespace IntegratedGameplaySystem
             ServiceLocator<IInputService>.Provide(inputHandler);
             ServiceLocator<IWorldService>.Provide(new GameWorld());
 
+            // FILTER THIS ??
+
+            // functie geeft de leest mij in stoppen en er uit hae
+
+
+            // input T , list is pass by refernece, en dan de list vna de dingen.
             // The order of this is important.
             List<object> components = new List<object>()
             {
@@ -59,6 +68,7 @@ namespace IntegratedGameplaySystem
             List<IStartable> startables = new();
             foreach (object component in components)
             {
+                // TE ZEGGEN FILTER.
                 if (component is IStartable startable)
                     startables.Add(startable);
 

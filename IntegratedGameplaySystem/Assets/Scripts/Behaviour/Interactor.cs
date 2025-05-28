@@ -22,7 +22,7 @@ namespace IntegratedGameplaySystem
         public Interactor()
         {
             // or something idk.
-            raycaster = new Raycaster(ServiceLocator<IAssetService>.Locate().FindAsset<RaycastData>("raycast"));
+            raycaster = new Raycaster(ServiceLocator<IAssetService>.Locate().GetInteractionRaycast());
             cam = Camera.main.transform;
 
             inputService = ServiceLocator<IInputService>.Locate();

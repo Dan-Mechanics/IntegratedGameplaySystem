@@ -6,10 +6,9 @@ namespace IntegratedGameplaySystem
     [System.Serializable]
     public class GameContext : IStartable, IUpdatable, IDisposable
     {
-        [SerializeField] private string assetsPath = "assets";
-        [SerializeField] private string sceneSetupPath = "scene_setup";
-
+        [SerializeField] private SceneSetup sceneSetup = default;
         [SerializeField] private List<GameObject> scenePrefabs = default;
+        [SerializeField] private Assets assets = default;
 
         /// <summary>
         /// FIXME:
@@ -29,11 +28,10 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
-            Resources.Load<SceneSetup>(sceneSetupPath).Start();
+            ServiceLocator<IAssetService>.Provide(assets);
 
-            AssetScratchpad scratchpad = InitializeAssets(assetsPath);
-            InputHandler inputHandler = InitializeInput(scratchpad, "config");
-
+            sceneSetup.Start();
+            InputHandler inputHandler = InitializeInput(assets.GetBindingsConfig());
             ServiceLocator<IWorldService>.Provide(new GameWorld());
 
             List<object> components = new List<object>()
@@ -58,18 +56,10 @@ namespace IntegratedGameplaySystem
             startables.ForEach(x => x.Start());
         }
 
-        private AssetScratchpad InitializeAssets(string path)
-        {
-            AssetScratchpad scratchpad = Resources.Load<AssetScratchpad>(path);
-            scratchpad.Start();
-            ServiceLocator<IAssetService>.Provide(scratchpad);
-            return scratchpad;
-        }
-
-        private InputHandler InitializeInput(AssetScratchpad scratchpad, string path)
+        private InputHandler InitializeInput(BindingsConfig bindingsConfig)
         {
             InputHandler inputHandler = new InputHandler(new DefaultBindingRules());
-            List<Binding> bindings = scratchpad.FindAsset<BindingsConfig>(path).GetBindings();
+            List<Binding> bindings = bindingsConfig.GetBindings();
             bindings.ForEach(x => inputHandler.AddBinding(x));
             ServiceLocator<IInputService>.Provide(inputHandler);
 

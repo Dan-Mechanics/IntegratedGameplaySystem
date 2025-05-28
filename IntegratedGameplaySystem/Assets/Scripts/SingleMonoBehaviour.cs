@@ -3,7 +3,8 @@
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// SINGLE MONOBEHAVIOUR HERE !!
+    /// SINGLE MONOBEHAVIOUR HERE !! maybe make this the gamemanager or sometihng thatwould make al ittle more sense.
+    /// we arent really gaining anything by leaving this as seperate.
     /// </summary>
     public class SingleMonoBehaviour : MonoBehaviour
     {

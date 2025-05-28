@@ -29,8 +29,8 @@ namespace IntegratedGameplaySystem
             
             IAssetService assets = ServiceLocator<IAssetService>.Locate();
 
-            groundedConfig = assets.FindAsset<GroundedConfiguration>("grounded_config");
-            settings = assets.FindAsset<MovementSettings>("movement_settings");
+            groundedConfig = assets.GetGroundedConfig();
+            settings = assets.GetMovementSettings();
         }
 
         /// <summary>

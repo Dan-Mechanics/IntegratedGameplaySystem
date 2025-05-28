@@ -20,18 +20,15 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            SceneObject player = new SceneObject("player");
-
-            Debug.Log(player.trans);
-
-            Rigidbody rb = player.trans.GetComponent<Rigidbody>();
+            var player = new SceneObject(ServiceLocator<IAssetService>.Locate().GetPlayer());
+            Rigidbody rb = player.transform.GetComponent<Rigidbody>();
 
             eyes = new GameObject("eyes").transform;
-            eyes.SetParent(player.trans);
+            eyes.SetParent(player.transform);
             eyes.localPosition = Vector3.up * EYES_HEIGHT;
 
-            movement = new ForcesMovement(player.trans, eyes, rb);
-            mouseMovement = new MouseMovement(eyes, player.trans);
+            movement = new ForcesMovement(player.transform, eyes, rb);
+            mouseMovement = new MouseMovement(eyes, player.transform);
             cameraHandler = new CameraHandler(Camera.main.transform);
         }
 

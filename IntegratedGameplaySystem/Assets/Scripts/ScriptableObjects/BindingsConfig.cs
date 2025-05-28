@@ -5,6 +5,7 @@ using System;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
+    /// FOR FUN !!!
     /// Temp solution to TXT file vibes.
     /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(BindingsConfig), fileName = "New " + nameof(BindingsConfig))]
@@ -15,7 +16,6 @@ namespace IntegratedGameplaySystem
         public List<Binding> GetBindings() 
         {
             bindings.ForEach(x => x.keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), x.key));
-
             return bindings;
         }
     }

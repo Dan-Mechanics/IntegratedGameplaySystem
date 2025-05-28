@@ -17,6 +17,10 @@ namespace IntegratedGameplaySystem
 
     public interface IAssetService
     {
-        T FindAsset<T>(string name) where T : Object;
+        GameObject GetPlayer();
+        RaycastData GetInteractionRaycast();
+        MovementSettings GetMovementSettings();
+        GroundedConfiguration GetGroundedConfig();
+        BindingsConfig GetBindingsConfig();
     }
 }

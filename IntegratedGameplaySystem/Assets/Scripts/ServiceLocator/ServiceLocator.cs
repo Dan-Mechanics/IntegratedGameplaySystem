@@ -5,11 +5,15 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// I wanna use this for input and config loading.
+    /// CREDIT: HKU CLASSES.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
     public static class ServiceLocator<T>
     {
         public static T instance;
+
+        /// <summary>
+        /// Please cache. Or dont.
+        /// </summary>
         public static T Locate()
         {
             if (instance == null)

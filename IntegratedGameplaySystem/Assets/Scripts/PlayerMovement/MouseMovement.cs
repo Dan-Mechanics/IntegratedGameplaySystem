@@ -2,24 +2,29 @@
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// NEED: 
+    /// sens data
+    /// cam
+    /// transform
+    /// IPlayerInput basically.
+    /// 
+    /// and then we just update and done.
+    /// </summary>
     public class MouseMovement 
     {
         private const float MIN_CAM_ANGLE = -90f;
         private const float MAX_CAM_ANGLE = 90f;
-
-        /// <summary>
-        /// Yeah yeah
-        /// </summary>
         private const float SENS = 0.33f;
 
         private readonly Transform eyes;
-        private readonly Transform trans;
-        private Vector2 mouseDir;
+        private readonly Transform transform;
+        private Vector2 lookingDirection;
 
-        public MouseMovement(Transform eyes, Transform trans)
+        public MouseMovement(Transform eyes, Transform transform)
         {
             this.eyes = eyes;
-            this.trans = trans;
+            this.transform = transform;
         }
 
         /// <summary>
@@ -27,11 +32,11 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Update(Vector2 mouseDirectionChange)
         {
-            mouseDir += mouseDirectionChange * SENS;
-            mouseDir.y = Mathf.Clamp(mouseDir.y, MIN_CAM_ANGLE, MAX_CAM_ANGLE);
+            lookingDirection += mouseDirectionChange * SENS;
+            lookingDirection.y = Mathf.Clamp(lookingDirection.y, MIN_CAM_ANGLE, MAX_CAM_ANGLE);
 
-            eyes.localRotation = Quaternion.AngleAxis(-mouseDir.y, Vector3.right);
-            trans.localRotation = Quaternion.AngleAxis(mouseDir.x, Vector3.up);
+            eyes.localRotation = Quaternion.AngleAxis(-lookingDirection.y, Vector3.right);
+            transform.localRotation = Quaternion.AngleAxis(lookingDirection.x, Vector3.up);
         }
     }
 }

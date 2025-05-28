@@ -12,6 +12,35 @@ namespace IntegratedGameplaySystem
             return Random.Range(0, x + 1) == 0;
         }
 
-        // load by type or something here. get prefabs.
+        public static GameObject SpawnPrefab(GameObject prefab) 
+        {
+            GameObject go = Object.Instantiate(prefab, prefab.transform.position, prefab.transform.rotation);
+            go.name = prefab.name;
+            return go;
+        }
+        
+        /*[System.Obsolete]
+        public static GameObject LoadPrefab(string name) 
+        {
+            GameObject prefab = Resources.Load<GameObject>($"Prefabs/{name}");
+
+            // ????
+            if (prefab == null)
+                throw new System.Exception("Can't find that prefab!");
+
+            return prefab;
+        }
+
+        [System.Obsolete]
+        public static T LoadData<T>(string name) where T : Object
+        {
+            T data = Resources.Load<T>($"Data/{name}");
+
+            // ????
+            if (data == null)
+                throw new System.Exception("Can't find that data!");
+
+            return data;
+        }*/
     }
 }

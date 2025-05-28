@@ -1,3 +1,31 @@
+random idee:
+we maken dat alle locations naar data in de serialized is,
+en dan de rest is whatever basically.
+i basically want all the data in the game to be in scriptalbe objects assets
+and then the names of those things can change too right so yeah.
+
+
+idea: instead of using resources.load, use like a blackboard technique 
+with unity serialized fields. so we basically pass a list of shit in via inspector
+and then we say pipe thati nto a dictionary and then make the names correct
+and then dumb that shit into a service locator called something like
+IAssetService, and then we have AssetScratchpad. wherbey the key is the name and such.
+and then we just need to be really fricking disciplined aobut the naming of the stuff in the game.
+
+ok, i would like to move my project away from scriptable objects lol.
+
+my vision, as described before:
+
+if we want to add something new to the game we do that by making a class, just
+a simple class it may not inhertiet from anything. next we define the interfaces
+it has, and then the heart script ( not yet mono ?? ) then is like yo we have
+our scene prefabs which dont have associated behaviour ( yet ) 
+i basically ideally want the single monobehavuour to be called the gamecontext or something,
+kindal ike that. 
+
+anyway, that is called heart. 
+
+
 we could have a system wherbey we have dictionary whereby the gamboect is the key
 and then we have an array of behaviours.
 and then we have some replacement for get componenet or something.

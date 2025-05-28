@@ -4,13 +4,10 @@ using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// I think this is how you implement it ??
-    /// </summary>
-    [System.Serializable]
-    public class AssetScratchpad : IAssetService, IStartable
+    [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(AssetScratchpad), fileName = "New " + nameof(AssetScratchpad))]
+    public class AssetScratchpad : ScriptableObject, IAssetService, IStartable
     {
-        public List<Object> assets;
+        [SerializeField] private List<Object> assets = default;
         private readonly Dictionary<string, Object> scratchpad = new();
 
         public void Start()
@@ -28,10 +25,5 @@ namespace IntegratedGameplaySystem
 
             return scratchpad[name] as T;
         }
-    }
-
-    public interface IAssetService 
-    {
-        T FindAsset<T>(string name) where T : Object;
     }
 }

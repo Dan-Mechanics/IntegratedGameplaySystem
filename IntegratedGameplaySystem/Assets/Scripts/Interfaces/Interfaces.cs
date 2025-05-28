@@ -14,4 +14,9 @@ namespace IntegratedGameplaySystem
     public interface IDisposable { void Dispose(); }
     public interface IFixedUpdatable { void FixedUpdate(); }
     public interface ILateFixedUpdatable { void LateFixedUpdate(); }
+
+    public interface IAssetService
+    {
+        T FindAsset<T>(string name) where T : Object;
+    }
 }

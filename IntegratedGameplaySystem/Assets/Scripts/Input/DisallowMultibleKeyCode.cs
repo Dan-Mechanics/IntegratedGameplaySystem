@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// This name sucks.
+    /// </summary>
     public class DisallowMultibleKeyCode : IBindingRule
     {
         public bool AllowBinding(List<Binding> bindings, Binding binding)

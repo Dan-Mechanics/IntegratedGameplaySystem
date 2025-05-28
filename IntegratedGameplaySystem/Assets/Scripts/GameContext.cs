@@ -6,9 +6,7 @@ namespace IntegratedGameplaySystem
     [System.Serializable]
     public class GameContext : IStartable, IUpdatable, IDisposable
     {
-        public SceneSetup sceneSetup;
-        public List<GameObject> scenePrefabs;
-        public AssetScratchpad assetScratchpad;
+        [SerializeField] private List<GameObject> scenePrefabs = default;
 
         /// <summary>
         /// what happens when shit needs to be deleted? this breaks basically.
@@ -26,10 +24,13 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Start()
         {
-            assetScratchpad.Start();
-            ServiceLocator<IAssetService>.Provide(assetScratchpad);
-
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
+
+            AssetScratchpad scratchpad = Resources.Load<AssetScratchpad>("assets");
+            scratchpad.Start();
+            ServiceLocator<IAssetService>.Provide(scratchpad);
+
+            Resources.Load<SceneSetup>("scene_setup").Start();
 
             // INPUT ==========
 
@@ -37,15 +38,13 @@ namespace IntegratedGameplaySystem
             // noem het exception.
             IBindingRule[] rules = { new DisallowMultiblePlayerAction() };
             InputHandler inputHandler = new InputHandler(rules);
-            List<Binding> bindings = assetScratchpad.FindAsset<BindingsConfig>("config").GetBindings();
-
-            //return;
-
+            List<Binding> bindings = scratchpad.FindAsset<BindingsConfig>("config").GetBindings();
             bindings.ForEach(x => inputHandler.AddBinding(x));
             
             // We provide the InputHandler after we create it.
             // I think that is correct but I am not certain.
             ServiceLocator<IInputService>.Provide(inputHandler);
+
             ServiceLocator<IWorldService>.Provide(new GameWorld());
 
             // FILTER THIS ??
@@ -57,7 +56,6 @@ namespace IntegratedGameplaySystem
             // The order of this is important.
             List<object> components = new List<object>()
             {
-                sceneSetup,
                 inputHandler,
                 new Interactor(),
                 new EasyDebug(),
@@ -68,25 +66,20 @@ namespace IntegratedGameplaySystem
             List<IStartable> startables = new();
             foreach (object component in components)
             {
-                // TE ZEGGEN FILTER.
-                if (component is IStartable startable)
-                    startables.Add(startable);
-
-                if (component is IUpdatable updatable)
-                    updatables.Add(updatable);
-
-                if (component is IFixedUpdatable fixedUpdatable)
-                    fixedUpdatables.Add(fixedUpdatable);
-
-                if (component is ILateFixedUpdatable lateFixedUpdatable)
-                    lateFixedUpdatables.Add(lateFixedUpdatable);
-
-                if (component is IDisposable disposable)
-                    disposables.Add(disposable);
+                TrySortComponent(component, startables);
+                TrySortComponent(component, updatables);
+                TrySortComponent(component, fixedUpdatables);
+                TrySortComponent(component, lateFixedUpdatables);
+                TrySortComponent(component, disposables);
             }
 
-            // we must provide all services before the shit.
             startables.ForEach(x => x.Start());
+        }
+
+        private void TrySortComponent<T>(object component, List<T> list)
+        {
+            if (component is T t)
+                list.Add(t);
         }
 
         /// <summary>

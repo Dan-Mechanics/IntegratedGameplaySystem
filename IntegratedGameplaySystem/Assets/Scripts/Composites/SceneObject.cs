@@ -14,7 +14,7 @@ namespace IntegratedGameplaySystem
 
         public SceneObject(string prefabName)
         {
-            gameObject = Utils.SpawnPrefab(Utils.LoadPrefab(prefabName));
+            gameObject = ServiceLocator<IAssetService>.Locate().FindAsset<GameObject>(prefabName);
             trans = gameObject.transform;
         }
     }

@@ -19,7 +19,7 @@ namespace IntegratedGameplaySystem
             return go;
         }
         
-        [System.Obsolete]
+        /*[System.Obsolete]
         public static GameObject LoadPrefab(string name) 
         {
             GameObject prefab = Resources.Load<GameObject>($"Prefabs/{name}");
@@ -41,6 +41,6 @@ namespace IntegratedGameplaySystem
                 throw new System.Exception("Can't find that data!");
 
             return data;
-        }
+        }*/
     }
 }

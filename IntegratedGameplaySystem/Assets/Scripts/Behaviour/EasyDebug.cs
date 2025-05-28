@@ -7,6 +7,8 @@ namespace IntegratedGameplaySystem
     {
         private readonly IInputService inputService;
 
+        public event System.Action<object> OnDispose;
+
         public EasyDebug()
         {
             inputService = ServiceLocator<IInputService>.Locate();
@@ -22,6 +24,7 @@ namespace IntegratedGameplaySystem
         {
             inputService.GetInputSource(PlayerAction.Reload).OnDown -= Reload;
             inputService.GetInputSource(PlayerAction.Escape).OnDown -= Quit;
+            OnDispose?.Invoke(this);
         }
 
         private void Reload()

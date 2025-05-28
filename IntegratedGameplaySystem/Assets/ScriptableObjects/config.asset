@@ -15,16 +15,22 @@ MonoBehaviour:
   bindings:
   - key: W
     playerAction: 2
-    keyCode: 0
+    keyCode: 119
   - key: S
     playerAction: 3
-    keyCode: 0
+    keyCode: 115
   - key: A
     playerAction: 4
-    keyCode: 0
+    keyCode: 97
   - key: D
     playerAction: 5
-    keyCode: 0
+    keyCode: 100
   - key: Mouse1
     playerAction: 1
-    keyCode: 0
+    keyCode: 324
+  - key: Escape
+    playerAction: 7
+    keyCode: 324
+  - key: R
+    playerAction: 6
+    keyCode: 324

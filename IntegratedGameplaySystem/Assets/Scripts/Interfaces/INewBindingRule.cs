@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
-    public interface IBindingRule
+    public interface INewBindingRule
     {
         // This is where you can define the rules for which bindings are allowed.
 

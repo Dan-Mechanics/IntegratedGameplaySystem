@@ -14,11 +14,11 @@ namespace IntegratedGameplaySystem
     {
         private readonly List<Binding> bindings = new();
         private readonly Dictionary<PlayerAction, InputSource> conversion = new();
-        private readonly IBindingRule[] rules;
+        private readonly INewBindingRule newBindingRule;
 
-        public InputHandler(IBindingRule[] rules)
+        public InputHandler(INewBindingRule newBindingRule)
         {
-            this.rules = rules;
+            this.newBindingRule = newBindingRule;
 
             for (int i = 0; i < Enum.GetValues(typeof(PlayerAction)).Length; i++)
             {
@@ -31,7 +31,7 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void AddBinding(Binding binding)
         {
-            foreach (IBindingRule rule in rules)
+            foreach (INewBindingRule rule in newBindingRule)
             {
                 if (!rule.AllowBinding(bindings, binding))
                     return;

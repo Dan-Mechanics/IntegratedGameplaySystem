@@ -36,8 +36,7 @@ namespace IntegratedGameplaySystem
 
             // nooit een ontkenning in je code, altijd is iets en niet not iets.
             // noem het exception.
-            IBindingRule[] rules = { new DisallowMultiblePlayerAction() };
-            InputHandler inputHandler = new InputHandler(rules);
+            InputHandler inputHandler = new InputHandler(new DefaultBindingRules());
             List<Binding> bindings = scratchpad.FindAsset<BindingsConfig>("config").GetBindings();
             bindings.ForEach(x => inputHandler.AddBinding(x));
             
@@ -66,17 +65,17 @@ namespace IntegratedGameplaySystem
             List<IStartable> startables = new();
             foreach (object component in components)
             {
-                TrySortComponent(component, startables);
-                TrySortComponent(component, updatables);
-                TrySortComponent(component, fixedUpdatables);
-                TrySortComponent(component, lateFixedUpdatables);
-                TrySortComponent(component, disposables);
+                SortComponent(component, startables);
+                SortComponent(component, updatables);
+                SortComponent(component, fixedUpdatables);
+                SortComponent(component, lateFixedUpdatables);
+                SortComponent(component, disposables);
             }
 
             startables.ForEach(x => x.Start());
         }
 
-        private void TrySortComponent<T>(object component, List<T> list)
+        private void SortComponent<T>(object component, List<T> list)
         {
             if (component is T t)
                 list.Add(t);

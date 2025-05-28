@@ -31,11 +31,8 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void AddBinding(Binding binding)
         {
-            foreach (INewBindingRule rule in newBindingRule)
-            {
-                if (!rule.AllowBinding(bindings, binding))
-                    return;
-            }
+            if (!newBindingRule.AllowBinding(bindings, binding))
+                return;
 
             bindings.Add(binding);
             Debug.Log($"added binding {binding.keyCode}");

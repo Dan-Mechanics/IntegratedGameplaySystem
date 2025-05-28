@@ -5,40 +5,33 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// I want the context classes to load shit from memory basically.
     /// </summary>
-    public class PlayerContext : IStartable, IUpdatable
+    public class PlayerContext : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
-        public ForcesMovement.Settings settings;
-        public ForcesMovement.GroundedConfiguration grounded;
-        public float eyeHeight;
-        public Wallet wallet;
+        /// <summary>
+        /// EXPORT TO SOME ASSET !!
+        /// </summary>
+        public const float EYES_HEIGHT = 0.2f;
 
-        private Rigidbody rb;
         private Transform eyes;
-        private PlayerInput playerInput;
-        private CameraHandler cameraHandler;
-        private MouseMovement mouseMovement;
+        private readonly PlayerInput playerInput = new PlayerInput();
         private ForcesMovement movement;
-
-        private readonly SceneObject obj;
-
-        public PlayerContext()
-        {
-            obj = new SceneObject("player");
-        }
+        private MouseMovement mouseMovement;
+        private CameraHandler cameraHandler;
 
         public void Start()
         {
-            rb = obj.trans.GetComponent<Rigidbody>();
+            SceneObject player = new SceneObject("player");
+
+            Debug.Log(player.trans);
+
+            Rigidbody rb = player.trans.GetComponent<Rigidbody>();
 
             eyes = new GameObject("eyes").transform;
-            eyes.SetParent(obj.trans);
-            eyes.localPosition = Vector3.up * eyeHeight;
+            eyes.SetParent(player.trans);
+            eyes.localPosition = Vector3.up * EYES_HEIGHT;
 
-            playerInput = new PlayerInput();
-
-            ForcesMovement.References player = new ForcesMovement.References(rb, eyes, obj.trans);
-            movement = new ForcesMovement(grounded, settings, player);
-            mouseMovement = new MouseMovement(eyes, obj.trans);
+            movement = new ForcesMovement(player.trans, eyes, rb);
+            mouseMovement = new MouseMovement(eyes, player.trans);
             cameraHandler = new CameraHandler(Camera.main.transform);
         }
 

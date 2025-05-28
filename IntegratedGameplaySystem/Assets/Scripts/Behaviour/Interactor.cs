@@ -16,10 +16,13 @@ namespace IntegratedGameplaySystem
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
         
+        /// <summary>
+        /// Or we could push the asset name upward.
+        /// </summary>
         public Interactor()
         {
             // or something idk.
-            //raycaster = new Raycaster(Utils.LoadData<RaycastData>("interactor_raycast"));
+            raycaster = new Raycaster(ServiceLocator<IAssetService>.Locate().FindAsset<RaycastData>("raycast"));
             cam = Camera.main.transform;
 
             inputService = ServiceLocator<IInputService>.Locate();

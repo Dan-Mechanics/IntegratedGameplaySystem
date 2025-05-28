@@ -41,7 +41,7 @@ namespace IntegratedGameplaySystem
                 // we can use the name for inforamtion.
 
                 var newPlant = new Plant(blueprint, plant);
-                newPlant.OnEarnMoney += playerContext.wallet.EarnMoney;
+                //newPlant.OnEarnMoney += playerContext.wallet.EarnMoney;
                 plants.Add(newPlant);
                 //child.name = i.ToString();
             }

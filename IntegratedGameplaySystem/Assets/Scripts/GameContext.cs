@@ -6,12 +6,13 @@ namespace IntegratedGameplaySystem
     [System.Serializable]
     public class GameContext : IStartable, IUpdatable, IDisposable
     {
-        public const string ASSET_SCRATCHPAD_PATH = "assets";
-        public const string SCENE_SETUP_PATH = "scene_setup";
+        [SerializeField] private string assetsPath = "assets";
+        [SerializeField] private string sceneSetupPath = "scene_setup";
 
         [SerializeField] private List<GameObject> scenePrefabs = default;
 
         /// <summary>
+        /// FIXME:
         /// what happens when shit needs to be deleted? this breaks basically.
         /// </summary>
         private readonly List<IUpdatable> updatables = new();
@@ -28,26 +29,19 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
-            Resources.Load<SceneSetup>(SCENE_SETUP_PATH).Start();
+            Resources.Load<SceneSetup>(sceneSetupPath).Start();
 
-            AssetScratchpad scratchpad = InitializeAssets();
-            InputHandler inputHandler = InitializeInput(scratchpad);
+            AssetScratchpad scratchpad = InitializeAssets(assetsPath);
+            InputHandler inputHandler = InitializeInput(scratchpad, "config");
 
             ServiceLocator<IWorldService>.Provide(new GameWorld());
 
-            // FILTER THIS ??
-
-            // functie geeft de leest mij in stoppen en er uit hae
-
-
-            // input T , list is pass by refernece, en dan de list vna de dingen.
-            // The order of this is important.
             List<object> components = new List<object>()
             {
                 inputHandler,
                 new Interactor(),
                 new EasyDebug(),
-                //new PlayerContext()
+                new PlayerContext()
                 // gotta add plants.
             };
 
@@ -64,18 +58,18 @@ namespace IntegratedGameplaySystem
             startables.ForEach(x => x.Start());
         }
 
-        private static AssetScratchpad InitializeAssets()
+        private AssetScratchpad InitializeAssets(string path)
         {
-            AssetScratchpad scratchpad = Resources.Load<AssetScratchpad>(ASSET_SCRATCHPAD_PATH);
+            AssetScratchpad scratchpad = Resources.Load<AssetScratchpad>(path);
             scratchpad.Start();
             ServiceLocator<IAssetService>.Provide(scratchpad);
             return scratchpad;
         }
 
-        private InputHandler InitializeInput(AssetScratchpad scratchpad)
+        private InputHandler InitializeInput(AssetScratchpad scratchpad, string path)
         {
             InputHandler inputHandler = new InputHandler(new DefaultBindingRules());
-            List<Binding> bindings = scratchpad.FindAsset<BindingsConfig>("config").GetBindings();
+            List<Binding> bindings = scratchpad.FindAsset<BindingsConfig>(path).GetBindings();
             bindings.ForEach(x => inputHandler.AddBinding(x));
             ServiceLocator<IInputService>.Provide(inputHandler);
 

@@ -45,12 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameContext:
-    sceneSetup: {fileID: 11400000, guid: 4ce5449af4eed3a4981bcfd051721a5c, type: 2}
-    assetScratchpad:
-      assets:
-      - {fileID: 11400000, guid: 656bb6f3a2ac7ba48964d350c81465ad, type: 2}
-      - {fileID: 4437024385587191265, guid: 6f7db1ccb32e6424eaaa8c2cca893bbc, type: 3}
-      - {fileID: 11400000, guid: 2968f1d98c793454380570b033841c3c, type: 2}
+    assetsPath: assets
+    sceneSetupPath: scene_setup
     scenePrefabs:
     - {fileID: 3993618247013554881, guid: 2bd35eac28761b6489ddbfdd47807dde, type: 3}
     - {fileID: 4710450936777699201, guid: a569a48a02f66514486790d7fee81b52, type: 3}
+    - {fileID: 3798425744015788190, guid: 4649b9385cedad54a924bf9e83ee7526, type: 3}

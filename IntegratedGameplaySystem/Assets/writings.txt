@@ -1,3 +1,10 @@
+random idee:
+we maken dat alle locations naar data in de serialized is,
+en dan de rest is whatever basically.
+i basically want all the data in the game to be in scriptalbe objects assets
+and then the names of those things can change too right so yeah.
+
+
 idea: instead of using resources.load, use like a blackboard technique 
 with unity serialized fields. so we basically pass a list of shit in via inspector
 and then we say pipe thati nto a dictionary and then make the names correct

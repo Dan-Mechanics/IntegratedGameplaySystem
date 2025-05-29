@@ -1,9 +1,11 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// This class is a little creative.
+    /// </summary>
     public class Heart
     {
         private readonly List<IUpdatable> updatables = new();

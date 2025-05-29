@@ -3,27 +3,17 @@ using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// And this would then be where we have our like input handler classes and such. Component pattern perchange ??? !!
-    /// </summary>
-    [CreateAssetMenu(menuName = nameof(BaseBehaviour) + "/" + nameof(PatchBehaviour), fileName = "New " + nameof(PatchBehaviour))]
-    public class PatchBehaviour : BaseBehaviour
+    public class PatchBehaviour : IStartable, IDisposable
     {
+        public string name;
         public int count;
         public float dispersal;
         public GameObject plantPrefab;
 
-        /// <summary>
-        /// Here we see one bullshit reference.
-        /// </summary>
-        public PlayerContext playerContext;
-
         private readonly List<Plant> plants = new List<Plant>();
         
-        public override void Start()
+        public void Start()
         {
-            base.Start();
-
             PlantBlueprint blueprint = new PlantBlueprint.Builder()
                 .SetName(name)
                 .SetGrowOdds(7) // inspector exposed ??
@@ -36,33 +26,21 @@ namespace IntegratedGameplaySystem
                 Transform plant = Utils.SpawnPrefab(plantPrefab).transform;
                 plant.position = GetRandomPos();
 
-                /*Transform plant = Instantiate(plantPrefab, GetRandomPos(), Quaternion.identity).transform;
-                plant.name = $"{name}{InteractBehaviour.SPLITTER}{i}";*/
-                // we can use the name for inforamtion.
-
                 var newPlant = new Plant(blueprint, plant);
-                //newPlant.OnEarnMoney += playerContext.wallet.EarnMoney;
                 plants.Add(newPlant);
-                //child.name = i.ToString();
             }
         }
 
         /// <summary>
-        /// Utls ??
+        /// UTILS ??
         /// </summary>
-        /// <returns></returns>
         private Vector3 GetRandomPos() 
         {
             Vector2 rand = Random.insideUnitCircle * dispersal;
-            return new Vector3(rand.x, 0f, rand.y) + prefab.transform.position;
+            return new Vector3(rand.x, 0f, rand.y) + plantPrefab.transform.position;
         }
 
-        public override void Disable()
-        {
-            base.Disable();
-            plants.ForEach(x => x.Dispose());
-        }
-
+        public void Dispose() => plants.ForEach(x => x.Dispose());
         public Plant GetPlant(int index) => plants[index];
     }
 }

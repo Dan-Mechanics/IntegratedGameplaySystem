@@ -6,6 +6,10 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// I wanna use this for input and config loading.
     /// CREDIT: HKU CLASSES.
+    /// 
+    /// Perhaps i should add more stuff to the folder this is in including interfaces but ok.
+    /// maybe then it makes it sligjhtly more clear which things use this right. yeah.
+    /// but thats for later now i just wanna make the plants work in general.
     /// </summary>
     public static class ServiceLocator<T>
     {

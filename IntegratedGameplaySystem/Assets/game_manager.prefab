@@ -54,4 +54,5 @@ MonoBehaviour:
     interactionRaycast: {fileID: 11400000, guid: 2968f1d98c793454380570b033841c3c, type: 2}
     movementSettings: {fileID: 11400000, guid: 5392de7aa253c8d4fac36bc0a07a098f, type: 2}
     groundedConfiguration: {fileID: 11400000, guid: 664d217798bf1864d971d43b07110977, type: 2}
+    cameraSettingsFPS: {fileID: 11400000, guid: 4206347f8887dd1458e309f68387717c, type: 2}
     bindingsConfig: {fileID: 11400000, guid: 656bb6f3a2ac7ba48964d350c81465ad, type: 2}

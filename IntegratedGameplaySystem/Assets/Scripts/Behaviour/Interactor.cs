@@ -1,7 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
+using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
@@ -44,7 +42,7 @@ namespace IntegratedGameplaySystem
 
         private void TryInteractWithSomething()
         {
-            Debug.Log(nameof(TryInteractWithSomething));
+            //Debug.Log(nameof(TryInteractWithSomething));
             
             Transform hit = raycaster.Raycast(cam.position, cam.forward);
 

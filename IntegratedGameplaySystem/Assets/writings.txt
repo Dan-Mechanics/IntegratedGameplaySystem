@@ -1,3 +1,11 @@
+i basicalyl want some plots of each type of plant
+and then i want a button at the edge of the plot to make it watered
+or somethign which gives you more money but also costs money.
+isWEt increases the growth odds and then if iswet we have some cute particle above it
+and then if you buy the upgrade for like 100 you make the whole plot wet,
+this gives the game some replayable. consider that the game takes like 2 minutes to finish right.
+stress test: R to reset the game a buncha times and it will crash if u have memory leaks.
+
 funny idea: make like so that you have some selectable plant layer
 and not selectable and make it so all the plant switch layers when the 
 player selects a certain plant right so we dont have infinite layers 

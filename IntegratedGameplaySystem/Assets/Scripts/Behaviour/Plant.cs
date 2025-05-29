@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// Give this plant an Ipositioner that positions it according to some rules ya know?
+    /// I want this to be able to work with plots instead of patches.
+    /// </summary>
     public class Plant : IStartable, IInteractable, IDisposable
     {
         public const string PLANT_PREFAB_NAME = "plant";

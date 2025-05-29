@@ -10,7 +10,7 @@ namespace IntegratedGameplaySystem
     /// input
     /// world
     /// </summary>
-    public class Interactor : IStartable, IDisposable
+    public class Interactor : IStartable, IFixedUpdatable, IDisposable
     {
         private readonly Raycaster raycaster;
         private readonly Transform cam;
@@ -35,12 +35,7 @@ namespace IntegratedGameplaySystem
             inputService.GetInputSource(PlayerAction.PrimaryFire).OnDown += Interact;
         }
 
-        /*public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-
-            Hover();
-        }*/
+        public void FixedUpdate() => Hover();
 
         private void Interact()
         {
@@ -49,24 +44,18 @@ namespace IntegratedGameplaySystem
             if (!hit)
                 return;
 
-            worldService.GetComponent<IInteractable>(hit.gameObject).Interact();
+            worldService.GetComponent<IInteractable>(hit.root.gameObject).Interact();
         }
 
-        /*private void Hover()
+        private void Hover()
         {
             Transform hit = raycaster.Raycast(cam.position, cam.forward);
 
             if (!hit)
                 return;
 
-            displayBehaviour.WriteText(hit.name);
+            Debug.Log(hit.name + Time.time);
         }
-
-        public override void Disable()
-        {
-            base.Disable();
-            ServiceLocator<IInputService>.Locate().GetAction(PlayerAction.PrimaryFire).OnDown -= Interact;
-        }*/
 
         public void Dispose()
         {

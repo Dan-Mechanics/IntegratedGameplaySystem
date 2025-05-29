@@ -10,9 +10,9 @@ namespace IntegratedGameplaySystem
     public class PlayerContext : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
         public const string PLAYER_PREFAB_NAME = "player";
+        private readonly IPlayerInput playerInput = new KeyboardSource();
         
         private Transform eyes;
-        private readonly PlayerInput playerInput = new PlayerInput();
         private ForcesMovement movement;
         private MouseMovement mouseMovement;
         private CameraHandler cameraHandler;
@@ -21,21 +21,21 @@ namespace IntegratedGameplaySystem
         {
             IAssetService assets = ServiceLocator<IAssetService>.Locate();
 
-            Transform player = Utils.SpawnPrefab(assets.GetByAgreedName(PLAYER_PREFAB_NAME)).transform;
+            SceneObject player = new SceneObject(PLAYER_PREFAB_NAME);
             PlayerSettings settings = assets.GetByType<PlayerSettings>();
 
             eyes = new GameObject("eyes").transform;
-            eyes.SetParent(player);
+            eyes.SetParent(player.transform);
             eyes.localPosition = Vector3.up * settings.eyesHeight;
 
-            movement = new ForcesMovement(player, eyes, settings);
-            mouseMovement = new MouseMovement(eyes, player, settings.sens);
+            movement = new ForcesMovement(player.transform, eyes, settings);
+            mouseMovement = new MouseMovement(eyes, player.transform, settings.sens);
             cameraHandler = new CameraHandler(Camera.main.transform);
         }
 
         public void Update()
         {
-            mouseMovement.Update(playerInput.GetMouseInput());
+            mouseMovement.Update(playerInput.GetLookingInput());
 
             cameraHandler.UpdateRot(eyes.rotation);
             cameraHandler.Update();
@@ -43,7 +43,7 @@ namespace IntegratedGameplaySystem
 
         public void FixedUpdate()
         {
-            movement.DoMovement(playerInput.Vertical(), playerInput.Horizontal());
+            movement.DoMovement(playerInput.GetVertical(), playerInput.GetHorizontal());
         }
 
         public void LateFixedUpdate()

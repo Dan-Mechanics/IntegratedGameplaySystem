@@ -25,12 +25,15 @@ MonoBehaviour:
   - key: D
     playerAction: 5
     keyCode: 100
-  - key: Mouse1
+  - key: Mouse0
     playerAction: 1
     keyCode: 324
+  - key: Mouse1
+    playerAction: 1
+    keyCode: 114
   - key: Escape
     playerAction: 7
-    keyCode: 324
+    keyCode: 27
   - key: R
     playerAction: 6
-    keyCode: 324
+    keyCode: 114

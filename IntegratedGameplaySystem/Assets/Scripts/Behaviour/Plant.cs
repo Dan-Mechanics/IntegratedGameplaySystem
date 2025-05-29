@@ -15,9 +15,10 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// flyweight.
         /// </summary>
-        private PlantSpeciesProfile profile;
+        private PlantSpeciesProfile blueprint;
         private int progression;
 
+        private SceneObject sceneObject;
         //private bool isWet = false; 
         private MeshRenderer[] meshRenderers;
         private SphereCollider sphereCollider;
@@ -28,9 +29,9 @@ namespace IntegratedGameplaySystem
         /// If u gonna makethis solid do it in da start pls.
         /// I doubt the reviewers would notice.
         /// </summary>
-        public Plant(PlantSpeciesProfile profile)
+        public Plant(PlantSpeciesProfile blueprint)
         {
-            this.profile = profile;
+            this.blueprint = blueprint;
             EventManager.AddListener(Occasion.TICK, Tick);
             /*GameObject go = Utils.SpawnPrefab(prefab);
 
@@ -48,6 +49,8 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             GameObject go = Utils.SpawnPrefab(ServiceLocator<IAssetService>.Locate().GetByAgreedName(PLANT_PREFAB_NAME));
+            go.transform.position = Utils.GetRandomFlatPos(go.transform.position, blueprint.dispersal);
+            go.name = blueprint.name;
 
             // You could add some funny scale variation hereo n the meshrenderer.
 
@@ -65,11 +68,11 @@ namespace IntegratedGameplaySystem
         private void Tick()
         {
             // 1 in 7 ?
-            if (!Utils.OneIn(7))
+            if (!Utils.OneIn(blueprint.growOdds))
                 return;
 
             progression++;
-            progression = Mathf.Clamp(progression, 0, profile.materials.Length - 1);
+            progression = Mathf.Clamp(progression, 0, blueprint.materials.Length - 1);
             Refresh();
         }
 
@@ -77,10 +80,10 @@ namespace IntegratedGameplaySystem
         {
             for (int i = 0; i < meshRenderers.Length; i++)
             {
-                meshRenderers[i].material = profile.materials[progression];
+                meshRenderers[i].material = blueprint.materials[progression];
             }
 
-            sphereCollider.enabled = progression >= profile.materials.Length - 1;
+            sphereCollider.enabled = progression >= blueprint.materials.Length - 1;
         }
 
         public void Interact()
@@ -88,7 +91,7 @@ namespace IntegratedGameplaySystem
             // cant cut when full.
             /*if (progression < blueprint.materials.Length - 1)
                 return;*/
-
+            Debug.Log("plant happy" + Time.time);
             progression = 0;
             //OnEarnMoney?.Invoke(1 * (isWet ? 2 : 1));
             Refresh();

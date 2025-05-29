@@ -15,8 +15,11 @@ namespace IntegratedGameplaySystem
     /// you need to make this work for the new shit.
     /// 
     /// and then we add another alyer of abstraction onto this AGIAN !!! 
+    /// 
+    /// MAYBE MAKE THIS WORK WITH INTERFACE SO WE CAN ABSTRACT OUT CONTROLLERS AND SUCH???
+    /// NAH ??
     /// </summary>
-    public class PlayerInput
+    public class KeyboardSource : IPlayerInput
     {
         //private readonly IInputService inputService;
         
@@ -25,7 +28,7 @@ namespace IntegratedGameplaySystem
         private readonly InputSource left;
         private readonly InputSource right;
 
-        public PlayerInput()
+        public KeyboardSource()
         {
             IInputService inputService = ServiceLocator<IInputService>.Locate();
 
@@ -40,7 +43,7 @@ namespace IntegratedGameplaySystem
         private void OnLeft(bool value) => left = value;
         private void OnRight(bool value) => right = value;*/
 
-        public float Vertical() 
+        public float GetVertical() 
         {
             float z = 0f;
 
@@ -53,7 +56,7 @@ namespace IntegratedGameplaySystem
             return z;
         }
 
-        public float Horizontal()
+        public float GetHorizontal()
         {
             float x = 0f;
 
@@ -66,7 +69,7 @@ namespace IntegratedGameplaySystem
             return x;
         }
 
-        public Vector2 GetMouseInput() 
+        public Vector2 GetLookingInput() 
         {
             return new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         }

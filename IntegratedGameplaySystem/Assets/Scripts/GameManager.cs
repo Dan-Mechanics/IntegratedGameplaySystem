@@ -37,15 +37,11 @@ namespace IntegratedGameplaySystem
                 new PlayerContext(),
                 new Interactor(),
                 new EasyDebug(),
+                new TickClock()
             };
 
-            // !COUPLING !!!!! AVOID !!
-            // IM DOING THIS FOR PERFOAMCNE? DOES IT MATTER ???
-            GameObject plantPrefab = assets.GetByAgreedName(Plant.PLANT_PREFAB_NAME);
+            // !PERFORMANCE
             List<PlantSpeciesProfile> profiles = assets.GetCollectionType<PlantSpeciesProfile>();
-
-            //Debug.Log(profiles != null);
-
             for (int i = 0; i < profiles.Count; i++)
             {
                 for (int j = 0; j < profiles[i].plantCount; j++)

@@ -1,3 +1,7 @@
+dont forget that you need to write documentation 
+and make a uml right but finish the game first is important i think.
+know you dont have infitie time, but this shit is just soooo fun #cool-coding.
+
 try the idea of the img_resource.load right.
 
 random: for the player, you can also make it that:

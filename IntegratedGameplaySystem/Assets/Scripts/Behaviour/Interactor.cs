@@ -32,19 +32,20 @@ namespace IntegratedGameplaySystem
 
         public void Start() 
         {
-            inputService.GetInputSource(PlayerAction.PrimaryFire).OnDown += Interact;
+            inputService.GetInputSource(PlayerAction.Interact).OnDown += TryInteractWithSomething;
         }
 
         public void FixedUpdate() => Hover();
 
-        private void Interact()
+        private void TryInteractWithSomething()
         {
             Transform hit = raycaster.Raycast(cam.position, cam.forward);
 
             if (!hit)
                 return;
-
-            worldService.GetComponent<IInteractable>(hit.root.gameObject).Interact();
+            
+            //worldService.GetComponent<IInteractable>(hit.root.gameObject).Interact();
+            worldService.GetComponent<IInteractable>(hit.gameObject).Interact();
         }
 
         private void Hover()
@@ -59,7 +60,7 @@ namespace IntegratedGameplaySystem
 
         public void Dispose()
         {
-            inputService.GetInputSource(PlayerAction.PrimaryFire).OnDown -= Interact;
+            inputService.GetInputSource(PlayerAction.Interact).OnDown -= TryInteractWithSomething;
         }
     }
 }

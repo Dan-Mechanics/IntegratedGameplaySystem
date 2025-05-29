@@ -1,6 +1,21 @@
+todos:
+UI
+Wallet
+Wallet yapping to UI or other way around rather
+Place to dumb crop
+Upgrades
+Timer
+WASD tooltip ??
+
+i dont really know the creative solution for 
+the UI yet tho but i think its gonna be peak lowkey, just see.
+
 dont forget that you need to write documentation 
 and make a uml right but finish the game first is important i think.
 know you dont have infitie time, but this shit is just soooo fun #cool-coding.
+
+i wanna do input memes config and all that jazz
+and yes i have time for it because im goated.
 
 try the idea of the img_resource.load right.
 

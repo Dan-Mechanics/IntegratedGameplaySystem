@@ -14,7 +14,8 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            Debug.Log(name + nameof(SceneSetup));
+            Debug.Log(name);
+
             Physics.simulationMode = SimulationMode.Script;
             Time.fixedDeltaTime = 1f / fixedUpdatesPerSecond;
             Application.targetFrameRate = maxFPS;

@@ -10,12 +10,17 @@ namespace IntegratedGameplaySystem
     public class PlayerContext : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
         public const string PLAYER_PREFAB_NAME = "player";
-        private readonly IPlayerInput playerInput = new KeyboardSource();
+        private readonly IPlayerInput playerInput;
         
         private Transform eyes;
         private ForcesMovement movement;
         private MouseMovement mouseMovement;
         private CameraHandler cameraHandler;
+
+        public PlayerContext(IPlayerInput playerInput)
+        {
+            this.playerInput = playerInput;
+        }
 
         public void Start()
         {

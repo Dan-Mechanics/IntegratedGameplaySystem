@@ -16,9 +16,10 @@ namespace IntegratedGameplaySystem
         private readonly Dictionary<PlayerAction, InputSource> conversion = new();
         private readonly INewBindingRule newBindingRule;
 
-        public InputHandler(INewBindingRule newBindingRule)
+        public InputHandler(INewBindingRule newBindingRule, IBindingsSource source)
         {
             this.newBindingRule = newBindingRule;
+            source.GetBindings().ForEach(x => AddBinding(x));
 
             for (int i = 0; i < Enum.GetValues(typeof(PlayerAction)).Length; i++)
             {
@@ -35,7 +36,7 @@ namespace IntegratedGameplaySystem
                 return;
 
             bindings.Add(binding);
-            Debug.Log($"added binding {binding.keyCode}");
+            Debug.Log($"added binding {binding.Log()}");
         }
 
         public void RemoveBinding(Binding binding) => bindings.Remove(binding);

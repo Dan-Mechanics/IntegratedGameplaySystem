@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
@@ -9,12 +7,14 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class SceneObject
     {
-        public GameObject gameObject;
-        public Transform transform;
+        public readonly GameObject gameObject;
+        public readonly Transform transform;
 
         public SceneObject(string prefabName)
         {
             gameObject = Utils.SpawnPrefab(ServiceLocator<IAssetService>.Locate().GetByAgreedName(prefabName));
+            gameObject.name = prefabName;
+
             transform = gameObject.transform;
         }
     }

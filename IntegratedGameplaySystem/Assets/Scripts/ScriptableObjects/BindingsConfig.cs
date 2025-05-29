@@ -9,13 +9,13 @@ namespace IntegratedGameplaySystem
     /// Temp solution to TXT file vibes.
     /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(BindingsConfig), fileName = "New " + nameof(BindingsConfig))]
-    public class BindingsConfig : ScriptableObject
+    public class BindingsConfig : ScriptableObject, IBindingsSource
     {
         public List<Binding> bindings;
 
         public List<Binding> GetBindings() 
         {
-            bindings.ForEach(x => x.keyCode = (KeyCode)Enum.Parse(typeof(KeyCode), x.key));
+            bindings.ForEach(x => x.ProcessKeyString());
             return bindings;
         }
     }

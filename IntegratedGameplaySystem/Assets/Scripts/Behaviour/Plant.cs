@@ -3,25 +3,19 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// Unique.
-    /// </summary>
     public class Plant : IStartable, IInteractable, IDisposable
     {
         public const string PLANT_PREFAB_NAME = "plant";
         
-        //public event Action<int> OnEarnMoney;
-        
-        /// <summary>
-        /// flyweight.
-        /// </summary>
-        private PlantSpeciesProfile blueprint;
-        private int progression;
+        public event Action<bool> OnCollect;
 
-        private SceneObject sceneObject;
-        //private bool isWet = false; 
-        private MeshRenderer[] meshRenderers;
-        private SphereCollider sphereCollider;
+        private readonly PlantSpeciesProfile blueprint;
+        private readonly SceneObject sceneObject;
+        private readonly MeshRenderer[] meshRenderers;
+        private readonly SphereCollider sphereCollider;
+
+        private int progression;
+        private bool watered;
 
         /// <summary>
         /// This is kinda nutty becasue we want to save load time but ok,
@@ -32,32 +26,25 @@ namespace IntegratedGameplaySystem
         public Plant(PlantSpeciesProfile blueprint)
         {
             this.blueprint = blueprint;
-            EventManager.AddListener(Occasion.TICK, Tick);
-            /*GameObject go = Utils.SpawnPrefab(prefab);
 
-            // You could add some funny scale variation hereo n the meshrenderer.
+            sceneObject = new SceneObject(PLANT_PREFAB_NAME);
+            sceneObject.gameObject.name = blueprint.name;
 
-            sphereCollider = go.AddComponent<SphereCollider>();
-            meshRenderers = go.GetComponentsInChildren<MeshRenderer>();
-            Refresh();
-
-            // we could ahve it that it gives refernece to this.
-            // !PERFORMANCE
-            ServiceLocator<IWorldService>.Locate().Add(go, this);*/
+            // You could add some funny scale variation here in the MeshRenderer !!
+            sphereCollider = sceneObject.gameObject.AddComponent<SphereCollider>();
+            meshRenderers = sceneObject.gameObject.GetComponentsInChildren<MeshRenderer>();
         }
 
         public void Start()
         {
-            GameObject go = Utils.SpawnPrefab(ServiceLocator<IAssetService>.Locate().GetByAgreedName(PLANT_PREFAB_NAME));
-            go.transform.position = Utils.GetRandomFlatPos(go.transform.position, blueprint.dispersal);
-            go.name = blueprint.name;
+            sceneObject.transform.position += Utils.GetRandomFlatPos(blueprint.dispersal);
 
-            // You could add some funny scale variation hereo n the meshrenderer.
+            sceneObject.transform.Rotate(Vector3.up * UnityEngine.Random.Range(0f, 360f), Space.Self);
+            //sceneObject.transform.localScale = Vector3.one * Random.Range(0.9f, 1.1f);
 
-            sphereCollider = go.AddComponent<SphereCollider>();
-            meshRenderers = go.GetComponentsInChildren<MeshRenderer>();
+            ServiceLocator<IWorldService>.Locate().Add(sceneObject.gameObject, this);
+            EventManager.AddListener(Occasion.TICK, Tick);
             Refresh();
-            ServiceLocator<IWorldService>.Locate().Add(go, this);
         }
 
         public void Dispose()
@@ -67,7 +54,6 @@ namespace IntegratedGameplaySystem
 
         private void Tick()
         {
-            // 1 in 7 ?
             if (!Utils.OneIn(blueprint.growOdds))
                 return;
 
@@ -86,15 +72,16 @@ namespace IntegratedGameplaySystem
             sphereCollider.enabled = progression >= blueprint.materials.Length - 1;
         }
 
+        /// <summary>
+        /// We should not be able to interact with this if not full-grown
+        /// but i dont do protective coding, i would rather instantly find bugs right.
+        /// </summary>
         public void Interact()
         {
-            // cant cut when full.
-            /*if (progression < blueprint.materials.Length - 1)
-                return;*/
-            Debug.Log("plant happy" + Time.time);
             progression = 0;
-            //OnEarnMoney?.Invoke(1 * (isWet ? 2 : 1));
             Refresh();
+
+            OnCollect?.Invoke(watered);
         }
     }
 }

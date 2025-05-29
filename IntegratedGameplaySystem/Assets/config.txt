@@ -1,3 +1,7 @@
+W Forward
+S Backward
+A Left
+D Right
 Mouse0 Interact
 Mouse1 Interact
 E Interact

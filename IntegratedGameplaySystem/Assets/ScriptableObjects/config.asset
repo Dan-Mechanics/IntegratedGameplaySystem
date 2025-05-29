@@ -13,27 +13,30 @@ MonoBehaviour:
   m_Name: config
   m_EditorClassIdentifier: 
   bindings:
-  - key: W
-    playerAction: 2
+  - playerAction: 2
+    keyString: W
     keyCode: 119
-  - key: S
-    playerAction: 3
+  - playerAction: 3
+    keyString: S
     keyCode: 115
-  - key: A
-    playerAction: 4
+  - playerAction: 4
+    keyString: A
     keyCode: 97
-  - key: D
-    playerAction: 5
+  - playerAction: 5
+    keyString: D
     keyCode: 100
-  - key: Mouse0
-    playerAction: 1
+  - playerAction: 1
+    keyString: Mouse0
     keyCode: 324
-  - key: Mouse1
-    playerAction: 1
+  - playerAction: 1
+    keyString: Mouse1
     keyCode: 114
-  - key: Escape
-    playerAction: 7
+  - playerAction: 1
+    keyString: E
+    keyCode: 114
+  - playerAction: 7
+    keyString: Escape
     keyCode: 27
-  - key: R
-    playerAction: 6
+  - playerAction: 6
+    keyString: R
     keyCode: 114

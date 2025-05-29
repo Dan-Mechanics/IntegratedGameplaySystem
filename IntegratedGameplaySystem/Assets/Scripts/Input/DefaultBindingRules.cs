@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// The cool thing is you can change these rules with
+    /// different classes right.
+    /// </summary>
     public class DefaultBindingRules : INewBindingRule
     {
         public bool AllowBinding(List<Binding> bindings, Binding binding)

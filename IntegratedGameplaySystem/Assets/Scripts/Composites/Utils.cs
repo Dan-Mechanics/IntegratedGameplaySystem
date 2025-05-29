@@ -19,10 +19,15 @@ namespace IntegratedGameplaySystem
             return go;
         }
 
-        public static Vector3 GetRandomFlatPos(Vector3 offset, float spread)
+        public static Vector3 GetRandomFlatPos(float spread, float y = 0f)
         {
             Vector2 rand = Random.insideUnitCircle * spread;
-            return new Vector3(rand.x, 0f, rand.y) + offset;
+            return new Vector3(rand.x, y, rand.y);
+        }
+
+        public static T StringToEnum<T>(string str) 
+        {
+            return (T)System.Enum.Parse(typeof(T), str);
         }
 
         /*[System.Obsolete]

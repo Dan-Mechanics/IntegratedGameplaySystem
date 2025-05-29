@@ -27,39 +27,33 @@ namespace IntegratedGameplaySystem
         {
             sceneSetup.Start();
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
+
             ServiceLocator<IAssetService>.Provide(assets);
-            InitializeInput(assets.GetByType<BindingsConfig>());
             ServiceLocator<IWorldService>.Provide(new GameWorld());
+
+            IBindingsSource bindings = assets.GetByType<BindingsConfig>();
+            ServiceLocator<IInputService>.Provide(new InputHandler(new DefaultBindingRules(), bindings));
 
             List<object> behaviours = new List<object>
             {
                 ServiceLocator<IInputService>.Locate(),
-                new PlayerContext(),
+                new PlayerContext(new KeyboardSource()),
                 new Interactor(),
                 new EasyDebug(),
                 new TickClock()
             };
 
-            // !PERFORMANCE
             List<PlantSpeciesProfile> profiles = assets.GetCollectionType<PlantSpeciesProfile>();
             for (int i = 0; i < profiles.Count; i++)
             {
                 for (int j = 0; j < profiles[i].plantCount; j++)
                 {
+                    // !PERFORMANCE
                     behaviours.Add(new Plant(profiles[i]));
                 }
             }
 
             heart.Setup(behaviours);
-        }
-
-        private void InitializeInput(BindingsConfig bindingsConfig)
-        {
-            InputHandler inputHandler = new InputHandler(new DefaultBindingRules());
-            List<Binding> bindings = bindingsConfig.GetBindings();
-            bindings.ForEach(x => inputHandler.AddBinding(x));
-
-            ServiceLocator<IInputService>.Provide(inputHandler);
         }
     }
 }

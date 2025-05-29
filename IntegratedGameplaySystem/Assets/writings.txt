@@ -6,6 +6,12 @@ Place to dumb crop
 Upgrades
 Timer
 WASD tooltip ??
+gotta seperate those itnerfaces / move them into their folders.
+
+I need to dream up a way to handle the money and total time
+basically the main question is the uI, do we get shit from the ui canvas
+or do we basicaly make shit isnite of it, maybe i should make some useful thing
+for spawning UI finally because it is always difficult.
 
 i dont really know the creative solution for 
 the UI yet tho but i think its gonna be peak lowkey, just see.

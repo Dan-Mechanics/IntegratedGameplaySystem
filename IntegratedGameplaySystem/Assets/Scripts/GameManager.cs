@@ -40,7 +40,7 @@ namespace IntegratedGameplaySystem
                 inputService,
                 new PlayerMovement(new KeyboardSource()),
                 new Interactor(),
-                new EasyDebug(),
+                new TestingFeatures(),
                 new TickClock()
             };
 

@@ -29,6 +29,7 @@ namespace IntegratedGameplaySystem
 
         /// <summary>
         /// It would be cool if these rules worked with a func<> type beat.
+        /// But for now i like the interface.
         /// </summary>
         public void AddBinding(Binding binding)
         {

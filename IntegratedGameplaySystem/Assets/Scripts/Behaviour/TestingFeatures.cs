@@ -1,15 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace IntegratedGameplaySystem
 {
-    public class EasyDebug : IStartable, IDisposable
+    public class TestingFeatures : IStartable, IDisposable
     {
         private readonly IInputService inputService;
 
-        public event System.Action<object> OnDispose;
-
-        public EasyDebug()
+        public TestingFeatures()
         {
             inputService = ServiceLocator<IInputService>.Locate();
         }
@@ -24,7 +23,6 @@ namespace IntegratedGameplaySystem
         {
             inputService.GetInputSource(PlayerAction.Reload).OnDown -= Reload;
             inputService.GetInputSource(PlayerAction.Escape).OnDown -= Quit;
-            OnDispose?.Invoke(this);
         }
 
         private void Reload()

@@ -31,7 +31,7 @@ namespace IntegratedGameplaySystem
             ServiceLocator<IAssetService>.Provide(assets);
             ServiceLocator<IWorldService>.Provide(new GameWorld());
 
-            IInputService inputService = new InputHandler(new DefaultBindingRules(), new ConfigTextFile());
+            IInputService inputService = new InputHandler(new ChillBindingRules(), new ConfigTextFile());
             //IInputService inputService = new InputHandler(new DefaultBindingRules(), assets.GetByType<BindingsConfig>());
             ServiceLocator<IInputService>.Provide(inputService);
 

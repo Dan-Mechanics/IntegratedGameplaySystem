@@ -14,11 +14,11 @@ namespace IntegratedGameplaySystem
     {
         private readonly List<Binding> bindings = new();
         private readonly Dictionary<PlayerAction, InputSource> conversion = new();
-        private readonly INewBindingRule newBindingRule;
+        private readonly INewBindingRules newBindingRules;
 
-        public InputHandler(INewBindingRule newBindingRule, IBindingsSource source)
+        public InputHandler(INewBindingRules newBindingRules, IBindingsSource source)
         {
-            this.newBindingRule = newBindingRule;
+            this.newBindingRules = newBindingRules;
             source.GetBindings().ForEach(x => AddBinding(x));
 
             for (int i = 0; i < Enum.GetValues(typeof(PlayerAction)).Length; i++)
@@ -33,11 +33,11 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void AddBinding(Binding binding)
         {
-            if (!newBindingRule.AllowBinding(bindings, binding))
+            if (!newBindingRules.AllowBinding(bindings, binding))
                 return;
 
             bindings.Add(binding);
-            Debug.Log($"added binding {binding.Log()}.");
+            Debug.Log($"added binding {binding}");
         }
 
         public void RemoveBinding(Binding binding) => bindings.Remove(binding);
@@ -64,11 +64,11 @@ namespace IntegratedGameplaySystem
         {
             foreach (var binding in bindings)
             {
-                // ??
-                if (!conversion.ContainsKey(binding.playerAction))
-                    continue;
+                if (Input.GetKeyDown(binding.keyCode))
+                    conversion[binding.playerAction].OnDown?.Invoke();
 
-                conversion[binding.playerAction].SetPressed(Input.GetKey(binding.keyCode));
+                if (Input.GetKeyUp(binding.keyCode))
+                    conversion[binding.playerAction].OnUp?.Invoke();
             }
         }
 

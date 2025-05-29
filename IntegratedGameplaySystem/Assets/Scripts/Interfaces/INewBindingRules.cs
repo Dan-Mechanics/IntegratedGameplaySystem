@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
-    public interface INewBindingRule
+    public interface INewBindingRules
     {
         // This is where you can define the rules for which bindings are allowed.
 
@@ -16,6 +16,6 @@ namespace IntegratedGameplaySystem
 
         // Or we have it that one key does one thing and an action can only have
         // one key associated with it, but what's the fun in that ?
-        bool AllowBinding(List<Binding> bindings, Binding binding);
+        bool AllowBinding(List<Binding> alreadyBound, Binding newBinding);
     }
 }

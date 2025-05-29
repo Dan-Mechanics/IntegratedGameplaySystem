@@ -18,6 +18,11 @@ namespace IntegratedGameplaySystem
         private readonly IWorldService worldService;
 
         /// <summary>
+        /// TEMP !! fIX
+        /// </summary>
+        public event Func<bool> CanCollect;
+
+        /// <summary>
         /// Or we could push the asset name upward.
         /// </summary>
         public Interactor()
@@ -39,6 +44,8 @@ namespace IntegratedGameplaySystem
 
         private void TryInteractWithSomething()
         {
+            Debug.Log("click");
+            
             Transform hit = raycaster.Raycast(cam.position, cam.forward);
 
             if (!hit)

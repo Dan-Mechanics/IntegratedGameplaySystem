@@ -23,7 +23,17 @@ namespace IntegratedGameplaySystem
             ProcessKeyString();
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj is not Binding other)
+                return false;
+
+            return playerAction == other.playerAction && keyCode == other.keyCode;
+        }
+
         public void ProcessKeyString() => keyCode = Utils.StringToEnum<KeyCode>(keyString);
-        public string Log() => $"{keyString} --> {keyCode} | {playerAction}";
+
+        public override int GetHashCode() => base.GetHashCode();
+        public override string ToString() => $"{keyString} --> {keyCode} | {playerAction}";
     }
 }

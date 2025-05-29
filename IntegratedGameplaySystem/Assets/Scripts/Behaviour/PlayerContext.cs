@@ -21,7 +21,7 @@ namespace IntegratedGameplaySystem
         {
             IAssetService assets = ServiceLocator<IAssetService>.Locate();
 
-            Transform player = Utils.SpawnPrefab(assets.GetByAgreedName<GameObject>(PLAYER_PREFAB_NAME)).transform;
+            Transform player = Utils.SpawnPrefab(assets.GetByAgreedName(PLAYER_PREFAB_NAME)).transform;
             PlayerSettings settings = assets.GetByType<PlayerSettings>();
 
             eyes = new GameObject("eyes").transform;

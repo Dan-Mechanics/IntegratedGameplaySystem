@@ -1,3 +1,10 @@
+
+
+random: for the player, you can also make it that:
+the player's prefab resides in the player settings right
+
+and then do the same for plant, that might be a good idea.
+
 make the assets find something based on type or name right.
 or type or obvious refernce.
 

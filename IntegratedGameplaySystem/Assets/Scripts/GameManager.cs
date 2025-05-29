@@ -32,14 +32,14 @@ namespace IntegratedGameplaySystem
             InputHandler inputHandler = InitializeInput(assets.GetByType<BindingsConfig>());
             ServiceLocator<IWorldService>.Provide(new GameWorld());
 
-            object[] behaviours = new object[]
+            List<object> behaviours = new List<object>
             {
                 inputHandler,
                 new Interactor(),
                 new EasyDebug(),
-                new PlayerContext()
-                // gotta add plants.
             };
+
+
 
             heart.Setup(behaviours);
         }

@@ -9,6 +9,9 @@ namespace IntegratedGameplaySystem
     /// keep to: YAGNI here.
     /// 
     /// IDEA: make the game world and gamecotnext one entity that also handles shit being destroyed right?
+    /// 
+    /// 
+    /// In the future i can make the object object LISt but for now this is good.
     /// </summary>
     public class GameWorld : IWorldService
     {

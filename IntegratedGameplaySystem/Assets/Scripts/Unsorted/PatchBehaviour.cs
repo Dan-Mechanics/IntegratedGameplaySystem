@@ -5,15 +5,27 @@ namespace IntegratedGameplaySystem
 {
     public class PatchBehaviour : IStartable, IDisposable
     {
-        public string name;
-        public int count;
-        public float dispersal;
-        public GameObject plantPrefab;
+        public const string PLANT_PREFAB_NAME = "plant";
 
+        private readonly string name;
+        private readonly int count;
+        private readonly float dispersal;
         private readonly List<Plant> plants = new List<Plant>();
-        
+
+        public PatchBehaviour(string name, int count, float dispersal)
+        {
+            this.name = name;
+            this.count = count;
+            this.dispersal = dispersal;
+        }
+
         public void Start()
         {
+            IWorldService world = ServiceLocator<IWorldService>.Locate();
+            IAssetService assets = ServiceLocator<IAssetService>.Locate();
+
+            GameObject prefab = assets.GetByAgreedName(PLANT_PREFAB_NAME);
+
             PlantBlueprint blueprint = new PlantBlueprint.Builder()
                 .SetName(name)
                 .SetGrowOdds(7) // inspector exposed ??
@@ -23,21 +35,22 @@ namespace IntegratedGameplaySystem
 
             for (int i = 0; i < count; i++)
             {
-                Transform plant = Utils.SpawnPrefab(plantPrefab).transform;
-                plant.position = GetRandomPos();
+                GameObject go = Utils.SpawnPrefab(prefab);
+                go.transform.position = GetRandomPos(prefab.transform.position);
 
-                var newPlant = new Plant(blueprint, plant);
-                plants.Add(newPlant);
+                Plant plant = new Plant(blueprint, go.transform);
+                plants.Add(plant);
+                world.Add(go, plant);
             }
         }
 
         /// <summary>
         /// UTILS ??
         /// </summary>
-        private Vector3 GetRandomPos() 
+        private Vector3 GetRandomPos(Vector3 offset) 
         {
             Vector2 rand = Random.insideUnitCircle * dispersal;
-            return new Vector3(rand.x, 0f, rand.y) + plantPrefab.transform.position;
+            return new Vector3(rand.x, 0f, rand.y) + offset;
         }
 
         public void Dispose() => plants.ForEach(x => x.Dispose());

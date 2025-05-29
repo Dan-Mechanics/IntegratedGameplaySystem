@@ -15,7 +15,7 @@ namespace IntegratedGameplaySystem
 
         private float timer;
 
-        public void Setup(object[] components)
+        public void Setup(List<object> components)
         {
             List<IStartable> startables = new();
             foreach (object component in components)

@@ -18,7 +18,13 @@ namespace IntegratedGameplaySystem
             go.name = prefab.name;
             return go;
         }
-        
+
+        public static Vector3 GetRandomFlatPos(Vector3 offset, float spread)
+        {
+            Vector2 rand = Random.insideUnitCircle * spread;
+            return new Vector3(rand.x, 0f, rand.y) + offset;
+        }
+
         /*[System.Obsolete]
         public static GameObject LoadPrefab(string name) 
         {

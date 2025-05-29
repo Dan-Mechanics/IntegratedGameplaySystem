@@ -1,4 +1,4 @@
-
+try the idea of the img_resource.load right.
 
 random: for the player, you can also make it that:
 the player's prefab resides in the player settings right

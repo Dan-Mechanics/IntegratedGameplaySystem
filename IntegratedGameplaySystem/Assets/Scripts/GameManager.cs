@@ -30,16 +30,29 @@ namespace IntegratedGameplaySystem
 
             sceneSetup.Start();
             InputHandler inputHandler = InitializeInput(assets.GetByType<BindingsConfig>());
-            ServiceLocator<IWorldService>.Provide(new GameWorld());
+
+            IWorldService world = new GameWorld();
+            ServiceLocator<IWorldService>.Provide(world);
 
             List<object> behaviours = new List<object>
             {
                 inputHandler,
+                new PlayerContext(),
                 new Interactor(),
                 new EasyDebug(),
             };
 
-
+            // !COUPLING !!!!! AVOID !!
+            // IM DOING THIS FOR PERFOAMCNE? DOES IT MATTER ???
+            GameObject plantPrefab = assets.GetByAgreedName(Plant.PLANT_PREFAB_NAME);
+            List<PlantSpeciesProfile> profiles = assets.GetCollectionType<PlantSpeciesProfile>();
+            for (int i = 0; i < profiles?.Count; i++)
+            {
+                for (int j = 0; j < profiles[i].plantCount; j++)
+                {
+                    behaviours.Add(new Plant(profiles[i], plantPrefab, world));
+                }
+            }
 
             heart.Setup(behaviours);
         }

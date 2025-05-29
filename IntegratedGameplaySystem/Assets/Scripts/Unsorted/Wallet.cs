@@ -3,13 +3,20 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    [Serializable]
-    public class Wallet 
+    /// <summary>
+    /// This class should respond to the events yo.
+    /// </summary>
+    public class Wallet : IDisposable
     {
         public Action<int, int> OnMoneyChanged;
         
         public int moneyToWin;
         private int money;
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
 
         public void EarnMoney(int incoming) 
         {

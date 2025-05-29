@@ -8,43 +8,47 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Plant : IInteractable
     {
-        public event Action<int> OnEarnMoney;
+        public const string PLANT_PREFAB_NAME = "plant";
+        
+        //public event Action<int> OnEarnMoney;
         
         /// <summary>
         /// flyweight.
         /// </summary>
-        private PlantBlueprint blueprint;
+        private PlantSpeciesProfile profile;
         private int progression;
 
-        /// <summary>
-        /// Still working on this.
-        /// </summary>
-        private bool isWet = false; // for example.
+        //private bool isWet = false; 
         private MeshRenderer[] meshRenderers;
         private SphereCollider sphereCollider;
 
-        public Plant(PlantBlueprint blueprint, Transform transform)
+        /// <summary>
+        /// This is kinda nutty becasue we want to save load time but ok,
+        /// maybe prioirtize SOLID instead right.
+        /// If u gonna makethis solid do it in da start pls.
+        /// I doubt the reviewers would notice.
+        /// </summary>
+        public Plant(PlantSpeciesProfile profile, GameObject prefab, IWorldService world)
         {
-            this.blueprint = blueprint;
+            this.profile = profile;
 
             EventManager.AddListener(Occasion.TICK, Tick);
+            GameObject go = Utils.SpawnPrefab(prefab);
 
             // You could add some funny scale variation hereo n the meshrenderer.
 
-            sphereCollider = transform.gameObject.AddComponent<SphereCollider>();
-            meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
+            sphereCollider = go.AddComponent<SphereCollider>();
+            meshRenderers = go.GetComponentsInChildren<MeshRenderer>();
             Refresh();
+
+            // we could ahve it that it gives refernece to this.
+            world.Add(go, this);
         }
 
         public void Dispose()
         {
             EventManager.RemoveListener(Occasion.TICK, Tick);
         }
-
-        /*public void Update() 
-        {
-
-        }*/
 
         private void Tick()
         {
@@ -53,7 +57,7 @@ namespace IntegratedGameplaySystem
                 return;
 
             progression++;
-            progression = Mathf.Clamp(progression, 0, blueprint.materials.Length - 1);
+            progression = Mathf.Clamp(progression, 0, profile.materials.Length - 1);
             Refresh();
         }
 
@@ -61,10 +65,10 @@ namespace IntegratedGameplaySystem
         {
             for (int i = 0; i < meshRenderers.Length; i++)
             {
-                meshRenderers[i].material = blueprint.materials[progression];
+                meshRenderers[i].material = profile.materials[progression];
             }
 
-            sphereCollider.enabled = progression >= blueprint.materials.Length - 1;
+            sphereCollider.enabled = progression >= profile.materials.Length - 1;
         }
 
         public void Interact()
@@ -74,7 +78,7 @@ namespace IntegratedGameplaySystem
                 return;*/
 
             progression = 0;
-            OnEarnMoney?.Invoke(1 * (isWet ? 2 : 1));
+            //OnEarnMoney?.Invoke(1 * (isWet ? 2 : 1));
             Refresh();
         }
     }

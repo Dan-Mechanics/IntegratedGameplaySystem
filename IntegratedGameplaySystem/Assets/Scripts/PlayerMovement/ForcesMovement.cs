@@ -12,8 +12,7 @@ namespace IntegratedGameplaySystem
         /// !Coupling !!
         /// Make different to camerhandler and give better name.
         /// </summary>
-        private readonly MovementSettings settings;
-        private readonly GroundedConfiguration groundedConfig;
+        private readonly PlayerSettings settings;
         private readonly Transform trans;
         private readonly Transform eyes;
         private readonly Rigidbody rb;
@@ -25,12 +24,11 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private CameraHandler.Tick currentTick;
 
-        public ForcesMovement(Transform trans, Transform eyes, GroundedConfiguration groundedConfig, MovementSettings settings)
+        public ForcesMovement(Transform trans, Transform eyes, PlayerSettings settings)
         {
             this.trans = trans;
             this.eyes = eyes;
             rb = trans.GetComponent<Rigidbody>();
-            this.groundedConfig = groundedConfig;
             this.settings = settings;
         }
 
@@ -40,7 +38,7 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void DoMovement(float vert, float hori) 
         {
-            isGrounded = GetIsGrounded(groundedConfig, trans.position);
+            isGrounded = GetIsGrounded();
 
             float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.airborneAccelMult;
             Vector3 mov = GetMovement(vert, hori, trans);
@@ -83,16 +81,16 @@ namespace IntegratedGameplaySystem
             return mov;
         }
 
-        private bool GetIsGrounded(GroundedConfiguration config, Vector3 playerPosition)
+        private bool GetIsGrounded()
         {
-            RaycastHit[] hits = Physics.SphereCastAll(playerPosition, config.radius, Vector3.down, config.reach, config.mask, QueryTriggerInteraction.Ignore);
+            RaycastHit[] hits = Physics.SphereCastAll(trans.position, settings.radius, Vector3.down, settings.reach, settings.mask, QueryTriggerInteraction.Ignore);
 
             foreach (RaycastHit hit in hits)
             {
                 if (hit.distance == 0f)
                     continue;
 
-                if (Vector3.Angle(Vector3.up, hit.normal) <= config.maxAngle)
+                if (Vector3.Angle(Vector3.up, hit.normal) <= settings.maxAngle)
                     return true;
             }
 

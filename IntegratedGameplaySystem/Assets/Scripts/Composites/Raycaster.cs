@@ -4,9 +4,9 @@ namespace IntegratedGameplaySystem
 {
     public class Raycaster
     {
-        private readonly RaycastData data;
+        private readonly RaycastSettings data;
 
-        public Raycaster(RaycastData data)
+        public Raycaster(RaycastSettings data)
         {
             this.data = data;
         }

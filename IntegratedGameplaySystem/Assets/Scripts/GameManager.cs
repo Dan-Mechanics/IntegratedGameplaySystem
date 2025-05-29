@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace IntegratedGameplaySystem
@@ -8,6 +9,12 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class GameManager : MonoBehaviour 
     {
+        public const string PLAYER = "player";
+        public const string PLANT = "plant";
+        public const string PLAYER_SETTINGS = "player_settings";
+        public const string BINDINGS = "config";
+        public const string INTERACT = "interact_raycast";
+
         [SerializeField] private SceneSetup sceneSetup = default;
         [SerializeField] private List<GameObject> scenePrefabs = default;
         [SerializeField] private Assets assets = default;
@@ -18,6 +25,7 @@ namespace IntegratedGameplaySystem
         private void Update() => heart.Update();
         private void OnDisable() => heart.Dispose();
         private void OnApplicationQuit() => EventManager.RaiseEvent(Occasion.CLOSE_GAME);
+        private void OnValidate() => CheckAssets();
 
         /// <summary>
         /// Chat I think this project is a little overengineerd but thats fun.
@@ -54,6 +62,24 @@ namespace IntegratedGameplaySystem
             ServiceLocator<IInputService>.Provide(inputHandler);
 
             return inputHandler;
+        }
+
+        private void CheckAssets() 
+        {
+            string[] paths = 
+            { 
+                PLAYER,
+                PLANT,
+                PLAYER_SETTINGS,
+                BINDINGS,
+                INTERACT  
+            };
+
+            foreach (string path in paths)
+            {
+                if (Resources.Load(path) == null)
+                    Debug.LogError($"{path} not found in resources! Please fix!");
+            }
         }
     }
 }

@@ -35,11 +35,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IAssetService
     {
-        GameObject GetPlayer();
-        RaycastData GetInteractionRaycast();
-        MovementSettings GetMovementSettings();
-        GroundedConfiguration GetGroundedConfig();
-        CameraSettingsFPS GetSettingsFPS();
-        BindingsConfig GetBindingsConfig();
+        T GetByType<T>();
+        T GetByAgreedName<T>(string name);
     }
 }

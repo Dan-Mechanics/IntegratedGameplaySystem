@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(RaycastData), fileName = "New " + nameof(RaycastData))]
-    public class RaycastData : ScriptableObject
+    [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(RaycastSettings), fileName = "New " + nameof(RaycastSettings))]
+    public class RaycastSettings : ScriptableObject
     {
         public float range;
         public LayerMask mask;

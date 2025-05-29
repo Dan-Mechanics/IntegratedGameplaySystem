@@ -17,14 +17,14 @@ namespace IntegratedGameplaySystem
         {
             IAssetService assets = ServiceLocator<IAssetService>.Locate();
             Transform player = Utils.SpawnPrefab(assets.GetPlayer()).transform;
-            CameraSettingsFPS fpsSettings = assets.GetSettingsFPS();
+            PlayerSettings settings = Resources.Load<PlayerSettings>(GameManager.PLAYER_SETTINGS);
 
             eyes = new GameObject("eyes").transform;
             eyes.SetParent(player);
-            eyes.localPosition = Vector3.up * fpsSettings.eyesHeight;
+            eyes.localPosition = Vector3.up * settings.eyesHeight;
 
-            movement = new ForcesMovement(player, eyes, assets.GetGroundedConfig(), assets.GetMovementSettings());
-            mouseMovement = new MouseMovement(eyes, player, fpsSettings.sens);
+            movement = new ForcesMovement(player, eyes, settings);
+            mouseMovement = new MouseMovement(eyes, player, settings.sens);
             cameraHandler = new CameraHandler(Camera.main.transform);
         }
 

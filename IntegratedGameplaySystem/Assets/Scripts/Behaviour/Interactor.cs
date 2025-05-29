@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 namespace IntegratedGameplaySystem
 {
@@ -15,7 +16,9 @@ namespace IntegratedGameplaySystem
         private readonly Transform cam;
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
-        
+
+        public event Action<object> OnDispose;
+
         /// <summary>
         /// Or we could push the asset name upward.
         /// </summary>

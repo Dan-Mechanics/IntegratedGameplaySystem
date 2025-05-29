@@ -1,3 +1,8 @@
+funny idea: make like so that you have some selectable plant layer
+and not selectable and make it so all the plant switch layers when the 
+player selects a certain plant right so we dont have infinite layers 
+then. so that the playerCANN only interact with what is possible bascially. #utils
+
 end check: commetns and summaires, make sure all places where subscribe you ALWAYS unsub thats important i tihnk.
 
 todos:

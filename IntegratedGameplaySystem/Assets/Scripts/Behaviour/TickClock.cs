@@ -7,7 +7,7 @@ namespace IntegratedGameplaySystem
         public float interval;
         private readonly Timer timer = new();
 
-        public TickClock(float interval = 0.5f)
+        public TickClock(float interval = 1f)
         {
             this.interval = interval;   
         }

@@ -7,6 +7,9 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class KeyboardSource : IPlayerInput
     {
+        /// <summary>
+        /// Does this deallocate ??
+        /// </summary>
         private readonly InputSource forward;
         private readonly InputSource back;
         private readonly InputSource left;

@@ -37,14 +37,14 @@ namespace IntegratedGameplaySystem
 
         public void Start() 
         {
-            inputService.GetInputSource(PlayerAction.Interact).OnDown += TryInteractWithSomething;
+            inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteractWithSomething;
         }
 
         public void FixedUpdate() => Hover();
 
         private void TryInteractWithSomething()
         {
-            Debug.Log("click");
+            Debug.Log(nameof(TryInteractWithSomething));
             
             Transform hit = raycaster.Raycast(cam.position, cam.forward);
 
@@ -67,7 +67,7 @@ namespace IntegratedGameplaySystem
 
         public void Dispose()
         {
-            inputService.GetInputSource(PlayerAction.Interact).OnDown -= TryInteractWithSomething;
+            inputService.GetInputSource(PlayerAction.Interact).onDown -= TryInteractWithSomething;
         }
     }
 }

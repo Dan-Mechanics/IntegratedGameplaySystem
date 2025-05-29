@@ -5,14 +5,15 @@ namespace IntegratedGameplaySystem
     public class InputSource
     {
         public bool IsPressed { get; private set; }
-        public Action OnDown;
-        public Action OnUp;
-        public Action<bool> OnChange;
+        public event Action<bool> OnChange;
+
+        public Action onDown;
+        public Action onUp;
 
         public InputSource()
         {
-            OnDown += Compress;
-            OnUp += Release;
+            onDown += Compress;
+            onUp += Release;
         }
 
         private void Compress() 

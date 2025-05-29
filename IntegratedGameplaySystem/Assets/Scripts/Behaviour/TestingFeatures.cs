@@ -15,14 +15,14 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            inputService.GetInputSource(PlayerAction.Reload).OnDown += Reload;
-            inputService.GetInputSource(PlayerAction.Escape).OnDown += Quit;
+            inputService.GetInputSource(PlayerAction.Reload).onDown += Reload;
+            inputService.GetInputSource(PlayerAction.Escape).onDown += Quit;
         }
 
         public void Dispose()
         {
-            inputService.GetInputSource(PlayerAction.Reload).OnDown -= Reload;
-            inputService.GetInputSource(PlayerAction.Escape).OnDown -= Quit;
+            inputService.GetInputSource(PlayerAction.Reload).onDown -= Reload;
+            inputService.GetInputSource(PlayerAction.Escape).onDown -= Quit;
         }
 
         private void Reload()

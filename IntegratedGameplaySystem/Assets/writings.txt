@@ -1,3 +1,5 @@
+end check: commetns and summaires, make sure all places where subscribe you ALWAYS unsub thats important i tihnk.
+
 todos:
 UI
 Wallet

@@ -25,18 +25,15 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private void Setup()
         {
+            sceneSetup.Start();
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
             ServiceLocator<IAssetService>.Provide(assets);
-
-            sceneSetup.Start();
-            InputHandler inputHandler = InitializeInput(assets.GetByType<BindingsConfig>());
-
-            IWorldService world = new GameWorld();
-            ServiceLocator<IWorldService>.Provide(world);
+            InitializeInput(assets.GetByType<BindingsConfig>());
+            ServiceLocator<IWorldService>.Provide(new GameWorld());
 
             List<object> behaviours = new List<object>
             {
-                inputHandler,
+                ServiceLocator<IInputService>.Locate(),
                 new PlayerContext(),
                 new Interactor(),
                 new EasyDebug(),
@@ -46,25 +43,27 @@ namespace IntegratedGameplaySystem
             // IM DOING THIS FOR PERFOAMCNE? DOES IT MATTER ???
             GameObject plantPrefab = assets.GetByAgreedName(Plant.PLANT_PREFAB_NAME);
             List<PlantSpeciesProfile> profiles = assets.GetCollectionType<PlantSpeciesProfile>();
-            for (int i = 0; i < profiles?.Count; i++)
+
+            //Debug.Log(profiles != null);
+
+            for (int i = 0; i < profiles.Count; i++)
             {
                 for (int j = 0; j < profiles[i].plantCount; j++)
                 {
-                    behaviours.Add(new Plant(profiles[i], plantPrefab, world));
+                    behaviours.Add(new Plant(profiles[i]));
                 }
             }
 
             heart.Setup(behaviours);
         }
 
-        private InputHandler InitializeInput(BindingsConfig bindingsConfig)
+        private void InitializeInput(BindingsConfig bindingsConfig)
         {
             InputHandler inputHandler = new InputHandler(new DefaultBindingRules());
             List<Binding> bindings = bindingsConfig.GetBindings();
             bindings.ForEach(x => inputHandler.AddBinding(x));
-            ServiceLocator<IInputService>.Provide(inputHandler);
 
-            return inputHandler;
+            ServiceLocator<IInputService>.Provide(inputHandler);
         }
     }
 }

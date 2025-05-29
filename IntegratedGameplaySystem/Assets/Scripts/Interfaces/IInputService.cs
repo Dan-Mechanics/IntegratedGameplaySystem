@@ -4,7 +4,10 @@ using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
-    public interface IInputService 
+    /// <summary>
+    /// Perchance add update here since thats important right.
+    /// </summary>
+    public interface IInputService : IUpdatable
     {
         InputSource GetInputSource(PlayerAction playerAction);
     }

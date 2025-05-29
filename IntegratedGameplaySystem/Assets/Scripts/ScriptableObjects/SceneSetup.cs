@@ -2,6 +2,9 @@
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// Consider making this just a class that rests in the GameManager?? idk, outsourcing CODE!! is always good.
+    /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(SceneSetup), fileName = "New " + nameof(SceneSetup))]
     public class SceneSetup : ScriptableObject, IStartable
     {

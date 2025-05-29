@@ -6,7 +6,7 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Unique.
     /// </summary>
-    public class Plant : IInteractable
+    public class Plant : IStartable, IInteractable, IDisposable
     {
         public const string PLANT_PREFAB_NAME = "plant";
         
@@ -28,12 +28,11 @@ namespace IntegratedGameplaySystem
         /// If u gonna makethis solid do it in da start pls.
         /// I doubt the reviewers would notice.
         /// </summary>
-        public Plant(PlantSpeciesProfile profile, GameObject prefab, IWorldService world)
+        public Plant(PlantSpeciesProfile profile)
         {
             this.profile = profile;
-
             EventManager.AddListener(Occasion.TICK, Tick);
-            GameObject go = Utils.SpawnPrefab(prefab);
+            /*GameObject go = Utils.SpawnPrefab(prefab);
 
             // You could add some funny scale variation hereo n the meshrenderer.
 
@@ -42,7 +41,20 @@ namespace IntegratedGameplaySystem
             Refresh();
 
             // we could ahve it that it gives refernece to this.
-            world.Add(go, this);
+            // !PERFORMANCE
+            ServiceLocator<IWorldService>.Locate().Add(go, this);*/
+        }
+
+        public void Start()
+        {
+            GameObject go = Utils.SpawnPrefab(ServiceLocator<IAssetService>.Locate().GetByAgreedName(PLANT_PREFAB_NAME));
+
+            // You could add some funny scale variation hereo n the meshrenderer.
+
+            sphereCollider = go.AddComponent<SphereCollider>();
+            meshRenderers = go.GetComponentsInChildren<MeshRenderer>();
+            Refresh();
+            ServiceLocator<IWorldService>.Locate().Add(go, this);
         }
 
         public void Dispose()

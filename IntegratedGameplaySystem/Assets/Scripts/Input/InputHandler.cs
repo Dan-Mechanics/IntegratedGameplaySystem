@@ -10,7 +10,7 @@ namespace IntegratedGameplaySystem
     /// It doesnt make sense because we can add and remove bindings dynamically but then if something is bound to it you have uno issue.
     /// No, it still makes sense.
     /// </summary>
-    public class InputHandler : IInputService, IUpdatable
+    public class InputHandler : IInputService
     {
         private readonly List<Binding> bindings = new();
         private readonly Dictionary<PlayerAction, InputSource> conversion = new();

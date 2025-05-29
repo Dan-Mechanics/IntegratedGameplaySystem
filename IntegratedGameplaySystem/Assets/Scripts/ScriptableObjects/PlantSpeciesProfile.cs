@@ -15,9 +15,10 @@ namespace IntegratedGameplaySystem
         public Sprite sprite;
         public Material[] materials;
 
-        [ContextMenu("wdwd")]
-        public void Yeet()
+        private void OnValidate() 
         {
+            Debug.Log(name.ToUpper());
+            
             for (int i = 0; i < materials.Length; i++)
             {
                 materials[i] = Resources.Load<Material>($"{name}/stage_{i + 1}_mat");
@@ -25,10 +26,8 @@ namespace IntegratedGameplaySystem
 
             // or we say sample the last stage and make all the stuff sprites
             // idk if that will break the material tho ...
-            //sprite = Resources.Load<Sprite>($"{name}/sprite.png");
-            sprite = Resources.Load<Sprite>($"{name}/stage_5_image.png");
+            //sprite = Resources.Load<Sprite>($"{name}/sprite");
+            sprite = Resources.Load<Sprite>($"{name}/stage_{materials.Length}_img");
         }
-
-        private void OnValidate() => Yeet();
     }
 }

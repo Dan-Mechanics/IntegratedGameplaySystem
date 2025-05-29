@@ -32,7 +32,7 @@ namespace IntegratedGameplaySystem
             startables.Clear();
         }
 
-        private void DestroyComponent(object component)
+        private void DestroyComponent(object component, GameObject go)
         {
             Remove(component, updatables);
             Remove(component, fixedUpdatables);
@@ -46,6 +46,8 @@ namespace IntegratedGameplaySystem
 
             if (component is IDestroyable destroyable)
                 destroyable.OnDestroy -= DestroyComponent;
+
+            ServiceLocator<IWorldService>.Locate().Remove(go);
         }
 
         private void Sort<T>(object component, List<T> list)

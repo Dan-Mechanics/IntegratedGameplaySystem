@@ -19,6 +19,9 @@ namespace IntegratedGameplaySystem
         private void OnDisable() => heart.Dispose();
         private void OnApplicationQuit() => EventManager.RaiseEvent(Occasion.CLOSE_GAME);
 
+        /// <summary>
+        /// Chat I think this project is a little overengineerd but thats fun.
+        /// </summary>
         private void Setup()
         {
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
@@ -31,7 +34,7 @@ namespace IntegratedGameplaySystem
             // TEST:
             ServiceLocator<IWorldService>.Locate().Remove(gameObject);
 
-            object[] components = new object[]
+            object[] behaviours = new object[]
             {
                 inputHandler,
                 new Interactor(),
@@ -40,7 +43,7 @@ namespace IntegratedGameplaySystem
                 // gotta add plants.
             };
 
-            heart.Setup(components);
+            heart.Setup(behaviours);
         }
 
         private InputHandler InitializeInput(BindingsConfig bindingsConfig)

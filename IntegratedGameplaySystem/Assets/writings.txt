@@ -1,3 +1,5 @@
+make all the directory of the proejct nice at the end yo.
+
 add: txt shit config funny, seperate class
 add: cool assets ?? in the sense that you drag object because that doesnt break when you change the shit right.
 

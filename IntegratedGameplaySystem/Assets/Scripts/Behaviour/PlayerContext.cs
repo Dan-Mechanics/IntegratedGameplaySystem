@@ -7,11 +7,6 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class PlayerContext : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
-        /// <summary>
-        /// EXPORT TO SOME ASSET !!
-        /// </summary>
-        public const float EYES_HEIGHT = 0.2f;
-
         private Transform eyes;
         private readonly PlayerInput playerInput = new PlayerInput();
         private ForcesMovement movement;
@@ -20,15 +15,16 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            var player = new SceneObject(ServiceLocator<IAssetService>.Locate().GetPlayer());
-            Rigidbody rb = player.transform.GetComponent<Rigidbody>();
+            IAssetService assets = ServiceLocator<IAssetService>.Locate();
+            Transform player = Utils.SpawnPrefab(assets.GetPlayer()).transform;
+            CameraSettingsFPS fpsSettings = assets.GetSettingsFPS();
 
             eyes = new GameObject("eyes").transform;
-            eyes.SetParent(player.transform);
-            eyes.localPosition = Vector3.up * EYES_HEIGHT;
+            eyes.SetParent(player);
+            eyes.localPosition = Vector3.up * fpsSettings.eyesHeight;
 
-            movement = new ForcesMovement(player.transform, eyes, rb);
-            mouseMovement = new MouseMovement(eyes, player.transform);
+            movement = new ForcesMovement(player, eyes, assets.GetGroundedConfig(), assets.GetMovementSettings());
+            mouseMovement = new MouseMovement(eyes, player, fpsSettings.sens);
             cameraHandler = new CameraHandler(Camera.main.transform);
         }
 

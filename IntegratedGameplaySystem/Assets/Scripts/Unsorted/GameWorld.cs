@@ -33,6 +33,6 @@ namespace IntegratedGameplaySystem
             world.Add(go, obj);
         }
 
-        public void Remove(GameObject go) { world.Remove(go); }
+        public void Remove(GameObject go) => world.Remove(go);
     }
 }

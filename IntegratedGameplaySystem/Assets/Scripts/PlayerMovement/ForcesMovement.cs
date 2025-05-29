@@ -12,25 +12,26 @@ namespace IntegratedGameplaySystem
         /// !Coupling !!
         /// Make different to camerhandler and give better name.
         /// </summary>
-        private CameraHandler.Tick currentTick;
         private readonly MovementSettings settings;
         private readonly GroundedConfiguration groundedConfig;
+        private readonly Transform trans;
+        private readonly Transform eyes;
+        private readonly Rigidbody rb;
 
-        private Transform trans;
-        private Transform eyes;
-        private Rigidbody rb;
         private bool isGrounded;
 
-        public ForcesMovement(Transform trans, Transform eyes, Rigidbody rb)
+        /// <summary>
+        /// DEPENDACY !!! AHHH FIX !!
+        /// </summary>
+        private CameraHandler.Tick currentTick;
+
+        public ForcesMovement(Transform trans, Transform eyes, GroundedConfiguration groundedConfig, MovementSettings settings)
         {
             this.trans = trans;
             this.eyes = eyes;
-            this.rb = rb;
-            
-            IAssetService assets = ServiceLocator<IAssetService>.Locate();
-
-            groundedConfig = assets.GetGroundedConfig();
-            settings = assets.GetMovementSettings();
+            rb = trans.GetComponent<Rigidbody>();
+            this.groundedConfig = groundedConfig;
+            this.settings = settings;
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IDestroyable 
     {
-        event Action<object> OnDestroy;
+        event Action<object, GameObject> OnDestroy;
         void Destroy();
     }
 
@@ -39,6 +39,7 @@ namespace IntegratedGameplaySystem
         RaycastData GetInteractionRaycast();
         MovementSettings GetMovementSettings();
         GroundedConfiguration GetGroundedConfig();
+        CameraSettingsFPS GetSettingsFPS();
         BindingsConfig GetBindingsConfig();
     }
 }

@@ -15,15 +15,16 @@ namespace IntegratedGameplaySystem
     {
         private const float MIN_CAM_ANGLE = -90f;
         private const float MAX_CAM_ANGLE = 90f;
-        private const float SENS = 0.33f;
 
+        private float sens;
         private readonly Transform eyes;
         private readonly Transform transform;
         private Vector2 lookingDirection;
 
-        public MouseMovement(Transform eyes, Transform transform)
+        public MouseMovement(Transform eyes, Transform transform, float sens)
         {
             this.eyes = eyes;
+            this.sens = sens;
             this.transform = transform;
         }
 
@@ -32,7 +33,7 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Update(Vector2 mouseDirectionChange)
         {
-            lookingDirection += mouseDirectionChange * SENS;
+            lookingDirection += mouseDirectionChange * sens;
             lookingDirection.y = Mathf.Clamp(lookingDirection.y, MIN_CAM_ANGLE, MAX_CAM_ANGLE);
 
             eyes.localRotation = Quaternion.AngleAxis(-lookingDirection.y, Vector3.right);

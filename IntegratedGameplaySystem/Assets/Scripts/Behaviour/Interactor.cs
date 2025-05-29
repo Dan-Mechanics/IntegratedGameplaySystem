@@ -17,6 +17,8 @@ namespace IntegratedGameplaySystem
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
 
+        private readonly AudioClip tickClip;
+
         /// <summary>
         /// TEMP !! fIX
         /// </summary>
@@ -31,13 +33,23 @@ namespace IntegratedGameplaySystem
             raycaster = new Raycaster(ServiceLocator<IAssetService>.Locate().GetByType<RaycastSettings>());
             cam = Camera.main.transform;
 
+            tickClip = Resources.Load<AudioClip>("dmg_tick");
+
             inputService = ServiceLocator<IInputService>.Locate();
             worldService = ServiceLocator<IWorldService>.Locate();
+
+
+        }
+
+        private void Tick(bool pressed) 
+        {
+            AudioSource.PlayClipAtPoint(tickClip, cam.position);
         }
 
         public void Start() 
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteractWithSomething;
+            inputService.GetInputSource(PlayerAction.Interact).OnChange += Tick;
         }
 
         public void FixedUpdate() => Hover();
@@ -68,6 +80,7 @@ namespace IntegratedGameplaySystem
         public void Dispose()
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown -= TryInteractWithSomething;
+            inputService.GetInputSource(PlayerAction.Interact).OnChange -= Tick;
         }
     }
 }

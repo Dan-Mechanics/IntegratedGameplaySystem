@@ -9,12 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbe682f4d3175ab4bb333cc61d45a360, type: 3}
-  m_Name: grounded_config
+  m_Script: {fileID: 11500000, guid: 934a6945ae1539047b894114f64ef5a0, type: 3}
+  m_Name: player_setting
   m_EditorClassIdentifier: 
+  walkSpeed: 6
+  runSpeed: 12
+  flySpeed: 24
+  movAccel: 30
+  airborneAccelMult: 0.35
   mask:
     serializedVersion: 2
     m_Bits: 1
   radius: 0.55
   reach: 0.5
   maxAngle: 42.5
+  sens: 0.33
+  eyesHeight: 0.2

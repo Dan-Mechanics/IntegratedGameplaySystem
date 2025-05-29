@@ -9,8 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcdfac3dbfc7ff645b6bd21e67c0a4ae, type: 3}
-  m_Name: camera_settings
+  m_Script: {fileID: 11500000, guid: 52d80ded69ef82d4bbc608defd97e362, type: 3}
+  m_Name: interaction
   m_EditorClassIdentifier: 
-  sens: 0.33
-  eyesHeight: 0.2
+  range: 2.5
+  mask:
+    serializedVersion: 2
+    m_Bits: 513
+  triggerInteraction: 1
+  tags:
+  - Plant

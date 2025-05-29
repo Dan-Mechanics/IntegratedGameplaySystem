@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 namespace IntegratedGameplaySystem
 {
@@ -7,21 +7,19 @@ namespace IntegratedGameplaySystem
     /// This way, there is never confusion which assets do what.
     /// and because we use interface here, we can add adressables later.
     /// </summary>
-    [Serializable]
+    [System.Serializable]
     public class Assets : IAssetService
     {
-        public GameObject GetPlayer() => player;
-        public RaycastSettings GetInteractionRaycast() => interactionRaycast;
-        public PlayerSettings GetMovementSettings() => movementSettings;
-      // public GroundedConfiguration GetGroundedConfig() => groundedConfiguration;
-      // public CameraSettingsFPS GetSettingsFPS() => cameraSettingsFPS;
-        public BindingsConfig GetBindingsConfig() => bindingsConfig;
+        [SerializeField] private List<Object> collection = default;
 
-        [SerializeField] private GameObject player = default;
-        [SerializeField] private RaycastSettings interactionRaycast = default;
-        [SerializeField] private PlayerSettings movementSettings = default;
-        // [SerializeField] private GroundedConfiguration groundedConfiguration = default;
-        // [SerializeField] private CameraSettingsFPS cameraSettingsFPS = default;
-        [SerializeField] private BindingsConfig bindingsConfig = default;
+        public T GetByAgreedName<T>(string name) where T : Object
+        {
+            return collection.Find(x => x.name == name) as T;
+        }
+
+        public T GetByType<T>() where T : Object
+        {
+            return collection.Find(x => x.GetType() == typeof(T)) as T;
+        }
     }
 }

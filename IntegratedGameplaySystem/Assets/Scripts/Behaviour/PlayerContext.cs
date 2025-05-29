@@ -4,9 +4,13 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// I want the context classes to load shit from memory basically.
+    /// 
+    /// Renmae to player or something. playerbehavuour.
     /// </summary>
     public class PlayerContext : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
+        public const string PLAYER_PREFAB_NAME = "player";
+        
         private Transform eyes;
         private readonly PlayerInput playerInput = new PlayerInput();
         private ForcesMovement movement;
@@ -16,8 +20,9 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             IAssetService assets = ServiceLocator<IAssetService>.Locate();
-            Transform player = Utils.SpawnPrefab(assets.GetPlayer()).transform;
-            PlayerSettings settings = Resources.Load<PlayerSettings>(GameManager.PLAYER_SETTINGS);
+
+            Transform player = Utils.SpawnPrefab(assets.GetByAgreedName<GameObject>(PLAYER_PREFAB_NAME)).transform;
+            PlayerSettings settings = assets.GetByType<PlayerSettings>();
 
             eyes = new GameObject("eyes").transform;
             eyes.SetParent(player);

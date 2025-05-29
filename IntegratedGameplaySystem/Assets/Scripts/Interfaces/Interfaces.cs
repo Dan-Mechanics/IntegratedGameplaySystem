@@ -35,7 +35,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IAssetService
     {
-        T GetByType<T>();
-        T GetByAgreedName<T>(string name);
+        T GetByType<T>() where T : UnityEngine.Object;
+        T GetByAgreedName<T>(string name) where T : UnityEngine.Object;
     }
 }

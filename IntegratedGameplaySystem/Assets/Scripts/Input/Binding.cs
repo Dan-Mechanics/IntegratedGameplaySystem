@@ -16,7 +16,14 @@ namespace IntegratedGameplaySystem
             this.keyCode = keyCode;
         }
 
+        public Binding(string keyString, PlayerAction playerAction)
+        {
+            this.keyString = keyString;
+            this.playerAction = playerAction;
+            ProcessKeyString();
+        }
+
         public void ProcessKeyString() => keyCode = Utils.StringToEnum<KeyCode>(keyString);
-        public string Log() => $"{keyString} {playerAction} {keyCode}";
+        public string Log() => $"{keyString} --> {keyCode} | {playerAction}";
     }
 }

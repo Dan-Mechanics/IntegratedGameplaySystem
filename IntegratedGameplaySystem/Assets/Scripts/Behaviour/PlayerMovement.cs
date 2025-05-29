@@ -3,11 +3,9 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// I want the context classes to load shit from memory basically.
-    /// 
-    /// Renmae to player or something. playerbehavuour.
+    /// Also spawns the player.
     /// </summary>
-    public class PlayerContext : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
+    public class PlayerMovement : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
         public const string PLAYER_PREFAB_NAME = "player";
         private readonly IPlayerInput playerInput;
@@ -17,7 +15,7 @@ namespace IntegratedGameplaySystem
         private MouseMovement mouseMovement;
         private CameraHandler cameraHandler;
 
-        public PlayerContext(IPlayerInput playerInput)
+        public PlayerMovement(IPlayerInput playerInput)
         {
             this.playerInput = playerInput;
         }

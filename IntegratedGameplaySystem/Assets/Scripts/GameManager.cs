@@ -31,13 +31,14 @@ namespace IntegratedGameplaySystem
             ServiceLocator<IAssetService>.Provide(assets);
             ServiceLocator<IWorldService>.Provide(new GameWorld());
 
-            IBindingsSource bindings = assets.GetByType<BindingsConfig>();
-            ServiceLocator<IInputService>.Provide(new InputHandler(new DefaultBindingRules(), bindings));
+            IInputService inputService = new InputHandler(new DefaultBindingRules(), new ConfigTextFile());
+            //IInputService inputService = new InputHandler(new DefaultBindingRules(), assets.GetByType<BindingsConfig>());
+            ServiceLocator<IInputService>.Provide(inputService);
 
             List<object> behaviours = new List<object>
             {
-                ServiceLocator<IInputService>.Locate(),
-                new PlayerContext(new KeyboardSource()),
+                inputService,
+                new PlayerMovement(new KeyboardSource()),
                 new Interactor(),
                 new EasyDebug(),
                 new TickClock()

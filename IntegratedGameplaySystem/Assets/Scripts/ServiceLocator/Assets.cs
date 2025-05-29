@@ -12,11 +12,6 @@ namespace IntegratedGameplaySystem
     {
         [SerializeField] private List<Object> collection = default;
 
-        /*public List<PlantSpeciesProfile> GetPlants() 
-        {
-            return collection.FindAll(x => x.GetType() == typeof(PlantSpeciesProfile)) as List<PlantSpeciesProfile>;
-        }*/
-
         public GameObject GetByAgreedName(string name) 
         {
             return collection.Find(x => x.name == name) as GameObject;
@@ -33,7 +28,7 @@ namespace IntegratedGameplaySystem
         }
 
         /// <summary>
-        /// Idk how to do these better sry.
+        /// Idk how to do this better yet.
         /// </summary>
         public List<T> GetCollectionType<T>() where T : Object
         {

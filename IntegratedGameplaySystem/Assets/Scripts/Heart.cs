@@ -6,10 +6,6 @@ namespace IntegratedGameplaySystem
 {
     public class Heart
     {
-        /// <summary>
-        /// FIXME:
-        /// what happens when shit needs to be deleted? this breaks basically.
-        /// </summary>
         private readonly List<IUpdatable> updatables = new();
         private readonly List<IFixedUpdatable> fixedUpdatables = new();
         private readonly List<ILateFixedUpdatable> lateFixedUpdatables = new();
@@ -17,20 +13,16 @@ namespace IntegratedGameplaySystem
 
         private float timer;
 
-        /// <summary>
-        /// You could feed the components in here but i think it makes sense here.
-        /// Or just make this heart or something.
-        /// </summary>
-        public void Start(object[] components)
+        public void Setup(object[] components)
         {
             List<IStartable> startables = new();
             foreach (object component in components)
             {
-                SortGameElement(component, startables);
-                SortGameElement(component, updatables);
-                SortGameElement(component, fixedUpdatables);
-                SortGameElement(component, lateFixedUpdatables);
-                SortGameElement(component, disposables);
+                Sort(component, startables);
+                Sort(component, updatables);
+                Sort(component, fixedUpdatables);
+                Sort(component, lateFixedUpdatables);
+                Sort(component, disposables);
 
                 if (component is IDestroyable destroyable)
                     destroyable.OnDestroy += DestroyComponent;
@@ -40,26 +32,7 @@ namespace IntegratedGameplaySystem
             startables.Clear();
         }
 
-        private InputHandler InitializeInput(BindingsConfig bindingsConfig)
-        {
-            InputHandler inputHandler = new InputHandler(new DefaultBindingRules());
-            List<Binding> bindings = bindingsConfig.GetBindings();
-            bindings.ForEach(x => inputHandler.AddBinding(x));
-            ServiceLocator<IInputService>.Provide(inputHandler);
-
-            return inputHandler;
-        }
-
-        /// <summary>
-        /// or then maybe make it work via something else idk ??
-        /// I think this works fine for now...
-        /// It isnt really needed anyway.
-        /// 
-        /// Ok, this code is getting bad now, im getting tired.
-        /// I tihnk i need to make a seperate interface for disposing events and destroying things, like i desteroyable. that makes more sense.
-        /// but they live in the same wheelhouse right ?? whatever. look at this in the morning.
-        /// </summary>
-        public void DestroyComponent(object component)
+        private void DestroyComponent(object component)
         {
             Remove(component, updatables);
             Remove(component, fixedUpdatables);
@@ -75,15 +48,15 @@ namespace IntegratedGameplaySystem
                 destroyable.OnDestroy -= DestroyComponent;
         }
 
-        private void SortGameElement<T>(object gameElement, List<T> list)
+        private void Sort<T>(object component, List<T> list)
         {
-            if (gameElement is T t)
+            if (component is T t)
                 list.Add(t);
         }
 
-        private void Remove<T>(object gameElement, List<T> list)
+        private void Remove<T>(object component, List<T> list)
         {
-            if (gameElement is T t)
+            if (component is T t)
                 list.Remove(t);
         }
 
@@ -92,22 +65,35 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Update()
         {
-            updatables.ForEach(x => x.Update());
+            for (int i = updatables.Count - 1; i >= 0; i--)
+                updatables[i].Update();
 
             timer += Time.deltaTime;
             while (timer >= Time.fixedDeltaTime)
             {
                 timer -= Time.fixedDeltaTime;
 
-                fixedUpdatables.ForEach(x => x.FixedUpdate());
+                for (int i = fixedUpdatables.Count - 1; i >= 0; i--)
+                    fixedUpdatables[i].FixedUpdate();
+
                 Physics.Simulate(Time.fixedDeltaTime);
-                lateFixedUpdatables.ForEach(x => x.LateFixedUpdate());
+
+                for (int i = lateFixedUpdatables.Count - 1; i >= 0; i--)
+                    lateFixedUpdatables[i].LateFixedUpdate();
             }
         }
 
         /// <summary>
         /// THIS MUST WORK FOR WHEN SWITCHING SCENES !! TEST THAT !!
         /// </summary>
-        public void Dispose() => disposables.ForEach(x => x.Dispose());
+        public void Dispose() 
+        {
+            for (int i = disposables.Count - 1; i >= 0; i--)
+            {
+                disposables[i].Dispose();
+            }
+
+            disposables.Clear();
+        }
     }
 }

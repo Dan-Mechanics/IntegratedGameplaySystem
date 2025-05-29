@@ -1,3 +1,8 @@
+add: txt shit config funny, seperate class
+add: cool assets ?? in the sense that you drag object because that doesnt break when you change the shit right.
+
+===
+
 random idee:
 we maken dat alle locations naar data in de serialized is,
 en dan de rest is whatever basically.

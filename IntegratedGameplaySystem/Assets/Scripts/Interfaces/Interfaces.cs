@@ -17,6 +17,9 @@ namespace IntegratedGameplaySystem
         void Dispose();
     }
 
+    /// <summary>
+    /// THINK ABOUT GAMEWORLD BULLSHIT !!.
+    /// </summary>
     public interface IDestroyable 
     {
         event Action<object> OnDestroy;
@@ -26,6 +29,10 @@ namespace IntegratedGameplaySystem
     public interface IFixedUpdatable { void FixedUpdate(); }
     public interface ILateFixedUpdatable { void LateFixedUpdate(); }
 
+
+    /// <summary>
+    /// Or this could be addressable, you get the point.
+    /// </summary>
     public interface IAssetService
     {
         GameObject GetPlayer();

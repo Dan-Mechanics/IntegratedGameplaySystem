@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8097411516312560830}
-  - component: {fileID: 7194501001463481828}
+  - component: {fileID: 3873894960500641815}
   m_Layer: 0
-  m_Name: single_monobehaviour
+  m_Name: game_manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7194501001463481828
+--- !u!114 &3873894960500641815
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,18 +41,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8097411516312560828}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f8a8891766c414438651318a6001f16, type: 3}
+  m_Script: {fileID: 11500000, guid: 4da7425478963aa4e9c3c96d28dde1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameContext:
-    sceneSetup: {fileID: 11400000, guid: 4ce5449af4eed3a4981bcfd051721a5c, type: 2}
-    scenePrefabs:
-    - {fileID: 3993618247013554881, guid: 2bd35eac28761b6489ddbfdd47807dde, type: 3}
-    - {fileID: 4710450936777699201, guid: a569a48a02f66514486790d7fee81b52, type: 3}
-    - {fileID: 3798425744015788190, guid: 4649b9385cedad54a924bf9e83ee7526, type: 3}
-    assets:
-      player: {fileID: 4437024385587191265, guid: 6f7db1ccb32e6424eaaa8c2cca893bbc, type: 3}
-      interactionRaycast: {fileID: 11400000, guid: 2968f1d98c793454380570b033841c3c, type: 2}
-      movementSettings: {fileID: 11400000, guid: 5392de7aa253c8d4fac36bc0a07a098f, type: 2}
-      groundedConfiguration: {fileID: 11400000, guid: 664d217798bf1864d971d43b07110977, type: 2}
-      bindingsConfig: {fileID: 11400000, guid: 656bb6f3a2ac7ba48964d350c81465ad, type: 2}
+  sceneSetup: {fileID: 11400000, guid: 4ce5449af4eed3a4981bcfd051721a5c, type: 2}
+  scenePrefabs:
+  - {fileID: 3993618247013554881, guid: 2bd35eac28761b6489ddbfdd47807dde, type: 3}
+  - {fileID: 4710450936777699201, guid: a569a48a02f66514486790d7fee81b52, type: 3}
+  - {fileID: 3798425744015788190, guid: 4649b9385cedad54a924bf9e83ee7526, type: 3}
+  assets:
+    player: {fileID: 4437024385587191265, guid: 6f7db1ccb32e6424eaaa8c2cca893bbc, type: 3}
+    interactionRaycast: {fileID: 11400000, guid: 2968f1d98c793454380570b033841c3c, type: 2}
+    movementSettings: {fileID: 11400000, guid: 5392de7aa253c8d4fac36bc0a07a098f, type: 2}
+    groundedConfiguration: {fileID: 11400000, guid: 664d217798bf1864d971d43b07110977, type: 2}
+    bindingsConfig: {fileID: 11400000, guid: 656bb6f3a2ac7ba48964d350c81465ad, type: 2}

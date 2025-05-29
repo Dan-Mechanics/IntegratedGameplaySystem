@@ -12,11 +12,17 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IStartable { void Start(); }
     public interface IUpdatable { void Update(); }
-    public interface IDisposable 
+    public interface IDisposable
     {
-        event Action<object> OnDispose;
         void Dispose();
     }
+
+    public interface IDestroyable 
+    {
+        event Action<object> OnDestroy;
+        void Destroy();
+    }
+
     public interface IFixedUpdatable { void FixedUpdate(); }
     public interface ILateFixedUpdatable { void LateFixedUpdate(); }
 

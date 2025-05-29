@@ -1,16 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    [Serializable]
-    public class GameContext : IStartable, IUpdatable
+    public class Heart
     {
-        [SerializeField] private SceneSetup sceneSetup = default;
-        [SerializeField] private List<GameObject> scenePrefabs = default;
-        [SerializeField] private Assets assets = default;
-
         /// <summary>
         /// FIXME:
         /// what happens when shit needs to be deleted? this breaks basically.
@@ -26,27 +21,8 @@ namespace IntegratedGameplaySystem
         /// You could feed the components in here but i think it makes sense here.
         /// Or just make this heart or something.
         /// </summary>
-        public void Start()
+        public void Start(object[] components)
         {
-            scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
-            ServiceLocator<IAssetService>.Provide(assets);
-
-            sceneSetup.Start();
-            InputHandler inputHandler = InitializeInput(assets.GetBindingsConfig());
-            ServiceLocator<IWorldService>.Provide(new GameWorld());
-
-            List<object> components = new List<object>()
-            {
-                inputHandler,
-                new Interactor(),
-                new EasyDebug(),
-                new PlayerContext()
-                // gotta add plants.
-            };
-
-            // I dont want to be able to start things after the game has started
-            // with this. the host class should call a constructor or a setup or start method
-            // on the nwely created thing. the newly created thigns are owned by the maker.
             List<IStartable> startables = new();
             foreach (object component in components)
             {
@@ -56,7 +32,7 @@ namespace IntegratedGameplaySystem
                 SortGameElement(component, lateFixedUpdatables);
                 SortGameElement(component, disposables);
 
-                if(component is IDestroyable destroyable)
+                if (component is IDestroyable destroyable)
                     destroyable.OnDestroy += DestroyComponent;
             }
 
@@ -83,7 +59,7 @@ namespace IntegratedGameplaySystem
         /// I tihnk i need to make a seperate interface for disposing events and destroying things, like i desteroyable. that makes more sense.
         /// but they live in the same wheelhouse right ?? whatever. look at this in the morning.
         /// </summary>
-        public void DestroyComponent(object component) 
+        public void DestroyComponent(object component)
         {
             Remove(component, updatables);
             Remove(component, fixedUpdatables);

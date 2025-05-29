@@ -17,8 +17,6 @@ namespace IntegratedGameplaySystem
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
 
-        public event Action<object> OnDispose;
-
         /// <summary>
         /// Or we could push the asset name upward.
         /// </summary>

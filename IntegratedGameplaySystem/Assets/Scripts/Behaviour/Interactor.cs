@@ -10,15 +10,15 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Interactor : IStartable, IFixedUpdatable, IDisposable
     {
+        public event Action<string> OnHoverChange;
+        
         private readonly Raycaster raycaster;
         private readonly Transform cam;
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
 
-        /// <summary>
-        /// TEMP !! fIX
-        /// </summary>
-        public event Func<bool> CanCollect;
+        private string prevHovering;
+        private string hovering;
 
         /// <summary>
         /// Or we could push the asset name upward.
@@ -35,37 +35,47 @@ namespace IntegratedGameplaySystem
 
         public void Start() 
         {
-            inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteractWithSomething;
+            inputService.GetInputSource(PlayerAction.Interact).onDown += InteractWithWorld;
+            SetHovering(string.Empty);
         }
 
         public void FixedUpdate() => Hover();
 
-        private void TryInteractWithSomething()
+        private void InteractWithWorld()
         {
-            //Debug.Log(nameof(TryInteractWithSomething));
-            
-            Transform hit = raycaster.Raycast(cam.position, cam.forward);
-
-            if (!hit)
+            if (!DoRaycast(out Transform hit))
                 return;
-            
-            //worldService.GetComponent<IInteractable>(hit.root.gameObject).Interact();
+
             worldService.GetComponent<IInteractable>(hit.gameObject).Interact();
+        }
+
+        private bool DoRaycast(out Transform hit)
+        {
+            hit = raycaster.Raycast(cam.position, cam.forward);
+            return hit;
         }
 
         private void Hover()
         {
-            Transform hit = raycaster.Raycast(cam.position, cam.forward);
-
-            if (!hit)
+            if (!DoRaycast(out Transform hit))
                 return;
 
-            Debug.Log(hit.name + Time.time);
+            hovering = hit.name;
+            if (hovering == prevHovering)
+                return;
+
+            SetHovering(hovering);
+        }
+
+        private void SetHovering(string hovering)
+        {
+            OnHoverChange?.Invoke(hovering);
+            prevHovering = hovering;
         }
 
         public void Dispose()
         {
-            inputService.GetInputSource(PlayerAction.Interact).onDown -= TryInteractWithSomething;
+            inputService.GetInputSource(PlayerAction.Interact).onDown -= InteractWithWorld;
         }
     }
 }

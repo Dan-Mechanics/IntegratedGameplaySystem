@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff6a27d827763c14bb119215246c475d, type: 3}
   m_Name: Everbending
   m_EditorClassIdentifier: 
-  plantCount: 30
-  dispersal: 15
-  growOdds: 20
-  wateredGrowOdds: 10
+  plantCount: 20
+  dispersal: 10
+  growOdds: 10
+  wateredGrowOdds: 5
   sprite: {fileID: 21300000, guid: 7c768b292b4ad1c44b99ed372216f18c, type: 3}
   materials:
   - {fileID: 2100000, guid: fe992bb52a09c904ba249199f0f2424d, type: 2}

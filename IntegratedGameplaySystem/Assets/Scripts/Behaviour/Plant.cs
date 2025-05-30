@@ -41,7 +41,7 @@ namespace IntegratedGameplaySystem
             go.transform.localPosition = rainPrefab.transform.localPosition;
             waterEffect = go.GetComponent<ParticleSystem>();
 
-            UpdateWatered(Utils.GetRandBool());
+            //UpdateWatered(Utils.GetRandBool());
             // You could add some funny scale variation here in the MeshRenderer !!
             sphereCollider = sceneObject.gameObject.AddComponent<SphereCollider>();
             meshRenderers = sceneObject.gameObject.GetComponentsInChildren<MeshRenderer>();
@@ -49,6 +49,7 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
+            UpdateWatered(false);
             sceneObject.transform.position += Utils.GetRandomFlatPos(blueprint.dispersal);
             Utils.ApplyRandomRotation(sceneObject.transform);
 
@@ -80,7 +81,7 @@ namespace IntegratedGameplaySystem
                 meshRenderers[i].material = blueprint.materials[progression];
             }
 
-            sphereCollider.enabled = progression >= blueprint.materials.Length - 1;
+            sphereCollider.enabled = progression >= blueprint.materials.Length - 1 || !isWatered;
         }
 
         private void UpdateWatered(bool water)
@@ -98,10 +99,15 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Interact()
         {
-            progression = 0;
-            Refresh();
+            if (progression >= blueprint.materials.Length - 1) 
+            {
+                progression = 0;
+                OnCollect?.Invoke();
+            }
+            else if (!isWatered)
+                UpdateWatered(true);
 
-            OnCollect?.Invoke();
+            Refresh();
         }
     }
 }

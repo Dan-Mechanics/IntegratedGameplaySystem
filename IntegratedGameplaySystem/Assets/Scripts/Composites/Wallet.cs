@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace IntegratedGameplaySystem
@@ -6,7 +7,7 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// This class should respond to the events yo.
     /// </summary>
-    public class Wallet : IDisposable
+    public class Wallet : IDisposable, IStartable
     {
         public event Action<int, int> OnMoneyChanged;
         
@@ -14,10 +15,21 @@ namespace IntegratedGameplaySystem
         public int moneyPerPlantGained;
 
         private int money;
+        private readonly List<Plant> plants;
+
+        public Wallet(int moneyToWin, int moneyPerPlantGained, List<Plant> plants)
+        {
+            this.plants = plants;
+            this.moneyToWin = moneyToWin;
+            this.moneyPerPlantGained = moneyPerPlantGained;
+
+            plants.ForEach(x => x.OnCollect += Collect);
+        }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            plants.ForEach(x => x.OnCollect -= Collect);
+            plants.Clear();
         }
 
         public void Collect() => EarnMoney(moneyPerPlantGained);
@@ -34,6 +46,16 @@ namespace IntegratedGameplaySystem
 
             if (money >= moneyToWin)
                 EventManager.RaiseEvent(Occasion.GAME_OVER);
+        }
+
+        public void Start()
+        {
+            OnMoneyChanged += Log;
+        }
+
+        private void Log(int arg1, int arg2)
+        {
+            Debug.Log(arg1);
         }
     }
 }

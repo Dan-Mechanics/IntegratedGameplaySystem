@@ -22,6 +22,7 @@ namespace IntegratedGameplaySystem
 
         /// <summary>
         /// Chat I think this project is a little overengineerd but thats fun.
+        /// Consider moving this setup to an inhertied thng.
         /// </summary>
         private void Setup()
         {
@@ -30,31 +31,46 @@ namespace IntegratedGameplaySystem
 
             ServiceLocator<IAssetService>.Provide(assets);
             ServiceLocator<IWorldService>.Provide(new GameWorld());
+            ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
 
-            IInputService inputService = new InputHandler(new ChillBindingRules(), new ConfigTextFile());
-            //IInputService inputService = new InputHandler(new DefaultBindingRules(), assets.GetByType<BindingsConfig>());
-            ServiceLocator<IInputService>.Provide(inputService);
+            heart.Setup(GetGameBehaviours());
+        }
 
-            List<object> behaviours = new List<object>
+        /// <summary>
+        /// Cosndier moving this somewhere else.
+        /// Litterally lvoe coding silly things like this:
+        /// And suddenly im me again.
+        /// </summary>
+        private List<object> GetGameBehaviours() 
+        {
+            List<object> result = new List<object>
             {
-                inputService,
+                ServiceLocator<IInputService>.Locate(),
                 new PlayerMovement(new KeyboardSource()),
                 new Interactor(),
                 new TestingFeatures(),
                 new TickClock()
             };
 
-            List<PlantSpeciesProfile> profiles = assets.GetCollectionType<PlantSpeciesProfile>();
-            for (int i = 0; i < profiles.Count; i++)
+            List<Plant> plants = new List<Plant>();
+            List<PlantSpeciesProfile> blueprints = assets.GetCollectionType<PlantSpeciesProfile>();
+
+            for (int i = 0; i < blueprints.Count; i++)
             {
-                for (int j = 0; j < profiles[i].plantCount; j++)
+                for (int j = 0; j < blueprints[i].plantCount; j++)
                 {
                     // !PERFORMANCE
-                    behaviours.Add(new Plant(profiles[i], assets.GetByAgreedName(Plant.PLANT_PREFAB_NAME), assets.GetByAgreedName(Plant.RAIN_PREFAB_NAME)));
+                    plants.Add(
+                        new Plant(blueprints[i], assets.GetByAgreedName(Plant.PLANT_PREFAB_NAME),
+                        assets.GetByAgreedName(Plant.RAIN_PREFAB_NAME)));
                 }
             }
 
-            heart.Setup(behaviours);
+            // Idk if this is order sentiitive ??
+            result.Add(new Wallet(1000, 10, plants));
+            plants.ForEach(x => result.Add(x));
+
+            return result;
         }
     }
 }

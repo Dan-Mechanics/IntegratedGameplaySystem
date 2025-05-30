@@ -13,8 +13,12 @@ namespace IntegratedGameplaySystem
         public SceneObject(string prefabName)
         {
             gameObject = Utils.SpawnPrefab(ServiceLocator<IAssetService>.Locate().GetByAgreedName(prefabName));
-            gameObject.name = prefabName;
+            transform = gameObject.transform;
+        }
 
+        public SceneObject(GameObject prefab)
+        {
+            gameObject = Utils.SpawnPrefab(prefab);
             transform = gameObject.transform;
         }
     }

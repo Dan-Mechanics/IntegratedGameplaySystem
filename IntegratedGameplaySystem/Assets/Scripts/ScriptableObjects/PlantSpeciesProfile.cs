@@ -13,6 +13,7 @@ namespace IntegratedGameplaySystem
 
         [Tooltip("One in ...")]
         [Min(1)] public int growOdds;
+        [Min(1)] public int wateredGrowOdds;
         public Sprite sprite;
         public Material[] materials;
         

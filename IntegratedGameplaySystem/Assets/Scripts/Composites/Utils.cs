@@ -9,7 +9,17 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public static bool OneIn(int x)
         {
-            return Random.Range(0, x + 1) == 0;
+            return Random.Range(0, x) == 0;
+        }
+
+        public static bool GetRandBool() 
+        {
+            return Random.value > 0.5f;
+        }
+
+        public static void ApplyRandomRotation(Transform trans) 
+        {
+            trans.Rotate(Vector3.up * Random.Range(0f, 360f), Space.Self);
         }
 
         public static GameObject SpawnPrefab(GameObject prefab) 

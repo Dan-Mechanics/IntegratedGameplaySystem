@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52d80ded69ef82d4bbc608defd97e362, type: 3}
   m_Name: interaction
   m_EditorClassIdentifier: 
-  range: 2.5
+  range: 3
   mask:
     serializedVersion: 2
     m_Bits: 513

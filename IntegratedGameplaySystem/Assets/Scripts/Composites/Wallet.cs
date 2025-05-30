@@ -8,15 +8,19 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Wallet : IDisposable
     {
-        public Action<int, int> OnMoneyChanged;
+        public event Action<int, int> OnMoneyChanged;
         
         public int moneyToWin;
+        public int moneyPerPlantGained;
+
         private int money;
 
         public void Dispose()
         {
             throw new NotImplementedException();
         }
+
+        public void Collect() => EarnMoney(moneyPerPlantGained);
 
         public void EarnMoney(int incoming) 
         {
@@ -26,10 +30,10 @@ namespace IntegratedGameplaySystem
             money += incoming;
 
             money = Mathf.Clamp(money, 0, moneyToWin);
+            OnMoneyChanged?.Invoke(money, moneyToWin);
+
             if (money >= moneyToWin)
                 EventManager.RaiseEvent(Occasion.GAME_OVER);
-
-            OnMoneyChanged?.Invoke(money, moneyToWin);
         }
     }
 }

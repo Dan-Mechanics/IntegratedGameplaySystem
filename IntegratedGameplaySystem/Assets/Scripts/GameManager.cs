@@ -50,7 +50,7 @@ namespace IntegratedGameplaySystem
                 for (int j = 0; j < profiles[i].plantCount; j++)
                 {
                     // !PERFORMANCE
-                    behaviours.Add(new Plant(profiles[i]));
+                    behaviours.Add(new Plant(profiles[i], assets.GetByAgreedName(Plant.PLANT_PREFAB_NAME), assets.GetByAgreedName(Plant.RAIN_PREFAB_NAME)));
                 }
             }
 

@@ -36,6 +36,7 @@ namespace IntegratedGameplaySystem
             rain.transform.SetParent(sceneObject.transform);
             rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
             waterEffect = rain.GetComponent<ParticleSystem>();
+            //rain.transform.SetParent(nu)
 
             sphereCollider = sceneObject.gameObject.AddComponent<SphereCollider>();
             meshRenderers = sceneObject.gameObject.GetComponentsInChildren<MeshRenderer>();

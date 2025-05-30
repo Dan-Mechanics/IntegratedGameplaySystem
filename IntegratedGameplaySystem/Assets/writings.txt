@@ -1,3 +1,6 @@
+performance: store all the plabnts in the frenzy game thing
+and then do array emmes.
+
 i basicalyl want some plots of each type of plant
 and then i want a button at the edge of the plot to make it watered
 or somethign which gives you more money but also costs money.

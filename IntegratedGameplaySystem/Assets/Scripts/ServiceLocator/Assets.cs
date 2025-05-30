@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
     {
         [SerializeField] private List<Object> collection = default;
 
-        public GameObject GetByAgreedName(string name) 
+        /*public GameObject GetByAgreedName(string name) 
         {
             return collection.Find(x => x.name == name) as GameObject;
         }
@@ -20,7 +20,7 @@ namespace IntegratedGameplaySystem
         public T GetByAgreedName<T>(string name) where T : Object
         {
             return collection.Find(x => x.name == name) as T;
-        }
+        }*/
 
         public T GetByType<T>() where T : Object
         {

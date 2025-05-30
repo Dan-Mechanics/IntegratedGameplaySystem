@@ -9,9 +9,8 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Plant : IStartable, IInteractable, IDisposable
     {
-        public const string PLANT_PREFAB_NAME = "plant";
-        public const string RAIN_PREFAB_NAME = "rain";
-
+        /*public const string PLANT_PREFAB_NAME = "plant";
+        public const string RAIN_PREFAB_NAME = "rain";*/
         //public event Action<int> OnCollect;
 
         private readonly PlantSpeciesProfile blueprint;
@@ -29,17 +28,17 @@ namespace IntegratedGameplaySystem
         /// If u gonna makethis solid do it in da start pls.
         /// I doubt the reviewers would notice.
         /// </summary>
-        public Plant(PlantSpeciesProfile blueprint, GameObject plantPrefab, GameObject rainPrefab)
+        public Plant(PlantSpeciesProfile blueprint)
         {
             this.blueprint = blueprint;
 
-            sceneObject = new SceneObject(plantPrefab);
+            sceneObject = new SceneObject(blueprint.plantPrefab);
             sceneObject.gameObject.name = blueprint.name;
 
-            GameObject go = Utils.SpawnPrefab(rainPrefab);
-            go.transform.SetParent(sceneObject.transform);
-            go.transform.localPosition = rainPrefab.transform.localPosition;
-            waterEffect = go.GetComponent<ParticleSystem>();
+            GameObject rain = Utils.SpawnPrefab(blueprint.rainPrefab);
+            rain.transform.SetParent(sceneObject.transform);
+            rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
+            waterEffect = rain.GetComponent<ParticleSystem>();
 
             sphereCollider = sceneObject.gameObject.AddComponent<SphereCollider>();
             meshRenderers = sceneObject.gameObject.GetComponentsInChildren<MeshRenderer>();

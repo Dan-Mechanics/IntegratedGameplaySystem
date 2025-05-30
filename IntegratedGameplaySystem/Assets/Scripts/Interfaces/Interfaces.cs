@@ -37,7 +37,7 @@ namespace IntegratedGameplaySystem
     {
         T GetByType<T>() where T : UnityEngine.Object;
         List<T> GetCollectionType<T>() where T : UnityEngine.Object;
-        T GetByAgreedName<T>(string name) where T : UnityEngine.Object;
-        GameObject GetByAgreedName(string name);
+        /*T GetByAgreedName<T>(string name) where T : UnityEngine.Object;
+        GameObject GetByAgreedName(string name);*/
     }
 }

@@ -7,7 +7,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class PlayerMovement : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
-        public const string PLAYER_PREFAB_NAME = "player";
+        //public const string PLAYER_PREFAB_NAME = "player";
         private readonly IPlayerInput playerInput;
         
         private Transform eyes;
@@ -24,8 +24,8 @@ namespace IntegratedGameplaySystem
         {
             IAssetService assets = ServiceLocator<IAssetService>.Locate();
 
-            SceneObject player = new SceneObject(PLAYER_PREFAB_NAME);
             PlayerSettings settings = assets.GetByType<PlayerSettings>();
+            SceneObject player = new SceneObject(settings.prefab);
 
             eyes = new GameObject("eyes").transform;
             eyes.SetParent(player.transform);

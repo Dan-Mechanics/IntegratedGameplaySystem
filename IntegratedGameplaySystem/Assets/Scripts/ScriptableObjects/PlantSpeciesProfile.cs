@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
@@ -8,6 +9,8 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(PlantSpeciesProfile), fileName = "New " + nameof(PlantSpeciesProfile))]
     public class PlantSpeciesProfile : ScriptableObject
     {
+        public GameObject plantPrefab;
+        public GameObject rainPrefab;
         [Min(1)] public int plantCount;
         [Min(0f)] public float dispersal;
         public int monetaryValue;
@@ -16,6 +19,14 @@ namespace IntegratedGameplaySystem
         [Min(1)] public int wateredGrowOdds;
         public Sprite sprite;
         public Material[] materials;
+
+        public void Populate(List<object> behaviours) 
+        {
+            for (int j = 0; j < plantCount; j++)
+            {
+                behaviours.Add(new Plant(this));
+            }
+        }
         
         private void OnValidate() 
         {

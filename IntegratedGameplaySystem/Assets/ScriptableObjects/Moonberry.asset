@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff6a27d827763c14bb119215246c475d, type: 3}
   m_Name: Moonberry
   m_EditorClassIdentifier: 
+  plantPrefab: {fileID: 6319714984396151695, guid: 048e399419656db4b9c9aa6ae6023c6f, type: 3}
+  rainPrefab: {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}
   plantCount: 20
   dispersal: 10
   monetaryValue: 100

@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(PlayerSettings), fileName = "New " + nameof(PlayerSettings))]
     public class PlayerSettings : ScriptableObject
     {
+        public GameObject prefab;
+
         [Header("Movement")]
         public float walkSpeed;
         public float runSpeed;

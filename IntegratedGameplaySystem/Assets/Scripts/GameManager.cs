@@ -33,50 +33,8 @@ namespace IntegratedGameplaySystem
             ServiceLocator<IWorldService>.Provide(new GameWorld());
             ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
 
-            heart.Setup(GetGameBehaviours());
-        }
-
-        /// <summary>
-        /// Cosndier moving this somewhere else.
-        /// Litterally lvoe coding silly things like this:
-        /// And suddenly im me again.
-        /// 
-        /// MASSIVE COUPLING EMERGY HERE !!
-        /// </summary>
-        private List<object> GetGameBehaviours() 
-        {
-            List<object> result = new List<object>
-            {
-                ServiceLocator<IInputService>.Locate(),
-                new PlayerMovement(new KeyboardSource()),
-                //new Interactor(),
-                new TestingFeatures(),
-                new TickClock()
-            };
-
-            Display display = new Display(assets.GetByAgreedName(Display.CANVAS_PREFAB_NAME));
-            Interactor interactor = new Interactor();
-            interactor.OnHoverChange += display.UpdateHoveringText;
-
-            result.Add(interactor);
-            result.Add(display);
-
-            List<PlantSpeciesProfile> blueprints = assets.GetCollectionType<PlantSpeciesProfile>();
-            Wallet wallet = new Wallet();
-
-            for (int i = 0; i < blueprints.Count; i++)
-            {
-                for (int j = 0; j < blueprints[i].plantCount; j++)
-                {
-                    result.Add(new Plant(blueprints[i], assets.GetByAgreedName(Plant.PLANT_PREFAB_NAME),
-                        assets.GetByAgreedName(Plant.RAIN_PREFAB_NAME)));
-                }
-            }
-
-            wallet.OnMoneyChanged += display.UpdateMoneyText;
-            result.Add(wallet);
-
-            return result;
+            IGame game = new FarmingFrenzy();
+            heart.Setup(game.GetGameBehaviours());
         }
     }
 }

@@ -17,8 +17,7 @@ namespace IntegratedGameplaySystem
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
 
-      //  private string prevHovering;
-       // private string hovering;
+        private Transform currentlyHovering;
 
         /// <summary>
         /// Or we could push the asset name upward.
@@ -57,7 +56,12 @@ namespace IntegratedGameplaySystem
         private void Hover()
         {
             DoRaycast(out Transform hit);
-            OnHoverChange?.Invoke(hit);
+
+            if (hit == currentlyHovering)
+                return;
+
+            currentlyHovering = hit;
+            OnHoverChange?.Invoke(currentlyHovering);
         }
 
         /*private void SetHovering(string hovering)

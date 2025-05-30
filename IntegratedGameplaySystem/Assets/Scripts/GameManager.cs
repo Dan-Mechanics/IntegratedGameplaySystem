@@ -49,29 +49,32 @@ namespace IntegratedGameplaySystem
             {
                 ServiceLocator<IInputService>.Locate(),
                 new PlayerMovement(new KeyboardSource()),
-                new Interactor(),
+                //new Interactor(),
                 new TestingFeatures(),
-                new TickClock(),
-                new Display(assets.GetByAgreedName(Display.CANVAS_PREFAB_NAME))
+                new TickClock()
             };
 
-            List<Plant> plants = new List<Plant>();
+            Display display = new Display(assets.GetByAgreedName(Display.CANVAS_PREFAB_NAME));
+            Interactor interactor = new Interactor();
+            interactor.OnHoverChange += display.UpdateHoveringText;
+
+            result.Add(interactor);
+            result.Add(display);
+
             List<PlantSpeciesProfile> blueprints = assets.GetCollectionType<PlantSpeciesProfile>();
+            Wallet wallet = new Wallet();
 
             for (int i = 0; i < blueprints.Count; i++)
             {
                 for (int j = 0; j < blueprints[i].plantCount; j++)
                 {
-                    // !PERFORMANCE
-                    plants.Add(
-                        new Plant(blueprints[i], assets.GetByAgreedName(Plant.PLANT_PREFAB_NAME),
+                    result.Add(new Plant(blueprints[i], assets.GetByAgreedName(Plant.PLANT_PREFAB_NAME),
                         assets.GetByAgreedName(Plant.RAIN_PREFAB_NAME)));
                 }
             }
 
-            // Idk if this is order sentiitive ??
-            result.Add(new Wallet(1000, 10, plants));
-            plants.ForEach(x => result.Add(x));
+            wallet.OnMoneyChanged += display.UpdateMoneyText;
+            result.Add(wallet);
 
             return result;
         }

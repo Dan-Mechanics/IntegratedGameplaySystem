@@ -7,55 +7,41 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// This class should respond to the events yo.
     /// </summary>
-    public class Wallet : IDisposable, IStartable
+    public class Wallet :  IStartable, IDisposable
     {
         public event Action<int, int> OnMoneyChanged;
-        
-        public int moneyToWin;
-        public int moneyPerPlantGained;
 
+        private readonly WalletSettings settings;
         private int money;
-        private readonly List<Plant> plants;
 
-        public Wallet(int moneyToWin, int moneyPerPlantGained, List<Plant> plants)
+        public Wallet()
         {
-            this.plants = plants;
-            this.moneyToWin = moneyToWin;
-            this.moneyPerPlantGained = moneyPerPlantGained;
-
-            plants.ForEach(x => x.OnCollect += Collect);
+            settings = ServiceLocator<IAssetService>.Locate().GetByType<WalletSettings>();
         }
 
-        public void Dispose()
+        public void Start()
         {
-            plants.ForEach(x => x.OnCollect -= Collect);
-            plants.Clear();
+            OnMoneyChanged?.Invoke(money, settings.moneyToWin);
+            EventManagerGeneric<int>.AddListener(Occasion.EARN_MONEY, EarnMoney);
         }
 
-        public void Collect() => EarnMoney(moneyPerPlantGained);
-
-        public void EarnMoney(int incoming) 
+        public void EarnMoney(int incoming)
         {
             if (incoming <= 0)
                 return;
 
             money += incoming;
 
-            money = Mathf.Clamp(money, 0, moneyToWin);
-            OnMoneyChanged?.Invoke(money, moneyToWin);
+            money = Mathf.Clamp(money, 0, settings.moneyToWin);
+            OnMoneyChanged?.Invoke(money, settings.moneyToWin);
 
-            if (money >= moneyToWin)
+            if (money >= settings.moneyToWin)
                 EventManager.RaiseEvent(Occasion.GAME_OVER);
         }
 
-        public void Start()
+        public void Dispose()
         {
-            OnMoneyChanged += Log;
-        }
-
-        private void Log(int arg1, int arg2)
-        {
-            Debug.Log(arg1);
+            EventManagerGeneric<int>.RemoveListener(Occasion.EARN_MONEY, EarnMoney);
         }
     }
 }

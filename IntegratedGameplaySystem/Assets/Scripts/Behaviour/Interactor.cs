@@ -10,15 +10,15 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Interactor : IStartable, IFixedUpdatable, IDisposable
     {
-        public event Action<string> OnHoverChange;
+        public event Action<Transform> OnHoverChange;
         
         private readonly Raycaster raycaster;
         private readonly Transform cam;
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
 
-        private string prevHovering;
-        private string hovering;
+      //  private string prevHovering;
+       // private string hovering;
 
         /// <summary>
         /// Or we could push the asset name upward.
@@ -36,7 +36,6 @@ namespace IntegratedGameplaySystem
         public void Start() 
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown += InteractWithWorld;
-            SetHovering(string.Empty);
         }
 
         public void FixedUpdate() => Hover();
@@ -57,21 +56,15 @@ namespace IntegratedGameplaySystem
 
         private void Hover()
         {
-            if (!DoRaycast(out Transform hit))
-                return;
-
-            hovering = hit.name;
-            if (hovering == prevHovering)
-                return;
-
-            SetHovering(hovering);
+            DoRaycast(out Transform hit);
+            OnHoverChange?.Invoke(hit);
         }
 
-        private void SetHovering(string hovering)
+        /*private void SetHovering(string hovering)
         {
             OnHoverChange?.Invoke(hovering);
             prevHovering = hovering;
-        }
+        }*/
 
         public void Dispose()
         {

@@ -48,7 +48,6 @@ MonoBehaviour:
   scenePrefabs:
   - {fileID: 3993618247013554881, guid: 2bd35eac28761b6489ddbfdd47807dde, type: 3}
   - {fileID: 4710450936777699201, guid: a569a48a02f66514486790d7fee81b52, type: 3}
-  - {fileID: 3798425744015788190, guid: 4649b9385cedad54a924bf9e83ee7526, type: 3}
   assets:
     collection:
     - {fileID: 4437024385587191265, guid: 6f7db1ccb32e6424eaaa8c2cca893bbc, type: 3}
@@ -61,3 +60,4 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3aa9be92a0736b0439525ba630c79984, type: 2}
     - {fileID: 4900000, guid: 863bc45e8e1ae1842aeea6c43ff9bf18, type: 3}
     - {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}
+    - {fileID: 3798425744015788190, guid: 4649b9385cedad54a924bf9e83ee7526, type: 3}

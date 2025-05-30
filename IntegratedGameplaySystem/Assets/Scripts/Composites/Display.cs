@@ -14,14 +14,17 @@ namespace IntegratedGameplaySystem
     public class Display
     {
         public const string CANVAS_PREFAB_NAME = "canvas";
-        private Text hoveringText;
+        private readonly Text hoveringText;
+        private readonly Text moneyText;
 
         public Display(GameObject prefab)
         {
             Transform canvas = Utils.SpawnPrefab(prefab).transform;
-            hoveringText = canvas.GetComponentInChildren<Text>();
+            hoveringText = canvas.GetChild(0).GetComponent<Text>();
+            moneyText = canvas.GetChild(1).GetComponent<Text>();
         }
 
-        public void UpdateHoveringText(string txt) => hoveringText.text = txt;
+        public void UpdateHoveringText(Transform hit) => hoveringText.text = hit ? hit.name : string.Empty;
+        public void UpdateMoneyText(int money, int maxMoney) => moneyText.text = money > 0 ? $"({money} / {maxMoney})" : string.Empty;
     }
 }

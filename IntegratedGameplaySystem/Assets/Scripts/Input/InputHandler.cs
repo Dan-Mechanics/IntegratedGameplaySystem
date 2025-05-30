@@ -62,15 +62,6 @@ namespace IntegratedGameplaySystem
 
         public void Update()
         {
-            /*foreach (var binding in bindings)
-            {
-                if (Input.GetKeyDown(binding.keyCode))
-                    conversion[binding.playerAction].onDown?.Invoke();
-
-                if (Input.GetKeyUp(binding.keyCode))
-                    conversion[binding.playerAction].onUp?.Invoke();
-            }*/
-
             for (int i = 0; i < bindings.Count; i++)
             {
                 if (Input.GetKeyDown(bindings[i].keyCode))

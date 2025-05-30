@@ -10,7 +10,7 @@ namespace IntegratedGameplaySystem
     {
         [Min(1)] public int plantCount;
         [Min(0f)] public float dispersal;
-
+        public int monetaryValue;
         [Tooltip("One in ...")]
         [Min(1)] public int growOdds;
         [Min(1)] public int wateredGrowOdds;

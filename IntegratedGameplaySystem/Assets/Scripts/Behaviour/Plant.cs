@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
         public const string PLANT_PREFAB_NAME = "plant";
         public const string RAIN_PREFAB_NAME = "rain";
 
-        public event Action OnCollect;
+        //public event Action<int> OnCollect;
 
         private readonly PlantSpeciesProfile blueprint;
         private readonly SceneObject sceneObject;
@@ -41,8 +41,6 @@ namespace IntegratedGameplaySystem
             go.transform.localPosition = rainPrefab.transform.localPosition;
             waterEffect = go.GetComponent<ParticleSystem>();
 
-            //UpdateWatered(Utils.GetRandBool());
-            // You could add some funny scale variation here in the MeshRenderer !!
             sphereCollider = sceneObject.gameObject.AddComponent<SphereCollider>();
             meshRenderers = sceneObject.gameObject.GetComponentsInChildren<MeshRenderer>();
         }
@@ -102,7 +100,7 @@ namespace IntegratedGameplaySystem
             if (progression >= blueprint.materials.Length - 1) 
             {
                 progression = 0;
-                OnCollect?.Invoke();
+                EventManagerGeneric<int>.RaiseEvent(Occasion.EARN_MONEY, blueprint.monetaryValue);
             }
             else if (!isWatered)
                 UpdateWatered(true);

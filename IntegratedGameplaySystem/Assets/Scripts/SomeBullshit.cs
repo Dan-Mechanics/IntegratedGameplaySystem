@@ -3,12 +3,9 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// This shit is getting a little messy again GRRR.
-    /// </summary>
     public interface IPlantSpawner 
     {
-        public void Spawn(List<object> behaviours, PlantBlueprint blueprint, Vector3 offset, List<Plant> plants);
+        public void Spawn(List<object> behaviours, PlantBlueprint blueprint, Vector3 offset);
     }
 
     public class Dispersal : IPlantSpawner
@@ -22,7 +19,7 @@ namespace IntegratedGameplaySystem
             this.dispersal = dispersal;
         }
 
-        public void Spawn(List<object> behaviours, PlantBlueprint blueprint, Vector3 offset, List<Plant> plants)
+        public void Spawn(List<object> behaviours, PlantBlueprint blueprint, Vector3 offset)
         {
             Plant temp;
             
@@ -34,7 +31,6 @@ namespace IntegratedGameplaySystem
                 temp.sceneObject.transform.position += offset;
                 Utils.ApplyRandomRotation(temp.sceneObject.transform);
 
-                plants.Add(temp);
                 behaviours.Add(temp);
             }
         }
@@ -51,7 +47,7 @@ namespace IntegratedGameplaySystem
             this.spacing = spacing;
         }
 
-        public void Spawn(List<object> behaviours, PlantBlueprint blueprint, Vector3 offset, List<Plant> plants)
+        public void Spawn(List<object> behaviours, PlantBlueprint blueprint, Vector3 offset)
         {
             Plant temp;
 
@@ -65,7 +61,6 @@ namespace IntegratedGameplaySystem
                     temp.sceneObject.transform.position += offset;
                     Utils.ApplyRandomRotation(temp.sceneObject.transform);
 
-                    plants.Add(temp);
                     behaviours.Add(temp);
                 }
             }

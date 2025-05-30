@@ -36,6 +36,7 @@ namespace IntegratedGameplaySystem
             rain.transform.SetParent(sceneObject.transform);
             rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
             waterEffect = rain.GetComponent<ParticleSystem>();
+            //rain.transform.SetParent(nu)
 
             sphereCollider = sceneObject.gameObject.AddComponent<SphereCollider>();
             meshRenderers = sceneObject.gameObject.GetComponentsInChildren<MeshRenderer>();
@@ -44,18 +45,20 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             UpdateWatered(false);
+            /*sceneObject.transform.position += Utils.GetRandomFlatPos(blueprint.dispersal);
+            Utils.ApplyRandomRotation(sceneObject.transform);*/
 
             ServiceLocator<IWorldService>.Locate().Add(sceneObject.gameObject, this);
-            //EventManager.AddListener(Occasion.TICK, Tick);
+            EventManager.AddListener(Occasion.TICK, Tick);
             Refresh();
         }
 
         public void Dispose()
         {
-            //EventManager.RemoveListener(Occasion.TICK, Tick);
+            EventManager.RemoveListener(Occasion.TICK, Tick);
         }
 
-        public void Tick()
+        private void Tick()
         {
             if (!Utils.OneIn(isWatered ? blueprint.wateredGrowOdds : blueprint.growOdds))
                 return;

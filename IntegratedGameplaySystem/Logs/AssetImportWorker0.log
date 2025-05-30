@@ -8821,3 +8821,68 @@ AssetImportParameters requested are different than current active one (requested
   custom:scripting/precompiled-assembly-types:Assembly-CSharp: 69ca2bf823dc1e81bb5789d8e5d43de6 -> 59baa7da96163ace6556c07381d70db5
   custom:scripting/monoscript/fileName/IGame.cs: e373e76e2684e32938d2ac4a164887a4 -> 
   custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 1.05 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 1 unused Assets / (3.1 KB). Loaded Objects now: 1908.
+Memory consumption went from 133.5 MB to 133.5 MB.
+Total: 2.975400 ms (FindLiveObjects: 0.190800 ms CreateObjectMapping: 0.096800 ms MarkObjects: 2.664300 ms  DeleteObjects: 0.022500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/PlantBlueprint.cs: cdaa2550ecd562dda3ffe6b02402fe8c -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/SomeBullshit.cs: 364061819e3bbaf9b6b850ee338ceccf -> 
+  custom:scripting/monoscript/fileName/Player.cs: 58f7f05f32d6cc34181e03351d766ba2 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/DisplaySettings.cs: 02bc4089d0971a70cd2a41c8d2c8bb68 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: 69ca2bf823dc1e81bb5789d8e5d43de6 -> 59baa7da96163ace6556c07381d70db5
+  custom:scripting/monoscript/fileName/IGame.cs: e373e76e2684e32938d2ac4a164887a4 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+========================================================================
+Received Import Request.
+  Time since last request: 1303.164742 seconds.
+  path: Assets/ScriptableObjects/Plant/Everbending.asset
+  artifactKey: Guid(fea0b6872a59f284da25ba69885c92f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/Plant/Everbending.asset using Guid(fea0b6872a59f284da25ba69885c92f6) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+EVERBENDING
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+IntegratedGameplaySystem.PlantBlueprint:OnValidate () (at Assets/Scripts/ScriptableObjects/PlantBlueprint.cs:42)
+
+(Filename: Assets/Scripts/ScriptableObjects/PlantBlueprint.cs Line: 42)
+
+ -> (artifact id: 'e129327eb85780c799a4fadb2ce925ea') in 0.032820 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 32
+========================================================================
+Received Import Request.
+  Time since last request: 0.000011 seconds.
+  path: Assets/ScriptableObjects/Plant/Moonberry.asset
+  artifactKey: Guid(3aa9be92a0736b0439525ba630c79984) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ScriptableObjects/Plant/Moonberry.asset using Guid(3aa9be92a0736b0439525ba630c79984) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+MOONBERRY
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+IntegratedGameplaySystem.PlantBlueprint:OnValidate () (at Assets/Scripts/ScriptableObjects/PlantBlueprint.cs:42)
+
+(Filename: Assets/Scripts/ScriptableObjects/PlantBlueprint.cs Line: 42)
+
+ -> (artifact id: 'db84806b3f6aae2404cc99dc6f47f934') in 0.003209 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 32

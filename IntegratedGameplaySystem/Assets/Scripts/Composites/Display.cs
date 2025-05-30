@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace IntegratedGameplaySystem
 {
@@ -12,17 +13,15 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Display
     {
-        public GameObject itemSlotPrefab;
-        public GameObject textPrefab;
-        public Sprite emptySprite;
-        //public PlayerContext playerContext;
-        
-        private void Place(Transform trans, Vector3 pos)
+        public const string CANVAS_PREFAB_NAME = "canvas";
+        private Text hoveringText;
+
+        public Display(GameObject prefab)
         {
-            //trans.SetParent(transform);
-            trans.localPosition = Vector3.zero;
-            trans.localRotation = Quaternion.identity;
-            trans.GetComponent<RectTransform>().anchoredPosition = pos;
+            Transform canvas = Utils.SpawnPrefab(prefab).transform;
+            hoveringText = canvas.GetComponentInChildren<Text>();
         }
+
+        public void UpdateHoveringText(string txt) => hoveringText.text = txt;
     }
 }

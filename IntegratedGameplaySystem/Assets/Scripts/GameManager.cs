@@ -40,6 +40,8 @@ namespace IntegratedGameplaySystem
         /// Cosndier moving this somewhere else.
         /// Litterally lvoe coding silly things like this:
         /// And suddenly im me again.
+        /// 
+        /// MASSIVE COUPLING EMERGY HERE !!
         /// </summary>
         private List<object> GetGameBehaviours() 
         {
@@ -49,7 +51,8 @@ namespace IntegratedGameplaySystem
                 new PlayerMovement(new KeyboardSource()),
                 new Interactor(),
                 new TestingFeatures(),
-                new TickClock()
+                new TickClock(),
+                new Display(assets.GetByAgreedName(Display.CANVAS_PREFAB_NAME))
             };
 
             List<Plant> plants = new List<Plant>();

@@ -1,3 +1,5 @@
+ok the perforace is better but now the rest is shitty.
+
 performance: store all the plabnts in the frenzy game thing
 and then do array emmes.
 

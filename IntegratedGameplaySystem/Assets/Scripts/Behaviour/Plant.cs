@@ -9,12 +9,9 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Plant : IStartable, IInteractable, IDisposable
     {
-        /*public const string PLANT_PREFAB_NAME = "plant";
-        public const string RAIN_PREFAB_NAME = "rain";*/
-        //public event Action<int> OnCollect;
-
-        private readonly PlantSpeciesProfile blueprint;
-        private readonly SceneObject sceneObject;
+        public readonly SceneObject sceneObject;
+        
+        private readonly PlantBlueprint blueprint;
         private readonly MeshRenderer[] meshRenderers;
         private readonly SphereCollider sphereCollider;
         private readonly ParticleSystem waterEffect;
@@ -28,7 +25,7 @@ namespace IntegratedGameplaySystem
         /// If u gonna makethis solid do it in da start pls.
         /// I doubt the reviewers would notice.
         /// </summary>
-        public Plant(PlantSpeciesProfile blueprint)
+        public Plant(PlantBlueprint blueprint)
         {
             this.blueprint = blueprint;
 
@@ -47,8 +44,8 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             UpdateWatered(false);
-            sceneObject.transform.position += Utils.GetRandomFlatPos(blueprint.dispersal);
-            Utils.ApplyRandomRotation(sceneObject.transform);
+            /*sceneObject.transform.position += Utils.GetRandomFlatPos(blueprint.dispersal);
+            Utils.ApplyRandomRotation(sceneObject.transform);*/
 
             ServiceLocator<IWorldService>.Locate().Add(sceneObject.gameObject, this);
             EventManager.AddListener(Occasion.TICK, Tick);

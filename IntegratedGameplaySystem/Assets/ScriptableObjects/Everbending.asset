@@ -14,11 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantPrefab: {fileID: 6319714984396151695, guid: 048e399419656db4b9c9aa6ae6023c6f, type: 3}
   rainPrefab: {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}
-  plantCount: 20
-  dispersal: 10
   monetaryValue: 100
-  growOdds: 10
-  wateredGrowOdds: 5
+  growOdds: 20
+  wateredGrowOdds: 10
   sprite: {fileID: 21300000, guid: 7c768b292b4ad1c44b99ed372216f18c, type: 3}
   materials:
   - {fileID: 2100000, guid: fe992bb52a09c904ba249199f0f2424d, type: 2}

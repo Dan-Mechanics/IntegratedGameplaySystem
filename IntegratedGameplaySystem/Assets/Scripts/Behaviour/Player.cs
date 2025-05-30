@@ -2,12 +2,8 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// Also spawns the player.
-    /// </summary>
-    public class PlayerMovement : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
+    public class Player : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
-        //public const string PLAYER_PREFAB_NAME = "player";
         private readonly IPlayerInput playerInput;
         
         private Transform eyes;
@@ -15,16 +11,14 @@ namespace IntegratedGameplaySystem
         private MouseMovement mouseMovement;
         private CameraHandler cameraHandler;
 
-        public PlayerMovement(IPlayerInput playerInput)
+        public Player(IPlayerInput playerInput)
         {
             this.playerInput = playerInput;
         }
 
         public void Start()
         {
-            IAssetService assets = ServiceLocator<IAssetService>.Locate();
-
-            PlayerSettings settings = assets.GetByType<PlayerSettings>();
+            PlayerSettings settings = ServiceLocator<IAssetService>.Locate().GetByType<PlayerSettings>();
             SceneObject player = new SceneObject(settings.prefab);
 
             eyes = new GameObject("eyes").transform;

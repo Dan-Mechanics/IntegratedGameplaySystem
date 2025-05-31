@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4da7425478963aa4e9c3c96d28dde1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scene: {fileID: 11400000, guid: aff288634d52d9041bd2d47d18287c9f, type: 2}
   sceneSetup: {fileID: 11400000, guid: 4ce5449af4eed3a4981bcfd051721a5c, type: 2}
   scenePrefabs:
   - {fileID: 3993618247013554881, guid: 2bd35eac28761b6489ddbfdd47807dde, type: 3}
@@ -59,4 +60,3 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3aa9be92a0736b0439525ba630c79984, type: 2}
     - {fileID: 11400000, guid: f3c844299f452a240bedd292b592bcf1, type: 2}
     - {fileID: 11400000, guid: 0326ca5c9435ded43819a030e1be536d, type: 2}
-    - {fileID: 2118756706629037042, guid: 6d7533ae40270ac41b038abdce0878ec, type: 3}

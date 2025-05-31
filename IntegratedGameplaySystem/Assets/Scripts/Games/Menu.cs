@@ -9,27 +9,27 @@ namespace IntegratedGameplaySystem
     public class Menu : Scene
     {
         public GameObject canvas;
-        //public string nextScene;
+        protected Transform canvasTrans;
 
         private Button button;
-
+        
         public override void Dispose()
         {
             base.Dispose();
             button.onClick.RemoveListener(NextScene);
         }
 
-        public override List<object> GetGameBehaviours()
+        public override List<object> GetGame()
         {
             List<object> behaviours = new List<object>();
 
-            Transform canvas = Utils.SpawnPrefab(this.canvas).transform;
-            button = canvas.GetComponentInChildren<Button>();
+            canvasTrans = Utils.SpawnPrefab(canvas).transform;
+            button = canvasTrans.GetComponentInChildren<Button>();
             button.onClick.AddListener(NextScene);
-
+          //  Debug.Log(button);
             //result.Add(this);
 
-            behaviours.AddRange(base.GetGameBehaviours());
+            behaviours.AddRange(base.GetGame());
 
             return behaviours;
         }

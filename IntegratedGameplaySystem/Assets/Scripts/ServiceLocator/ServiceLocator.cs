@@ -20,8 +20,8 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public static T Locate()
         {
-            if (instance == null)
-                throw new Exception("No instance provided yet !!");
+            //if (instance == null)
+                //throw new Exception("No instance provided yet !!");
 
             return instance;
         }

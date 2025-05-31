@@ -34,7 +34,8 @@ namespace IntegratedGameplaySystem
 
             // Just in case.
             ServiceLocator<IWorldService>.Provide(null);
-            ServiceLocator<IInputService>.Provide(null);
+
+            ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
 
             if (scene == null)
             {
@@ -42,8 +43,9 @@ namespace IntegratedGameplaySystem
                 return;
             }
 
-            //IGame game = new FarmingFrenzy();
-            heart.Setup(scene.GetGameBehaviours());
+            List<object> wd = scene.GetGame();
+            wd.Add(ServiceLocator<IInputService>.Locate());
+            heart.Setup(scene.GetGame());
         }
     }
 }

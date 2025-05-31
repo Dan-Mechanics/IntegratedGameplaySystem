@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace IntegratedGameplaySystem
 {
@@ -15,6 +16,18 @@ namespace IntegratedGameplaySystem
         public static bool GetRandBool() 
         {
             return Random.value > 0.5f;
+        }
+
+        public static Text MakeText(Transform canvas, GameObject textPrefab, Vector2 pos)
+        {
+            Transform trans = Utils.SpawnPrefab(textPrefab).transform;
+            trans.SetParent(canvas);
+            trans.localPosition = Vector3.zero;
+            trans.GetComponent<RectTransform>().anchoredPosition = pos;
+            Text txt = trans.GetComponent<Text>();
+            txt.text = string.Empty;
+
+            return txt;
         }
 
         public static void ApplyRandomRotation(Transform trans) 

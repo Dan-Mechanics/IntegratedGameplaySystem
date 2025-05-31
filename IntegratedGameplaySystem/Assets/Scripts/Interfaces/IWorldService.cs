@@ -10,4 +10,9 @@ namespace IntegratedGameplaySystem
         void Add(GameObject go, object obj);
         void Remove(GameObject go);
     }
+
+    public interface IHighscoreService
+    {
+        float GetHighscore();
+    }
 }

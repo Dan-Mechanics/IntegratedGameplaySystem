@@ -8,6 +8,6 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IScene 
     {
-        List<object> GetGameBehaviours();
+        List<object> GetGame();
     }
 }

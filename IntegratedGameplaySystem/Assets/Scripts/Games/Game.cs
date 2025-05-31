@@ -13,18 +13,22 @@ namespace IntegratedGameplaySystem
         /// 
         /// MASSIVE COUPLING EMERGY HERE !!
         /// </summary>
-        public override List<object> GetGameBehaviours()
+        public override List<object> GetGame()
         {
             ServiceLocator<IWorldService>.Provide(new GameWorld());
-            ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
+            //ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
 
             List<object> behaviours = new()
             {
                 ServiceLocator<IInputService>.Locate(),
                 new Player(new KeyboardSource()),
-                new TestingFeatures(),
-                new TickClock()
+               // new TestingFeatures()
             };
+
+            var tickClock = new TickClock();
+            behaviours.Add(tickClock);
+
+            ServiceLocator<IHighscoreService>.Provide(tickClock);
 
             var interactor = new Interactor();
             behaviours.Add(interactor);
@@ -41,13 +45,13 @@ namespace IntegratedGameplaySystem
                 spawner.Spawn(behaviours, plantSpecies[i], new Vector3(i * 5f, 0f, 0f));
             }
 
-            var display = new Display(interactor, wallet);
+            var display = new Display(interactor, wallet, tickClock);
             behaviours.Add(display);
 
             //behaviours.Add(this);
             //EventManager.AddListener(Occasion.GAME_OVER, NextScene);
 
-            behaviours.AddRange(base.GetGameBehaviours());
+            behaviours.AddRange(base.GetGame());
 
             return behaviours;
         }

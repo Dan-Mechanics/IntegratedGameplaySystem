@@ -31,8 +31,10 @@ namespace IntegratedGameplaySystem
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
 
             ServiceLocator<IAssetService>.Provide(assets);
-            /*ServiceLocator<IWorldService>.Provide(new GameWorld());
-            ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));*/
+
+            // Just in case.
+            ServiceLocator<IWorldService>.Provide(null);
+            ServiceLocator<IInputService>.Provide(null);
 
             if (scene == null)
             {

@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class GameManager : MonoBehaviour 
     {
-        [SerializeField] private Object scene = default;
+        [SerializeField] private Scene scene = default;
         [SerializeField] private SceneSetup sceneSetup = default;
         [SerializeField] private List<GameObject> scenePrefabs = default;
         [SerializeField] private Assets assets = default;
@@ -34,14 +34,14 @@ namespace IntegratedGameplaySystem
             /*ServiceLocator<IWorldService>.Provide(new GameWorld());
             ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));*/
 
-            if (scene is not IScene foundScene)
+            if (scene == null)
             {
-                Debug.LogError("Please assign a valid scene.");
+                Debug.LogError("Please assign a scene.");
                 return;
             }
 
             //IGame game = new FarmingFrenzy();
-            heart.Setup(foundScene.GetGameBehaviours());
+            heart.Setup(scene.GetGameBehaviours());
         }
     }
 }

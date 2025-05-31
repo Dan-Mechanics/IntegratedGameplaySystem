@@ -1,19 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace IntegratedGameplaySystem
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
-    public class Game : ScriptableObject, IScene, IDisposable
+    public class Game : Scene
     {
-        public string nextScene;
-        
-        public void Dispose()
-        {
-            EventManager.RemoveListener(Occasion.GAME_OVER, NextScene);
-        }
-
         /// <summary>
         /// Cosndier moving this somewhere else.
         /// Litterally lvoe coding silly things like this:
@@ -21,7 +13,7 @@ namespace IntegratedGameplaySystem
         /// 
         /// MASSIVE COUPLING EMERGY HERE !!
         /// </summary>
-        public List<object> GetGameBehaviours()
+        public override List<object> GetGameBehaviours()
         {
             ServiceLocator<IWorldService>.Provide(new GameWorld());
             ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
@@ -52,16 +44,12 @@ namespace IntegratedGameplaySystem
             var display = new Display(interactor, wallet);
             behaviours.Add(display);
 
-            behaviours.Add(this);
+            //behaviours.Add(this);
+            //EventManager.AddListener(Occasion.GAME_OVER, NextScene);
 
-            EventManager.AddListener(Occasion.GAME_OVER, NextScene);
+            behaviours.AddRange(base.GetGameBehaviours());
 
             return behaviours;
-        }
-
-        private void NextScene()
-        {
-            SceneManager.LoadScene(nextScene);
         }
     }
 }

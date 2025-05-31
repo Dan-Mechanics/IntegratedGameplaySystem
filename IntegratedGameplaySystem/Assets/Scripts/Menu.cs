@@ -6,37 +6,32 @@ using UnityEngine.UI;
 namespace IntegratedGameplaySystem
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Menu), fileName = "New " + nameof(Menu))]
-    public class Menu : ScriptableObject, IScene, IDisposable
+    public class Menu : Scene
     {
         public GameObject canvas;
-        public string nextScene;
+        //public string nextScene;
 
         private Button button;
 
-        public void Dispose()
+        public override void Dispose()
         {
+            base.Dispose();
             button.onClick.RemoveListener(NextScene);
         }
 
-        public List<object> GetGameBehaviours()
+        public override List<object> GetGameBehaviours()
         {
-            List<object> result = new List<object>();
+            List<object> behaviours = new List<object>();
 
             Transform canvas = Utils.SpawnPrefab(this.canvas).transform;
             button = canvas.GetComponentInChildren<Button>();
             button.onClick.AddListener(NextScene);
 
-            result.Add(this);
+            //result.Add(this);
 
-            return result;
-        }
+            behaviours.AddRange(base.GetGameBehaviours());
 
-        /// <summary>
-        /// Repeatign fuck this shit.
-        /// </summary>
-        private void NextScene() 
-        {
-            SceneManager.LoadScene(nextScene);
+            return behaviours;
         }
     }
 }

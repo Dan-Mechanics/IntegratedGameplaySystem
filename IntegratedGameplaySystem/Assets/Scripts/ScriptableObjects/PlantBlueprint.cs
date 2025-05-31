@@ -11,10 +11,7 @@ namespace IntegratedGameplaySystem
     {
         public GameObject plantPrefab;
         public GameObject rainPrefab;
-        /*[Min(1)] public int plantCount;
-        [Min(0f)] public float dispersal;*/
         public int monetaryValue;
-
         [Tooltip("One in ...")]
         [Min(1)] public int growOdds;
         [Tooltip("One in ...")]
@@ -22,14 +19,6 @@ namespace IntegratedGameplaySystem
 
         public Sprite sprite;
         public Material[] materials;
-
-        /*public void Spawn(List<object> behaviours) 
-        {
-            for (int j = 0; j < plantCount; j++)
-            {
-                behaviours.Add(new Plant(this));
-            }
-        }*/
         
         private void OnValidate() 
         {

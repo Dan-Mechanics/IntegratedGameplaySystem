@@ -1,4 +1,4 @@
-﻿using System;
+﻿//using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +9,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class GameManager : MonoBehaviour 
     {
+        [SerializeField] private Object scene = default;
         [SerializeField] private SceneSetup sceneSetup = default;
         [SerializeField] private List<GameObject> scenePrefabs = default;
         [SerializeField] private Assets assets = default;
@@ -30,11 +31,17 @@ namespace IntegratedGameplaySystem
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
 
             ServiceLocator<IAssetService>.Provide(assets);
-            ServiceLocator<IWorldService>.Provide(new GameWorld());
-            ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
+            /*ServiceLocator<IWorldService>.Provide(new GameWorld());
+            ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));*/
 
-            IGame game = new FarmingFrenzy();
-            heart.Setup(game.GetGameBehaviours());
+            if (scene is not IScene foundScene)
+            {
+                Debug.LogError("Please assign a valid scene.");
+                return;
+            }
+
+            //IGame game = new FarmingFrenzy();
+            heart.Setup(foundScene.GetGameBehaviours());
         }
     }
 }

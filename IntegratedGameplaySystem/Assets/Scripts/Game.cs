@@ -1,15 +1,19 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace IntegratedGameplaySystem
 {
-    public interface IGame 
+    [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
+    public class Game : ScriptableObject, IScene, IDisposable
     {
-        List<object> GetGameBehaviours();
-    }
+        public string nextScene;
+        
+        public void Dispose()
+        {
+            EventManager.RemoveListener(Occasion.GAME_OVER, NextScene);
+        }
 
-    public class FarmingFrenzy : IGame 
-    {
         /// <summary>
         /// Cosndier moving this somewhere else.
         /// Litterally lvoe coding silly things like this:
@@ -19,6 +23,9 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public List<object> GetGameBehaviours()
         {
+            ServiceLocator<IWorldService>.Provide(new GameWorld());
+            ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
+
             List<object> behaviours = new()
             {
                 ServiceLocator<IInputService>.Locate(),
@@ -45,7 +52,16 @@ namespace IntegratedGameplaySystem
             var display = new Display(interactor, wallet);
             behaviours.Add(display);
 
+            behaviours.Add(this);
+
+            EventManager.AddListener(Occasion.GAME_OVER, NextScene);
+
             return behaviours;
+        }
+
+        private void NextScene()
+        {
+            SceneManager.LoadScene(nextScene);
         }
     }
 }

@@ -133,18 +133,30 @@ PrefabInstance:
     - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: game
       value: 
-      objectReference: {fileID: 11400000, guid: aff288634d52d9041bd2d47d18287c9f, type: 2}
+      objectReference: {fileID: 11400000, guid: 7d3163ba6c76aac43918cb38df17a942, type: 2}
     - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: scene
       value: 
-      objectReference: {fileID: 11400000, guid: aff288634d52d9041bd2d47d18287c9f, type: 2}
+      objectReference: {fileID: 11400000, guid: 7d3163ba6c76aac43918cb38df17a942, type: 2}
+    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
+      propertyPath: sceneSetup
+      value: 
+      objectReference: {fileID: 11400000, guid: bb593227d28783d4da32ce627fa22e72, type: 2}
+    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
+      propertyPath: scenePrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: assets.collection.Array.size
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8097411516312560828, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: m_Name
       value: game_manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097411516312560828, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8097411516312560830, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: m_LocalPosition.x

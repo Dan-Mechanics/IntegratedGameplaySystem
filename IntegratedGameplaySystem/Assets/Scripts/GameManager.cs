@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class GameManager : MonoBehaviour 
     {
-        [SerializeField] private Scene scene = default;
+        [SerializeField] private Object scene = default;
         [SerializeField] private SceneSetup sceneSetup = default;
         [SerializeField] private List<GameObject> scenePrefabs = default;
         [SerializeField] private Assets assets = default;
@@ -34,13 +34,17 @@ namespace IntegratedGameplaySystem
             ServiceLocator<IWorldService>.Provide(null);
             ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
 
-            if (scene == null)
+            if (scene == null || scene is not IScene _scene)
             {
-                Debug.LogError("Please assign a scene.");
+                Debug.LogError("Please assign a valid IScene scene.");
                 return;
             }
 
-            List<object> behaviours = scene.GetGame();
+            Debug.Log(scene.name.ToUpper());
+
+            // This will throw an error if the scene is not an IScene.
+            // this is on purpouse because then i assigned the wrong thing.
+            List<object> behaviours = _scene.GetSceneBehaviours();
             behaviours.Add(scene);
 
             behaviours.Add(ServiceLocator<IInputService>.Locate());

@@ -177,7 +177,7 @@ PrefabInstance:
     - target: {fileID: 5566012569777904282, guid: 13f97432376d99f45ba24ad8a4b5b97c, type: 3}
       propertyPath: scene
       value: 
-      objectReference: {fileID: 11400000, guid: a5c486a0a8c020640be6870a3289b2d1, type: 2}
+      objectReference: {fileID: 11400000, guid: db098b9eb5d447b4c8e901e9d946f219, type: 2}
     - target: {fileID: 5566012569777904282, guid: 13f97432376d99f45ba24ad8a4b5b97c, type: 3}
       propertyPath: assets.collection.Array.size
       value: 1

@@ -4,22 +4,18 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
-    public class Game : Scene
+    public class Game : ScriptableObject, IScene, IDisposable
     {
-        public override List<object> GetGame()
+        public SceneHandler sceneHandler;
+
+        public List<object> GetSceneBehaviours()
         {
-            List<object> behaviours = base.GetGame();
-            
+            List<object> behaviours = sceneHandler.GetSceneBehaviours();
+
             ServiceLocator<IWorldService>.Provide(new GameWorld());
-            //ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
-
-            behaviours.Add(ServiceLocator<IInputService>.Locate());
-            behaviours.Add(new Player(new KeyboardSource()));
-
-            ServiceLocator<IScoreService>.Provide(null);
+            behaviours.Add(new Player(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
 
             var tickClock = new Clock();
-            Debug.Log(tickClock);
             behaviours.Add(tickClock);
 
             ServiceLocator<IScoreService>.Provide(tickClock);
@@ -42,9 +38,12 @@ namespace IntegratedGameplaySystem
             var display = new Display(interactor, wallet, tickClock);
             behaviours.Add(display);
 
-            //behaviours.AddRange(base.GetGame());
-
             return behaviours;
+        }
+
+        public void Dispose()
+        {
+            sceneHandler.Dispose();
         }
     }
 }

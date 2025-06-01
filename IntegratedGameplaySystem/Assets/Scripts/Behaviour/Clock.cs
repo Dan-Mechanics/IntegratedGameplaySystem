@@ -14,7 +14,6 @@ namespace IntegratedGameplaySystem
 
         public Clock(float interval = 1f)
         {
-            Debug.Log("new");
             this.interval = interval;   
         }
 

@@ -28,7 +28,7 @@ namespace IntegratedGameplaySystem
             }
 
             sprite = Resources.Load<Sprite>($"{name}/stage_{materials.Length}_img");
-            Debug.Log(name.ToUpper());
+            //Debug.Log(name.ToUpper());
         }
     }
 }

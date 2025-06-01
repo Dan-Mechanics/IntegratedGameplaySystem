@@ -8,6 +8,11 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IScene 
     {
-        List<object> GetGame();
+        List<object> GetSceneBehaviours();
+    }
+
+    public interface IMenuDecorator
+    {
+        void Decorate(List<object> behaviours, Transform canvas);
     }
 }

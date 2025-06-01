@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: assets.collection.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8097411516312560828, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: m_Name

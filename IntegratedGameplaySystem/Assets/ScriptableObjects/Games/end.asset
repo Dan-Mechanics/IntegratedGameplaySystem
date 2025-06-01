@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c92cbcfe7d136c49959b5260ecdfeff, type: 3}
-  m_Name: start
+  m_Name: end
   m_EditorClassIdentifier: 
-  canvas: {fileID: 7198252773159180085, guid: c862b1c7f3de45c45854c414877c94b1, type: 3}
-  nextScene: Game
+  sceneHandler:
+    nextScene: Start
+  canvasPrefab: {fileID: 7198252773159180085, guid: e815896baf817bc4d95d720f045ff25a, type: 3}
+  decorators:
+  - {fileID: 11400000, guid: a5c486a0a8c020640be6870a3289b2d1, type: 2}

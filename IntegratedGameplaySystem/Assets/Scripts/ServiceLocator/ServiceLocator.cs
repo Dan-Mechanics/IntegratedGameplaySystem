@@ -10,6 +10,9 @@ namespace IntegratedGameplaySystem
     /// Perhaps i should add more stuff to the folder this is in including interfaces but ok.
     /// maybe then it makes it sligjhtly more clear which things use this right. yeah.
     /// but thats for later now i just wanna make the plants work in general.
+    /// 
+    /// 
+    /// Note to self: we can use servicelocators as tools for persistant memory.
     /// </summary>
     public static class ServiceLocator<T>
     {

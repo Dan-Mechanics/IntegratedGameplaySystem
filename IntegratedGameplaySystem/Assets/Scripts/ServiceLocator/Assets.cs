@@ -27,15 +27,10 @@ namespace IntegratedGameplaySystem
             return collection.Find(x => x.GetType() == typeof(T)) as T;
         }
 
-        /// <summary>
-        /// Idk how to do this better yet.
-        /// </summary>
         public List<T> GetCollectionType<T>() where T : Object
         {
-            List<Object> filteredCollection = collection.FindAll(x => x.GetType() == typeof(T));
             List<T> result = new List<T>();
-
-            filteredCollection.ForEach(x => result.Add(x as T));
+            collection.FindAll(x => x.GetType() == typeof(T)).ForEach(x => result.Add(x as T));
 
             return result;
         }

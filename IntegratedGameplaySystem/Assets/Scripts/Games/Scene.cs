@@ -9,17 +9,9 @@ namespace IntegratedGameplaySystem
     {
         public string nextScene;
         
-        public virtual void Dispose()
-        {
-            EventManager.RemoveListener(Occasion.GAME_OVER, NextScene);
-        }
-
         public virtual List<object> GetGame()
         {
             List<object> behaviours = new();
-
-            behaviours.Add(new TestingFeatures());
-            behaviours.Add(this);
             EventManager.AddListener(Occasion.GAME_OVER, NextScene);
 
             return behaviours;
@@ -27,8 +19,12 @@ namespace IntegratedGameplaySystem
 
         protected void NextScene()
         {
-            //Debug.Log("dwd");
             SceneManager.LoadScene(nextScene);
+        }
+        
+        public virtual void Dispose()
+        {
+            EventManager.RemoveListener(Occasion.GAME_OVER, NextScene);
         }
     }
 }

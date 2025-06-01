@@ -15,14 +15,14 @@ namespace IntegratedGameplaySystem
     {
         private readonly Wallet wallet;
         private readonly Interactor interactor;
-        private readonly TickClock tickClock;
+        private readonly Clock tickClock;
 
         //public const string CANVAS_PREFAB_NAME = "canvas";
         private readonly Text hoveringText;
         private readonly Text moneyText;
         private readonly Text timerText;
 
-        public Display(Interactor interactor, Wallet wallet, TickClock tickClock)
+        public Display(Interactor interactor, Wallet wallet, Clock tickClock)
         {
             this.wallet = wallet;
             this.interactor = interactor;
@@ -41,7 +41,7 @@ namespace IntegratedGameplaySystem
         {
             wallet.OnMoneyChanged += UpdateMoneyText;
             interactor.OnHoverChange += UpdateHoveringText;
-            tickClock.OnNewTime += UpdateTimerText;
+            tickClock.OnNewScore += UpdateTimerText;
             //EventManagerGeneric<int>.RaiseEvent(Occasion.EARN_MONEY, 10);
         }
 
@@ -53,7 +53,7 @@ namespace IntegratedGameplaySystem
         {
             wallet.OnMoneyChanged -= UpdateMoneyText;
             interactor.OnHoverChange -= UpdateHoveringText;
-            tickClock.OnNewTime -= UpdateTimerText;
+            tickClock.OnNewScore -= UpdateTimerText;
         }
     }
 }

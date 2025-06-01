@@ -44,6 +44,9 @@ namespace IntegratedGameplaySystem
         public readonly int width;
         public readonly float spacing;
 
+        /// <summary>
+        /// Consider moving to a settigns scriptableobject asset . 
+        /// </summary>
         public Plot(int width, float spacing)
         {
             this.width = width;

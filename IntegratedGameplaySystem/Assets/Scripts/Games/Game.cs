@@ -6,29 +6,23 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
     public class Game : Scene
     {
-        /// <summary>
-        /// Cosndier moving this somewhere else.
-        /// Litterally lvoe coding silly things like this:
-        /// And suddenly im me again.
-        /// 
-        /// MASSIVE COUPLING EMERGY HERE !!
-        /// </summary>
         public override List<object> GetGame()
         {
+            List<object> behaviours = base.GetGame();
+            
             ServiceLocator<IWorldService>.Provide(new GameWorld());
             //ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
 
-            List<object> behaviours = new()
-            {
-                ServiceLocator<IInputService>.Locate(),
-                new Player(new KeyboardSource()),
-               // new TestingFeatures()
-            };
+            behaviours.Add(ServiceLocator<IInputService>.Locate());
+            behaviours.Add(new Player(new KeyboardSource()));
 
-            var tickClock = new TickClock();
+            ServiceLocator<IScoreService>.Provide(null);
+
+            var tickClock = new Clock();
+            Debug.Log(tickClock);
             behaviours.Add(tickClock);
 
-            ServiceLocator<IHighscoreService>.Provide(tickClock);
+            ServiceLocator<IScoreService>.Provide(tickClock);
 
             var interactor = new Interactor();
             behaviours.Add(interactor);
@@ -48,10 +42,7 @@ namespace IntegratedGameplaySystem
             var display = new Display(interactor, wallet, tickClock);
             behaviours.Add(display);
 
-            //behaviours.Add(this);
-            //EventManager.AddListener(Occasion.GAME_OVER, NextScene);
-
-            behaviours.AddRange(base.GetGame());
+            //behaviours.AddRange(base.GetGame());
 
             return behaviours;
         }

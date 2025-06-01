@@ -31,10 +31,7 @@ namespace IntegratedGameplaySystem
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
 
             ServiceLocator<IAssetService>.Provide(assets);
-
-            // Just in case.
             ServiceLocator<IWorldService>.Provide(null);
-
             ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
 
             if (scene == null)
@@ -43,9 +40,13 @@ namespace IntegratedGameplaySystem
                 return;
             }
 
-            List<object> wd = scene.GetGame();
-            wd.Add(ServiceLocator<IInputService>.Locate());
-            heart.Setup(scene.GetGame());
+            List<object> behaviours = scene.GetGame();
+            behaviours.Add(scene);
+
+            behaviours.Add(ServiceLocator<IInputService>.Locate());
+            behaviours.Add(new TestingFeatures());
+
+            heart.Setup(behaviours);
         }
     }
 }

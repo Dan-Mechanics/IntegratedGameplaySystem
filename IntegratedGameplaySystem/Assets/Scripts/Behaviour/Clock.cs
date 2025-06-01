@@ -3,17 +3,18 @@ using System;
 
 namespace IntegratedGameplaySystem
 {
-    public class TickClock : IStartable, IFixedUpdatable, IHighscoreService
+    public class Clock : IStartable, IFixedUpdatable, IScoreService
     {
-        public Action<float> OnNewTime;
+        public Action<float> OnNewScore;
         
         public float interval;
         private readonly Timer timer = new();
 
-        private float time;
+        private float score;
 
-        public TickClock(float interval = 1f)
+        public Clock(float interval = 1f)
         {
+            Debug.Log("new");
             this.interval = interval;   
         }
 
@@ -24,8 +25,8 @@ namespace IntegratedGameplaySystem
 
         public void FixedUpdate() 
         {
-            time = Time.time;
-            OnNewTime?.Invoke(time);
+            score = Time.timeSinceLevelLoad;
+            OnNewScore?.Invoke(score);
             
             if (!timer.Tick(Time.fixedDeltaTime))
                 return;
@@ -36,7 +37,7 @@ namespace IntegratedGameplaySystem
 
         public float GetHighscore()
         {
-            return time;
+            return score;
         }
     }
 }

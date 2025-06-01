@@ -98,6 +98,9 @@ namespace IntegratedGameplaySystem
             }
 
             disposables.Clear();
+            updatables.Clear();
+            fixedUpdatables.Clear();
+            lateFixedUpdatables.Clear();
         }
     }
 }

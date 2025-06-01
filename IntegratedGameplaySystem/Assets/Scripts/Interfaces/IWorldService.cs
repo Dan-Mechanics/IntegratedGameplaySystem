@@ -11,7 +11,7 @@ namespace IntegratedGameplaySystem
         void Remove(GameObject go);
     }
 
-    public interface IHighscoreService
+    public interface IScoreService
     {
         float GetHighscore();
     }

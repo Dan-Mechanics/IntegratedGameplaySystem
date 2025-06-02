@@ -13,6 +13,6 @@ namespace IntegratedGameplaySystem
 
     public interface IScoreService
     {
-        float GetHighscore();
+        float GetScore();
     }
 }

@@ -10,7 +10,8 @@ namespace IntegratedGameplaySystem
 
         public List<object> GetSceneBehaviours()
         {
-            List<object> behaviours = sceneHandler.GetSceneBehaviours();
+            sceneHandler.Start();
+            List<object> behaviours = new List<object>();
 
             ServiceLocator<IWorldService>.Provide(new GameWorld());
             behaviours.Add(new Player(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
@@ -32,7 +33,7 @@ namespace IntegratedGameplaySystem
             IPlantSpawner spawner = new Plot(5, 1f);
             for (int i = 0; i < plantSpecies.Count; i++)
             {
-                spawner.Spawn(behaviours, plantSpecies[i], new Vector3(i * 5f, 0f, 0f));
+                spawner.Spawn(behaviours, plantSpecies[i], new Vector3(i * 5f + 0.5f, 0f, 0.5f));
             }
 
             var display = new Display(interactor, wallet, tickClock);

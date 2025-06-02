@@ -14,7 +14,7 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            Debug.Log(name);
+            Debug.Log($"loading {name}");
 
             Physics.simulationMode = SimulationMode.Script;
             Time.fixedDeltaTime = 1f / fixedUpdatesPerSecond;

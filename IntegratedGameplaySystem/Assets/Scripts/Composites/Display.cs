@@ -41,7 +41,7 @@ namespace IntegratedGameplaySystem
         {
             wallet.OnMoneyChanged += UpdateMoneyText;
             interactor.OnHoverChange += UpdateHoveringText;
-            tickClock.OnNewScore += UpdateTimerText;
+            tickClock.OnNewTime += UpdateTimerText;
             //EventManagerGeneric<int>.RaiseEvent(Occasion.EARN_MONEY, 10);
         }
 
@@ -53,7 +53,7 @@ namespace IntegratedGameplaySystem
         {
             wallet.OnMoneyChanged -= UpdateMoneyText;
             interactor.OnHoverChange -= UpdateHoveringText;
-            tickClock.OnNewScore -= UpdateTimerText;
+            tickClock.OnNewTime -= UpdateTimerText;
         }
     }
 }

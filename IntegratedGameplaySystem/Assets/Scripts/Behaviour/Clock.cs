@@ -5,12 +5,12 @@ namespace IntegratedGameplaySystem
 {
     public class Clock : IStartable, IFixedUpdatable, IScoreService
     {
-        public Action<float> OnNewScore;
+        public Action<float> OnNewTime;
         
         public float interval;
         private readonly Timer timer = new();
 
-        private float score;
+        private float time;
 
         public Clock(float interval = 1f)
         {
@@ -24,8 +24,8 @@ namespace IntegratedGameplaySystem
 
         public void FixedUpdate() 
         {
-            score = Time.timeSinceLevelLoad;
-            OnNewScore?.Invoke(score);
+            time = Time.timeSinceLevelLoad;
+            OnNewTime?.Invoke(time);
             
             if (!timer.Tick(Time.fixedDeltaTime))
                 return;
@@ -34,9 +34,9 @@ namespace IntegratedGameplaySystem
             EventManager.RaiseEvent(Occasion.TICK);
         }
 
-        public float GetHighscore()
+        public float GetScore()
         {
-            return score;
+            return time;
         }
     }
 }

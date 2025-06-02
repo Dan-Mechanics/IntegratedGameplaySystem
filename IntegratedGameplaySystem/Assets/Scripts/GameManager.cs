@@ -32,19 +32,21 @@ namespace IntegratedGameplaySystem
 
             ServiceLocator<IAssetService>.Provide(assets);
             ServiceLocator<IWorldService>.Provide(null);
-            ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
 
-            if (scene == null || scene is not IScene _scene)
+            if (ServiceLocator<IInputService>.Locate() == null)
+                ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
+
+            if (scene == null || scene is not IScene foundScene)
             {
                 Debug.LogError("Please assign a valid IScene scene.");
                 return;
             }
 
-            Debug.Log(scene.name.ToUpper());
+            Debug.Log($"loading {scene.name.ToUpper()}");
 
             // This will throw an error if the scene is not an IScene.
             // this is on purpouse because then i assigned the wrong thing.
-            List<object> behaviours = _scene.GetSceneBehaviours();
+            List<object> behaviours = foundScene.GetSceneBehaviours();
             behaviours.Add(scene);
 
             behaviours.Add(ServiceLocator<IInputService>.Locate());

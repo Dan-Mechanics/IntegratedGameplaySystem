@@ -1,19 +1,16 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine.SceneManagement;
 
 namespace IntegratedGameplaySystem
 {
-    [System.Serializable]
-    public class SceneHandler : IScene, IDisposable
+    [Serializable]
+    public class SceneHandler : IStartable, IDisposable
     {
         public string nextScene;
 
-        public List<object> GetSceneBehaviours()
+        public void Start()
         {
-            List<object> behaviours = new();
             EventManager.AddListener(Occasion.GAME_OVER, GoNextScene);
-
-            return behaviours;
         }
 
         public void GoNextScene()

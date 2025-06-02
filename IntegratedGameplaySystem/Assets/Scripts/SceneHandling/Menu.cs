@@ -18,7 +18,8 @@ namespace IntegratedGameplaySystem
         
         public List<object> GetSceneBehaviours()
         {
-            List<object> behaviours = sceneHandler.GetSceneBehaviours();
+            sceneHandler.Start();
+            List<object> behaviours = new List<object>();
 
             Transform canvas = Utils.SpawnPrefab(canvasPrefab).transform;
             nextSceneButton = canvas.GetComponentInChildren<Button>();

@@ -19,3 +19,4 @@ MonoBehaviour:
   triggerInteraction: 1
   tags:
   - Plant
+  - Untagged

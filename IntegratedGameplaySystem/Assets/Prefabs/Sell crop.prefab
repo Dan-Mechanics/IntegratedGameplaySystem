@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 8986603679221753588}
   - component: {fileID: 840310164561729301}
   m_Layer: 0
-  m_Name: sell
+  m_Name: Sell crop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,7 +204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2309689930534140676, guid: 089d9a9dead2ff64d9c79711fc831f89, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.575
+      value: 0.479
       objectReference: {fileID: 0}
     - target: {fileID: 2309689930534140676, guid: 089d9a9dead2ff64d9c79711fc831f89, type: 3}
       propertyPath: m_LocalPosition.z
@@ -241,6 +241,14 @@ PrefabInstance:
     - target: {fileID: 7281992081650814562, guid: 089d9a9dead2ff64d9c79711fc831f89, type: 3}
       propertyPath: m_Name
       value: coins
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281992081650814562, guid: 089d9a9dead2ff64d9c79711fc831f89, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281992081650814562, guid: 089d9a9dead2ff64d9c79711fc831f89, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

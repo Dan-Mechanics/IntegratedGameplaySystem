@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantPrefab: {fileID: 6319714984396151695, guid: 048e399419656db4b9c9aa6ae6023c6f, type: 3}
   rainPrefab: {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}
-  monetaryValue: 50
+  monetaryValue: 100
   growOdds: 25
   wateredGrowOdds: 5
   sprite: {fileID: 21300000, guid: 5c2923238074b194e8c530c6aa62fe83, type: 3}

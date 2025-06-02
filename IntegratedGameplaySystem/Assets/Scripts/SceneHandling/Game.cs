@@ -24,7 +24,7 @@ namespace IntegratedGameplaySystem
             var interactor = new Interactor();
             behaviours.Add(interactor);
 
-            var wallet = new Wallet();
+            var wallet = new MoneyCentral();
             behaviours.Add(wallet);
 
             var plantSpecies = ServiceLocator<IAssetService>.Locate().GetCollectionType<PlantBlueprint>();

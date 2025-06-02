@@ -73,5 +73,16 @@ namespace IntegratedGameplaySystem
         }
 
         public InputSource GetInputSource(PlayerAction playerAction) => conversion[playerAction];
+
+        /// <summary>
+        /// Because we want all the stuff to reset.
+        /// </summary>
+        public void Dispose()
+        {
+            foreach (var item in conversion)
+            {
+                item.Value.onUp?.Invoke();
+            }
+        }
     }
 }

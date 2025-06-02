@@ -44,7 +44,7 @@ namespace IntegratedGameplaySystem
             if (!DoRaycast(out Transform hit))
                 return;
 
-            worldService.GetComponent<IInteractable>(hit.gameObject).Interact();
+            worldService.GetComponent<IInteractable>(hit.gameObject)?.Interact();
         }
 
         private bool DoRaycast(out Transform hit)
@@ -63,12 +63,6 @@ namespace IntegratedGameplaySystem
             currentlyHovering = hit;
             OnHoverChange?.Invoke(currentlyHovering);
         }
-
-        /*private void SetHovering(string hovering)
-        {
-            OnHoverChange?.Invoke(hovering);
-            prevHovering = hovering;
-        }*/
 
         public void Dispose()
         {

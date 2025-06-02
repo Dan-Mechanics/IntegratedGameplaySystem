@@ -13,7 +13,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Display : IStartable, IDisposable
     {
-        private readonly Wallet wallet;
+        private readonly MoneyCentral wallet;
         private readonly Interactor interactor;
         private readonly Clock tickClock;
 
@@ -22,7 +22,7 @@ namespace IntegratedGameplaySystem
         private readonly Text moneyText;
         private readonly Text timerText;
 
-        public Display(Interactor interactor, Wallet wallet, Clock tickClock)
+        public Display(Interactor interactor, MoneyCentral wallet, Clock tickClock)
         {
             this.wallet = wallet;
             this.interactor = interactor;

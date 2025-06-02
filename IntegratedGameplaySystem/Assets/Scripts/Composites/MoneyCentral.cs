@@ -6,16 +6,23 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// This class should respond to the events yo.
     /// </summary>
-    public class Wallet :  IStartable, IDisposable
+    public class MoneyCentral :  IStartable, IDisposable, IInteractable
     {
         public event Action<int, int> OnMoneyChanged;
 
-        private readonly WalletSettings settings;
+        private readonly MoneyCentralSettings settings;
         private int money;
 
-        public Wallet()
+        private readonly ParticleSystem particle;
+
+        public MoneyCentral()
         {
-            settings = ServiceLocator<IAssetService>.Locate().GetByType<WalletSettings>();
+            settings = ServiceLocator<IAssetService>.Locate().GetByType<MoneyCentralSettings>();
+
+            GameObject go = Utils.SpawnPrefab(settings.prefab);
+            particle = go.transform.GetComponentInChildren<ParticleSystem>();
+
+            ServiceLocator<IWorldService>.Locate().Add(go, this);
         }
 
         public void Start()
@@ -41,6 +48,11 @@ namespace IntegratedGameplaySystem
         public void Dispose()
         {
             EventManagerGeneric<int>.RemoveListener(Occasion.EARN_MONEY, EarnMoney);
+        }
+            
+        public void Interact()
+        {
+            particle.Play();
         }
     }
 }

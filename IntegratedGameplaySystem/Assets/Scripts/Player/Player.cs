@@ -18,7 +18,7 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            PlayerSettings settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<PlayerSettings>();
+            PlayerSettings settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<PlayerSettings>();
             Transform transform = Utils.SpawnPrefab(settings.prefab).transform;
 
             eyes = new GameObject("eyes").transform;

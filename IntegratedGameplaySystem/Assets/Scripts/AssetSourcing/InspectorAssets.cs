@@ -21,7 +21,7 @@ namespace IntegratedGameplaySystem
     {
         [SerializeField] private List<UnityEngine.Object> assets = default;
 
-        public T GetAssetByType<T>() where T : UnityEngine.Object
+        public T GetAssetWithType<T>() where T : UnityEngine.Object
         {
             return assets.Find(x => x.GetType() == typeof(T)) as T;
         }

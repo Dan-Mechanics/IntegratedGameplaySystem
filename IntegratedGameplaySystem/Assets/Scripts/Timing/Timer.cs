@@ -16,7 +16,7 @@
             return value <= 0f;
         }
 
-        public virtual void SetValue(float value) 
+        public void SetValue(float value) 
         {
             this.value = value;
             hasBeenSet = true;

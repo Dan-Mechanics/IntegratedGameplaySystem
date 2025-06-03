@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IAssetService
     {
-        T GetAssetByType<T>() where T : UnityEngine.Object;
+        T GetAssetWithType<T>() where T : UnityEngine.Object;
         List<T> GetAssetsOfType<T>() where T : UnityEngine.Object;
     }
 }

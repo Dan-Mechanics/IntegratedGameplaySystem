@@ -1,3 +1,14 @@
+new ideas given: 
+chainsaw farming,
+farming bomb
+cool upgrades like that.
+it seems like they were pretty pleased with
+the pitch and said, just make it ! so thats cool,
+since then my implementation for decoupling has changed.
+
+IN DOCUMENTATION: say WHY you didnt opt for scriptalbe object pattern ( heavy coupling is the reason )
+and also describe why everything billion interfaces right
+
 i wanna make the folder based on the system and not the pattern or whateve.
 
 performance: store all the plabnts in the frenzy game thing

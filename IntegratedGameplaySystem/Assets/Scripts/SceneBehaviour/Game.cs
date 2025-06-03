@@ -8,13 +8,13 @@ namespace IntegratedGameplaySystem
     {
         public override List<object> GetSceneComponents()
         {
-            //sceneHandler.Start();
+            IAssetService assetService = ServiceLocator<IAssetService>.Locate();
             List<object> components = base.GetSceneComponents();
 
             //ServiceLocator<IWorldService>.Provide(new GameWorld());
             components.Add(new Player(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
 
-            var tickClock = new Clock();
+            var tickClock = new Clock(assetService.GetAssetWithType<ClockSettings>().interval);
             components.Add(tickClock);
 
             ServiceLocator<IScoreService>.Provide(tickClock);
@@ -25,7 +25,7 @@ namespace IntegratedGameplaySystem
             var wallet = new MoneyCentral();
             components.Add(wallet);
 
-            List<PlantBlueprint> plantBlueprints = ServiceLocator<IAssetService>.Locate().GetAssetsOfType<PlantBlueprint>();
+            List<PlantBlueprint> plantBlueprints = assetService.GetAssetsOfType<PlantBlueprint>();
 
             //IPlantSpawner spawner = new Dispersal() { dispersal = 20, plantCount = 30 };
             IPlantSpawner spawner = new Plot(5, 1f);

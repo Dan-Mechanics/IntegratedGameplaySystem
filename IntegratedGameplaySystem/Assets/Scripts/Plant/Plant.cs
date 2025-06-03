@@ -9,8 +9,8 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Plant : IStartable, IInteractable, IDisposable
     {
-        //public readonly SceneObject sceneObject;
         public readonly GameObject gameObject;
+        public readonly Transform transform;
 
         private readonly PlantBlueprint blueprint;
         private readonly MeshRenderer[] meshRenderers;
@@ -31,15 +31,16 @@ namespace IntegratedGameplaySystem
             this.blueprint = blueprint;
 
             gameObject = Utils.SpawnPrefab(blueprint.plantPrefab);
-            gameObject.name = blueprint.name;
+            transform = gameObject.transform;
+            transform.name = blueprint.name;
 
             GameObject rain = Utils.SpawnPrefab(blueprint.rainPrefab);
-            rain.transform.SetParent(gameObject.transform);
+            rain.transform.SetParent(transform);
             rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
             waterEffect = rain.GetComponent<ParticleSystem>();
 
             sphereCollider = gameObject.AddComponent<SphereCollider>();
-            meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+            meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
         }
 
         public void Start()

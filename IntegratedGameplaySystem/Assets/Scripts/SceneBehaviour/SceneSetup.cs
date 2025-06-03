@@ -16,6 +16,9 @@ namespace IntegratedGameplaySystem
         {
             Debug.Log($"loading {name}");
 
+            // Idk I think this makes sense.
+            Random.InitState(0);
+
             Physics.simulationMode = SimulationMode.Script;
             Time.fixedDeltaTime = 1f / fixedUpdatesPerSecond;
             Application.targetFrameRate = maxFPS;

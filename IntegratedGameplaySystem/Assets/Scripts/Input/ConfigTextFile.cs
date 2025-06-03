@@ -13,12 +13,23 @@ namespace IntegratedGameplaySystem
         {
             List<Binding> bindings = new List<Binding>();
             
-            string txt = ServiceLocator<IAssetService>.Locate().GetAssetByType<TextAsset>().text;
+            string txt = ServiceLocator<IAssetService>.Locate().GetAssetWithType<TextAsset>().text;
             string[] lines = txt.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string line in lines)
             {
-                string[] tokens = line.Split(' ');
+                if (!Utils.IsStringValid(line))
+                    continue;
+
+                // Comments
+                if (line.Length > 0 && line[0] == '#')
+                    continue;
+
+                string[] tokens = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                if (tokens.Length < 2)
+                    continue;
+
                 bindings.Add(new Binding(tokens[0], Utils.StringToEnum<PlayerAction>(tokens[1])));
             }
 

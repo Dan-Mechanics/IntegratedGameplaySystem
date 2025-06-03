@@ -16,7 +16,7 @@ namespace IntegratedGameplaySystem
         private const float MIN_CAM_ANGLE = -90f;
         private const float MAX_CAM_ANGLE = 90f;
 
-        private float sens;
+        private readonly float sens;
         private readonly Transform eyes;
         private readonly Transform transform;
         private Vector2 lookingDirection;

@@ -1,9 +1,21 @@
+# Config file for the input.
+# NOTE: this is case-sensitive.
+# Syntax: "[KeyCode] [PlayerAction]"
+
+# Movement
+
 W Forward
 S Backward
 A Left
 D Right
+
+# Interaction
+
 Mouse0 Interact
 Mouse1 Interact
 E Interact
+
+# Debug
+
 R Reload
 Escape Escape

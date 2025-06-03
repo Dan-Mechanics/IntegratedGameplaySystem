@@ -17,7 +17,7 @@ namespace IntegratedGameplaySystem
 
         public MoneyCentral()
         {
-            settings = ServiceLocator<IAssetService>.Locate().GetByType<MoneyCentralSettings>();
+            settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<MoneyCentralSettings>();
 
             GameObject go = Utils.SpawnPrefab(settings.prefab);
             particle = go.transform.GetComponentInChildren<ParticleSystem>();

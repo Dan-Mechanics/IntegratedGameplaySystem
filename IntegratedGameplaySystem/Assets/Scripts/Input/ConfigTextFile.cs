@@ -13,7 +13,7 @@ namespace IntegratedGameplaySystem
         {
             List<Binding> bindings = new List<Binding>();
             
-            string txt = ServiceLocator<IAssetService>.Locate().GetByType<TextAsset>().text;
+            string txt = ServiceLocator<IAssetService>.Locate().GetAssetByType<TextAsset>().text;
             string[] lines = txt.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string line in lines)

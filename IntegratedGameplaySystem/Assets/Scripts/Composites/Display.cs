@@ -28,7 +28,7 @@ namespace IntegratedGameplaySystem
             this.interactor = interactor;
             this.tickClock = tickClock;
 
-            var settings = ServiceLocator<IAssetService>.Locate().GetByType<DisplaySettings>();
+            var settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<DisplaySettings>();
             var canvas = Utils.SpawnPrefab(settings.canvas).transform;
 
             // make something for this.

@@ -7,12 +7,21 @@ namespace IntegratedGameplaySystem
     /// This way, there is never confusion which assets do what.
     /// and because we use interface here, we can add adressables later.
     /// 
-    /// this is a little strange? use resourc.elaod
+    /// Rename to insepctor assets, collection called assets.
+    /// 
+    /// 
+    /// Code review: everything is pretty good but i dont wanna
+    /// make a 
+    /// 
+    /// AssetBudnle term drop.
     /// </summary>
     [System.Serializable]
     public class InspectorAssets : IAssetService
     {
-        [SerializeField] private List<Object> assets = default;
+        /// <summary>
+        /// Asin the collection of assets.
+        /// </summary>
+        [SerializeField] private List<Object> collection = default;
 
         /*public GameObject GetByAgreedName(string name)
         {
@@ -24,17 +33,17 @@ namespace IntegratedGameplaySystem
             return collection.Find(x => x.name == name) as T;
         }*/
 
-        public T GetByType<T>() where T : Object
+        public T GetAssetByType<T>() where T : Object
         {
-            return assets.Find(x => x.GetType() == typeof(T)) as T;
+            return collection.Find(x => x.GetType() == typeof(T)) as T;
         }
 
-        public List<T> GetCollectionType<T>() where T : Object
+        public List<T> GetAssetsByType<T>() where T : Object
         {
-            List<T> result = new List<T>();
-            assets.FindAll(x => x.GetType() == typeof(T)).ForEach(x => result.Add(x as T));
+            List<T> list = new List<T>();
+            collection.FindAll(x => x.GetType() == typeof(T)).ForEach(x => list.Add(x as T));
 
-            return result;
+            return list;
         }
     }
 }

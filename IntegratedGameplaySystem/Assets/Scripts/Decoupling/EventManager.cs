@@ -39,7 +39,7 @@ namespace IntegratedGameplaySystem
         }
     }
 
-    public static class EventManagerGeneric<T>
+    public static class EventManager<T>
     {
         private static readonly Dictionary<Occasion, Action<T>> events = new();
 

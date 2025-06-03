@@ -6,7 +6,7 @@ namespace IntegratedGameplaySystem
     public static class Utils 
     {
         /// <summary>
-        /// Useful for FNaF-like games.
+        /// A one in X chance.
         /// </summary>
         public static bool OneIn(int x)
         {
@@ -20,19 +20,19 @@ namespace IntegratedGameplaySystem
 
         public static Text MakeText(Transform canvas, GameObject textPrefab, Vector2 pos)
         {
-            Transform trans = Utils.SpawnPrefab(textPrefab).transform;
-            trans.SetParent(canvas);
-            trans.localPosition = Vector3.zero;
-            trans.GetComponent<RectTransform>().anchoredPosition = pos;
-            Text txt = trans.GetComponent<Text>();
+            Transform transform = SpawnPrefab(textPrefab).transform;
+            transform.SetParent(canvas);
+            transform.localPosition = Vector3.zero;
+            transform.GetComponent<RectTransform>().anchoredPosition = pos;
+            Text txt = transform.GetComponent<Text>();
             txt.text = string.Empty;
 
             return txt;
         }
 
-        public static void ApplyRandomRotation(Transform trans) 
+        public static void ApplyRandomRotation(Transform transform) 
         {
-            trans.Rotate(Vector3.up * Random.Range(0f, 360f), Space.Self);
+            transform.Rotate(Vector3.up * Random.Range(0f, 360f), Space.Self);
         }
 
         public static GameObject SpawnPrefab(GameObject prefab) 
@@ -52,29 +52,5 @@ namespace IntegratedGameplaySystem
         {
             return (T)System.Enum.Parse(typeof(T), str);
         }
-
-        /*[System.Obsolete]
-        public static GameObject LoadPrefab(string name) 
-        {
-            GameObject prefab = Resources.Load<GameObject>($"Prefabs/{name}");
-
-            // ????
-            if (prefab == null)
-                throw new System.Exception("Can't find that prefab!");
-
-            return prefab;
-        }
-
-        [System.Obsolete]
-        public static T LoadData<T>(string name) where T : Object
-        {
-            T data = Resources.Load<T>($"Data/{name}");
-
-            // ????
-            if (data == null)
-                throw new System.Exception("Can't find that data!");
-
-            return data;
-        }*/
     }
 }

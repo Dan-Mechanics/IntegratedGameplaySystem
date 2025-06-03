@@ -9,8 +9,9 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Plant : IStartable, IInteractable, IDisposable
     {
-        public readonly SceneObject sceneObject;
-        
+        //public readonly SceneObject sceneObject;
+        private readonly GameObject gameObject;
+
         private readonly PlantBlueprint blueprint;
         private readonly MeshRenderer[] meshRenderers;
         private readonly SphereCollider sphereCollider;
@@ -29,17 +30,19 @@ namespace IntegratedGameplaySystem
         {
             this.blueprint = blueprint;
 
-            sceneObject = new SceneObject(blueprint.plantPrefab);
-            sceneObject.gameObject.name = blueprint.name;
+            gameObject = Utils.SpawnPrefab(blueprint.plantPrefab);
+            gameObject.name = blueprint.name;
+            //sceneObject = new SceneObject(blueprint.plantPrefab);
+            //sceneObject.gameObject.name = blueprint.name;
 
             GameObject rain = Utils.SpawnPrefab(blueprint.rainPrefab);
-            rain.transform.SetParent(sceneObject.transform);
+            rain.transform.SetParent(gameObject.transform);
             rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
             waterEffect = rain.GetComponent<ParticleSystem>();
             //rain.transform.SetParent(nu)
 
-            sphereCollider = sceneObject.gameObject.AddComponent<SphereCollider>();
-            meshRenderers = sceneObject.gameObject.GetComponentsInChildren<MeshRenderer>();
+            sphereCollider = gameObject.AddComponent<SphereCollider>();
+            meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
         }
 
         public void Start()
@@ -48,7 +51,7 @@ namespace IntegratedGameplaySystem
             /*sceneObject.transform.position += Utils.GetRandomFlatPos(blueprint.dispersal);
             Utils.ApplyRandomRotation(sceneObject.transform);*/
 
-            ServiceLocator<IWorldService>.Locate().Add(sceneObject.gameObject, this);
+            ServiceLocator<IWorldService>.Locate().Add(gameObject, this);
             EventManager.AddListener(Occasion.TICK, Tick);
             Refresh();
         }
@@ -97,7 +100,7 @@ namespace IntegratedGameplaySystem
             if (progression >= blueprint.materials.Length - 1) 
             {
                 progression = 0;
-                EventManagerGeneric<int>.RaiseEvent(Occasion.EARN_MONEY, blueprint.monetaryValue);
+                EventManager<int>.RaiseEvent(Occasion.EARN_MONEY, blueprint.monetaryValue);
             }
             else if (!isWatered)
                 UpdateWatered(true);

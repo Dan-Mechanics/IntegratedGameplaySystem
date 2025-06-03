@@ -25,7 +25,7 @@ namespace IntegratedGameplaySystem
             var wallet = new MoneyCentral();
             components.Add(wallet);
 
-            List<PlantBlueprint> plantBlueprints = ServiceLocator<IAssetService>.Locate().GetAssetsByType<PlantBlueprint>();
+            List<PlantBlueprint> plantBlueprints = ServiceLocator<IAssetService>.Locate().GetAssetsOfType<PlantBlueprint>();
 
             //IPlantSpawner spawner = new Dispersal() { dispersal = 20, plantCount = 30 };
             IPlantSpawner spawner = new Plot(5, 1f);

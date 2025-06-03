@@ -32,7 +32,6 @@ namespace IntegratedGameplaySystem
         }
 
         public void ProcessKeyString() => keyCode = Utils.StringToEnum<KeyCode>(keyString);
-
         public override int GetHashCode() => base.GetHashCode();
         public override string ToString() => $"{keyString} --> {keyCode} | {playerAction}";
     }

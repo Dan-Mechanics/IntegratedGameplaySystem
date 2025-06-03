@@ -28,7 +28,7 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             OnMoneyChanged?.Invoke(money, settings.moneyToWin);
-            EventManagerGeneric<int>.AddListener(Occasion.EARN_MONEY, EarnMoney);
+            EventManager<int>.AddListener(Occasion.EARN_MONEY, EarnMoney);
         }
 
         public void EarnMoney(int incoming)
@@ -47,7 +47,7 @@ namespace IntegratedGameplaySystem
 
         public void Dispose()
         {
-            EventManagerGeneric<int>.RemoveListener(Occasion.EARN_MONEY, EarnMoney);
+            EventManager<int>.RemoveListener(Occasion.EARN_MONEY, EarnMoney);
         }
             
         public void Interact()

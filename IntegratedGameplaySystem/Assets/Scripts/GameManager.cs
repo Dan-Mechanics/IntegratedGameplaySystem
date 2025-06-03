@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
         [SerializeField] private SceneBehaviour sceneBehaviour = default;
         [SerializeField] private SceneSetup sceneSetup = default;
         [SerializeField] private List<GameObject> scenePrefabs = default;
-        [SerializeField] private InspectorAssets assets = default;
+        [SerializeField] private InspectorAssets inspectorAssets = default;
 
         private readonly Heart heart = new Heart();
 
@@ -30,7 +30,7 @@ namespace IntegratedGameplaySystem
             sceneSetup.Setup();
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
 
-            ServiceLocator<IAssetService>.Provide(assets);
+            ServiceLocator<IAssetService>.Provide(inspectorAssets);
 
             IWorldService worldService = ServiceLocator<IWorldService>.Locate();
             if (worldService == null)
@@ -50,15 +50,16 @@ namespace IntegratedGameplaySystem
             }
 
             if (sceneBehaviour == null)
-                throw new System.Exception($"please assign a valid {nameof(sceneBehaviour)}.");
+            {
+                Debug.LogError($"please assign a valid {nameof(sceneBehaviour)}.");
+                return;
+            }
 
             Debug.Log($"loading {sceneBehaviour.name.ToUpper()}");
 
-            // This will throw an error if the scene is not an IScene.
-            // this is on purpouse because then i assigned the wrong thing.
             List<object> components = sceneBehaviour.GetSceneComponents();
-            components.Add(sceneBehaviour);
 
+            components.Add(sceneBehaviour);
             components.Add(inputService);
             components.Add(new TestingFeatures());
 

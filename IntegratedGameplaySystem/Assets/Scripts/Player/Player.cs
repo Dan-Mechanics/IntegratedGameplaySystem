@@ -19,14 +19,14 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             PlayerSettings settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<PlayerSettings>();
-            SceneObject sceneObject = new SceneObject(settings.prefab);
+            Transform transform = Utils.SpawnPrefab(settings.prefab).transform;
 
             eyes = new GameObject("eyes").transform;
-            eyes.SetParent(sceneObject.transform);
+            eyes.SetParent(transform);
             eyes.localPosition = Vector3.up * settings.eyesHeight;
 
-            movement = new ForcesMovement(sceneObject.transform, eyes, settings);
-            mouseMovement = new MouseMovement(eyes, sceneObject.transform, settings.sens);
+            movement = new ForcesMovement(transform, eyes, settings);
+            mouseMovement = new MouseMovement(eyes, transform, settings.sens);
             cameraHandler = new CameraHandler(Camera.main.transform);
         }
 

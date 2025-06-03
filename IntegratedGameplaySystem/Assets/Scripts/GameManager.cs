@@ -27,14 +27,27 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private void Setup()
         {
-            sceneSetup.Start();
+            sceneSetup.Setup();
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
 
             ServiceLocator<IAssetService>.Provide(assets);
-            ServiceLocator<IWorldService>.Provide(null);
 
-            if (ServiceLocator<IInputService>.Locate() == null)
-                ServiceLocator<IInputService>.Provide(new InputHandler(new ChillBindingRules(), new ConfigTextFile()));
+            IWorldService worldService = ServiceLocator<IWorldService>.Locate();
+            if (worldService == null)
+            {
+                ServiceLocator<IWorldService>.Provide(new GameWorld());
+            }
+            else
+            {
+                worldService.Reset();
+            }
+
+            IInputService inputService = ServiceLocator<IInputService>.Locate();
+            if (inputService == null)
+            {
+                inputService = new InputHandler(new ChillBindingRules(), new ConfigTextFile());
+                ServiceLocator<IInputService>.Provide(inputService);
+            }
 
             if (scene == null || scene is not IScene foundScene)
             {
@@ -46,13 +59,13 @@ namespace IntegratedGameplaySystem
 
             // This will throw an error if the scene is not an IScene.
             // this is on purpouse because then i assigned the wrong thing.
-            List<object> behaviours = foundScene.GetSceneBehaviours();
-            behaviours.Add(scene);
+            List<object> components = foundScene.GetSceneComponents();
+            components.Add(scene);
 
-            behaviours.Add(ServiceLocator<IInputService>.Locate());
-            behaviours.Add(new TestingFeatures());
+            components.Add(inputService);
+            components.Add(new TestingFeatures());
 
-            heart.Setup(behaviours);
+            heart.Setup(components);
         }
     }
 }

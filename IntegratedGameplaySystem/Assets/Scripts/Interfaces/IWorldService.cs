@@ -9,6 +9,7 @@ namespace IntegratedGameplaySystem
         T GetComponent<T>(GameObject go);
         void Add(GameObject go, object obj);
         void Remove(GameObject go);
+        void Reset();
     }
 
     public interface IScoreService

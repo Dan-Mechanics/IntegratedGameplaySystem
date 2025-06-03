@@ -16,7 +16,7 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private Button nextSceneButton;
         
-        public List<object> GetSceneBehaviours()
+        public List<object> GetSceneComponents()
         {
             sceneHandler.Start();
             List<object> behaviours = new List<object>();

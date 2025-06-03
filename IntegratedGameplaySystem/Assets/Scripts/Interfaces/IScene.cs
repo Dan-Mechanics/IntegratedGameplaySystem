@@ -8,7 +8,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IScene 
     {
-        List<object> GetSceneBehaviours();
+        List<object> GetSceneComponents();
     }
 
     public interface IMenuDecorator

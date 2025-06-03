@@ -4,28 +4,28 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
-    public class Game : ScriptableObject, IScene, IDisposable
+    public class Game : ScriptableObject, IScene, IStartable, IDisposable
     {
         public SceneHandler sceneHandler;
 
-        public List<object> GetSceneBehaviours()
+        public List<object> GetSceneComponents()
         {
-            sceneHandler.Start();
-            List<object> behaviours = new List<object>();
+            //sceneHandler.Start();
+            List<object> components = new List<object>();
 
             ServiceLocator<IWorldService>.Provide(new GameWorld());
-            behaviours.Add(new Player(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
+            components.Add(new Player(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
 
             var tickClock = new Clock();
-            behaviours.Add(tickClock);
+            components.Add(tickClock);
 
             ServiceLocator<IScoreService>.Provide(tickClock);
 
             var interactor = new Interactor();
-            behaviours.Add(interactor);
+            components.Add(interactor);
 
             var wallet = new MoneyCentral();
-            behaviours.Add(wallet);
+            components.Add(wallet);
 
             var plantSpecies = ServiceLocator<IAssetService>.Locate().GetCollectionType<PlantBlueprint>();
 
@@ -33,18 +33,23 @@ namespace IntegratedGameplaySystem
             IPlantSpawner spawner = new Plot(5, 1f);
             for (int i = 0; i < plantSpecies.Count; i++)
             {
-                spawner.Spawn(behaviours, plantSpecies[i], new Vector3(i * 5f + 0.5f, 0f, 0.5f));
+                spawner.Spawn(components, plantSpecies[i], new Vector3(i * 5f + 0.5f, 0f, 0.5f));
             }
 
             var display = new Display(interactor, wallet, tickClock);
-            behaviours.Add(display);
+            components.Add(display);
 
-            return behaviours;
+            return components;
         }
 
         public void Dispose()
         {
             sceneHandler.Dispose();
+        }
+
+        public void Start()
+        {
+            sceneHandler.Start();
         }
     }
 }

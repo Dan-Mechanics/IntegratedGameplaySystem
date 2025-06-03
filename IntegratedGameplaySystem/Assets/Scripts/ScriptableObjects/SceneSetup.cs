@@ -6,13 +6,13 @@ namespace IntegratedGameplaySystem
     /// Consider making this just a class that rests in the GameManager?? idk, outsourcing CODE!! is always good.
     /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(SceneSetup), fileName = "New " + nameof(SceneSetup))]
-    public class SceneSetup : ScriptableObject, IStartable
+    public class SceneSetup : ScriptableObject
     {
         [Min(10)] public int maxFPS;
         [Min(10f)] public float fixedUpdatesPerSecond;
         public bool mouseLocked;
 
-        public void Start()
+        public void Setup()
         {
             Debug.Log($"loading {name}");
 

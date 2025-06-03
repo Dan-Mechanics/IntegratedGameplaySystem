@@ -10,7 +10,7 @@ namespace IntegratedGameplaySystem
     public class Plant : IStartable, IInteractable, IDisposable
     {
         //public readonly SceneObject sceneObject;
-        private readonly GameObject gameObject;
+        public readonly GameObject gameObject;
 
         private readonly PlantBlueprint blueprint;
         private readonly MeshRenderer[] meshRenderers;
@@ -32,14 +32,11 @@ namespace IntegratedGameplaySystem
 
             gameObject = Utils.SpawnPrefab(blueprint.plantPrefab);
             gameObject.name = blueprint.name;
-            //sceneObject = new SceneObject(blueprint.plantPrefab);
-            //sceneObject.gameObject.name = blueprint.name;
 
             GameObject rain = Utils.SpawnPrefab(blueprint.rainPrefab);
             rain.transform.SetParent(gameObject.transform);
             rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
             waterEffect = rain.GetComponent<ParticleSystem>();
-            //rain.transform.SetParent(nu)
 
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
@@ -48,8 +45,6 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             UpdateWatered(false);
-            /*sceneObject.transform.position += Utils.GetRandomFlatPos(blueprint.dispersal);
-            Utils.ApplyRandomRotation(sceneObject.transform);*/
 
             ServiceLocator<IWorldService>.Locate().Add(gameObject, this);
             EventManager.AddListener(Occasion.TICK, Tick);

@@ -32,6 +32,10 @@ PrefabInstance:
       propertyPath: assets.collection.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
+      propertyPath: inspectorAssets.assets.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8097411516312560828, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: m_Name
       value: end_manager Variant

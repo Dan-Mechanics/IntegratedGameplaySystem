@@ -8,5 +8,10 @@ namespace IntegratedGameplaySystem
     public interface IDisposable { void Dispose(); }
     public interface IFixedUpdatable { void FixedUpdate(); }
     public interface ILateFixedUpdatable { void LateFixedUpdate(); }
-    public interface IDestroyable { event Action<object, GameObject> OnDestroy; void Destroy(); }
+
+    public interface IDestroyable 
+    { 
+        event Action<object, GameObject> OnDestroy;
+        void Destroy();
+    }
 }

@@ -32,9 +32,9 @@ namespace IntegratedGameplaySystem
             var canvas = Utils.SpawnPrefab(settings.canvas).transform;
 
             // make something for this.
-            hoveringText = Utils.MakeText(canvas, settings.text, 0.5f * 30f * Vector2.down);
-            moneyText = Utils.MakeText(canvas, settings.text, 1.5f * 30f * Vector2.down);
-            timerText = Utils.MakeText(canvas, settings.text, 2f * 30f * Vector2.down);
+            hoveringText = Utils.AddTextToCanvas(canvas, settings.text, 0.5f * 30f * Vector2.down);
+            moneyText = Utils.AddTextToCanvas(canvas, settings.text, 1.5f * 30f * Vector2.down);
+            timerText = Utils.AddTextToCanvas(canvas, settings.text, 2f * 30f * Vector2.down);
         }
 
         public void Start()

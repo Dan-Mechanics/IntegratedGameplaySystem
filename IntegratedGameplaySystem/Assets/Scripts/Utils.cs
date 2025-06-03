@@ -18,12 +18,13 @@ namespace IntegratedGameplaySystem
             return Random.value > 0.5f;
         }
 
-        public static Text MakeText(Transform canvas, GameObject textPrefab, Vector2 pos)
+        public static Text AddTextToCanvas(Transform canvas, GameObject textPrefab, Vector2 pos)
         {
             Transform transform = SpawnPrefab(textPrefab).transform;
             transform.SetParent(canvas);
             transform.localPosition = Vector3.zero;
             transform.GetComponent<RectTransform>().anchoredPosition = pos;
+
             Text txt = transform.GetComponent<Text>();
             txt.text = string.Empty;
 

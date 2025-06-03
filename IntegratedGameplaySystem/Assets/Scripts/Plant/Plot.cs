@@ -8,7 +8,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IPlantSpawner 
     {
-        public void Spawn(List<object> behaviours, PlantBlueprint blueprint, Vector3 offset);
+        public void Spawn(List<object> components, PlantBlueprint blueprint, Vector3 offset);
     }
 
     public class Dispersal : IPlantSpawner
@@ -22,7 +22,7 @@ namespace IntegratedGameplaySystem
             this.dispersal = dispersal;
         }
 
-        public void Spawn(List<object> behaviours, PlantBlueprint blueprint, Vector3 offset)
+        public void Spawn(List<object> components, PlantBlueprint blueprint, Vector3 offset)
         {
             Plant temp;
             
@@ -30,11 +30,11 @@ namespace IntegratedGameplaySystem
             {
                 temp = new Plant(blueprint);
 
-                temp.sceneObject.transform.position += Utils.GetRandomFlatPos(dispersal);
-                temp.sceneObject.transform.position += offset;
-                Utils.ApplyRandomRotation(temp.sceneObject.transform);
+                temp.gameObject.transform.position += Utils.GetRandomFlatPos(dispersal);
+                temp.gameObject.transform.position += offset;
+                Utils.ApplyRandomRotation(temp.gameObject.transform);
 
-                behaviours.Add(temp);
+                components.Add(temp);
             }
         }
     }
@@ -53,7 +53,7 @@ namespace IntegratedGameplaySystem
             this.spacing = spacing;
         }
 
-        public void Spawn(List<object> behaviours, PlantBlueprint blueprint, Vector3 offset)
+        public void Spawn(List<object> components, PlantBlueprint blueprint, Vector3 offset)
         {
             Plant temp;
 
@@ -63,11 +63,11 @@ namespace IntegratedGameplaySystem
                 {
                     temp = new Plant(blueprint);
 
-                    temp.sceneObject.transform.position += new Vector3(x * spacing, 0f, z * spacing);
-                    temp.sceneObject.transform.position += offset;
-                    Utils.ApplyRandomRotation(temp.sceneObject.transform);
+                    temp.gameObject.transform.position += new Vector3(x * spacing, 0f, z * spacing);
+                    temp.gameObject.transform.position += offset;
+                    // Utils.ApplyRandomRotation(temp.gameObject.transform);
 
-                    behaviours.Add(temp);
+                    components.Add(temp);
                 }
             }
         }

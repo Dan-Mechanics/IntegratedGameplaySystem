@@ -7,15 +7,15 @@
       "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\servicelocator\\inspectorassets.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\scenehandling\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|c:\\users\\dan-mechanics\\development\\github\\integratedgameplaysystem\\integratedgameplaysystem\\assets\\scripts\\scenehandling\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scenehandling\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|c:\\users\\dan-mechanics\\development\\github\\integratedgameplaysystem\\integratedgameplaysystem\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\scriptableobjects\\raycastsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|c:\\users\\dan-mechanics\\development\\github\\integratedgameplaysystem\\integratedgameplaysystem\\assets\\scripts\\scriptableobjects\\raycastsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scriptableobjects\\raycastsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -50,7 +50,8 @@
               "RelativeToolTip": "Assets\\Scripts\\SceneHandling\\Game.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T13:31:44.41Z"
+              "WhenOpened": "2025-06-03T13:31:44.41Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -60,7 +61,7 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\ServiceLocator\\InspectorAssets.cs",
               "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\ServiceLocator\\InspectorAssets.cs",
               "RelativeToolTip": "Assets\\Scripts\\ServiceLocator\\InspectorAssets.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAYwB4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T13:21:16.081Z",
               "EditorCaption": ""
@@ -75,7 +76,8 @@
               "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAowBYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T13:17:40.142Z"
+              "WhenOpened": "2025-06-03T13:17:40.142Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -87,7 +89,8 @@
               "RelativeToolTip": "Assets\\Scripts\\ScriptableObjects\\RaycastSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T13:17:35.752Z"
+              "WhenOpened": "2025-06-03T13:17:35.752Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

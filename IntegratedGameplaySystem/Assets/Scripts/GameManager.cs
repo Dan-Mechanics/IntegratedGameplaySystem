@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
         [SerializeField] private SceneBehaviour sceneBehaviour = default;
         [SerializeField] private SceneSetup sceneSetup = default;
         [SerializeField] private List<GameObject> scenePrefabs = default;
-        [SerializeField] private Assets assets = default;
+        [SerializeField] private InspectorAssets assets = default;
 
         private readonly Heart heart = new Heart();
 

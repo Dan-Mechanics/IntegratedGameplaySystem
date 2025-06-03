@@ -1,3 +1,10 @@
+stuff i wanna add:
+hold up to X amount of items of a single plant type, not multible
+cant interact with collecting plants once you have selected ?? 
+interact with moeny central is gain money based on items.
+cant collect plant if full and does not match type.
+layers? maybe make a clever something that 
+
 new ideas given: 
 chainsaw farming,
 farming bomb

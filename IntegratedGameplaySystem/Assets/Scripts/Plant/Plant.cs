@@ -81,10 +81,15 @@ namespace IntegratedGameplaySystem
         private void UpdateWatered(bool water)
         {
             isWatered = water;
-            if (water)
+
+            if (isWatered)
+            {
                 waterEffect.Play();
+            }
             else
+            {
                 waterEffect.Stop();
+            }
         }
 
         /// <summary>
@@ -93,13 +98,15 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Interact()
         {
-            if (progression >= blueprint.materials.Length - 1) 
+            if (progression >= blueprint.materials.Length - 1)
             {
                 progression = 0;
                 EventManager<int>.RaiseEvent(Occasion.EARN_MONEY, blueprint.monetaryValue);
             }
             else if (!isWatered)
+            {
                 UpdateWatered(true);
+            }
 
             Refresh();
         }

@@ -14,19 +14,7 @@ namespace IntegratedGameplaySystem
             //ServiceLocator<IWorldService>.Provide(new GameWorld());
             components.Add(new Player(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
 
-            var tickClock = new Clock(assetService.GetAssetWithType<ClockSettings>().interval);
-            components.Add(tickClock);
-
-            ServiceLocator<IScoreService>.Provide(tickClock);
-
-            var interactor = new Interactor();
-            components.Add(interactor);
-
-            var wallet = new MoneyCentral();
-            components.Add(wallet);
-
             List<PlantBlueprint> plantBlueprints = assetService.GetAssetsOfType<PlantBlueprint>();
-
             //IPlantSpawner spawner = new Dispersal() { dispersal = 20, plantCount = 30 };
             IPlantSpawner spawner = new Plot(5, 1f);
             for (int i = 0; i < plantBlueprints.Count; i++)
@@ -34,8 +22,18 @@ namespace IntegratedGameplaySystem
                 spawner.Spawn(components, plantBlueprints[i], new Vector3(i * 5f + 0.5f, 0f, 0.5f));
             }
 
+            var tickClock = new Clock(assetService.GetAssetWithType<ClockSettings>().interval);
+            ServiceLocator<IScoreService>.Provide(tickClock);
+
+            var interactor = new Interactor();
+            var wallet = new MoneyCentral();
+
             var display = new Display(interactor, wallet, tickClock);
             components.Add(display);
+
+            components.Add(tickClock);
+            components.Add(wallet);            
+            components.Add(interactor);
 
             return components;
         }

@@ -23,20 +23,20 @@ namespace IntegratedGameplaySystem
         private void Update() => heart.Update();
         private void OnDisable() => heart.Dispose();
         private void OnApplicationQuit() => EventManager.RaiseEvent(Occasion.CLOSE_GAME);
-        private void OnValidate() => EditorSceneManager.sceneOpened += Select;
+        private void OnValidate() => EditorSceneManager.sceneOpened += SelectInHierarchy;
 
         /// <summary>
         /// This is just a little side quest.
         /// IDK how this works but it does.
         /// </summary>
-        private void Select(Scene scene, OpenSceneMode mode)
+        private void SelectInHierarchy(Scene scene, OpenSceneMode mode)
         {
             // Idk why this needs to be in here but otherwise 
             // it throws an error sooooo.
             if (this != null && !Selection.objects.Contains(gameObject))
                 Selection.objects = new Object[] { gameObject };
 
-            EditorSceneManager.sceneOpened -= Select;
+            EditorSceneManager.sceneOpened -= SelectInHierarchy;
         }
 
         /// <summary>

@@ -35,6 +35,7 @@ namespace IntegratedGameplaySystem
         public void Start() 
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown += InteractWithWorld;
+            OnHoverChange?.Invoke(null);
         }
 
         public void FixedUpdate() => Hover();

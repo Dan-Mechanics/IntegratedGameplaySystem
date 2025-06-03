@@ -20,15 +20,18 @@ namespace IntegratedGameplaySystem
         public Sprite sprite;
         public Material[] materials;
         
+        /// <summary>
+        /// Does making the textures sprites mess
+        /// with the performance ??
+        /// </summary>
         private void OnValidate() 
         {
+            sprite = Resources.Load<Sprite>($"{name}/stage_{materials.Length}_img");
+
             for (int i = 0; i < materials.Length; i++)
             {
                 materials[i] = Resources.Load<Material>($"{name}/stage_{i + 1}_mat");
             }
-
-            sprite = Resources.Load<Sprite>($"{name}/stage_{materials.Length}_img");
-            //Debug.Log(name.ToUpper());
         }
     }
 }

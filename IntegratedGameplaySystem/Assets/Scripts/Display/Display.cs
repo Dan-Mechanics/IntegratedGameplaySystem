@@ -10,9 +10,15 @@ namespace IntegratedGameplaySystem
     /// so i would rahter have us not do that right.
     /// Maybe if we have some clever solution for assets??
     /// Where like we just spawn it in and it works??
+    /// 
+    /// I thought about not using TMP because its more laggy i think.
+    /// 
+    /// NOTE: this class is NOT very solid.
     /// </summary>
     public class Display : IStartable, IDisposable
     {
+        private const string NOT_HOVERING = " . . . ";
+        
         private readonly MoneyCentral wallet;
         private readonly Interactor interactor;
         private readonly Clock tickClock;
@@ -21,6 +27,7 @@ namespace IntegratedGameplaySystem
         private readonly Text hoveringText;
         private readonly Text moneyText;
         private readonly Text timerText;
+        private readonly Image heldItemImage;
 
         public Display(Interactor interactor, MoneyCentral wallet, Clock tickClock)
         {
@@ -31,10 +38,19 @@ namespace IntegratedGameplaySystem
             var settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<DisplaySettings>();
             var canvas = Utils.SpawnPrefab(settings.canvas).transform;
 
-            // make something for this.
-            hoveringText = Utils.AddTextToCanvas(canvas, settings.text, 0.5f * 30f * Vector2.down);
-            moneyText = Utils.AddTextToCanvas(canvas, settings.text, 1.5f * 30f * Vector2.down);
-            timerText = Utils.AddTextToCanvas(canvas, settings.text, 2f * 30f * Vector2.down);
+            // !Clean ??
+
+            float height = Utils.GetHeight(settings.text);
+
+            hoveringText = Utils.AddTextToCanvas(canvas, settings.text, 1f * height * Vector2.down);
+            timerText = Utils.AddTextToCanvas(canvas, settings.text, 2f * height * Vector2.down);
+            moneyText = Utils.AddTextToCanvas(canvas, settings.text, 3f * height * Vector2.down);
+
+            heldItemImage = Utils.AddImageToCanvas(canvas, settings.image, Vector2.up * 15f);
+
+            Utils.SnapToBottom(heldItemImage.GetComponent<RectTransform>());
+
+            heldItemImage.sprite = ServiceLocator<IAssetService>.Locate().GetAssetWithType<PlantBlueprint>().sprite;
         }
 
         public void Start()
@@ -42,11 +58,11 @@ namespace IntegratedGameplaySystem
             wallet.OnMoneyChanged += UpdateMoneyText;
             interactor.OnHoverChange += UpdateHoveringText;
             tickClock.OnNewTime += UpdateTimerText;
-            //EventManagerGeneric<int>.RaiseEvent(Occasion.EARN_MONEY, 10);
         }
 
-        public void UpdateHoveringText(Transform hit) => hoveringText.text = hit ? hit.name : string.Empty;
-        public void UpdateMoneyText(int money, int maxMoney) => moneyText.text = money > 0 ? $"({money} / {maxMoney})" : string.Empty;
+        public void UpdateHoveringText(Transform hit) => hoveringText.text = hit ? hit.name : NOT_HOVERING;
+        //public void UpdateMoneyText(int money, int maxMoney) => moneyText.text = money > 0 ? $"({money} / {maxMoney})" : string.Empty;
+        public void UpdateMoneyText(int money, int maxMoney) => moneyText.text = $"({money} / {maxMoney})";
         public void UpdateTimerText(float time) => timerText.text = time.ToString();
 
         public void Dispose()

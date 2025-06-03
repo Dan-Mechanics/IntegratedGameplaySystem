@@ -7,5 +7,6 @@ namespace IntegratedGameplaySystem
     {
         public GameObject canvas;
         public GameObject text;
+        public GameObject image;
     }
 }

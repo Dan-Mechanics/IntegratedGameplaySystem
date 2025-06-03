@@ -18,6 +18,53 @@ namespace IntegratedGameplaySystem
             return Random.value > 0.5f;
         }
 
+        public static float GetHeight(GameObject go) 
+        {
+            return go.GetComponent<RectTransform>().sizeDelta.y;
+        }
+
+        public static float GetWidth(GameObject go)
+        {
+            return go.GetComponent<RectTransform>().sizeDelta.x;
+        }
+
+        public static void SnapToLeft(RectTransform rect) 
+        {
+            rect.pivot = new Vector2(0f, 0.5f);
+            Snap(rect);
+        }
+
+        public static void SnapToRight(RectTransform rect)
+        {
+            rect.pivot = new Vector2(1f, 0.5f);
+            Snap(rect);
+        }
+
+        public static void SnapToBottom(RectTransform rect)
+        {
+            rect.pivot = new Vector2(0.5f, 0f);
+            Snap(rect);
+        }
+
+        public static void SnapToTop(RectTransform rect)
+        {
+            rect.pivot = new Vector2(0.5f, 1f);
+            Snap(rect);
+        }
+
+        public static void SnapToCenter(RectTransform rect)
+        {
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            Snap(rect);
+        }
+
+        private static void Snap(RectTransform rect)
+        {
+            rect.anchorMin = rect.pivot;
+            rect.anchorMax = rect.pivot;
+            //rect.anchoredPosition = Vector2.up * 15f;
+        }
+
         public static Text AddTextToCanvas(Transform canvas, GameObject textPrefab, Vector2 pos)
         {
             Transform transform = SpawnPrefab(textPrefab).transform;
@@ -29,6 +76,19 @@ namespace IntegratedGameplaySystem
             txt.text = string.Empty;
 
             return txt;
+        }
+
+        public static Image AddImageToCanvas(Transform canvas, GameObject imagePrefab, Vector2 pos)
+        {
+            Transform transform = SpawnPrefab(imagePrefab).transform;
+            transform.SetParent(canvas);
+            transform.localPosition = Vector3.zero;
+            transform.GetComponent<RectTransform>().anchoredPosition = pos;
+
+            Image img = transform.GetComponent<Image>();
+            // img.sprite = null;
+
+            return img;
         }
 
         public static void ApplyRandomRotation(Transform transform) 

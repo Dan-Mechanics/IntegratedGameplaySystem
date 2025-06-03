@@ -79,9 +79,9 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Dispose()
         {
-            foreach (var item in conversion)
+            foreach (var pair in conversion)
             {
-                item.Value.onUp?.Invoke();
+                pair.Value.onUp?.Invoke();
             }
         }
     }

@@ -17,8 +17,6 @@ namespace IntegratedGameplaySystem
 
         public KeyboardSource(IInputService inputService)
         {
-            //IInputService inputService = ServiceLocator<IInputService>.Locate();
-
             forward = inputService.GetInputSource(PlayerAction.Forward);
             back = inputService.GetInputSource(PlayerAction.Backward);
             left = inputService.GetInputSource(PlayerAction.Left);

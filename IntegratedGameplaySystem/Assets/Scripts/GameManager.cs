@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -26,12 +27,13 @@ namespace IntegratedGameplaySystem
 
         /// <summary>
         /// This is just a little side quest.
+        /// IDK how this works but it does.
         /// </summary>
         private void Select(Scene scene, OpenSceneMode mode)
         {
             // Idk why this needs to be in here but otherwise 
             // it throws an error sooooo.
-            if (this != null)
+            if (this != null && !Selection.objects.Contains(gameObject))
                 Selection.objects = new Object[] { gameObject };
 
             EditorSceneManager.sceneOpened -= Select;

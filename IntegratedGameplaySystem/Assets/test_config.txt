@@ -1,0 +1,37 @@
+Config file for the input.   !
+NOTE: this is case-sensitive.   !
+Syntax: "[KeyCode] [PlayerAction]"  !
+
+# Movement ==============
+
+W Forward
+
+   W      Forward  # this is allowed
+W   Forward  this is also allowed
+
+ThisDoesntDoAnythingBecauseThereIsLessThanTwo
+
+# NowThis Forward, because those are not recognized enums
+# W IsWhatBreaks, because those are not recognized enums
+# I like it that way because then i KNOW there is a bug, instead of having too look for it.
+
+If you think about it this is also a comment !
+
+S Backward!
+A Left!
+D Right !
+
+# Interaction ==============
+
+done
+now we have disabled interaction
+we can literally wrtie whatever here because this is basically return;
+
+Mouse0 Interact
+Mouse1 Interact
+E Interact
+
+# Debug ==============
+
+R Reload
+Escape Escape

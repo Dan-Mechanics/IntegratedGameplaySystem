@@ -12,13 +12,20 @@ namespace IntegratedGameplaySystem
         public List<Binding> GetBindings()
         {
             List<Binding> bindings = new List<Binding>();
-            
+
             string txt = ServiceLocator<IAssetService>.Locate().GetAssetWithType<TextAsset>().text;
             string[] lines = txt.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string line in lines)
             {
                 if (!Utils.IsStringValid(line))
+                    continue;
+
+                if (line == "done")
+                    break;
+
+                // Ignore statment
+                if (line.Contains('!'))
                     continue;
 
                 // Comments

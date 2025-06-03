@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 namespace IntegratedGameplaySystem
 {
     [Serializable]
-    public class SceneHandler : IStartable, IDisposable
+    public class NextSceneHandler : IStartable, IDisposable
     {
         public string nextScene;
 

@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class GameManager : MonoBehaviour 
     {
-        [SerializeField] private Object scene = default;
+        [SerializeField] private SceneBehaviour sceneBehaviour = default;
         [SerializeField] private SceneSetup sceneSetup = default;
         [SerializeField] private List<GameObject> scenePrefabs = default;
         [SerializeField] private Assets assets = default;
@@ -49,18 +49,15 @@ namespace IntegratedGameplaySystem
                 ServiceLocator<IInputService>.Provide(inputService);
             }
 
-            if (scene == null || scene is not IScene foundScene)
-            {
-                Debug.LogError("Please assign a valid IScene scene.");
-                return;
-            }
+            if (sceneBehaviour == null)
+                throw new System.Exception($"please assign a valid {nameof(sceneBehaviour)}.");
 
-            Debug.Log($"loading {scene.name.ToUpper()}");
+            Debug.Log($"loading {sceneBehaviour.name.ToUpper()}");
 
             // This will throw an error if the scene is not an IScene.
             // this is on purpouse because then i assigned the wrong thing.
-            List<object> components = foundScene.GetSceneComponents();
-            components.Add(scene);
+            List<object> components = sceneBehaviour.GetSceneComponents();
+            components.Add(sceneBehaviour);
 
             components.Add(inputService);
             components.Add(new TestingFeatures());

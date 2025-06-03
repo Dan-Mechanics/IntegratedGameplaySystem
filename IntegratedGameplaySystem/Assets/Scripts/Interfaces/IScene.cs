@@ -3,16 +3,14 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// This is to allow a little more flexiblity for non-scriptableobject.
-    /// </summary>
-    public interface IScene 
+    // This is to allow a little more flexiblity for non-scriptableobject.
+    /*public interface IScene 
     {
         List<object> GetSceneComponents();
-    }
+    }*/
 
     public interface IMenuDecorator
     {
-        void Decorate(List<object> behaviours, Transform canvas);
+        void Decorate(List<object> components, Transform canvas);
     }
 }

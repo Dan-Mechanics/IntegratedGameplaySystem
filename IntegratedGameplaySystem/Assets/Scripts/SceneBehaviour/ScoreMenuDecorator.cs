@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
     {
         public GameObject textPrefab;
 
-        public void Decorate(List<object> behaviours, Transform canvas)
+        public void Decorate(List<object> components, Transform canvas)
         {
             IScoreService service = ServiceLocator<IScoreService>.Locate();
             string score = service == null ? "no highscore ..." : service.GetScore().ToString();

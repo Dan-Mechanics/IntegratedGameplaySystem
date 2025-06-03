@@ -4,16 +4,14 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
-    public class Game : ScriptableObject, IScene, IStartable, IDisposable
+    public class Game : SceneBehaviour
     {
-        public SceneHandler sceneHandler;
-
-        public List<object> GetSceneComponents()
+        public override List<object> GetSceneComponents()
         {
             //sceneHandler.Start();
-            List<object> components = new List<object>();
+            List<object> components = base.GetSceneComponents();
 
-            ServiceLocator<IWorldService>.Provide(new GameWorld());
+            //ServiceLocator<IWorldService>.Provide(new GameWorld());
             components.Add(new Player(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
 
             var tickClock = new Clock();
@@ -27,29 +25,19 @@ namespace IntegratedGameplaySystem
             var wallet = new MoneyCentral();
             components.Add(wallet);
 
-            var plantSpecies = ServiceLocator<IAssetService>.Locate().GetCollectionType<PlantBlueprint>();
+            List<PlantBlueprint> plantBlueprints = ServiceLocator<IAssetService>.Locate().GetCollectionType<PlantBlueprint>();
 
             //IPlantSpawner spawner = new Dispersal() { dispersal = 20, plantCount = 30 };
             IPlantSpawner spawner = new Plot(5, 1f);
-            for (int i = 0; i < plantSpecies.Count; i++)
+            for (int i = 0; i < plantBlueprints.Count; i++)
             {
-                spawner.Spawn(components, plantSpecies[i], new Vector3(i * 5f + 0.5f, 0f, 0.5f));
+                spawner.Spawn(components, plantBlueprints[i], new Vector3(i * 5f + 0.5f, 0f, 0.5f));
             }
 
             var display = new Display(interactor, wallet, tickClock);
             components.Add(display);
 
             return components;
-        }
-
-        public void Dispose()
-        {
-            sceneHandler.Dispose();
-        }
-
-        public void Start()
-        {
-            sceneHandler.Start();
         }
     }
 }

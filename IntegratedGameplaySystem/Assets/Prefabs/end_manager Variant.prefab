@@ -21,12 +21,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: bb593227d28783d4da32ce627fa22e72, type: 2}
     - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
+      propertyPath: sceneBehaviour
+      value: 
+      objectReference: {fileID: 11400000, guid: db098b9eb5d447b4c8e901e9d946f219, type: 2}
+    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: scenePrefabs.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: assets.collection.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8097411516312560828, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: m_Name

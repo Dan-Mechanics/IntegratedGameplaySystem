@@ -3,67 +3,72 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// Rename to inventory.
-    /// </summary>
     public class Inventory : IStartable, IDisposable
     {
         // EITHER Evnet onholdingChange or some typa interface so other scripts can get a reference
         // to this mainly the interactor and the display
-        public Action<IItem> OnHold;
+        public Action<ISellableItem> OnItemChange;
         public Action<int> OnCountChange;
+        public Action<bool> AtMaxCapacity;
 
-        private IItem holding;
+        private ISellableItem currentItem;
         private int count;
         // and then the max count in in the thing.
 
         public void Start()
         {
-            EventManager<IItem>.AddListener(Occasion.EquipItem, Equip);
+            EventManager<ISellableItem>.AddListener(Occasion.SetOrAddItem, SetOrAddItem);
+            EventManager<ISellableItem>.RaiseEvent(Occasion.SetOrAddItem, null);
 
-            OnHold?.Invoke(holding);
+            OnItemChange?.Invoke(currentItem);
             OnCountChange?.Invoke(count);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>The amount of money worth all the inventory.</returns>
         public int SellAll() 
         {
             int money = 0;
 
-            if (holding != null)
-                money = holding.MaxCount * count;
+            if (currentItem != null)
+                money = currentItem.MaxCount * count;
 
-            EventManager<IItem>.RaiseEvent(Occasion.EquipItem, null);
+            EventManager<ISellableItem>.RaiseEvent(Occasion.SetOrAddItem, null);
 
             return money;
         }
 
         public bool HasSomethingToSell()
         {
-            return holding != null && count > 0;
+            return currentItem != null && count > 0;
         }
 
-        private void Equip(IItem item)
+        private void SetOrAddItem(ISellableItem newItem)
         {
-            if (holding == item)
+            if (newItem != null && currentItem == newItem)
             {
                 count++;
 
-                if (count > holding.MaxCount)
-                    count = holding.MaxCount;
+                // GIVE WARNING HERE !!
+                if (count > currentItem.MaxCount)
+                    count = currentItem.MaxCount;
             }
             else
             {
-                holding = item;
-                count = holding == null ? 0 : 1;
+                currentItem = newItem;
+                count = currentItem == null ? 0 : 1;
             }
 
-            OnHold?.Invoke(holding);
+            AtMaxCapacity?.Invoke(currentItem != null && count >= currentItem.MaxCount);
+            OnItemChange?.Invoke(currentItem);
             OnCountChange?.Invoke(count);
         }
 
         public void Dispose()
         {
-            EventManager<IItem>.RemoveListener(Occasion.EquipItem, Equip);
+            EventManager<ISellableItem>.RemoveListener(Occasion.SetOrAddItem, SetOrAddItem);
         }
     }
 }

@@ -11,20 +11,19 @@ namespace IntegratedGameplaySystem
             this.settings = settings;
         }
 
-        public Transform Raycast(Vector3 pos, Vector3 dir) 
+        public bool Raycast(Vector3 pos, Vector3 dir, out Transform hitTransform) 
         {
-            return Raycast(pos, dir, settings.mask);
-        }
-
-        public Transform Raycast(Vector3 pos, Vector3 dir, LayerMask mask)
-        {
-            if (!Physics.Raycast(pos, dir, out RaycastHit hit, settings.range, mask, settings.triggerInteraction))
-                return null;
+            hitTransform = null;
+            
+            if (!Physics.Raycast(pos, dir, out RaycastHit hit, settings.range, settings.mask, settings.triggerInteraction))
+                return false;
 
             if (!settings.tags.Contains(hit.transform.tag))
-                return null;
+                return false;
 
-            return hit.transform;
+            // Or use transform.root.
+            hitTransform = hit.transform;
+            return true;
         }
     }
 }

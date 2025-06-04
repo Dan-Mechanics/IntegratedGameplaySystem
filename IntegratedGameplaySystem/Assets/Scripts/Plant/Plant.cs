@@ -89,22 +89,13 @@ namespace IntegratedGameplaySystem
                 meshRenderers[i].material = blueprint.materials[progression];
             }
 
+            sphereCollider.center = Vector3.down * (IsHarvestable ? 0f : 0.5f);
             sphereCollider.enabled = IsHarvestable || !isWatered;
-
-            if (IsHarvestable)
-            {
-                gameObject.layer = LayerMask.NameToLayer(blueprint.name);
-            }
-            else
-            {
-                gameObject.layer = LayerMask.NameToLayer(isWatered ? blueprint.name : "Dry");
-            }
         }
 
         /// <summary>
         /// Use events ??
         /// </summary>
-        /// <param name="water"></param>
         private void UpdateWatered(bool water)
         {
             isWatered = water;
@@ -125,10 +116,10 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Interact()
         {
-            if (progression >= blueprint.materials.Length - 1)
+            if (IsHarvestable)
             {
                 progression = 0;
-                EventManager<IItem>.RaiseEvent(Occasion.EquipItem, blueprint);
+                EventManager<ISellableItem>.RaiseEvent(Occasion.SetOrAddItem, blueprint);
             }
             else if (!isWatered)
             {

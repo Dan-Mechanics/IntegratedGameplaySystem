@@ -14,10 +14,13 @@ namespace IntegratedGameplaySystem
     /// I thought about not using TMP because its more laggy i think.
     /// 
     /// NOTE: this class is NOT very solid.
+    /// 
+    /// 
+    /// I think this clasess is allowed to have hella references and YES i can make it better.
     /// </summary>
     public class Display : IStartable, IDisposable
     {
-        private readonly MoneyCentral wallet;
+        private readonly MoneyCentral moneyCentral;
         private readonly Interactor interactor;
         private readonly Clock tickClock;
         private readonly Inventory inventory;
@@ -29,17 +32,20 @@ namespace IntegratedGameplaySystem
         public Image HeldItemImage { get; private set; }
         public Text ItemCountText { get; private set; }
 
-        private Display(Interactor interactor, MoneyCentral wallet, Clock tickClock, Inventory inventory)
+        private Display(Interactor interactor, MoneyCentral moneyCentral, Clock tickClock, Inventory inventory)
         {
-            this.wallet = wallet;
+            this.moneyCentral = moneyCentral;
             this.interactor = interactor;
             this.tickClock = tickClock;
             this.inventory = inventory;
         }
 
-        public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral wallet, Clock tickClock, Inventory holdingHandler) 
+        /// <summary>
+        /// Factory.
+        /// </summary>
+        public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral moneyCentral, Clock tickClock, Inventory inventory) 
         {
-            Display display = new Display(interactor, wallet, tickClock, holdingHandler);
+            Display display = new Display(interactor, moneyCentral, tickClock, inventory);
 
             display.Settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<DisplaySettings>();
             var canvas = Utils.SpawnPrefab(display.Settings.canvas).transform;
@@ -51,37 +57,45 @@ namespace IntegratedGameplaySystem
             display.HoveringText = Utils.AddTextToCanvas(canvas, display.Settings.text, 1f * height * Vector2.down);
             display.TimerText = Utils.AddTextToCanvas(canvas, display.Settings.text, 2f * height * Vector2.down);
             display.MoneyText = Utils.AddTextToCanvas(canvas, display.Settings.text, 3f * height * Vector2.down);
-            
+
             display.HeldItemImage = Utils.AddImageToCanvas(canvas, display.Settings.image, Vector2.up * 15f);
             display.ItemCountText = Utils.AddTextToCanvas(canvas, display.Settings.text, (15f + display.HeldItemImage.rectTransform.sizeDelta.y / 2f) * (Vector2.up+Vector2.left));
             display.ItemCountText.color = Color.black;
             Utils.SnapToBottom(display.HeldItemImage.rectTransform);
             Utils.SnapToBottom(display.ItemCountText.rectTransform);
-            //display.HeldItemImage.sprite = ServiceLocator<IAssetService>.Locate().GetAssetWithType<PlantBlueprint>().sprite;
+
+            Image overlay = Utils.AddImageToCanvas(canvas, display.Settings.image, Vector2.up * 15f);
+            overlay.sprite  = display.Settings.holdingNothingSprite;
+            Utils.SnapToBottom(overlay.rectTransform);
 
             return display;
         }
 
         public void Start()
         {
-            wallet.OnMoneyChanged += UpdateMoneyText;
-            interactor.OnHoverChange += UpdateHoveringText;
-            tickClock.OnNewTime += UpdateTimerText;
-            inventory.OnHold += UpdateItem;
-            inventory.OnCountChange += UpdateItemCount;
+            moneyCentral.OnMoneyChanged += UpdateMoneyText;
+            interactor.OnHoverChange    += UpdateHoveringText;
+            tickClock.OnNewTime         += UpdateTimerText;
+            inventory.OnItemChange      += UpdateItem;
+            inventory.OnCountChange     += UpdateItemCount;
+            inventory.AtMaxCapacity     += UpdateMaxCapacity;
         }
 
         public void UpdateHoveringText(string hover) => HoveringText.text = string.IsNullOrEmpty(hover) ? Settings.hoveringNothingText : hover;
         public void UpdateMoneyText(int money, int maxMoney) => MoneyText.text = $"({money} / {maxMoney})";
         public void UpdateTimerText(float time) => TimerText.text = time.ToString();
-        public void UpdateItem(IItem item) => HeldItemImage.sprite = item == null ? Settings.holdingNothingSprite : item.Sprite;
+        public void UpdateItem(ISellableItem item) => HeldItemImage.sprite = item == null ? Settings.holdingNothingSprite : item.Sprite;
         public void UpdateItemCount(int count) => ItemCountText.text = count.ToString();
+        public void UpdateMaxCapacity(bool atCapacity) => ItemCountText.color = atCapacity ? Color.red : Color.black;
 
         public void Dispose()
         {
-            wallet.OnMoneyChanged -= UpdateMoneyText;
-            interactor.OnHoverChange -= UpdateHoveringText;
-            tickClock.OnNewTime -= UpdateTimerText;
+            moneyCentral.OnMoneyChanged -= UpdateMoneyText;
+            interactor.OnHoverChange    -= UpdateHoveringText;
+            tickClock.OnNewTime         -= UpdateTimerText;
+            inventory.OnItemChange      -= UpdateItem;
+            inventory.OnCountChange     -= UpdateItemCount;
+            inventory.AtMaxCapacity     -= UpdateMaxCapacity;
         }
     }
 }

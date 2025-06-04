@@ -4,9 +4,13 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// We need:
+    /// Input:
     /// input
     /// world
+    /// 
+    /// Output:
+    /// OnHoverChange
+    /// IInteractable.interact.
     /// </summary>
     public class Interactor : IStartable, IFixedUpdatable, IDisposable
     {
@@ -17,24 +21,15 @@ namespace IntegratedGameplaySystem
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
 
-        private string currentlyHovering;
-        private LayerMask defaultMask;
-        private LayerMask mask;
+        private string currentHover;
 
         /// <summary>
-        /// Or we could push the asset name upward.
+        /// Or we could push all of this upwards but that would make the game script messy.
         /// </summary>
         public Interactor()
         {
-            // or something idk.
-
-            RaycastSettings settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<RaycastSettings>();
-            raycaster = new Raycaster(settings);
-            defaultMask = settings.mask;
-            mask = defaultMask;
-
             cam = Camera.main.transform;
-
+            raycaster = new Raycaster(ServiceLocator<IAssetService>.Locate().GetAssetWithType<RaycastSettings>());
             inputService = ServiceLocator<IInputService>.Locate();
             worldService = ServiceLocator<IWorldService>.Locate();
         }
@@ -42,58 +37,42 @@ namespace IntegratedGameplaySystem
         public void Start() 
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteract;
-            EventManager<IItem>.AddListener(Occasion.EquipItem, OnNewItem);
-
             OnHoverChange?.Invoke(string.Empty);
-        }
-
-        public void OnNewItem(IItem item) 
-        {
-            if (item == null)
-            {
-                mask = defaultMask;
-                return;
-            }
-
-            mask = item.Mask;
         }
 
         public void FixedUpdate() 
         {
-            IHoverable hit = GetHoverHit();
-            string newHover = hit == null ? string.Empty : hit.HoverTitle;
+            string newHover = GetHoverable(out IHoverable hoverable) ? hoverable.HoverTitle : string.Empty;
 
-            if (newHover == currentlyHovering)
+            if (newHover == currentHover)
                 return;
 
-            currentlyHovering = newHover;
-            OnHoverChange?.Invoke(currentlyHovering);
+            currentHover = newHover;
+            OnHoverChange?.Invoke(currentHover);
         }
 
         private void TryInteract()
         {
-            Transform hit = raycaster.Raycast(cam.position, cam.forward, mask);
-
-            if (!hit)
+            if (!raycaster.Raycast(cam.position, cam.forward, out Transform hitTransform))
                 return;
 
-            worldService.GetComponent<IInteractable>(hit)?.Interact();
+            worldService.GetComponent<IInteractable>(hitTransform)?.Interact();
         }
 
-        private IHoverable GetHoverHit()
+        private bool GetHoverable(out IHoverable hoverable)
         {
-            Transform hit = raycaster.Raycast(cam.position, cam.forward, mask);
+            hoverable = null;
 
-            if (!hit)
-                return null;
+            if (!raycaster.Raycast(cam.position, cam.forward, out Transform hitTransform))
+                return false;
 
-            return worldService.GetComponent<IHoverable>(hit);
+            hoverable = worldService.GetComponent<IHoverable>(hitTransform);
+            return true;
         }
 
         public void Dispose()
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown -= TryInteract;
-            EventManager<IItem>.RemoveListener(Occasion.EquipItem, OnNewItem);
         }
     }
 }

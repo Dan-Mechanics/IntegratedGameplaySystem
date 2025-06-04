@@ -1,3 +1,5 @@
+add more facotries.
+
 scope: ivnentory selection overrides current shit = hostile design
 that would make it smoother
 

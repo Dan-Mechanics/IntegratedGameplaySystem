@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// Make this work with transform only !!
+    /// </summary>
     public interface IWorldService
     {
         T GetComponent<T>(GameObject go);

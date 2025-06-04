@@ -29,10 +29,11 @@ namespace IntegratedGameplaySystem
             var invetory = new Inventory();
 
             // DOES THIS BREAKT HE UNSUB MEME ??? HOW DOES THIS DEALLOCATE ?????
-            var moneyCentral = new MoneyCentral(invetory.SellAll, invetory.HasSomethingToSell);
+            var moneyCentral = new MoneyCentral();
+            moneyCentral.CanInteract = invetory.HasSomethingToSell;
+            moneyCentral.GetEarnings = invetory.SellAll;
+            
             var interactor = new Interactor();
-
-            //invetory.OnNewSelectionMask += interactor.ChangeMask;
 
             Display display = Display.CreateAndInitializeUI(interactor, moneyCentral, tickClock, invetory);
             components.Add(display);

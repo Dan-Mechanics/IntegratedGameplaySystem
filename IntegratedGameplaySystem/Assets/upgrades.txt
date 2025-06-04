@@ -1,0 +1,28 @@
+idea:
+enum Upgrade
+
+list<Updeagrade
+void OnNewUpgrade
+if list.contains ( updragre) then do the shit.
+
+hold down the button instead of pressing aka the firerate change of the farming
+more inventory space --> means count is not based on 
+insta harvest all the shit greande
+always watered upgrade.
+speed boost ??
+
+
+
+speed boost
+inventory space
+sprinkler
+grenade
+hold down button / harvest fire rate increase.
+
+===
+
+dont forget documentation and the three patterns and clean alles etc etc
+
+this goes first over outer wilds btw.
+
+idea: make a censor filter all my common swears

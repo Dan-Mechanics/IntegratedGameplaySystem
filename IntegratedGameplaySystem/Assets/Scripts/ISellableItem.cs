@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public interface IItem
+    public interface ISellableItem
     {
         public Sprite Sprite { get; }
         public int MaxCount { get; }
         public int Money { get; }
-        public LayerMask Mask { get; }
     }
 }

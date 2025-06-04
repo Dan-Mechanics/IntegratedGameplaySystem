@@ -22,7 +22,7 @@ namespace IntegratedGameplaySystem
         private readonly MoneyCentral wallet;
         private readonly Interactor interactor;
         private readonly Clock tickClock;
-        private readonly HoldingHandler holdingHandler;
+        private readonly Inventory holdingHandler;
 
         public DisplaySettings Settings { get; private set; }
         public Text HoveringText { get; private set; }
@@ -31,7 +31,7 @@ namespace IntegratedGameplaySystem
         public Image HeldItemImage { get; private set; }
         public Text ItemCountText { get; private set; }
 
-        private Display(Interactor interactor, MoneyCentral wallet, Clock tickClock, HoldingHandler holdingHandler)
+        private Display(Interactor interactor, MoneyCentral wallet, Clock tickClock, Inventory holdingHandler)
         {
             this.wallet = wallet;
             this.interactor = interactor;
@@ -39,7 +39,7 @@ namespace IntegratedGameplaySystem
             this.holdingHandler = holdingHandler;
         }
 
-        public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral wallet, Clock tickClock, HoldingHandler holdingHandler) 
+        public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral wallet, Clock tickClock, Inventory holdingHandler) 
         {
             Display display = new Display(interactor, wallet, tickClock, holdingHandler);
 
@@ -76,7 +76,7 @@ namespace IntegratedGameplaySystem
         public void UpdateHoveringText(IHoverable hover) => HoveringText.text = hover != null ? hover.Name : NOT_HOVERING;
         public void UpdateMoneyText(int money, int maxMoney) => MoneyText.text = $"({money} / {maxMoney})";
         public void UpdateTimerText(float time) => TimerText.text = time.ToString();
-        public void UpdateItem(ISellable item) => HeldItemImage.sprite = item == null ? Settings.holdingNothingSprite : item.Sprite;
+        public void UpdateItem(IItem item) => HeldItemImage.sprite = item == null ? Settings.holdingNothingSprite : item.Sprite;
         public void UpdateItemCount(int count) => ItemCountText.text = count.ToString();
 
         public void Dispose()

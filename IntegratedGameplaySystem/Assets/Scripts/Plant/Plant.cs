@@ -7,11 +7,12 @@ namespace IntegratedGameplaySystem
     /// Give this plant an Ipositioner that positions it according to some rules ya know?
     /// I want this to be able to work with plots instead of patches.
     /// </summary>
-    public class Plant : IStartable, IInteractable, IDisposable
+    public class Plant : IStartable, IInteractable, IHoverable, IDisposable
     {
         public readonly GameObject gameObject;
         public readonly Transform transform;
 
+        // Composite this ??
         private readonly PlantBlueprint blueprint;
         private readonly MeshRenderer[] meshRenderers;
         private readonly SphereCollider sphereCollider;
@@ -19,6 +20,9 @@ namespace IntegratedGameplaySystem
 
         private int progression;
         private bool isWatered;
+
+        public string Name => GetHovering();
+        public bool IsHarvestable => progression >= blueprint.materials.Length - 1;
 
         /// <summary>
         /// This is kinda nutty becasue we want to save load time but ok,
@@ -41,6 +45,14 @@ namespace IntegratedGameplaySystem
 
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
+        }
+
+        public string GetHovering() 
+        {
+            if (!isWatered && !IsHarvestable)
+                return $"dry {blueprint.name}";
+
+            return blueprint.name;
         }
 
         public void Start()
@@ -75,9 +87,13 @@ namespace IntegratedGameplaySystem
                 meshRenderers[i].material = blueprint.materials[progression];
             }
 
-            sphereCollider.enabled = progression >= blueprint.materials.Length - 1 || !isWatered;
+            sphereCollider.enabled = IsHarvestable || !isWatered;
         }
 
+        /// <summary>
+        /// Use events ??
+        /// </summary>
+        /// <param name="water"></param>
         private void UpdateWatered(bool water)
         {
             isWatered = water;
@@ -101,8 +117,7 @@ namespace IntegratedGameplaySystem
             if (progression >= blueprint.materials.Length - 1)
             {
                 progression = 0;
-                EventManager<ISellable>.RaiseEvent(Occasion.TryPickupItem, blueprint);
-                //EventManager<int>.RaiseEvent(Occasion.EarnMoney, blueprint.monetaryValue);
+                EventManager<IItem>.RaiseEvent(Occasion.EquipItem, blueprint);
             }
             else if (!isWatered)
             {

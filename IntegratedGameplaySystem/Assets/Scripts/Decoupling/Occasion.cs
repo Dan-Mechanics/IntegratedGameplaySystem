@@ -9,6 +9,6 @@
         GameOver = 2,
         Tick = 3,
         EarnMoney = 4,
-        TryPickupItem = 5
+        EquipItem = 5
     }
 }

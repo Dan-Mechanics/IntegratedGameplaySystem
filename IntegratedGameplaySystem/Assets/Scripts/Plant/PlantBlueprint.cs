@@ -7,7 +7,7 @@ namespace IntegratedGameplaySystem
     /// "Flyweight" ish.
     /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(PlantBlueprint), fileName = "New " + nameof(PlantBlueprint))]
-    public class PlantBlueprint : ScriptableObject, ISellable
+    public class PlantBlueprint : ScriptableObject, IItem
     {
         public Sprite Sprite => sprite;
         public int MaxCount => maxCount;

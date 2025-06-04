@@ -26,7 +26,7 @@ namespace IntegratedGameplaySystem
             var tickClock = new Clock(assetService.GetAssetWithType<ClockSettings>().interval);
             ServiceLocator<IScoreService>.Provide(tickClock);
 
-            var holdingHandler = new HoldingHandler();
+            var holdingHandler = new Inventory();
             var moneyCentral = new MoneyCentral(holdingHandler.SellAll, holdingHandler.HasSomethingToSell);
             var interactor = new Interactor();
 

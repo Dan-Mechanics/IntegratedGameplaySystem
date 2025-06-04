@@ -11,20 +11,20 @@ namespace IntegratedGameplaySystem
         public event Action<int, int> OnMoneyChanged;
 
         public delegate int SellAll();
-        public delegate bool Interactable();
+        public delegate bool HasSomethingToSell();
         private readonly ParticleSystem particle;
         private readonly MoneyCentralSettings settings;
         private int money;
 
         private readonly SellAll sellAll;
-        private readonly Interactable interactable;
+        private readonly HasSomethingToSell hasSomethingToSell;
 
-        public string Name => interactable() ? "Sell crop" : string.Empty;
+        public string Name => hasSomethingToSell() ? "Sell crop" : string.Empty;
 
-        public MoneyCentral(SellAll sellAll, Interactable interactable)
+        public MoneyCentral(SellAll sellAll, HasSomethingToSell interactable)
         {
             this.sellAll = sellAll;
-            this.interactable = interactable;
+            this.hasSomethingToSell = interactable;
 
             settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<MoneyCentralSettings>();
 
@@ -61,7 +61,7 @@ namespace IntegratedGameplaySystem
         
         public void Interact()
         {
-            if (!interactable())
+            if (!hasSomethingToSell())
                 return;
             
             particle.Play();

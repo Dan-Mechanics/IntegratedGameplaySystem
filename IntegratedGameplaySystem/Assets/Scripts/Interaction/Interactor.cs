@@ -20,11 +20,6 @@ namespace IntegratedGameplaySystem
         private IHoverable currentlyHovering;
 
         /// <summary>
-        /// Do something different with layermaks if u wanna make this better.
-        /// </summary>
-        //public Func<bool> CanInteract;
-
-        /// <summary>
         /// Or we could push the asset name upward.
         /// </summary>
         public Interactor()

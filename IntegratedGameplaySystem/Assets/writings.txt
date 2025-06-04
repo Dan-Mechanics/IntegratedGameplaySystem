@@ -1,3 +1,9 @@
+ok so now we have a responsbility that the inventory says which things the interactor can interact with.
+i dont want the plant to handle, this, i do think it makes sense that the plant
+
+OK: make the plants triggers and then make interactable notinteractable ETC.
+remove ground tag.
+
 ok: here the idea: based on what the player has selected ( including the TYPE of plant )
 we want to change the layermaks that the player cna interact with. does that make sense?
 or like change something about the raycast settigns.

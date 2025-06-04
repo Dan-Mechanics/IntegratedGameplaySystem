@@ -1,6 +1,3 @@
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System;
 
 namespace IntegratedGameplaySystem
@@ -8,22 +5,22 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Rename to inventory.
     /// </summary>
-    public class HoldingHandler : IStartable, IDisposable
+    public class Inventory : IStartable, IDisposable
     {
         // EITHER Evnet onholdingChange or some typa interface so other scripts can get a reference
         // to this mainly the interactor and the display
 
 
-        public ISellable holding;
+        public IItem holding;
         public int count;
         // and then the max count in in the thing.
 
-        public Action<ISellable> OnHold;
+        public Action<IItem> OnHold;
         public Action<int> OnCountChange;
 
         public void Start()
         {
-            EventManager<ISellable>.AddListener(Occasion.TryPickupItem, Equip);
+            EventManager<IItem>.AddListener(Occasion.EquipItem, Equip);
 
             OnHold?.Invoke(holding);
             OnCountChange?.Invoke(count);
@@ -50,17 +47,7 @@ namespace IntegratedGameplaySystem
             return holding != null && count > 0;
         }
 
-        public bool HasSpaceLeft() 
-        {
-            return true;
-            
-            /*if (holding == null)
-                return true;
-
-            return count < holding.MaxCount;*/
-        }
-
-        private void Equip(ISellable item)
+        private void Equip(IItem item)
         {
             if (holding == item)
             {
@@ -81,7 +68,7 @@ namespace IntegratedGameplaySystem
 
         public void Dispose()
         {
-            EventManager<ISellable>.RemoveListener(Occasion.TryPickupItem, Equip);
+            EventManager<IItem>.RemoveListener(Occasion.EquipItem, Equip);
         }
     }
 }

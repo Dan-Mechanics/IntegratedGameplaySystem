@@ -73,7 +73,7 @@ namespace IntegratedGameplaySystem
             holdingHandler.OnCountChange += UpdateItemCount;
         }
 
-        public void UpdateHoveringText(Transform hit) => HoveringText.text = hit ? hit.name : NOT_HOVERING;
+        public void UpdateHoveringText(IHoverable hover) => HoveringText.text = hover != null ? hover.Name : NOT_HOVERING;
         public void UpdateMoneyText(int money, int maxMoney) => MoneyText.text = $"({money} / {maxMoney})";
         public void UpdateTimerText(float time) => TimerText.text = time.ToString();
         public void UpdateItem(ISellable item) => HeldItemImage.sprite = item == null ? Settings.holdingNothingSprite : item.Sprite;

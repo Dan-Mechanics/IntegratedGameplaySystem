@@ -19,7 +19,7 @@ namespace IntegratedGameplaySystem
         private readonly SellAll sellAll;
         private readonly Interactable interactable;
 
-        public string HoverText => interactable() ? "Sell crop" : string.Empty;
+        public string Name => interactable() ? "Sell crop" : string.Empty;
 
         public MoneyCentral(SellAll sellAll, Interactable interactable)
         {

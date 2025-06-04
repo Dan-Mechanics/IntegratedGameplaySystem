@@ -6,6 +6,6 @@ namespace IntegratedGameplaySystem
 {
     public interface IHoverable 
     {
-        string HoverText { get; }
+        string Name { get; }
     }
 }

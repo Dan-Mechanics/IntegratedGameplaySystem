@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
     {
         //public NextSceneHandler sceneHandler;
         public GameObject canvasPrefab;
-        public List<Object> decorators;
+        public Object[] decorators;
 
         //private readonly List<IMenuDecorator> menuDecorators = new();
 
@@ -22,7 +22,7 @@ namespace IntegratedGameplaySystem
         {
             base.Start();
 
-            for (int i = 0; i < decorators.Count; i++)
+            for (int i = 0; i < decorators.Length; i++)
             {
                 /*if (decorators[i] is IMenuDecorator decorator)
                     menuDecorators.Add(decorator);*/
@@ -43,7 +43,7 @@ namespace IntegratedGameplaySystem
 
             //menuDecorators.ForEach(x => x.Decorate(components, canvas));
 
-            for (int i = 0; i < decorators.Count; i++)
+            for (int i = 0; i < decorators.Length; i++)
             {
                 if (decorators[i] is IMenuDecorator decorator)
                     decorator.Decorate(components, canvas);
@@ -56,7 +56,7 @@ namespace IntegratedGameplaySystem
         {
             nextSceneButton.onClick.RemoveListener(sceneHandler.GoNextScene);
 
-            for (int i = 0; i < decorators.Count; i++)
+            for (int i = 0; i < decorators.Length; i++)
             {
                 if (decorators[i] is IDisposable disposable)
                     disposable.Dispose();

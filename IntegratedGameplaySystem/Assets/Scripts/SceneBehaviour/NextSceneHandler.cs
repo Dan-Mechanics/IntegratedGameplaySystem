@@ -10,7 +10,7 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            EventManager.AddListener(Occasion.GAME_OVER, GoNextScene);
+            EventManager.AddListener(Occasion.GameOver, GoNextScene);
         }
 
         public void GoNextScene()
@@ -20,7 +20,7 @@ namespace IntegratedGameplaySystem
 
         public void Dispose()
         {
-            EventManager.RemoveListener(Occasion.GAME_OVER, GoNextScene);
+            EventManager.RemoveListener(Occasion.GameOver, GoNextScene);
         }
     }
 }

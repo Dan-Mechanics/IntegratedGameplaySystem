@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    //[CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
     public abstract class SceneBehaviour : ScriptableObject, IStartable, IDisposable
     {
         public NextSceneHandler sceneHandler;

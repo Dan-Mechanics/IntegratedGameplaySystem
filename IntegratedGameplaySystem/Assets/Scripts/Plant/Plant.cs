@@ -48,13 +48,13 @@ namespace IntegratedGameplaySystem
             UpdateWatered(false);
 
             ServiceLocator<IWorldService>.Locate().Add(gameObject, this);
-            EventManager.AddListener(Occasion.TICK, Tick);
+            EventManager.AddListener(Occasion.Tick, Tick);
             Refresh();
         }
 
         public void Dispose()
         {
-            EventManager.RemoveListener(Occasion.TICK, Tick);
+            EventManager.RemoveListener(Occasion.Tick, Tick);
         }
 
         private void Tick()
@@ -101,7 +101,8 @@ namespace IntegratedGameplaySystem
             if (progression >= blueprint.materials.Length - 1)
             {
                 progression = 0;
-                EventManager<int>.RaiseEvent(Occasion.EARN_MONEY, blueprint.monetaryValue);
+                EventManager<ISellable>.RaiseEvent(Occasion.TryPickupItem, blueprint);
+                //EventManager<int>.RaiseEvent(Occasion.EarnMoney, blueprint.monetaryValue);
             }
             else if (!isWatered)
             {

@@ -6,6 +6,9 @@ namespace IntegratedGameplaySystem
     public class DisplaySettings : ScriptableObject
     {
         public GameObject canvas;
+
+        public Sprite holdingNothingSprite;
+        public string hoveringNothingStr;
         public GameObject text;
         public GameObject image;
     }

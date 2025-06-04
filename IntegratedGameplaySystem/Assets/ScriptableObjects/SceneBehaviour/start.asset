@@ -11,7 +11,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0c92cbcfe7d136c49959b5260ecdfeff, type: 3}
   m_Name: start
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp:IntegratedGameplaySystem:Menu
   sceneHandler:
     nextScene: Game
   canvasPrefab: {fileID: 7198252773159180085, guid: c862b1c7f3de45c45854c414877c94b1, type: 3}

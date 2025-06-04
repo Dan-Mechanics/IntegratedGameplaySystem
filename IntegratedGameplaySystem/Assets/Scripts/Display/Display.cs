@@ -22,35 +22,46 @@ namespace IntegratedGameplaySystem
         private readonly MoneyCentral wallet;
         private readonly Interactor interactor;
         private readonly Clock tickClock;
+        private readonly HoldingHandler holdingHandler;
 
-        //public const string CANVAS_PREFAB_NAME = "canvas";
-        private readonly Text hoveringText;
-        private readonly Text moneyText;
-        private readonly Text timerText;
-        private readonly Image heldItemImage;
+        public DisplaySettings Settings { get; private set; }
+        public Text HoveringText { get; private set; }
+        public Text MoneyText { get; private set; }
+        public Text TimerText { get; private set; }
+        public Image HeldItemImage { get; private set; }
+        public Text ItemCountText { get; private set; }
 
-        public Display(Interactor interactor, MoneyCentral wallet, Clock tickClock)
+        private Display(Interactor interactor, MoneyCentral wallet, Clock tickClock, HoldingHandler holdingHandler)
         {
             this.wallet = wallet;
             this.interactor = interactor;
             this.tickClock = tickClock;
+            this.holdingHandler = holdingHandler;
+        }
 
-            var settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<DisplaySettings>();
-            var canvas = Utils.SpawnPrefab(settings.canvas).transform;
+        public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral wallet, Clock tickClock, HoldingHandler holdingHandler) 
+        {
+            Display display = new Display(interactor, wallet, tickClock, holdingHandler);
+
+            display.Settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<DisplaySettings>();
+            var canvas = Utils.SpawnPrefab(display.Settings.canvas).transform;
 
             // !Clean ??
 
-            float height = Utils.GetHeight(settings.text);
+            float height = Utils.GetHeight(display.Settings.text);
 
-            hoveringText = Utils.AddTextToCanvas(canvas, settings.text, 1f * height * Vector2.down);
-            timerText = Utils.AddTextToCanvas(canvas, settings.text, 2f * height * Vector2.down);
-            moneyText = Utils.AddTextToCanvas(canvas, settings.text, 3f * height * Vector2.down);
+            display.HoveringText = Utils.AddTextToCanvas(canvas, display.Settings.text, 1f * height * Vector2.down);
+            display.TimerText = Utils.AddTextToCanvas(canvas, display.Settings.text, 2f * height * Vector2.down);
+            display.MoneyText = Utils.AddTextToCanvas(canvas, display.Settings.text, 3f * height * Vector2.down);
+            
+            display.HeldItemImage = Utils.AddImageToCanvas(canvas, display.Settings.image, Vector2.up * 15f);
+            display.ItemCountText = Utils.AddTextToCanvas(canvas, display.Settings.text, (15f + display.HeldItemImage.rectTransform.sizeDelta.y / 2f) * (Vector2.up+Vector2.left));
+            display.ItemCountText.color = Color.black;
+            Utils.SnapToBottom(display.HeldItemImage.rectTransform);
+            Utils.SnapToBottom(display.ItemCountText.rectTransform);
+            //display.HeldItemImage.sprite = ServiceLocator<IAssetService>.Locate().GetAssetWithType<PlantBlueprint>().sprite;
 
-            heldItemImage = Utils.AddImageToCanvas(canvas, settings.image, Vector2.up * 15f);
-
-            Utils.SnapToBottom(heldItemImage.GetComponent<RectTransform>());
-
-            heldItemImage.sprite = ServiceLocator<IAssetService>.Locate().GetAssetWithType<PlantBlueprint>().sprite;
+            return display;
         }
 
         public void Start()
@@ -58,12 +69,15 @@ namespace IntegratedGameplaySystem
             wallet.OnMoneyChanged += UpdateMoneyText;
             interactor.OnHoverChange += UpdateHoveringText;
             tickClock.OnNewTime += UpdateTimerText;
+            holdingHandler.OnHold += UpdateItem;
+            holdingHandler.OnCountChange += UpdateItemCount;
         }
 
-        public void UpdateHoveringText(Transform hit) => hoveringText.text = hit ? hit.name : NOT_HOVERING;
-        //public void UpdateMoneyText(int money, int maxMoney) => moneyText.text = money > 0 ? $"({money} / {maxMoney})" : string.Empty;
-        public void UpdateMoneyText(int money, int maxMoney) => moneyText.text = $"({money} / {maxMoney})";
-        public void UpdateTimerText(float time) => timerText.text = time.ToString();
+        public void UpdateHoveringText(Transform hit) => HoveringText.text = hit ? hit.name : NOT_HOVERING;
+        public void UpdateMoneyText(int money, int maxMoney) => MoneyText.text = $"({money} / {maxMoney})";
+        public void UpdateTimerText(float time) => TimerText.text = time.ToString();
+        public void UpdateItem(ISellable item) => HeldItemImage.sprite = item == null ? Settings.holdingNothingSprite : item.Sprite;
+        public void UpdateItemCount(int count) => ItemCountText.text = count.ToString();
 
         public void Dispose()
         {

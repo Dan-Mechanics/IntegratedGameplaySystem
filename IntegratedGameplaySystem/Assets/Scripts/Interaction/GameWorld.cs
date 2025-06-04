@@ -28,6 +28,8 @@ namespace IntegratedGameplaySystem
             return default;
         }
 
+        public T GetComponent<T>(Transform trans) => GetComponent<T>(trans.gameObject);
+
         public void Add(GameObject go, object obj) 
         {
             if (world.ContainsKey(go))

@@ -5,9 +5,10 @@
     /// </summary>
     public enum Occasion
     {
-        CLOSE_GAME = 1,
-        GAME_OVER = 2,
-        TICK = 3,
-        EARN_MONEY = 4
+        CloseGame = 1,
+        GameOver = 2,
+        Tick = 3,
+        EarnMoney = 4,
+        TryPickupItem = 5
     }
 }

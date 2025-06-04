@@ -22,7 +22,7 @@ namespace IntegratedGameplaySystem
         private void Start() => Setup();
         private void Update() => heart.Update();
         private void OnDisable() => heart.Dispose();
-        private void OnApplicationQuit() => EventManager.RaiseEvent(Occasion.CLOSE_GAME);
+        private void OnApplicationQuit() => EventManager.RaiseEvent(Occasion.CloseGame);
         private void OnValidate() => EditorSceneManager.sceneOpened += SelectInHierarchy;
 
         /// <summary>

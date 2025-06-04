@@ -10,14 +10,19 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Interactor : IStartable, IFixedUpdatable, IDisposable
     {
-        public event Action<Transform> OnHoverChange;
+        public event Action<IHoverable> OnHoverChange;
         
         private readonly Raycaster raycaster;
         private readonly Transform cam;
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
 
-        private Transform currentlyHovering;
+        private IHoverable currentlyHovering;
+
+        /// <summary>
+        /// Do something different with layermaks if u wanna make this better.
+        /// </summary>
+        //public Func<bool> CanInteract;
 
         /// <summary>
         /// Or we could push the asset name upward.
@@ -34,40 +39,44 @@ namespace IntegratedGameplaySystem
 
         public void Start() 
         {
-            inputService.GetInputSource(PlayerAction.Interact).onDown += InteractWithWorld;
+            inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteract;
             OnHoverChange?.Invoke(null);
         }
 
-        public void FixedUpdate() => Hover();
-
-        private void InteractWithWorld()
+        public void FixedUpdate() 
         {
-            if (!DoRaycast(out Transform hit))
+            IHoverable hoverable = GetHoverHit();
+
+            if (hoverable == currentlyHovering)
                 return;
 
-            worldService.GetComponent<IInteractable>(hit.gameObject)?.Interact();
-        }
-
-        private bool DoRaycast(out Transform hit)
-        {
-            hit = raycaster.Raycast(cam.position, cam.forward);
-            return hit;
-        }
-
-        private void Hover()
-        {
-            DoRaycast(out Transform hit);
-
-            if (hit == currentlyHovering)
-                return;
-
-            currentlyHovering = hit;
+            currentlyHovering = hoverable;
             OnHoverChange?.Invoke(currentlyHovering);
+        }
+
+        private void TryInteract()
+        {
+            Transform hit = raycaster.Raycast(cam.position, cam.forward);
+
+            if (!hit)
+                return;
+
+            worldService.GetComponent<IInteractable>(hit)?.Interact();
+        }
+
+        private IHoverable GetHoverHit()
+        {
+            Transform hit = raycaster.Raycast(cam.position, cam.forward);
+
+            if (!hit)
+                return null;
+
+            return worldService.GetComponent<IHoverable>(hit);
         }
 
         public void Dispose()
         {
-            inputService.GetInputSource(PlayerAction.Interact).onDown -= InteractWithWorld;
+            inputService.GetInputSource(PlayerAction.Interact).onDown -= TryInteract;
         }
     }
 }

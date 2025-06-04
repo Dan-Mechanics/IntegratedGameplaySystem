@@ -1,3 +1,7 @@
+ok: here the idea: based on what the player has selected ( including the TYPE of plant )
+we want to change the layermaks that the player cna interact with. does that make sense?
+or like change something about the raycast settigns.
+
 stuff i wanna add:
 hold up to X amount of items of a single plant type, not multible
 cant interact with collecting plants once you have selected ?? 

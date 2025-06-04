@@ -86,7 +86,7 @@ namespace IntegratedGameplaySystem
             transform.GetComponent<RectTransform>().anchoredPosition = pos;
 
             Image img = transform.GetComponent<Image>();
-            // img.sprite = null;
+            img.sprite = null;
 
             return img;
         }

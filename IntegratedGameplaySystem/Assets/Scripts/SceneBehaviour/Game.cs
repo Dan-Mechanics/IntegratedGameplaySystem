@@ -22,18 +22,21 @@ namespace IntegratedGameplaySystem
                 spawner.Spawn(components, plantBlueprints[i], new Vector3(i * 5f + 0.5f, 0f, 0.5f));
             }
 
+            // factory for this ??
             var tickClock = new Clock(assetService.GetAssetWithType<ClockSettings>().interval);
             ServiceLocator<IScoreService>.Provide(tickClock);
 
+            var holdingHandler = new HoldingHandler();
+            var moneyCentral = new MoneyCentral(holdingHandler.SellAll, holdingHandler.HasSomethingToSell);
             var interactor = new Interactor();
-            var wallet = new MoneyCentral();
 
-            var display = new Display(interactor, wallet, tickClock);
+            Display display = Display.CreateAndInitializeUI(interactor, moneyCentral, tickClock, holdingHandler);
             components.Add(display);
 
             components.Add(tickClock);
-            components.Add(wallet);            
+            components.Add(moneyCentral);            
             components.Add(interactor);
+            components.Add(holdingHandler);
 
             return components;
         }

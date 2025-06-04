@@ -7,19 +7,22 @@ namespace IntegratedGameplaySystem
     /// "Flyweight" ish.
     /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(PlantBlueprint), fileName = "New " + nameof(PlantBlueprint))]
-    public class PlantBlueprint : ScriptableObject
+    public class PlantBlueprint : ScriptableObject, ISellable
     {
+        public Sprite Sprite => sprite;
+        public int MaxCount => maxCount;
+        public int Money => monetaryValue;
+
         public GameObject plantPrefab;
         public GameObject rainPrefab;
         public int monetaryValue;
-        [Tooltip("One in ...")]
-        [Min(1)] public int growOdds;
-        [Tooltip("One in ...")]
-        [Min(1)] public int wateredGrowOdds;
+        [Min(1), Tooltip("One in ...")] public int growOdds;
+        [Min(1), Tooltip("One in ...")] public int wateredGrowOdds;
+        [Min(1)] public int maxCount;
 
         public Sprite sprite;
         public Material[] materials;
-        
+
         /// <summary>
         /// Does making the textures sprites mess
         /// with the performance ??

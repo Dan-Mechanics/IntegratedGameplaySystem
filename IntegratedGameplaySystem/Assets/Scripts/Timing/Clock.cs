@@ -34,7 +34,7 @@ namespace IntegratedGameplaySystem
                 return;
 
             timer.SetValue(interval);
-            EventManager.RaiseEvent(Occasion.TICK);
+            EventManager.RaiseEvent(Occasion.Tick);
         }
 
         public float GetScore()

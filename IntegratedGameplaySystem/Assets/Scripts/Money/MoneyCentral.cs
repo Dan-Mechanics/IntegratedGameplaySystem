@@ -6,17 +6,26 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// This class should respond to the events yo.
     /// </summary>
-    public class MoneyCentral :  IStartable, IDisposable, IInteractable
+    public class MoneyCentral :  IStartable, IInteractable, IHoverable
     {
         public event Action<int, int> OnMoneyChanged;
 
+        public delegate int SellAll();
+        public delegate bool Interactable();
+        private readonly ParticleSystem particle;
         private readonly MoneyCentralSettings settings;
         private int money;
 
-        private readonly ParticleSystem particle;
+        private readonly SellAll sellAll;
+        private readonly Interactable interactable;
 
-        public MoneyCentral()
+        public string HoverText => interactable() ? "Sell crop" : string.Empty;
+
+        public MoneyCentral(SellAll sellAll, Interactable interactable)
         {
+            this.sellAll = sellAll;
+            this.interactable = interactable;
+
             settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<MoneyCentralSettings>();
 
             GameObject go = Utils.SpawnPrefab(settings.prefab);
@@ -28,7 +37,7 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             OnMoneyChanged?.Invoke(money, settings.moneyToWin);
-            EventManager<int>.AddListener(Occasion.EARN_MONEY, EarnMoney);
+            //EventManager<int>.AddListener(Occasion.EarnMoney, EarnMoney);
         }
 
         public void EarnMoney(int incoming)
@@ -42,17 +51,21 @@ namespace IntegratedGameplaySystem
             OnMoneyChanged?.Invoke(money, settings.moneyToWin);
 
             if (money >= settings.moneyToWin)
-                EventManager.RaiseEvent(Occasion.GAME_OVER);
+                EventManager.RaiseEvent(Occasion.GameOver);
         }
 
-        public void Dispose()
+        /*public void Dispose()
         {
-            EventManager<int>.RemoveListener(Occasion.EARN_MONEY, EarnMoney);
-        }
-            
+            EventManager<int>.RemoveListener(Occasion.EarnMoney, EarnMoney);
+        }*/
+        
         public void Interact()
         {
+            if (!interactable())
+                return;
+            
             particle.Play();
+            EarnMoney(sellAll());
         }
     }
 }

@@ -12,7 +12,6 @@ namespace IntegratedGameplaySystem
         // to this mainly the interactor and the display
         public Action<IItem> OnHold;
         public Action<int> OnCountChange;
-        public Action<LayerMask?> OnNewSelectionMask;
 
         private IItem holding;
         private int count;
@@ -33,12 +32,7 @@ namespace IntegratedGameplaySystem
             if (holding != null)
                 money = holding.MaxCount * count;
 
-            holding = null;
-            count = 0;
-
-            OnNewSelectionMask?.Invoke(null);
-            OnHold?.Invoke(holding);
-            OnCountChange?.Invoke(count);
+            EventManager<IItem>.RaiseEvent(Occasion.EquipItem, null);
 
             return money;
         }
@@ -59,9 +53,8 @@ namespace IntegratedGameplaySystem
             }
             else
             {
-                OnNewSelectionMask?.Invoke(item.Mask);
                 holding = item;
-                count = 1;
+                count = holding == null ? 0 : 1;
             }
 
             OnHold?.Invoke(holding);

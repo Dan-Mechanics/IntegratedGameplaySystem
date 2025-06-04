@@ -10,21 +10,32 @@ namespace IntegratedGameplaySystem
     {
         public event Action<int, int> OnMoneyChanged;
 
-        public delegate int SellAll();
-        public delegate bool HasSomethingToSell();
         private readonly ParticleSystem particle;
         private readonly MoneyCentralSettings settings;
         private int money;
 
+        public delegate int SellAll();
+        public delegate bool HasSomethingToSell();
         private readonly SellAll sellAll;
         private readonly HasSomethingToSell hasSomethingToSell;
 
-        public string Name => hasSomethingToSell() ? "Sell crop" : string.Empty;
+        // use Func ??? i dont fucking know how it works.
 
+        public string HoverTitle => hasSomethingToSell() ? "Sell crop" : "No crop to sell";
+
+        /// <summary>
+        /// Do we need something to deallocate sellall ??
+        /// Dont use delegates i dont understand them bruuhhhhh
+        /// Like it works but i dont know what happens to the memory AT ALL
+        /// </summary>
         public MoneyCentral(SellAll sellAll, HasSomethingToSell hasSomethingToSell)
         {
             this.sellAll = sellAll;
             this.hasSomethingToSell = hasSomethingToSell;
+
+            // ???
+            /*this.sellAll += sellAll;
+            this.sellAll -= sellAll;*/
 
             settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<MoneyCentralSettings>();
 
@@ -54,11 +65,6 @@ namespace IntegratedGameplaySystem
                 EventManager.RaiseEvent(Occasion.GameOver);
         }
 
-        /*public void Dispose()
-        {
-            EventManager<int>.RemoveListener(Occasion.EarnMoney, EarnMoney);
-        }*/
-        
         public void Interact()
         {
             if (!hasSomethingToSell())

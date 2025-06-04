@@ -10,14 +10,14 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Interactor : IStartable, IFixedUpdatable, IDisposable
     {
-        public event Action<IHoverable> OnHoverChange;
+        public event Action<string> OnHoverChange;
         
         private readonly Raycaster raycaster;
         private readonly Transform cam;
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
 
-        private IHoverable currentlyHovering;
+        private string currentlyHovering;
         private LayerMask defaultMask;
         private LayerMask mask;
 
@@ -42,25 +42,31 @@ namespace IntegratedGameplaySystem
         public void Start() 
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteract;
-            OnHoverChange?.Invoke(null);
+            EventManager<IItem>.AddListener(Occasion.EquipItem, OnNewItem);
+
+            OnHoverChange?.Invoke(string.Empty);
         }
 
-        public void ChangeMask(LayerMask? newMask) 
+        public void OnNewItem(IItem item) 
         {
-            if (newMask == null)
-                newMask = defaultMask;
+            if (item == null)
+            {
+                mask = defaultMask;
+                return;
+            }
 
-            mask = (LayerMask)newMask;
+            mask = item.Mask;
         }
 
         public void FixedUpdate() 
         {
-            IHoverable hoverable = GetHoverHit();
+            IHoverable hit = GetHoverHit();
+            string newHover = hit == null ? string.Empty : hit.HoverTitle;
 
-            if (hoverable == currentlyHovering)
+            if (newHover == currentlyHovering)
                 return;
 
-            currentlyHovering = hoverable;
+            currentlyHovering = newHover;
             OnHoverChange?.Invoke(currentlyHovering);
         }
 
@@ -87,6 +93,7 @@ namespace IntegratedGameplaySystem
         public void Dispose()
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown -= TryInteract;
+            EventManager<IItem>.RemoveListener(Occasion.EquipItem, OnNewItem);
         }
     }
 }

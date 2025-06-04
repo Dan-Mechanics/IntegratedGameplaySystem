@@ -21,7 +21,7 @@ namespace IntegratedGameplaySystem
         private int progression;
         private bool isWatered;
 
-        public string Name => GetHovering();
+        public string HoverTitle => GetHovering();
         public bool IsHarvestable => progression >= blueprint.materials.Length - 1;
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace IntegratedGameplaySystem
         /// If u gonna makethis solid do it in da start pls.
         /// I doubt the reviewers would notice.
         /// 
-        /// Factory here.
+        /// Factory here !!!
         /// </summary>
         public Plant(PlantBlueprint blueprint)
         {
@@ -44,8 +44,6 @@ namespace IntegratedGameplaySystem
             rain.transform.SetParent(transform);
             rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
             waterEffect = rain.GetComponent<ParticleSystem>();
-
-            gameObject.layer = LayerMask.NameToLayer(blueprint.name);
 
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
@@ -92,6 +90,15 @@ namespace IntegratedGameplaySystem
             }
 
             sphereCollider.enabled = IsHarvestable || !isWatered;
+
+            if (IsHarvestable)
+            {
+                gameObject.layer = LayerMask.NameToLayer(blueprint.name);
+            }
+            else
+            {
+                gameObject.layer = LayerMask.NameToLayer(isWatered ? blueprint.name : "Dry");
+            }
         }
 
         /// <summary>

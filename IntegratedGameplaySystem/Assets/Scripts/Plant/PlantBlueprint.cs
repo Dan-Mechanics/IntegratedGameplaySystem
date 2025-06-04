@@ -34,7 +34,7 @@ namespace IntegratedGameplaySystem
             sprite = Resources.Load<Sprite>($"{name}/stage_{materials.Length}_img");
 
             // Default + Plant.
-            mask = 1 << 0 | 1 << LayerMask.NameToLayer(name);
+            mask = 1 << 0 | 1 << LayerMask.NameToLayer(name) | 1 << LayerMask.NameToLayer("Dry");
 
             for (int i = 0; i < materials.Length; i++)
             {

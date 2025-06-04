@@ -17,8 +17,6 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Display : IStartable, IDisposable
     {
-        private const string NOT_HOVERING = " . . . ";
-        
         private readonly MoneyCentral wallet;
         private readonly Interactor interactor;
         private readonly Clock tickClock;
@@ -73,7 +71,7 @@ namespace IntegratedGameplaySystem
             inventory.OnCountChange += UpdateItemCount;
         }
 
-        public void UpdateHoveringText(IHoverable hover) => HoveringText.text = hover != null ? hover.Name : NOT_HOVERING;
+        public void UpdateHoveringText(string hover) => HoveringText.text = string.IsNullOrEmpty(hover) ? Settings.hoveringNothingText : hover;
         public void UpdateMoneyText(int money, int maxMoney) => MoneyText.text = $"({money} / {maxMoney})";
         public void UpdateTimerText(float time) => TimerText.text = time.ToString();
         public void UpdateItem(IItem item) => HeldItemImage.sprite = item == null ? Settings.holdingNothingSprite : item.Sprite;

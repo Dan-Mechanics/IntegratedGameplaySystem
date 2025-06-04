@@ -1,3 +1,36 @@
+scope: ivnentory selection overrides current shit = hostile design
+that would make it smoother
+
+
+ik vind het basically valid om alleen te focuseen op dev nu en niet outer wilds totdat dat af is.
+
+think about the decoupling between classes and that classes basically know nothing about eachother and communicate via
+indireciton aka interface or delegate ( how many safe ?? ) or events ! check that for all the main and important stuff.
+
+you could add something that not harbestble colliders are lower down.
+
+ok, dit hele projecti s uit elkaar aan het storten, ik denk dat ik terug moet
+naar hostile design in the sense dat je gewoon items kwijt raakt als je shit verkeerd doet basically.
+
+i think that actually makes sense because its confusing for the player either way rigth.
+and then we simplify the system ten fold and make sure all the composites know nothing about eachother.
+and work in isolation basically.
+
+so we have inventory
+and we have interactor
+and we have moneypoint
+
+and we have ISellableItem or something
+we equip something via the evenysystem.
+i want to make the text red when the player is fullll.
+
+===
+
+three paradim ideas: unity disaster 
+   fake functional
+   and whereby you have classes that make all the dependancies work via like events or something idk.
+
+
 ok so now we have a responsbility that the inventory says which things the interactor can interact with.
 i dont want the plant to handle, this, i do think it makes sense that the plant
 

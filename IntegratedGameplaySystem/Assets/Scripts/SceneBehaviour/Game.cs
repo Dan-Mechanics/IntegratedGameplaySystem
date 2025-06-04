@@ -27,10 +27,12 @@ namespace IntegratedGameplaySystem
             ServiceLocator<IScoreService>.Provide(tickClock);
 
             var invetory = new Inventory();
+
+            // DOES THIS BREAKT HE UNSUB MEME ??? HOW DOES THIS DEALLOCATE ?????
             var moneyCentral = new MoneyCentral(invetory.SellAll, invetory.HasSomethingToSell);
             var interactor = new Interactor();
 
-            invetory.OnNewSelectionMask += interactor.ChangeMask;
+            //invetory.OnNewSelectionMask += interactor.ChangeMask;
 
             Display display = Display.CreateAndInitializeUI(interactor, moneyCentral, tickClock, invetory);
             components.Add(display);
@@ -41,6 +43,13 @@ namespace IntegratedGameplaySystem
             components.Add(invetory);
 
             return components;
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+
         }
     }
 }

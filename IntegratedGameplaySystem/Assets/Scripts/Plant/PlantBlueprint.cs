@@ -12,6 +12,7 @@ namespace IntegratedGameplaySystem
         public Sprite Sprite => sprite;
         public int MaxCount => maxCount;
         public int Money => monetaryValue;
+        public LayerMask Mask => mask;
 
         public GameObject plantPrefab;
         public GameObject rainPrefab;
@@ -19,6 +20,7 @@ namespace IntegratedGameplaySystem
         [Min(1), Tooltip("One in ...")] public int growOdds;
         [Min(1), Tooltip("One in ...")] public int wateredGrowOdds;
         [Min(1)] public int maxCount;
+        public LayerMask mask;
 
         public Sprite sprite;
         public Material[] materials;
@@ -30,6 +32,9 @@ namespace IntegratedGameplaySystem
         private void OnValidate() 
         {
             sprite = Resources.Load<Sprite>($"{name}/stage_{materials.Length}_img");
+
+            // Default + Plant.
+            mask = 1 << 0 | 1 << LayerMask.NameToLayer(name);
 
             for (int i = 0; i < materials.Length; i++)
             {

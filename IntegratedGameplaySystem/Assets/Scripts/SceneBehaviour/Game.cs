@@ -26,17 +26,19 @@ namespace IntegratedGameplaySystem
             var tickClock = new Clock(assetService.GetAssetWithType<ClockSettings>().interval);
             ServiceLocator<IScoreService>.Provide(tickClock);
 
-            var holdingHandler = new Inventory();
-            var moneyCentral = new MoneyCentral(holdingHandler.SellAll, holdingHandler.HasSomethingToSell);
+            var invetory = new Inventory();
+            var moneyCentral = new MoneyCentral(invetory.SellAll, invetory.HasSomethingToSell);
             var interactor = new Interactor();
 
-            Display display = Display.CreateAndInitializeUI(interactor, moneyCentral, tickClock, holdingHandler);
+            invetory.OnNewSelectionMask += interactor.ChangeMask;
+
+            Display display = Display.CreateAndInitializeUI(interactor, moneyCentral, tickClock, invetory);
             components.Add(display);
 
             components.Add(tickClock);
             components.Add(moneyCentral);            
             components.Add(interactor);
-            components.Add(holdingHandler);
+            components.Add(invetory);
 
             return components;
         }

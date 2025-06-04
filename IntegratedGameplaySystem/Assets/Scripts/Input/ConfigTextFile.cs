@@ -37,6 +37,7 @@ namespace IntegratedGameplaySystem
                 if (tokens.Length < 2)
                     continue;
 
+                // In the future you could say take 2 character only and then define those in the split.
                 bindings.Add(new Binding(tokens[0], Utils.StringToEnum<PlayerAction>(tokens[1])));
             }
 

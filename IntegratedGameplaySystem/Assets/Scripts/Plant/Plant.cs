@@ -29,6 +29,8 @@ namespace IntegratedGameplaySystem
         /// maybe prioirtize SOLID instead right.
         /// If u gonna makethis solid do it in da start pls.
         /// I doubt the reviewers would notice.
+        /// 
+        /// Factory here.
         /// </summary>
         public Plant(PlantBlueprint blueprint)
         {
@@ -42,6 +44,8 @@ namespace IntegratedGameplaySystem
             rain.transform.SetParent(transform);
             rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
             waterEffect = rain.GetComponent<ParticleSystem>();
+
+            gameObject.layer = LayerMask.NameToLayer(blueprint.name);
 
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();

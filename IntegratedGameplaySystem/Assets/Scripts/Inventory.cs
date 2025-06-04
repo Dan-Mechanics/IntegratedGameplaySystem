@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
@@ -9,14 +10,13 @@ namespace IntegratedGameplaySystem
     {
         // EITHER Evnet onholdingChange or some typa interface so other scripts can get a reference
         // to this mainly the interactor and the display
-
-
-        public IItem holding;
-        public int count;
-        // and then the max count in in the thing.
-
         public Action<IItem> OnHold;
         public Action<int> OnCountChange;
+        public Action<LayerMask?> OnNewSelectionMask;
+
+        private IItem holding;
+        private int count;
+        // and then the max count in in the thing.
 
         public void Start()
         {
@@ -36,6 +36,7 @@ namespace IntegratedGameplaySystem
             holding = null;
             count = 0;
 
+            OnNewSelectionMask?.Invoke(null);
             OnHold?.Invoke(holding);
             OnCountChange?.Invoke(count);
 
@@ -58,6 +59,7 @@ namespace IntegratedGameplaySystem
             }
             else
             {
+                OnNewSelectionMask?.Invoke(item.Mask);
                 holding = item;
                 count = 1;
             }

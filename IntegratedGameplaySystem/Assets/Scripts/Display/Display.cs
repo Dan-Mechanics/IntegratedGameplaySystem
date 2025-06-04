@@ -22,7 +22,7 @@ namespace IntegratedGameplaySystem
         private readonly MoneyCentral wallet;
         private readonly Interactor interactor;
         private readonly Clock tickClock;
-        private readonly Inventory holdingHandler;
+        private readonly Inventory inventory;
 
         public DisplaySettings Settings { get; private set; }
         public Text HoveringText { get; private set; }
@@ -31,12 +31,12 @@ namespace IntegratedGameplaySystem
         public Image HeldItemImage { get; private set; }
         public Text ItemCountText { get; private set; }
 
-        private Display(Interactor interactor, MoneyCentral wallet, Clock tickClock, Inventory holdingHandler)
+        private Display(Interactor interactor, MoneyCentral wallet, Clock tickClock, Inventory inventory)
         {
             this.wallet = wallet;
             this.interactor = interactor;
             this.tickClock = tickClock;
-            this.holdingHandler = holdingHandler;
+            this.inventory = inventory;
         }
 
         public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral wallet, Clock tickClock, Inventory holdingHandler) 
@@ -69,8 +69,8 @@ namespace IntegratedGameplaySystem
             wallet.OnMoneyChanged += UpdateMoneyText;
             interactor.OnHoverChange += UpdateHoveringText;
             tickClock.OnNewTime += UpdateTimerText;
-            holdingHandler.OnHold += UpdateItem;
-            holdingHandler.OnCountChange += UpdateItemCount;
+            inventory.OnHold += UpdateItem;
+            inventory.OnCountChange += UpdateItemCount;
         }
 
         public void UpdateHoveringText(IHoverable hover) => HoveringText.text = hover != null ? hover.Name : NOT_HOVERING;

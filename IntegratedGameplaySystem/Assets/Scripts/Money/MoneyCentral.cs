@@ -21,10 +21,10 @@ namespace IntegratedGameplaySystem
 
         public string Name => hasSomethingToSell() ? "Sell crop" : string.Empty;
 
-        public MoneyCentral(SellAll sellAll, HasSomethingToSell interactable)
+        public MoneyCentral(SellAll sellAll, HasSomethingToSell hasSomethingToSell)
         {
             this.sellAll = sellAll;
-            this.hasSomethingToSell = interactable;
+            this.hasSomethingToSell = hasSomethingToSell;
 
             settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<MoneyCentralSettings>();
 

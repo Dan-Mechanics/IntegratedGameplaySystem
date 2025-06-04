@@ -8,5 +8,6 @@ namespace IntegratedGameplaySystem
         public Sprite Sprite { get; }
         public int MaxCount { get; }
         public int Money { get; }
+        public LayerMask Mask { get; }
     }
 }

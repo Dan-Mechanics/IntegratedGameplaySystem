@@ -18,6 +18,8 @@ namespace IntegratedGameplaySystem
         private readonly IWorldService worldService;
 
         private IHoverable currentlyHovering;
+        private LayerMask defaultMask;
+        private LayerMask mask;
 
         /// <summary>
         /// Or we could push the asset name upward.
@@ -25,7 +27,12 @@ namespace IntegratedGameplaySystem
         public Interactor()
         {
             // or something idk.
-            raycaster = new Raycaster(ServiceLocator<IAssetService>.Locate().GetAssetWithType<RaycastSettings>());
+
+            RaycastSettings settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<RaycastSettings>();
+            raycaster = new Raycaster(settings);
+            defaultMask = settings.mask;
+            mask = defaultMask;
+
             cam = Camera.main.transform;
 
             inputService = ServiceLocator<IInputService>.Locate();
@@ -36,6 +43,14 @@ namespace IntegratedGameplaySystem
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteract;
             OnHoverChange?.Invoke(null);
+        }
+
+        public void ChangeMask(LayerMask? newMask) 
+        {
+            if (newMask == null)
+                newMask = defaultMask;
+
+            mask = (LayerMask)newMask;
         }
 
         public void FixedUpdate() 
@@ -51,7 +66,7 @@ namespace IntegratedGameplaySystem
 
         private void TryInteract()
         {
-            Transform hit = raycaster.Raycast(cam.position, cam.forward);
+            Transform hit = raycaster.Raycast(cam.position, cam.forward, mask);
 
             if (!hit)
                 return;
@@ -61,7 +76,7 @@ namespace IntegratedGameplaySystem
 
         private IHoverable GetHoverHit()
         {
-            Transform hit = raycaster.Raycast(cam.position, cam.forward);
+            Transform hit = raycaster.Raycast(cam.position, cam.forward, mask);
 
             if (!hit)
                 return null;

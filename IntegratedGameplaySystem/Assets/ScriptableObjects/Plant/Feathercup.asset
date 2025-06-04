@@ -18,6 +18,9 @@ MonoBehaviour:
   growOdds: 1
   wateredGrowOdds: 1
   maxCount: 10
+  mask:
+    serializedVersion: 2
+    m_Bits: 257
   sprite: {fileID: 21300000, guid: c40a69c366bba6e4ca43e3786e3bb49b, type: 3}
   materials:
   - {fileID: 2100000, guid: 98e4f45ecd07b7b47a584cdd16c8f91a, type: 2}

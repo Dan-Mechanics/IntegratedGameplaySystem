@@ -1,9 +1,104 @@
+ok so now we have a responsbility that the inventory says which things the interactor can interact with.
+i dont want the plant to handle, this, i do think it makes sense that the plant
+
+OK: make the plants triggers and then make interactable notinteractable ETC.
+remove ground tag.
+
+ok: here the idea: based on what the player has selected ( including the TYPE of plant )
+we want to change the layermaks that the player cna interact with. does that make sense?
+or like change something about the raycast settigns.
+
+stuff i wanna add:
+hold up to X amount of items of a single plant type, not multible
+cant interact with collecting plants once you have selected ?? 
+interact with moeny central is gain money based on items.
+cant collect plant if full and does not match type.
+layers? maybe make a clever something that 
+
+new ideas given: 
+chainsaw farming,
+farming bomb
+cool upgrades like that.
+it seems like they were pretty pleased with
+the pitch and said, just make it ! so thats cool,
+since then my implementation for decoupling has changed.
+
+IN DOCUMENTATION: say WHY you didnt opt for scriptalbe object pattern ( heavy coupling is the reason )
+and also describe why everything billion interfaces right
+
+i wanna make the folder based on the system and not the pattern or whateve.
+
+performance: store all the plabnts in the frenzy game thing
+and then do array emmes.
+
+i basicalyl want some plots of each type of plant
+and then i want a button at the edge of the plot to make it watered
+or somethign which gives you more money but also costs money.
+isWEt increases the growth odds and then if iswet we have some cute particle above it
+and then if you buy the upgrade for like 100 you make the whole plot wet,
+this gives the game some replayable. consider that the game takes like 2 minutes to finish right.
+stress test: R to reset the game a buncha times and it will crash if u have memory leaks.
+
+funny idea: make like so that you have some selectable plant layer
+and not selectable and make it so all the plant switch layers when the 
+player selects a certain plant right so we dont have infinite layers 
+then. so that the playerCANN only interact with what is possible bascially. #utils
+
+end check: commetns and summaires, make sure all places where subscribe you ALWAYS unsub thats important i tihnk.
+
+todos:
+UI
+Wallet
+Wallet yapping to UI or other way around rather
+Place to dumb crop
+Upgrades
+Timer
+WASD tooltip ??
+gotta seperate those itnerfaces / move them into their folders.
+
+I need to dream up a way to handle the money and total time
+basically the main question is the uI, do we get shit from the ui canvas
+or do we basicaly make shit isnite of it, maybe i should make some useful thing
+for spawning UI finally because it is always difficult.
+
+i dont really know the creative solution for 
+the UI yet tho but i think its gonna be peak lowkey, just see.
+
+dont forget that you need to write documentation 
+and make a uml right but finish the game first is important i think.
+know you dont have infitie time, but this shit is just soooo fun #cool-coding.
+
+i wanna do input memes config and all that jazz
+and yes i have time for it because im goated.
+
+try the idea of the img_resource.load right.
+
+random: for the player, you can also make it that:
+the player's prefab resides in the player settings right
+
+and then do the same for plant, that might be a good idea.
+
+make the assets find something based on type or name right.
+or type or obvious refernce.
+
+    /// Perhaps i should add more stuff to the folder this is in including interfaces but ok.
+    /// maybe then it makes it sligjhtly more clear which things use this right. yeah.
+    /// but thats for later now i just wanna make the plants work in general.
+    /// </summary>
+
+make all the directory of the proejct nice at the end yo.
+
+add: txt shit config funny, seperate class
+add: cool assets ?? in the sense that you drag object because that doesnt break when you change the shit right.
+
+===
+
 random idee:
 we maken dat alle locations naar data in de serialized is,
 en dan de rest is whatever basically.
 i basically want all the data in the game to be in scriptalbe objects assets
 and then the names of those things can change too right so yeah.
-
+i think i wanna make the money system move via the input thing.
 
 idea: instead of using resources.load, use like a blackboard technique 
 with unity serialized fields. so we basically pass a list of shit in via inspector

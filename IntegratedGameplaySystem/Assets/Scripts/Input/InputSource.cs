@@ -4,23 +4,28 @@ namespace IntegratedGameplaySystem
 {
     public class InputSource
     {
-        public event Action OnDown;
-        public event Action OnUp;
-        public event Action<bool> OnChange;
         public bool IsPressed { get; private set; }
+        public event Action<bool> OnChange;
 
-        public void SetPressed(bool newPressed) 
+        public Action onDown;
+        public Action onUp;
+
+        public InputSource()
         {
-            if (IsPressed != newPressed)
-                OnChange?.Invoke(newPressed);
+            onDown += Compress;
+            onUp += Release;
+        }
 
-            if (!IsPressed && newPressed)
-                OnDown?.Invoke();
+        private void Compress() 
+        {
+            IsPressed = true;
+            OnChange?.Invoke(IsPressed);
+        }
 
-            if (IsPressed && !newPressed)
-                OnUp?.Invoke();
-
-            IsPressed = newPressed;
+        private void Release()
+        {
+            IsPressed = false;
+            OnChange?.Invoke(IsPressed);
         }
     }
 }

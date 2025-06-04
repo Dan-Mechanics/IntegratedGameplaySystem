@@ -10,15 +10,16 @@ namespace IntegratedGameplaySystem
     /// It doesnt make sense because we can add and remove bindings dynamically but then if something is bound to it you have uno issue.
     /// No, it still makes sense.
     /// </summary>
-    public class InputHandler : IInputService, IUpdatable
+    public class InputHandler : IInputService
     {
         private readonly List<Binding> bindings = new();
         private readonly Dictionary<PlayerAction, InputSource> conversion = new();
-        private readonly INewBindingRule newBindingRule;
+        private readonly INewBindingRules newBindingRules;
 
-        public InputHandler(INewBindingRule newBindingRule)
+        public InputHandler(INewBindingRules newBindingRules, IBindingsSource source)
         {
-            this.newBindingRule = newBindingRule;
+            this.newBindingRules = newBindingRules;
+            source.GetBindings().ForEach(x => AddBinding(x));
 
             for (int i = 0; i < Enum.GetValues(typeof(PlayerAction)).Length; i++)
             {
@@ -28,14 +29,15 @@ namespace IntegratedGameplaySystem
 
         /// <summary>
         /// It would be cool if these rules worked with a func<> type beat.
+        /// But for now i like the interface.
         /// </summary>
         public void AddBinding(Binding binding)
         {
-            if (!newBindingRule.AllowBinding(bindings, binding))
+            if (!newBindingRules.AllowBinding(bindings, binding))
                 return;
 
             bindings.Add(binding);
-            Debug.Log($"added binding {binding.keyCode}");
+            Debug.Log($"added binding {binding}");
         }
 
         public void RemoveBinding(Binding binding) => bindings.Remove(binding);
@@ -60,15 +62,27 @@ namespace IntegratedGameplaySystem
 
         public void Update()
         {
-            foreach (var binding in bindings)
+            for (int i = 0; i < bindings.Count; i++)
             {
-                if (!conversion.ContainsKey(binding.playerAction))
-                    continue;
+                if (Input.GetKeyDown(bindings[i].keyCode))
+                    conversion[bindings[i].playerAction].onDown?.Invoke();
 
-                conversion[binding.playerAction].SetPressed(Input.GetKey(binding.keyCode));
+                if (Input.GetKeyUp(bindings[i].keyCode))
+                    conversion[bindings[i].playerAction].onUp?.Invoke();
             }
         }
 
         public InputSource GetInputSource(PlayerAction playerAction) => conversion[playerAction];
+
+        /// <summary>
+        /// Because we want all the stuff to reset.
+        /// </summary>
+        public void Dispose()
+        {
+            foreach (var pair in conversion)
+            {
+                pair.Value.onUp?.Invoke();
+            }
+        }
     }
 }

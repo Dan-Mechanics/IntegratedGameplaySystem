@@ -5,12 +5,14 @@ namespace IntegratedGameplaySystem
 {
     public class EasyUI
     {
-        private readonly RectTransform rect;
+        private RectTransform rect;
 
         public EasyUI(RectTransform rect)
         {
-            this.rect = rect;
+            Set(rect);
         }
+
+        public void Set(RectTransform rect) => this.rect = rect;
 
         public float GetHeight()
         {
@@ -100,7 +102,6 @@ namespace IntegratedGameplaySystem
         {
             rect.anchoredPosition = offset;
         }
-
         private void UpdateAnchor()
         {
             rect.anchorMin = rect.pivot;

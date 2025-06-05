@@ -27,52 +27,61 @@ namespace IntegratedGameplaySystem
 
         // FIX !!!
         private DisplaySettings settings;
-        private Text hoveringText;
-        private Text moneyText;
-        private Text timerText;
-        private Image heldItemImage;
-        private Text heldItemCountText;
+        //private Text hoveringText;
 
-        private Display(Interactor interactor, MoneyCentral moneyCentral, IChangeTracker<float> tickClock, Hand inventory)
+        private DataChannel<string, Text> hovering;
+
+        private Text money;
+        private Text timer;
+        private Image heldItem;
+        private Text itemCount;
+
+        private Display(Interactor interactor, MoneyCentral moneyCentral, IChangeTracker<float> tickClock, Hand hand)
         {
             this.moneyCentral = moneyCentral;
             this.interactor = interactor;
             this.tickClock = tickClock;
-            this.hand = inventory;
+            this.hand = hand;
         }
 
         /// <summary>
         /// Factory.
         /// Consider making this a builder and then making it proper ??
         /// </summary>
-        public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral moneyCentral, IChangeTracker<float> tickClock, Hand inventory) 
+        private void Setup() 
         {
-            Display display = new Display(interactor, moneyCentral, tickClock, inventory);
-
-            display.settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<DisplaySettings>();
-            var canvas = Utils.SpawnPrefab(display.settings.canvas).transform;
-
-            // !Clean ??
+            settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<DisplaySettings>();
+            Transform canvas = Utils.SpawnPrefab(settings.canvas).transform;
 
 
+            // Amazing code here:
+            hovering.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
+            EasyUI temp = new EasyUI(hovering.ui.rectTransform);
+            temp.SnapTo(Image.Origin180.Bottom, 1f * temp.GetHeight() * Vector2.down);
 
-            float height = Utils.GetHeight(display.settings.text);
+            timer = Utils.AddToCanvas<Text>(canvas, settings.text);
+            temp.Set(timer.rectTransform);
+            temp.SnapTo(Image.Origin180.Bottom, 2f * temp.GetHeight() * Vector2.down);
 
-            display.hoveringText = Utils.AddTextToCanvas(canvas, display.settings.text, 1f * height * Vector2.down);
-            display.timerText = Utils.AddTextToCanvas(canvas, display.settings.text, 2f * height * Vector2.down);
-            display.moneyText = Utils.AddTextToCanvas(canvas, display.settings.text, 3f * height * Vector2.down);
+            money = Utils.AddToCanvas<Text>(canvas, settings.text);
+            temp.Set(money.rectTransform);
+            temp.SnapTo(Image.Origin180.Bottom, 3f * temp.GetHeight() * Vector2.down);
 
-            display.heldItemImage = Utils.AddImageToCanvas(canvas, display.settings.image, Vector2.up * 15f);
-            display.heldItemCountText = Utils.AddTextToCanvas(canvas, display.settings.text, (15f + display.heldItemImage.rectTransform.sizeDelta.y / 2f) * (Vector2.up+Vector2.left));
-            display.heldItemCountText.color = Color.black;
-            Utils.SnapToBottom(display.heldItemImage.rectTransform);
-            Utils.SnapToBottom(display.heldItemCountText.rectTransform);
+            heldItem = Utils.AddToCanvas<Image>(canvas, settings.image);
+            temp.Set(heldItem.rectTransform);
+            temp.SnapTo(Image.Origin180.Bottom, Vector2.up * 15f);
 
-            Image overlay = Utils.AddImageToCanvas(canvas, display.settings.image, Vector2.up * 15f);
-            overlay.sprite  = display.settings.holdingNothingSprite;
-            Utils.SnapToBottom(overlay.rectTransform);
+            Vector2 itemCountOffset = (15f + temp.GetHeight() / 2f) * (Vector2.up + Vector2.left);
 
-            return display;
+            itemCount = Utils.AddToCanvas<Text>(canvas, settings.text);
+            itemCount.color = Color.black;
+            temp.Set(itemCount.rectTransform);
+            temp.SnapTo(Image.Origin180.Bottom, itemCountOffset);
+
+            Image overlay = Utils.AddToCanvas<Image>(canvas, settings.image);
+            overlay.sprite = settings.holdingNothingSprite;
+            temp.Set(overlay.rectTransform);
+            temp.SnapTo(Image.Origin180.Bottom, Vector2.up * 15f);
         }
 
         public void Start()
@@ -85,12 +94,21 @@ namespace IntegratedGameplaySystem
             hand.AtMaxCapacity     += UpdateMaxCapacity;
         }
 
-        public void UpdateHoveringText(string hover) => hoveringText.text = string.IsNullOrEmpty(hover) ? settings.hoveringNothingText : hover;
-        public void UpdateMoneyText(int money, int maxMoney) => moneyText.text = $"({money} / {maxMoney})";
-        public void UpdateTimerText(float time) => timerText.text = time.ToString();
-        public void UpdateItem(IItemArchitype item) => heldItemImage.sprite = item == null ? settings.holdingNothingSprite : item.Sprite;
-        public void UpdateItemCount(int count) => heldItemCountText.text = count.ToString();
-        public void UpdateMaxCapacity(bool atCapacity) => heldItemCountText.color = atCapacity ? Color.red : Color.black;
+        /// <summary>
+        /// T1 --> T2
+        /// </summary>
+        public class DataChannel<T1, T2> 
+        {
+            public IChangeTracker<T1> changeTracker;
+            public T2 ui;
+        }
+
+        public void UpdateHoveringText(string hover) => hovering.text = string.IsNullOrEmpty(hover) ? settings.hoveringNothingText : hover;
+        public void UpdateMoneyText(int money, int maxMoney) => this.money.text = $"({money} / {maxMoney})";
+        public void UpdateTimerText(float time) => timer.text = time.ToString();
+        public void UpdateItem(IItemArchitype item) => heldItem.sprite = item == null ? settings.holdingNothingSprite : item.Sprite;
+        public void UpdateItemCount(int count) => itemCount.text = count.ToString();
+        public void UpdateMaxCapacity(bool atCapacity) => itemCount.color = atCapacity ? Color.red : Color.black;
 
         public void Dispose()
         {

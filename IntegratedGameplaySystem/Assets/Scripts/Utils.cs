@@ -65,7 +65,17 @@ namespace IntegratedGameplaySystem
             //rect.anchoredPosition = Vector2.up * 15f;
         }*/
 
-        public static Text AddTextToCanvas(Transform canvas, GameObject textPrefab)
+
+        public static T AddToCanvas<T>(Transform canvas, GameObject prefab)
+        {
+            Transform transform = SpawnPrefab(prefab).transform;
+            transform.SetParent(canvas);
+            transform.localPosition = Vector3.zero;
+            return transform.GetComponent<T>();
+        }
+
+
+        /*public static Text AddTextToCanvas(Transform canvas, GameObject textPrefab)
         {
             Transform transform = SpawnPrefab(textPrefab).transform;
             transform.SetParent(canvas);
@@ -89,7 +99,7 @@ namespace IntegratedGameplaySystem
             img.sprite = null;
 
             return img;
-        }
+        }*/
 
         public static void ApplyRandomRotation(Transform transform) 
         {

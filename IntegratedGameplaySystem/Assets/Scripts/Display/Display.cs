@@ -23,7 +23,7 @@ namespace IntegratedGameplaySystem
         private readonly MoneyCentral moneyCentral;
         private readonly Interactor interactor;
         private readonly Clock tickClock;
-        private readonly Inventory inventory;
+        private readonly Hand inventory;
 
         public DisplaySettings Settings { get; private set; }
         public Text HoveringText { get; private set; }
@@ -32,7 +32,7 @@ namespace IntegratedGameplaySystem
         public Image HeldItemImage { get; private set; }
         public Text ItemCountText { get; private set; }
 
-        private Display(Interactor interactor, MoneyCentral moneyCentral, Clock tickClock, Inventory inventory)
+        private Display(Interactor interactor, MoneyCentral moneyCentral, Clock tickClock, Hand inventory)
         {
             this.moneyCentral = moneyCentral;
             this.interactor = interactor;
@@ -43,7 +43,7 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// Factory.
         /// </summary>
-        public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral moneyCentral, Clock tickClock, Inventory inventory) 
+        public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral moneyCentral, Clock tickClock, Hand inventory) 
         {
             Display display = new Display(interactor, moneyCentral, tickClock, inventory);
 
@@ -84,7 +84,7 @@ namespace IntegratedGameplaySystem
         public void UpdateHoveringText(string hover) => HoveringText.text = string.IsNullOrEmpty(hover) ? Settings.hoveringNothingText : hover;
         public void UpdateMoneyText(int money, int maxMoney) => MoneyText.text = $"({money} / {maxMoney})";
         public void UpdateTimerText(float time) => TimerText.text = time.ToString();
-        public void UpdateItem(ISellableItem item) => HeldItemImage.sprite = item == null ? Settings.holdingNothingSprite : item.Sprite;
+        public void UpdateItem(IItemArchitype item) => HeldItemImage.sprite = item == null ? Settings.holdingNothingSprite : item.Sprite;
         public void UpdateItemCount(int count) => ItemCountText.text = count.ToString();
         public void UpdateMaxCapacity(bool atCapacity) => ItemCountText.color = atCapacity ? Color.red : Color.black;
 

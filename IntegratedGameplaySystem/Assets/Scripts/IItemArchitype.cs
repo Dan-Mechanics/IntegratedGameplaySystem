@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public interface ISellableItem
+    public interface IItemArchitype
     {
         public Sprite Sprite { get; }
-        public int MaxCount { get; }
-        public int Money { get; }
+        public int StackSize { get; }
+        public int MonetaryValue { get; }
     }
 }

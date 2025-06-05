@@ -26,13 +26,8 @@ namespace IntegratedGameplaySystem
             var tickClock = new Clock(assetService.GetAssetWithType<ClockSettings>().interval);
             ServiceLocator<IScoreService>.Provide(tickClock);
 
-            var invetory = new Inventory();
-
-            // DOES THIS BREAKT HE UNSUB MEME ??? HOW DOES THIS DEALLOCATE ?????
-            var moneyCentral = new MoneyCentral();
-            moneyCentral.CanInteract = invetory.HasSomethingToSell;
-            moneyCentral.GetEarnings = invetory.SellAll;
-            
+            var invetory = new Hand();
+            var moneyCentral = new MoneyCentral(invetory);
             var interactor = new Interactor();
 
             Display display = Display.CreateAndInitializeUI(interactor, moneyCentral, tickClock, invetory);

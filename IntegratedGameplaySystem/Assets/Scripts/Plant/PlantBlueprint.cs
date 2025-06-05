@@ -7,11 +7,11 @@ namespace IntegratedGameplaySystem
     /// "Flyweight" ish.
     /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(PlantBlueprint), fileName = "New " + nameof(PlantBlueprint))]
-    public class PlantBlueprint : ScriptableObject, ISellableItem
+    public class PlantBlueprint : ScriptableObject, IItemArchitype
     {
         public Sprite Sprite => sprite;
-        public int MaxCount => maxCount;
-        public int Money => monetaryValue;
+        public int StackSize => maxCount;
+        public int MonetaryValue => monetaryValue;
 
         public GameObject plantPrefab;
         public GameObject rainPrefab;

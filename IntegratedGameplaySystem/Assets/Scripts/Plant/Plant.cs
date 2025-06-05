@@ -119,7 +119,7 @@ namespace IntegratedGameplaySystem
             if (IsHarvestable)
             {
                 progression = 0;
-                EventManager<ISellableItem>.RaiseEvent(Occasion.SetOrAddItem, blueprint);
+                EventManager<IItemArchitype>.RaiseEvent(Occasion.SetOrAddItem, blueprint);
             }
             else if (!isWatered)
             {

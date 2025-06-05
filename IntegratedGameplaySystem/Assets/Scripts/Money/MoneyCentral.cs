@@ -5,6 +5,8 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// This class should respond to the events yo.
+    /// 
+    /// Barter interface
     /// </summary>
     public class MoneyCentral :  IStartable, IInteractable, IHoverable, IDisposable
     {
@@ -12,10 +14,11 @@ namespace IntegratedGameplaySystem
 
         private readonly ParticleSystem particle;
         private readonly MoneyCentralSettings settings;
+        private readonly IItemHolder itemHolder;
         private int money;
 
-        public Func<bool> CanInteract;
-        public Func<int> GetEarnings;
+        // public Func<bool> CanInteract;
+        // public Func<int> GetEarnings;
 
         // use Func ??? i dont fucking know how it works.
 
@@ -26,8 +29,9 @@ namespace IntegratedGameplaySystem
         /// Dont use delegates i dont understand them bruuhhhhh
         /// Like it works but i dont know what happens to the memory AT ALL
         /// </summary>
-        public MoneyCentral()
+        public MoneyCentral(IItemHolder holder)
         {
+            this.itemHolder = holder;
             settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<MoneyCentralSettings>();
 
             GameObject go = Utils.SpawnPrefab(settings.prefab);
@@ -65,6 +69,44 @@ namespace IntegratedGameplaySystem
             EventManager<int>.RaiseEvent(Occasion.EarnMoney, GetEarnings());
         }
 
+        public bool CanInteract() 
+        {
+            int count = 0;
+
+            StackingItemInstance[] stacks = itemHolder.GetItems();
+            StackingItemInstance stack;
+
+            for (int i = 0; i < stacks.Length; i++)
+            {
+                stack = stacks[i];
+                if (stack.item != null)
+                    count += stack.count;
+            }
+
+            return count > 0;
+        }
+
+        public int GetEarnings() 
+        {
+            int earnings = 0;
+
+            StackingItemInstance[] stacks = itemHolder.GetItems();
+            StackingItemInstance stack;
+
+            for (int i = 0; i < stacks.Length; i++)
+            {
+                stack = stacks[i];
+                if (stack.item == null)
+                    continue;
+
+                earnings += stack.count * stack.item.MonetaryValue;
+            }
+
+            itemHolder.Clear();
+
+            return earnings;
+        }
+
         /// <summary>
         /// I think this works chat.
         /// Hopefully it's clear how this would work.
@@ -72,9 +114,6 @@ namespace IntegratedGameplaySystem
         public void Dispose()
         {
             EventManager<int>.RemoveListener(Occasion.EarnMoney, EarnMoney);
-
-            CanInteract = null;
-            GetEarnings = null;
         }
     }
 }

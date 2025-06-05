@@ -1,7 +1,9 @@
 stuff to do:
 
 implement upgrades ( inventory movement, insta farm etc ), grenade and sprinker first.
-make display more modulair
+make display more modulair with IChangible
+make dispaly more modulir with not using utils but something else.
+make different class for keeping trakc of scorre. VV
 
 
 ==

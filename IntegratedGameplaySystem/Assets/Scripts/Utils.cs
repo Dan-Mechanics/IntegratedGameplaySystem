@@ -18,7 +18,7 @@ namespace IntegratedGameplaySystem
             return Random.value > 0.5f;
         }
 
-        public static float GetHeight(GameObject go) 
+        /*public static float GetHeight(GameObject go) 
         {
             return go.GetComponent<RectTransform>().sizeDelta.y;
         }
@@ -63,14 +63,14 @@ namespace IntegratedGameplaySystem
             rect.anchorMin = rect.pivot;
             rect.anchorMax = rect.pivot;
             //rect.anchoredPosition = Vector2.up * 15f;
-        }
+        }*/
 
-        public static Text AddTextToCanvas(Transform canvas, GameObject textPrefab, Vector2 pos)
+        public static Text AddTextToCanvas(Transform canvas, GameObject textPrefab)
         {
             Transform transform = SpawnPrefab(textPrefab).transform;
             transform.SetParent(canvas);
             transform.localPosition = Vector3.zero;
-            transform.GetComponent<RectTransform>().anchoredPosition = pos;
+            //transform.GetComponent<RectTransform>().anchoredPosition = pos;
 
             Text txt = transform.GetComponent<Text>();
             txt.text = string.Empty;
@@ -78,12 +78,12 @@ namespace IntegratedGameplaySystem
             return txt;
         }
 
-        public static Image AddImageToCanvas(Transform canvas, GameObject imagePrefab, Vector2 pos)
+        public static Image AddImageToCanvas(Transform canvas, GameObject imagePrefab)
         {
             Transform transform = SpawnPrefab(imagePrefab).transform;
             transform.SetParent(canvas);
             transform.localPosition = Vector3.zero;
-            transform.GetComponent<RectTransform>().anchoredPosition = pos;
+            //transform.GetComponent<RectTransform>().anchoredPosition = pos;
 
             Image img = transform.GetComponent<Image>();
             img.sprite = null;

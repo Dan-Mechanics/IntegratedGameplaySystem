@@ -23,7 +23,7 @@ namespace IntegratedGameplaySystem
         private readonly MoneyCentral moneyCentral;
         private readonly Interactor interactor;
         private readonly IChangeTracker<float> tickClock;
-        private readonly Hand inventory;
+        private readonly Hand hand;
 
         // FIX !!!
         private DisplaySettings settings;
@@ -38,11 +38,12 @@ namespace IntegratedGameplaySystem
             this.moneyCentral = moneyCentral;
             this.interactor = interactor;
             this.tickClock = tickClock;
-            this.inventory = inventory;
+            this.hand = inventory;
         }
 
         /// <summary>
         /// Factory.
+        /// Consider making this a builder and then making it proper ??
         /// </summary>
         public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral moneyCentral, IChangeTracker<float> tickClock, Hand inventory) 
         {
@@ -52,6 +53,8 @@ namespace IntegratedGameplaySystem
             var canvas = Utils.SpawnPrefab(display.settings.canvas).transform;
 
             // !Clean ??
+
+
 
             float height = Utils.GetHeight(display.settings.text);
 
@@ -77,9 +80,9 @@ namespace IntegratedGameplaySystem
             moneyCentral.OnMoneyChanged += UpdateMoneyText;
             interactor.OnHoverChange    += UpdateHoveringText;
             tickClock.OnChange         += UpdateTimerText;
-            inventory.OnItemChange      += UpdateItem;
-            inventory.OnCountChange     += UpdateItemCount;
-            inventory.AtMaxCapacity     += UpdateMaxCapacity;
+            hand.OnItemChange      += UpdateItem;
+            hand.OnCountChange     += UpdateItemCount;
+            hand.AtMaxCapacity     += UpdateMaxCapacity;
         }
 
         public void UpdateHoveringText(string hover) => hoveringText.text = string.IsNullOrEmpty(hover) ? settings.hoveringNothingText : hover;
@@ -94,9 +97,9 @@ namespace IntegratedGameplaySystem
             moneyCentral.OnMoneyChanged -= UpdateMoneyText;
             interactor.OnHoverChange    -= UpdateHoveringText;
             tickClock.OnChange -= UpdateTimerText;
-            inventory.OnItemChange      -= UpdateItem;
-            inventory.OnCountChange     -= UpdateItemCount;
-            inventory.AtMaxCapacity     -= UpdateMaxCapacity;
+            hand.OnItemChange      -= UpdateItem;
+            hand.OnCountChange     -= UpdateItemCount;
+            hand.AtMaxCapacity     -= UpdateMaxCapacity;
         }
     }
 }

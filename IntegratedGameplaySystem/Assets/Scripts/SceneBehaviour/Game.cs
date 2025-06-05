@@ -24,13 +24,14 @@ namespace IntegratedGameplaySystem
 
             // factory for this ??
             var tickClock = new Clock(assetService.GetAssetWithType<ClockSettings>().interval);
-            ServiceLocator<IScoreService>.Provide(tickClock);
+            var score = new Score();
+            ServiceLocator<IScoreService>.Provide(score);
 
             var invetory = new Hand();
             var moneyCentral = new MoneyCentral(invetory);
             var interactor = new Interactor();
 
-            Display display = Display.CreateAndInitializeUI(interactor, moneyCentral, tickClock, invetory);
+            Display display = Display.CreateAndInitializeUI(interactor, moneyCentral, score, invetory);
             components.Add(display);
 
             components.Add(tickClock);

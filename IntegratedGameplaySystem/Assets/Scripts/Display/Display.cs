@@ -22,7 +22,7 @@ namespace IntegratedGameplaySystem
     {
         private readonly MoneyCentral moneyCentral;
         private readonly Interactor interactor;
-        private readonly Clock tickClock;
+        private readonly IChangeTracker<float> tickClock;
         private readonly Hand inventory;
 
         // FIX !!!
@@ -33,7 +33,7 @@ namespace IntegratedGameplaySystem
         private Image heldItemImage;
         private Text heldItemCountText;
 
-        private Display(Interactor interactor, MoneyCentral moneyCentral, Clock tickClock, Hand inventory)
+        private Display(Interactor interactor, MoneyCentral moneyCentral, IChangeTracker<float> tickClock, Hand inventory)
         {
             this.moneyCentral = moneyCentral;
             this.interactor = interactor;
@@ -44,7 +44,7 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// Factory.
         /// </summary>
-        public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral moneyCentral, Clock tickClock, Hand inventory) 
+        public static Display CreateAndInitializeUI(Interactor interactor, MoneyCentral moneyCentral, IChangeTracker<float> tickClock, Hand inventory) 
         {
             Display display = new Display(interactor, moneyCentral, tickClock, inventory);
 
@@ -76,7 +76,7 @@ namespace IntegratedGameplaySystem
         {
             moneyCentral.OnMoneyChanged += UpdateMoneyText;
             interactor.OnHoverChange    += UpdateHoveringText;
-            tickClock.OnNewTime         += UpdateTimerText;
+            tickClock.OnChange         += UpdateTimerText;
             inventory.OnItemChange      += UpdateItem;
             inventory.OnCountChange     += UpdateItemCount;
             inventory.AtMaxCapacity     += UpdateMaxCapacity;
@@ -93,7 +93,7 @@ namespace IntegratedGameplaySystem
         {
             moneyCentral.OnMoneyChanged -= UpdateMoneyText;
             interactor.OnHoverChange    -= UpdateHoveringText;
-            tickClock.OnNewTime         -= UpdateTimerText;
+            tickClock.OnChange -= UpdateTimerText;
             inventory.OnItemChange      -= UpdateItem;
             inventory.OnCountChange     -= UpdateItemCount;
             inventory.AtMaxCapacity     -= UpdateMaxCapacity;

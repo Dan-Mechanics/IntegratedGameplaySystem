@@ -6,7 +6,7 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// I feel like this *could* be seperated into two different classes.
     /// </summary>
-    public class Clock : IStartable, IFixedUpdatable, IScoreService
+    public class Clock : IStartable, IFixedUpdatable, IScoreService, IChangeTracker<float>
     {
         public Action<float> OnNewTime;
          
@@ -14,6 +14,8 @@ namespace IntegratedGameplaySystem
         private readonly Timer timer = new();
 
         private float time;
+
+        public event Action<float> OnChange;
 
         public Clock(float interval)
         {
@@ -29,6 +31,7 @@ namespace IntegratedGameplaySystem
         {
             time = Time.timeSinceLevelLoad;
             OnNewTime?.Invoke(time);
+            OnChange?.Invoke(time);
             
             if (!timer.Tick(Time.fixedDeltaTime))
                 return;

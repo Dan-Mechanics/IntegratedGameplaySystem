@@ -13,7 +13,7 @@ namespace IntegratedGameplaySystem
         public readonly Transform transform;
 
         // Composite this ??
-        private readonly PlantBlueprint blueprint;
+        private readonly PlantFlyweight blueprint;
         private readonly MeshRenderer[] meshRenderers;
         private readonly SphereCollider sphereCollider;
         private readonly ParticleSystem waterEffect;
@@ -32,7 +32,7 @@ namespace IntegratedGameplaySystem
         /// 
         /// Factory here !!!
         /// </summary>
-        public Plant(PlantBlueprint blueprint)
+        public Plant(PlantFlyweight blueprint)
         {
             this.blueprint = blueprint;
 

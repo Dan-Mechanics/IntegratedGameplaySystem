@@ -14,7 +14,7 @@ namespace IntegratedGameplaySystem
             this.dispersal = dispersal;
         }
 
-        public void Spawn(List<object> output, PlantBlueprint blueprint, Vector3 offset)
+        public void Spawn(List<object> output, PlantFlyweight blueprint, Vector3 offset)
         {
             Plant temp;
             

@@ -14,7 +14,7 @@ namespace IntegratedGameplaySystem
             //ServiceLocator<IWorldService>.Provide(new GameWorld());
             components.Add(new Player(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
 
-            List<PlantBlueprint> plantBlueprints = assetService.GetAssetsOfType<PlantBlueprint>();
+            List<PlantFlyweight> plantBlueprints = assetService.GetAssetsOfType<PlantFlyweight>();
             //IPlantSpawner spawner = new Dispersal() { dispersal = 20, plantCount = 30 };
             IPlantSpawner spawner = new Plot(5, 1f);
             for (int i = 0; i < plantBlueprints.Count; i++)

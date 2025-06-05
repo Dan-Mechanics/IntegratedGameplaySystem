@@ -12,9 +12,9 @@ namespace IntegratedGameplaySystem
     /// OnHoverChange
     /// IInteractable.interact.
     /// </summary>
-    public class Interactor : IStartable, IFixedUpdatable, IDisposable
+    public class Interactor : IStartable, IFixedUpdatable, IDisposable, IChangeTracker<string>
     {
-        public event Action<string> OnHoverChange;
+        public event Action<string> OnChange;
         
         private readonly Raycaster raycaster;
         private readonly Transform cam;
@@ -37,7 +37,7 @@ namespace IntegratedGameplaySystem
         public void Start() 
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteract;
-            OnHoverChange?.Invoke(string.Empty);
+            OnChange?.Invoke(string.Empty);
         }
 
         public void FixedUpdate() 
@@ -48,7 +48,7 @@ namespace IntegratedGameplaySystem
                 return;
 
             currentHover = newHover;
-            OnHoverChange?.Invoke(currentHover);
+            OnChange?.Invoke(currentHover);
         }
 
         private void TryInteract()

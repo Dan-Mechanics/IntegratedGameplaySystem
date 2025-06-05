@@ -27,17 +27,17 @@ namespace IntegratedGameplaySystem
             var score = new Score();
             ServiceLocator<IScoreService>.Provide(score);
 
-            var invetory = new Hand();
-            var moneyCentral = new MoneyCentral(invetory);
+            var hand = new Hand();
+            var moneyCentral = new MoneyCentral(hand);
             var interactor = new Interactor();
 
-            Display display = Display.CreateAndInitializeUI(interactor, moneyCentral, score, invetory);
+            Display display = new Display(interactor, moneyCentral, score, hand);
             components.Add(display);
 
             components.Add(tickClock);
             components.Add(moneyCentral);            
             components.Add(interactor);
-            components.Add(invetory);
+            components.Add(hand);
 
             return components;
         }

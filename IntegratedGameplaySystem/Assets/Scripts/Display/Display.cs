@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace IntegratedGameplaySystem
@@ -20,34 +22,26 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Display : IStartable, IDisposable
     {
-        private readonly MoneyCentral moneyCentral;
-        private readonly Interactor interactor;
-        private readonly IChangeTracker<float> tickClock;
-        private readonly Hand hand;
+        private readonly List<IDisposable> disposables = new();
 
-        // FIX !!!
+        private readonly DataChannel<string, Text> interactor;
+        private readonly DataChannel<int, int, Text> money;
+        private readonly DataChannel<float, Text> score;
+        private readonly DataChannel<ItemStack, Slot> hand;
         private DisplaySettings settings;
-
-        private Text hovering;
-        private Text money;
-        private Text timer;
-        private Image heldItem;
-        private Text itemCount;
-
-        public Display(Interactor interactor, MoneyCentral moneyCentral, IChangeTracker<float> tickClock, Hand hand)
+        
+        public Display(IChangeTracker<string> interactor, IChangeTracker<int, int> money, IChangeTracker<float> score, 
+            IChangeTracker<ItemStack> hand)
         {
-            this.moneyCentral = moneyCentral;
-            this.interactor = interactor;
-            this.tickClock = tickClock;
-            this.hand = hand;
+            this.interactor = new DataChannel<string, Text>(interactor, disposables);
+            this.money = new DataChannel<int, int, Text>(money, disposables);
+            this.score = new DataChannel<float, Text>(score, disposables);
+            this.hand = new DataChannel<ItemStack, Slot>(hand, disposables);
+            //this.atCapacity = new DataChannel<bool, Text>(atCapacity, disposables);
 
             Setup();
         }
 
-        /// <summary>
-        /// Factory.
-        /// Consider making this a builder and then making it proper ??
-        /// </summary>
         private void Setup() 
         {
             settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<DisplaySettings>();
@@ -55,44 +49,65 @@ namespace IntegratedGameplaySystem
 
 
             // Amazing code here:
-
-            hovering = Utils.AddToCanvas<Text>(canvas, settings.text);
-            EasyUI temp = new EasyUI(hovering.rectTransform);
+            interactor.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
+            EasyUI temp = new EasyUI(interactor.ui.rectTransform);
             temp.SnapTo(Image.Origin180.Bottom, 1f * temp.GetHeight() * Vector2.down);
 
-            timer = Utils.AddToCanvas<Text>(canvas, settings.text);
-            temp.Set(timer.rectTransform);
+            score.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
+            temp.Set(score.ui.rectTransform);
             temp.SnapTo(Image.Origin180.Bottom, 2f * temp.GetHeight() * Vector2.down);
 
-            money = Utils.AddToCanvas<Text>(canvas, settings.text);
-            temp.Set(money.rectTransform);
+            money.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
+            temp.Set(money.ui.rectTransform);
             temp.SnapTo(Image.Origin180.Bottom, 3f * temp.GetHeight() * Vector2.down);
 
-            heldItem = Utils.AddToCanvas<Image>(canvas, settings.image);
-            temp.Set(heldItem.rectTransform);
+            hand.ui.image = Utils.AddToCanvas<Image>(canvas, settings.image);
+            temp.Set(hand.ui.image.rectTransform);
             temp.SnapTo(Image.Origin180.Bottom, Vector2.up * 15f);
 
             Vector2 itemCountOffset = (15f + temp.GetHeight() / 2f) * (Vector2.up + Vector2.left);
 
-            itemCount = Utils.AddToCanvas<Text>(canvas, settings.text);
-            itemCount.color = Color.black;
-            temp.Set(itemCount.rectTransform);
+            hand.ui.text = Utils.AddToCanvas<Text>(canvas, settings.text);
+            hand.ui.text.color = Color.black;
+            temp.Set(hand.ui.text.rectTransform);
             temp.SnapTo(Image.Origin180.Bottom, itemCountOffset);
 
             Image overlay = Utils.AddToCanvas<Image>(canvas, settings.image);
-            overlay.sprite = settings.holdingNothingSprite;
+            overlay.sprite = settings.defaultSprite;
             temp.Set(overlay.rectTransform);
             temp.SnapTo(Image.Origin180.Bottom, Vector2.up * 15f);
         }
 
         public void Start()
         {
-            moneyCentral.OnMoneyChanged += UpdateMoneyText;
-            interactor.OnHoverChange    += UpdateHoveringText;
-            tickClock.OnChange         += UpdateTimerText;
-            hand.OnItemChange      += UpdateItem;
-            hand.OnCountChange     += UpdateItemCount;
-            hand.AtMaxCapacity     += UpdateMaxCapacity;
+            money.OnChange += RangeIntoText;
+            interactor.OnChange += StringIntoText;
+            score.OnChange += FloatIntoText;
+            hand.OnChange += StackIntoSlot;
+        }
+
+        public void StringIntoText(string str, Text text) => text.text = string.IsNullOrEmpty(str) ? settings.defaultText : str;
+        public void RangeIntoText(int a, int b, Text text) => text.text = $"({a} / {b})";
+        public void FloatIntoText(float value, Text text) => text.text = value.ToString();
+        public void IntIntoText(int value, Text text) => text.text = value.ToString();
+        public void SpriteIntoImage(Sprite sprite, Image image) => image.sprite = sprite == null ? settings.defaultSprite : sprite;
+        public void SetTextToRed(bool isRed, Text text) => text.color = isRed ? Color.red : Color.black;
+        
+        public void StackIntoSlot(ItemStack stack, Slot slot) 
+        {
+            SpriteIntoImage(stack.item?.Sprite, slot.image);
+            IntIntoText(stack.count, slot.text);
+            SetTextToRed(stack.AtCapacity(), slot.text);
+        }
+
+        public void Dispose()
+        {
+            disposables.ForEach(x => x.Dispose());
+
+            money.OnChange -= RangeIntoText;
+            interactor.OnChange -= StringIntoText;
+            score.OnChange -= FloatIntoText;
+            hand.OnChange -= StackIntoSlot;
         }
 
         /// <summary>
@@ -100,45 +115,45 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public class DataChannel<T1, T2> : IDisposable
         {
-            public IChangeTracker<T1> changeTracker;
+            private readonly IChangeTracker<T1> changeTracker;
             public T2 ui;
 
-            public DataChannel(IChangeTracker<T1> changeTracker, T2 ui)
+            public DataChannel(IChangeTracker<T1> changeTracker, List<IDisposable> disposables)
             {
                 this.changeTracker = changeTracker;
-                this.ui = ui;
+                changeTracker.OnChange += Combine;
 
-                changeTracker.OnChange += Invoke;
+                disposables.Add(this);
             }
 
-            private void Invoke(T1 a) 
-            {
-                Blah?.Invoke(a, ui);
-            }
+            private void Combine(T1 a) => OnChange?.Invoke(a, ui);
 
-            public void Dispose()
-            {
-                changeTracker.OnChange -= Invoke;
-            }
+            public void Dispose() => changeTracker.OnChange -= Combine;
 
-            public event System.Action<T1, T2> Blah;
+            public event Action<T1, T2> OnChange;
         }
 
-        public void UpdateHoveringText(string hover) => hovering.text = string.IsNullOrEmpty(hover) ? settings.hoveringNothingText : hover;
-        public void UpdateMoneyText(int money, int maxMoney) => this.money.text = $"({money} / {maxMoney})";
-        public void UpdateTimerText(float time) => timer.text = time.ToString();
-        public void UpdateItem(IItemArchitype item) => heldItem.sprite = item == null ? settings.holdingNothingSprite : item.Sprite;
-        public void UpdateItemCount(int count) => itemCount.text = count.ToString();
-        public void UpdateMaxCapacity(bool atCapacity) => itemCount.color = atCapacity ? Color.red : Color.black;
-
-        public void Dispose()
+        /// <summary>
+        /// T1 --> T2
+        /// </summary>
+        public class DataChannel<T1, T2, T3> : IDisposable
         {
-            moneyCentral.OnMoneyChanged -= UpdateMoneyText;
-            interactor.OnHoverChange    -= UpdateHoveringText;
-            tickClock.OnChange -= UpdateTimerText;
-            hand.OnItemChange      -= UpdateItem;
-            hand.OnCountChange     -= UpdateItemCount;
-            hand.AtMaxCapacity     -= UpdateMaxCapacity;
+            private readonly IChangeTracker<T1, T2> changeTracker;
+            public T3 ui;
+
+            public DataChannel(IChangeTracker<T1, T2> changeTracker, List<IDisposable> disposables)
+            {
+                this.changeTracker = changeTracker;
+                changeTracker.OnChange += Combine;
+
+                disposables.Add(this);
+            }
+
+            private void Combine(T1 a, T2 b) => OnChange?.Invoke(a, b, ui);
+
+            public void Dispose() => changeTracker.OnChange -= Combine;
+
+            public event Action<T1, T2, T3> OnChange;
         }
     }
 }

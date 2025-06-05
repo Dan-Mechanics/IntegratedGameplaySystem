@@ -6,11 +6,12 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// And then we can add something called a bag which has more items in it.
     /// </summary>
-    public class Hand : IStartable, IDisposable, IItemHolder
+    public class Hand : IStartable, IDisposable, IItemHolder, IChangeTracker<ItemStack> //, IChangeTracker<int>, IChangeTracker<bool>
     {
         // EITHER Evnet onholdingChange or some typa interface so other scripts can get a reference
         // to this mainly the interactor and the display
-        public Action<IItemArchitype> OnItemChange;
+        public event Action<ItemStack> OnChange;
+
         public Action<int> OnCountChange;
         public Action<bool> AtMaxCapacity;
 
@@ -23,10 +24,9 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             EventManager<IItemArchitype>.AddListener(Occasion.SetOrAddItem, SetOrAddItem);
-            Clear();
 
-            OnItemChange?.Invoke(heldItem.item);
-            OnCountChange?.Invoke(heldItem.count);
+            Clear();
+            OnChange?.Invoke(heldItem);
         }
 
         private void SetOrAddItem(IItemArchitype newItem)
@@ -42,9 +42,7 @@ namespace IntegratedGameplaySystem
                 heldItem.count = newItem == null ? 0 : 1;
             }
 
-            AtMaxCapacity?.Invoke(heldItem.AtCapacity());
-            OnItemChange?.Invoke(heldItem.item);
-            OnCountChange?.Invoke(heldItem.count);
+            OnChange?.Invoke(heldItem);
         }
 
         public void Dispose()

@@ -7,8 +7,8 @@ namespace IntegratedGameplaySystem
     {
         public GameObject canvas;
 
-        public Sprite holdingNothingSprite;
-        public string hoveringNothingText;
+        public Sprite defaultSprite;
+        public string defaultText;
         public GameObject text;
         public GameObject image;
     }

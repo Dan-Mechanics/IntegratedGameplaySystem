@@ -8,9 +8,9 @@ namespace IntegratedGameplaySystem
     /// 
     /// Barter interface
     /// </summary>
-    public class MoneyCentral :  IStartable, IInteractable, IHoverable, IDisposable
+    public class MoneyCentral :  IStartable, IInteractable, IHoverable, IDisposable, IChangeTracker<int, int>
     {
-        public event Action<int, int> OnMoneyChanged;
+        public event Action<int, int> OnChange;
 
         private readonly ParticleSystem particle;
         private readonly MoneyCentralSettings settings;
@@ -42,7 +42,7 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            OnMoneyChanged?.Invoke(money, settings.moneyToWin);
+            OnChange?.Invoke(money, settings.moneyToWin);
             EventManager<int>.AddListener(Occasion.EarnMoney, EarnMoney);
         }
 
@@ -54,7 +54,7 @@ namespace IntegratedGameplaySystem
             money += incoming;
 
             money = Mathf.Clamp(money, 0, settings.moneyToWin);
-            OnMoneyChanged?.Invoke(money, settings.moneyToWin);
+            OnChange?.Invoke(money, settings.moneyToWin);
 
             if (money >= settings.moneyToWin)
                 EventManager.RaiseEvent(Occasion.GameOver);

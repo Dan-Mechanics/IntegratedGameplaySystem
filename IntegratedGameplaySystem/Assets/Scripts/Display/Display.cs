@@ -27,21 +27,21 @@ namespace IntegratedGameplaySystem
 
         // FIX !!!
         private DisplaySettings settings;
-        //private Text hoveringText;
 
-        private DataChannel<string, Text> hovering;
-
+        private Text hovering;
         private Text money;
         private Text timer;
         private Image heldItem;
         private Text itemCount;
 
-        private Display(Interactor interactor, MoneyCentral moneyCentral, IChangeTracker<float> tickClock, Hand hand)
+        public Display(Interactor interactor, MoneyCentral moneyCentral, IChangeTracker<float> tickClock, Hand hand)
         {
             this.moneyCentral = moneyCentral;
             this.interactor = interactor;
             this.tickClock = tickClock;
             this.hand = hand;
+
+            Setup();
         }
 
         /// <summary>
@@ -55,8 +55,9 @@ namespace IntegratedGameplaySystem
 
 
             // Amazing code here:
-            hovering.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
-            EasyUI temp = new EasyUI(hovering.ui.rectTransform);
+
+            hovering = Utils.AddToCanvas<Text>(canvas, settings.text);
+            EasyUI temp = new EasyUI(hovering.rectTransform);
             temp.SnapTo(Image.Origin180.Bottom, 1f * temp.GetHeight() * Vector2.down);
 
             timer = Utils.AddToCanvas<Text>(canvas, settings.text);
@@ -97,10 +98,30 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// T1 --> T2
         /// </summary>
-        public class DataChannel<T1, T2> 
+        public class DataChannel<T1, T2> : IDisposable
         {
             public IChangeTracker<T1> changeTracker;
             public T2 ui;
+
+            public DataChannel(IChangeTracker<T1> changeTracker, T2 ui)
+            {
+                this.changeTracker = changeTracker;
+                this.ui = ui;
+
+                changeTracker.OnChange += Invoke;
+            }
+
+            private void Invoke(T1 a) 
+            {
+                Blah?.Invoke(a, ui);
+            }
+
+            public void Dispose()
+            {
+                changeTracker.OnChange -= Invoke;
+            }
+
+            public event System.Action<T1, T2> Blah;
         }
 
         public void UpdateHoveringText(string hover) => hovering.text = string.IsNullOrEmpty(hover) ? settings.hoveringNothingText : hover;

@@ -12,8 +12,13 @@ namespace IntegratedGameplaySystem
         public void Decorate(List<object> components, Transform canvas)
         {
             IScoreService service = ServiceLocator<IScoreService>.Locate();
-            string score = service == null ? "no score yet ..." : service.GetScore().ToString();
-            Utils.AddTextToCanvas(canvas, textPrefab, 3f * 30f * Vector2.up).GetComponent<Text>().text = score;
+            string scoreText = service == null ? "no score yet ..." : service.GetScore().ToString();
+
+            Text text = Utils.AddToCanvas<Text>(canvas, textPrefab);
+            text.text = scoreText;
+
+            EasyUI ui = new EasyUI(text.rectTransform);
+            ui.SnapTo(Snap.Center, 90f * Vector2.up);
         }
     }
 }

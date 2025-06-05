@@ -25,16 +25,17 @@ namespace IntegratedGameplaySystem
         private readonly List<IDisposable> disposables = new();
 
         private readonly DataChannel<string, Text> interactor;
-        private readonly DataChannel<int, int, Text> money;
         private readonly DataChannel<float, Text> score;
         private readonly DataChannel<ItemStack, Slot> hand;
+        private readonly DataChannel<Range, Text> money;
+        
         private DisplaySettings settings;
         
-        public Display(IChangeTracker<string> interactor, IChangeTracker<int, int> money, IChangeTracker<float> score, 
+        public Display(IChangeTracker<string> interactor, IChangeTracker<Range> money, IChangeTracker<float> score, 
             IChangeTracker<ItemStack> hand)
         {
             this.interactor = new DataChannel<string, Text>(interactor, disposables);
-            this.money = new DataChannel<int, int, Text>(money, disposables);
+            this.money = new DataChannel<Range, Text>(money, disposables);
             this.score = new DataChannel<float, Text>(score, disposables);
             this.hand = new DataChannel<ItemStack, Slot>(hand, disposables);
             //this.atCapacity = new DataChannel<bool, Text>(atCapacity, disposables);
@@ -51,31 +52,31 @@ namespace IntegratedGameplaySystem
             // Amazing code here:
             interactor.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
             EasyUI temp = new EasyUI(interactor.ui.rectTransform);
-            temp.SnapTo(Image.Origin180.Bottom, 1f * temp.GetHeight() * Vector2.down);
+            temp.SnapTo(Snap.Bottom, 1f * temp.GetHeight() * Vector2.down);
 
             score.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
             temp.Set(score.ui.rectTransform);
-            temp.SnapTo(Image.Origin180.Bottom, 2f * temp.GetHeight() * Vector2.down);
+            temp.SnapTo(Snap.Bottom, 2f * temp.GetHeight() * Vector2.down);
 
             money.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
             temp.Set(money.ui.rectTransform);
-            temp.SnapTo(Image.Origin180.Bottom, 3f * temp.GetHeight() * Vector2.down);
+            temp.SnapTo(Snap.Bottom, 3f * temp.GetHeight() * Vector2.down);
 
             hand.ui.image = Utils.AddToCanvas<Image>(canvas, settings.image);
             temp.Set(hand.ui.image.rectTransform);
-            temp.SnapTo(Image.Origin180.Bottom, Vector2.up * 15f);
+            temp.SnapTo(Snap.Bottom, Vector2.up * 15f);
 
             Vector2 itemCountOffset = (15f + temp.GetHeight() / 2f) * (Vector2.up + Vector2.left);
 
             hand.ui.text = Utils.AddToCanvas<Text>(canvas, settings.text);
             hand.ui.text.color = Color.black;
             temp.Set(hand.ui.text.rectTransform);
-            temp.SnapTo(Image.Origin180.Bottom, itemCountOffset);
+            temp.SnapTo(Snap.Bottom, itemCountOffset);
 
             Image overlay = Utils.AddToCanvas<Image>(canvas, settings.image);
             overlay.sprite = settings.defaultSprite;
             temp.Set(overlay.rectTransform);
-            temp.SnapTo(Image.Origin180.Bottom, Vector2.up * 15f);
+            temp.SnapTo(Snap.Bottom, Vector2.up * 15f);
         }
 
         public void Start()
@@ -83,21 +84,25 @@ namespace IntegratedGameplaySystem
             money.OnChange += RangeIntoText;
             interactor.OnChange += StringIntoText;
             score.OnChange += FloatIntoText;
-            hand.OnChange += StackIntoSlot;
+            hand.OnChange += ItemStackIntoSlot;
         }
 
         public void StringIntoText(string str, Text text) => text.text = string.IsNullOrEmpty(str) ? settings.defaultText : str;
-        public void RangeIntoText(int a, int b, Text text) => text.text = $"({a} / {b})";
+        public void RangeIntoText(Range range, Text text) => text.text = $"({range.value} / {range.max})";
         public void FloatIntoText(float value, Text text) => text.text = value.ToString();
         public void IntIntoText(int value, Text text) => text.text = value.ToString();
         public void SpriteIntoImage(Sprite sprite, Image image) => image.sprite = sprite == null ? settings.defaultSprite : sprite;
-        public void SetTextToRed(bool isRed, Text text) => text.color = isRed ? Color.red : Color.black;
+
+        /// <summary>
+        /// Or something ...
+        /// </summary>
+        public void BoolIntoRedText(bool isRed, Text text) => text.color = isRed ? Color.red : Color.black;
         
-        public void StackIntoSlot(ItemStack stack, Slot slot) 
+        public void ItemStackIntoSlot(ItemStack stack, Slot slot) 
         {
             SpriteIntoImage(stack.item?.Sprite, slot.image);
             IntIntoText(stack.count, slot.text);
-            SetTextToRed(stack.AtCapacity(), slot.text);
+            BoolIntoRedText(stack.AtCapacity(), slot.text);
         }
 
         public void Dispose()
@@ -107,7 +112,7 @@ namespace IntegratedGameplaySystem
             money.OnChange -= RangeIntoText;
             interactor.OnChange -= StringIntoText;
             score.OnChange -= FloatIntoText;
-            hand.OnChange -= StackIntoSlot;
+            hand.OnChange -= ItemStackIntoSlot;
         }
 
         /// <summary>
@@ -131,29 +136,6 @@ namespace IntegratedGameplaySystem
             public void Dispose() => changeTracker.OnChange -= Combine;
 
             public event Action<T1, T2> OnChange;
-        }
-
-        /// <summary>
-        /// T1 --> T2
-        /// </summary>
-        public class DataChannel<T1, T2, T3> : IDisposable
-        {
-            private readonly IChangeTracker<T1, T2> changeTracker;
-            public T3 ui;
-
-            public DataChannel(IChangeTracker<T1, T2> changeTracker, List<IDisposable> disposables)
-            {
-                this.changeTracker = changeTracker;
-                changeTracker.OnChange += Combine;
-
-                disposables.Add(this);
-            }
-
-            private void Combine(T1 a, T2 b) => OnChange?.Invoke(a, b, ui);
-
-            public void Dispose() => changeTracker.OnChange -= Combine;
-
-            public event Action<T1, T2, T3> OnChange;
         }
     }
 }

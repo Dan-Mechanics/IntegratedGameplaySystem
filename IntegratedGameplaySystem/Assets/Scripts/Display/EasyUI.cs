@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 namespace IntegratedGameplaySystem
 {
+    public enum Snap { Center, Left, Right, Bottom, Top }
+    
     public class EasyUI
     {
         private RectTransform rect;
@@ -24,47 +26,33 @@ namespace IntegratedGameplaySystem
             return rect.sizeDelta.x;
         }
 
-        public void SnapTo(Image.Origin180 snap) 
+        public void SnapTo(Snap snap) 
         {
             switch (snap)
             {
-                case Image.Origin180.Bottom:
-                    SnapToBottom();
+                case Snap.Center:
+                    SnapToCenter();
                     break;
-                case Image.Origin180.Left:
+                case Snap.Left:
                     SnapToLeft();
                     break;
-                case Image.Origin180.Top:
-                    SnapToTop();
-                    break;
-                case Image.Origin180.Right:
+                case Snap.Right:
                     SnapToRight();
+                    break;
+                case Snap.Bottom:
+                    SnapToBottom();
+                    break;
+                case Snap.Top:
+                    SnapToTop();
                     break;
                 default:
                     break;
             }
         }
 
-        public void SnapTo(Image.Origin180 snap, Vector2 offset)
+        public void SnapTo(Snap snap, Vector2 offset)
         {
-            switch (snap)
-            {
-                case Image.Origin180.Bottom:
-                    SnapToBottom();
-                    break;
-                case Image.Origin180.Left:
-                    SnapToLeft();
-                    break;
-                case Image.Origin180.Top:
-                    SnapToTop();
-                    break;
-                case Image.Origin180.Right:
-                    SnapToRight();
-                    break;
-                default:
-                    break;
-            }
-
+            SnapTo(snap);
             SetOffset(offset);
         }
 
@@ -102,6 +90,7 @@ namespace IntegratedGameplaySystem
         {
             rect.anchoredPosition = offset;
         }
+
         private void UpdateAnchor()
         {
             rect.anchorMin = rect.pivot;

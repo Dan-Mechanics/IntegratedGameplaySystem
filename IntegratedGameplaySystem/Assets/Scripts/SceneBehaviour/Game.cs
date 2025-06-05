@@ -28,14 +28,14 @@ namespace IntegratedGameplaySystem
             ServiceLocator<IScoreService>.Provide(score);
 
             var hand = new Hand();
-            var moneyCentral = new MoneyCentral(hand);
+            var money = new MoneyCentral(hand);
             var interactor = new Interactor();
 
-            Display display = new Display(interactor, moneyCentral, score, hand);
+            Display display = new Display(interactor, money, score, hand);
             components.Add(display);
 
             components.Add(tickClock);
-            components.Add(moneyCentral);            
+            components.Add(money);            
             components.Add(interactor);
             components.Add(hand);
 

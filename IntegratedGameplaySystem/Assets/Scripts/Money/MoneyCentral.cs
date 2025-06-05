@@ -8,14 +8,16 @@ namespace IntegratedGameplaySystem
     /// 
     /// Barter interface
     /// </summary>
-    public class MoneyCentral :  IStartable, IInteractable, IHoverable, IDisposable, IChangeTracker<int, int>
+    public class MoneyCentral :  IStartable, IInteractable, IHoverable, IDisposable, IChangeTracker<Range>
     {
-        public event Action<int, int> OnChange;
+        public event Action<Range> OnChange;
 
         private readonly ParticleSystem particle;
         private readonly MoneyCentralSettings settings;
         private readonly IItemHolder itemHolder;
-        private int money;
+        //private int money;
+
+        private Range money;
 
         // public Func<bool> CanInteract;
         // public Func<int> GetEarnings;
@@ -36,13 +38,14 @@ namespace IntegratedGameplaySystem
 
             GameObject go = Utils.SpawnPrefab(settings.prefab);
             particle = go.transform.GetComponentInChildren<ParticleSystem>();
+            money.max = settings.moneyToWin;
 
             ServiceLocator<IWorldService>.Locate().Add(go, this);
         }
 
         public void Start()
         {
-            OnChange?.Invoke(money, settings.moneyToWin);
+            OnChange?.Invoke(money);
             EventManager<int>.AddListener(Occasion.EarnMoney, EarnMoney);
         }
 
@@ -51,12 +54,11 @@ namespace IntegratedGameplaySystem
             if (incoming <= 0)
                 return;
 
-            money += incoming;
+            money.value += incoming;
+            money.Clamp();
+            OnChange?.Invoke(money);
 
-            money = Mathf.Clamp(money, 0, settings.moneyToWin);
-            OnChange?.Invoke(money, settings.moneyToWin);
-
-            if (money >= settings.moneyToWin)
+            if (money.value >= money.max)
                 EventManager.RaiseEvent(Occasion.GameOver);
         }
 

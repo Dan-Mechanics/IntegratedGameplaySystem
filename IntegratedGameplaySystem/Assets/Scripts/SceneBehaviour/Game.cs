@@ -40,12 +40,5 @@ namespace IntegratedGameplaySystem
 
             return components;
         }
-
-        public override void Dispose()
-        {
-            base.Dispose();
-
-
-        }
     }
 }

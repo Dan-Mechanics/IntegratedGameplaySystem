@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
@@ -17,38 +16,34 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// Make this use StackableItem
         /// </summary>
-        private IItemArchitype heldItem;
-        private int count;
+        private StackingItemInstance heldItem;
         // and then the max count in in the thing.
-
+        
         public void Start()
         {
             EventManager<IItemArchitype>.AddListener(Occasion.SetOrAddItem, SetOrAddItem);
             Clear();
 
-            OnItemChange?.Invoke(heldItem);
-            OnCountChange?.Invoke(count);
+            OnItemChange?.Invoke(heldItem.item);
+            OnCountChange?.Invoke(heldItem.count);
         }
 
         private void SetOrAddItem(IItemArchitype newItem)
         {
-            if (newItem != null && heldItem == newItem)
+            if (newItem != null && heldItem.item == newItem)
             {
-                count++;
-
-                // GIVE WARNING HERE !!
-                if (count > heldItem.StackSize)
-                    count = heldItem.StackSize;
+                heldItem.count++;
+                heldItem.Clamp();
             }
             else
             {
-                heldItem = newItem;
-                count = heldItem == null ? 0 : 1;
+                heldItem.item = newItem;
+                heldItem.count = newItem == null ? 0 : 1;
             }
 
-            AtMaxCapacity?.Invoke(heldItem != null && count >= heldItem.StackSize);
-            OnItemChange?.Invoke(heldItem);
-            OnCountChange?.Invoke(count);
+            AtMaxCapacity?.Invoke(heldItem.AtCapacity());
+            OnItemChange?.Invoke(heldItem.item);
+            OnCountChange?.Invoke(heldItem.count);
         }
 
         public void Dispose()
@@ -58,7 +53,7 @@ namespace IntegratedGameplaySystem
 
         public StackingItemInstance[] GetItems()
         {
-            return new StackingItemInstance[] { new StackingItemInstance(heldItem, count) };
+            return new StackingItemInstance[] { heldItem };
         }
 
         public void Clear()

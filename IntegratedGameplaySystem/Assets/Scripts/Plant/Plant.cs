@@ -66,6 +66,10 @@ namespace IntegratedGameplaySystem
             Refresh();
         }
 
+        /// <summary>
+        /// We could say we remove the gameobject from the gamewolrd
+        /// here but it gets cleared when we move scene anyway...
+        /// </summary>
         public void Dispose()
         {
             EventManager.RemoveListener(Occasion.Tick, Tick);

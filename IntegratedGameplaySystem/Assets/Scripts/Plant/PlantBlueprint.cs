@@ -10,7 +10,7 @@ namespace IntegratedGameplaySystem
     public class PlantBlueprint : ScriptableObject, IItemArchitype
     {
         public Sprite Sprite => sprite;
-        public int StackSize => maxCount;
+        public int MaxStackSize => maxCount;
         public int MonetaryValue => monetaryValue;
 
         public GameObject plantPrefab;

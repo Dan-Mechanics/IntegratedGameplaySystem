@@ -25,12 +25,13 @@ namespace IntegratedGameplaySystem
         private readonly Clock tickClock;
         private readonly Hand inventory;
 
-        public DisplaySettings Settings { get; private set; }
-        public Text HoveringText { get; private set; }
-        public Text MoneyText { get; private set; }
-        public Text TimerText { get; private set; }
-        public Image HeldItemImage { get; private set; }
-        public Text ItemCountText { get; private set; }
+        // FIX !!!
+        private DisplaySettings settings;
+        private Text hoveringText;
+        private Text moneyText;
+        private Text timerText;
+        private Image heldItemImage;
+        private Text heldItemCountText;
 
         private Display(Interactor interactor, MoneyCentral moneyCentral, Clock tickClock, Hand inventory)
         {
@@ -47,25 +48,25 @@ namespace IntegratedGameplaySystem
         {
             Display display = new Display(interactor, moneyCentral, tickClock, inventory);
 
-            display.Settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<DisplaySettings>();
-            var canvas = Utils.SpawnPrefab(display.Settings.canvas).transform;
+            display.settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<DisplaySettings>();
+            var canvas = Utils.SpawnPrefab(display.settings.canvas).transform;
 
             // !Clean ??
 
-            float height = Utils.GetHeight(display.Settings.text);
+            float height = Utils.GetHeight(display.settings.text);
 
-            display.HoveringText = Utils.AddTextToCanvas(canvas, display.Settings.text, 1f * height * Vector2.down);
-            display.TimerText = Utils.AddTextToCanvas(canvas, display.Settings.text, 2f * height * Vector2.down);
-            display.MoneyText = Utils.AddTextToCanvas(canvas, display.Settings.text, 3f * height * Vector2.down);
+            display.hoveringText = Utils.AddTextToCanvas(canvas, display.settings.text, 1f * height * Vector2.down);
+            display.timerText = Utils.AddTextToCanvas(canvas, display.settings.text, 2f * height * Vector2.down);
+            display.moneyText = Utils.AddTextToCanvas(canvas, display.settings.text, 3f * height * Vector2.down);
 
-            display.HeldItemImage = Utils.AddImageToCanvas(canvas, display.Settings.image, Vector2.up * 15f);
-            display.ItemCountText = Utils.AddTextToCanvas(canvas, display.Settings.text, (15f + display.HeldItemImage.rectTransform.sizeDelta.y / 2f) * (Vector2.up+Vector2.left));
-            display.ItemCountText.color = Color.black;
-            Utils.SnapToBottom(display.HeldItemImage.rectTransform);
-            Utils.SnapToBottom(display.ItemCountText.rectTransform);
+            display.heldItemImage = Utils.AddImageToCanvas(canvas, display.settings.image, Vector2.up * 15f);
+            display.heldItemCountText = Utils.AddTextToCanvas(canvas, display.settings.text, (15f + display.heldItemImage.rectTransform.sizeDelta.y / 2f) * (Vector2.up+Vector2.left));
+            display.heldItemCountText.color = Color.black;
+            Utils.SnapToBottom(display.heldItemImage.rectTransform);
+            Utils.SnapToBottom(display.heldItemCountText.rectTransform);
 
-            Image overlay = Utils.AddImageToCanvas(canvas, display.Settings.image, Vector2.up * 15f);
-            overlay.sprite  = display.Settings.holdingNothingSprite;
+            Image overlay = Utils.AddImageToCanvas(canvas, display.settings.image, Vector2.up * 15f);
+            overlay.sprite  = display.settings.holdingNothingSprite;
             Utils.SnapToBottom(overlay.rectTransform);
 
             return display;
@@ -81,12 +82,12 @@ namespace IntegratedGameplaySystem
             inventory.AtMaxCapacity     += UpdateMaxCapacity;
         }
 
-        public void UpdateHoveringText(string hover) => HoveringText.text = string.IsNullOrEmpty(hover) ? Settings.hoveringNothingText : hover;
-        public void UpdateMoneyText(int money, int maxMoney) => MoneyText.text = $"({money} / {maxMoney})";
-        public void UpdateTimerText(float time) => TimerText.text = time.ToString();
-        public void UpdateItem(IItemArchitype item) => HeldItemImage.sprite = item == null ? Settings.holdingNothingSprite : item.Sprite;
-        public void UpdateItemCount(int count) => ItemCountText.text = count.ToString();
-        public void UpdateMaxCapacity(bool atCapacity) => ItemCountText.color = atCapacity ? Color.red : Color.black;
+        public void UpdateHoveringText(string hover) => hoveringText.text = string.IsNullOrEmpty(hover) ? settings.hoveringNothingText : hover;
+        public void UpdateMoneyText(int money, int maxMoney) => moneyText.text = $"({money} / {maxMoney})";
+        public void UpdateTimerText(float time) => timerText.text = time.ToString();
+        public void UpdateItem(IItemArchitype item) => heldItemImage.sprite = item == null ? settings.holdingNothingSprite : item.Sprite;
+        public void UpdateItemCount(int count) => heldItemCountText.text = count.ToString();
+        public void UpdateMaxCapacity(bool atCapacity) => heldItemCountText.color = atCapacity ? Color.red : Color.black;
 
         public void Dispose()
         {

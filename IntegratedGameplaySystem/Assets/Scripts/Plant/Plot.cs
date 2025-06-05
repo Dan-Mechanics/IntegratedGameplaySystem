@@ -17,7 +17,7 @@ namespace IntegratedGameplaySystem
             this.spacing = spacing;
         }
 
-        public void Spawn(List<object> components, PlantBlueprint blueprint, Vector3 offset)
+        public void Spawn(List<object> output, PlantBlueprint blueprint, Vector3 offset)
         {
             Plant temp;
 
@@ -31,7 +31,7 @@ namespace IntegratedGameplaySystem
                     temp.transform.position += offset;
                     // Utils.ApplyRandomRotation(temp.gameObject.transform);
 
-                    components.Add(temp);
+                    output.Add(temp);
                 }
             }
         }

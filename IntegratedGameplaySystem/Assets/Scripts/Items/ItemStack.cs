@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public struct StackingItemInstance
+    public struct ItemStack
     {
         public IItemArchitype item;
         public int count;
 
-        public StackingItemInstance(IItemArchitype item, int count)
+        public ItemStack(IItemArchitype item, int count)
         {
             this.item = item;
             this.count = count;

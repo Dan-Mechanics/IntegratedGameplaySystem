@@ -17,7 +17,7 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// Make this use StackableItem
         /// </summary>
-        private StackingItemInstance heldItem;
+        private ItemStack heldItem;
         // and then the max count in in the thing.
         
         public void Start()
@@ -52,9 +52,9 @@ namespace IntegratedGameplaySystem
             EventManager<IItemArchitype>.RemoveListener(Occasion.SetOrAddItem, SetOrAddItem);
         }
 
-        public StackingItemInstance[] GetItems()
+        public ItemStack[] GetItems()
         {
-            return new StackingItemInstance[] { heldItem };
+            return new ItemStack[] { heldItem };
         }
 
         public void Clear()

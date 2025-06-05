@@ -29,9 +29,9 @@ namespace IntegratedGameplaySystem
         /// Dont use delegates i dont understand them bruuhhhhh
         /// Like it works but i dont know what happens to the memory AT ALL
         /// </summary>
-        public MoneyCentral(IItemHolder holder)
+        public MoneyCentral(IItemHolder itemHolder)
         {
-            this.itemHolder = holder;
+            this.itemHolder = itemHolder;
             settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<MoneyCentralSettings>();
 
             GameObject go = Utils.SpawnPrefab(settings.prefab);
@@ -73,8 +73,8 @@ namespace IntegratedGameplaySystem
         {
             int count = 0;
 
-            StackingItemInstance[] stacks = itemHolder.GetItems();
-            StackingItemInstance stack;
+            ItemStack[] stacks = itemHolder.GetItems();
+            ItemStack stack;
 
             for (int i = 0; i < stacks.Length; i++)
             {
@@ -90,8 +90,8 @@ namespace IntegratedGameplaySystem
         {
             int earnings = 0;
 
-            StackingItemInstance[] stacks = itemHolder.GetItems();
-            StackingItemInstance stack;
+            ItemStack[] stacks = itemHolder.GetItems();
+            ItemStack stack;
 
             for (int i = 0; i < stacks.Length; i++)
             {

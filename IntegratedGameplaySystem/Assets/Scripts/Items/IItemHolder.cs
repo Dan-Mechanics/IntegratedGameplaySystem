@@ -11,7 +11,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IItemHolder
     {
-        StackingItemInstance[] GetItems();
+        ItemStack[] GetItems();
         void Clear();
     }
 }

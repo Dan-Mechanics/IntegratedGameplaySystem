@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
         private Transform eyes;
         private ForcesMovement movement;
         private MouseMovement mouseMovement;
-        private CameraHandler cameraHandler;
+        private CameraExtrapolation cameraHandler;
 
         public Player(IPlayerInput playerInput)
         {
@@ -27,7 +27,7 @@ namespace IntegratedGameplaySystem
 
             movement = new ForcesMovement(transform, eyes, settings);
             mouseMovement = new MouseMovement(eyes, transform, settings.sens);
-            cameraHandler = new CameraHandler(Camera.main.transform);
+            cameraHandler = new CameraExtrapolation(Camera.main.transform);
         }
 
         public void Update()
@@ -45,7 +45,7 @@ namespace IntegratedGameplaySystem
 
         public void LateFixedUpdate()
         {
-            cameraHandler.SetTick(movement.GetTick());
+            cameraHandler.SetSnapshot(movement.GetSnapshot());
         }
     }
 }

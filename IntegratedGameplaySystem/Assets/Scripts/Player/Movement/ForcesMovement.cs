@@ -17,19 +17,18 @@ namespace IntegratedGameplaySystem
         private readonly Transform eyes;
         private readonly Rigidbody rb;
 
-        private bool isGrounded;
-
         /// <summary>
         /// DEPENDACY !!! AHHH FIX !!
         /// </summary>
-        private CameraHandler.Tick currentTick;
+        private CameraMotionSnapshot snapshot;
+        private bool isGrounded;
 
         public ForcesMovement(Transform trans, Transform eyes, PlayerSettings settings)
         {
             this.trans = trans;
             this.eyes = eyes;
-            rb = trans.GetComponent<Rigidbody>();
             this.settings = settings;
+            rb = trans.GetComponent<Rigidbody>();
         }
 
         /// <summary>
@@ -40,7 +39,7 @@ namespace IntegratedGameplaySystem
         {
             isGrounded = GetIsGrounded();
 
-            float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.airborneAccelMult;
+            float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.accelMult;
             Vector3 mov = GetMovement(vert, hori, trans);
 
             Vector3 flatVel = rb.velocity;
@@ -56,18 +55,18 @@ namespace IntegratedGameplaySystem
                 rb.AddForce(Vector3.ClampMagnitude(accel * Time.fixedDeltaTime * -flatVel.normalized, mag - settings.walkSpeed), ForceMode.VelocityChange);
             }
 
-            Vector3 counterMovement = accel * Time.fixedDeltaTime * settings.airborneAccelMult * -(flatVel.normalized - mov);
+            Vector3 counterMovement = accel * Time.fixedDeltaTime * settings.accelMult * -(flatVel.normalized - mov);
             if (mag != 0f && counterMovement.magnitude > mag)
                 counterMovement = -flatVel;
 
             rb.AddForce(counterMovement, ForceMode.VelocityChange);
         }
 
-        public CameraHandler.Tick GetTick() 
+        public CameraMotionSnapshot GetSnapshot() 
         {
             rb.velocity = Vector3.ClampMagnitude(rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
-            currentTick.Set(eyes.position, rb.velocity, Time.time);
-            return currentTick;
+            snapshot.Set(eyes.position, rb.velocity, Time.time);
+            return snapshot;
         }
 
         private Vector3 GetMovement(float vert, float hori, Transform orientedBody) 

@@ -8,6 +8,6 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IPlantDistribution 
     {
-        public void SpawnPlants(List<object> worldPlants);
+        public void SpawnPlants(List<object> components);
     }
 }

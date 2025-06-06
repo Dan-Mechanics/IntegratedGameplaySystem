@@ -12,23 +12,23 @@ namespace IntegratedGameplaySystem
         private readonly RepeatableUpgrade grenade = new();
         
         private readonly PlotSettings settings;
-        private readonly PlantFlyweight flyweight;
         private readonly Vector3 position;
         private readonly MoneyCentral money;
 
         private Plant[] plantsOnPlot;
 
-        public Plot(PlotSettings settings, PlantFlyweight flyweight, int index, MoneyCentral money)
+        public Plot(PlotSettings settings, int index, MoneyCentral money)
         {
             this.settings = settings;
-            this.flyweight = flyweight;
             this.money = money;
 
             position = new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
         }
 
-        public void SpawnPlants(List<object> worldPlants)
+        public void SpawnPlants(List<object> components)
         {
+            components.Add(this);
+            
             plantsOnPlot = new Plant[settings.width * settings.width];
             int index;
 
@@ -37,15 +37,13 @@ namespace IntegratedGameplaySystem
                 for (int z = 0; z < settings.width; z++)
                 {
                     index = x + (z * settings.width);
-                    plantsOnPlot[index] = new Plant(flyweight);
+                    plantsOnPlot[index] = new Plant(settings.plant);
 
                     plantsOnPlot[index].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + position;
                     Utils.ApplyRandomRotation(plantsOnPlot[index].transform);
-                    worldPlants.Add(plantsOnPlot[index]);
+                    components.Add(plantsOnPlot[index]);
                 }
             }
-
-            //Start();
         }
 
         public void Start() 
@@ -58,7 +56,7 @@ namespace IntegratedGameplaySystem
             sprinkler.Setup(world, position);
             grenade.Setup(world, position);
 
-            sprinkler.OnBuy += OnSprinklerInstalled;
+            sprinkler.OnBuy += RefreshAllRainEffects;
             sprinkler.OnCanAfford += money.CanAfford;
             grenade.OnCanAfford += money.CanAfford;
             grenade.OnBuy += HarvestAll;
@@ -77,7 +75,7 @@ namespace IntegratedGameplaySystem
             }
         }
 
-        private void OnSprinklerInstalled() 
+        private void RefreshAllRainEffects() 
         {
             for (int i = 0; i < plantsOnPlot.Length; i++)
             {
@@ -87,7 +85,7 @@ namespace IntegratedGameplaySystem
 
         public void Dispose() 
         {
-            sprinkler.OnBuy -= OnSprinklerInstalled;
+            sprinkler.OnBuy -= RefreshAllRainEffects;
             sprinkler.OnCanAfford -= money.CanAfford;
             grenade.OnCanAfford -= money.CanAfford;
             grenade.OnBuy -= HarvestAll;

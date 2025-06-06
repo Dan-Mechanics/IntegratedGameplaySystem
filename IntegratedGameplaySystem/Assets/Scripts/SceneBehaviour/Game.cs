@@ -9,6 +9,10 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
     public class Game : SceneBehaviour
     {
+        /// <summary>
+        /// Builder for this /???
+        /// </summary>
+        /// <returns></returns>
         public override List<object> GetSceneComponents()
         {
             IAssetService assetService = ServiceLocator<IAssetService>.Locate();
@@ -19,23 +23,22 @@ namespace IntegratedGameplaySystem
             var hand = new Hand();
             var money = new MoneyCentral(hand);
             
-            List<PlantFlyweight> flyweights = assetService.GetAllAssetsOfType<PlantFlyweight>();
-            var settings = assetService.GetAssetByType<PlotSettings>();
+            //List<PlantFlyweight> flyweights = assetService.GetAllAssetsOfType<PlantFlyweight>();
+            var plots = assetService.GetAllAssetsOfType<PlotSettings>();
 
-            for (int i = 0; i < flyweights.Count; i++)
+            for (int i = 0; i < plots.Count; i++)
             {
-                var plot = new Plot(settings, flyweights[i], i, money);
-                components.Add(plot);
-                plot.SpawnPlants(components);
+                IPlantDistribution spawner = new Plot(plots[i], i, money);
+                //IPlantDistribution plot = new Dispersal(30, 15f, flyweights[i], Vector3.zero);
+                spawner.SpawnPlants(components);
             }
 
             // factory for this ??
             var tickClock = new Clock(assetService.GetAssetByType<ClockSettings>().interval);
+            var interactor = new Interactor();
+
             var score = new Score();
             ServiceLocator<IScoreService>.Provide(score);
-
-            
-            var interactor = new Interactor();
 
             var display = new FarmingFrenzyDisplay(interactor, money, score, hand);
             components.Add(display);

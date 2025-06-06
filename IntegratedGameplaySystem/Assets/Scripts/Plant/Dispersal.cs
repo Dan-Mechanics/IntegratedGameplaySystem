@@ -3,35 +3,54 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class Dispersal : IPlantDistribution
+    /// <summary>
+    /// This class is not my main class but you get the idea.
+    /// </summary>
+    public class Dispersal : IPlantDistribution, IDisposable
     {
-        public readonly int plantCount;
-        public readonly float dispersal;
-        public readonly PlantFlyweight blueprint;
-        public readonly Vector3 offset;
+        private readonly int plantCount;
+        private readonly float dispersal;
+        private readonly PlantFlyweight flyweight;
+        private readonly Vector3 offset;
 
-        public Dispersal(int plantCount, float dispersal, PlantFlyweight blueprint, Vector3 offset)
+        private readonly List<Plant> plants = new();
+
+        public Dispersal(int plantCount, float dispersal, PlantFlyweight flyweight, Vector3 offset)
         {
             this.plantCount = plantCount;
             this.dispersal = dispersal;
-            this.blueprint = blueprint;
+            this.flyweight = flyweight;
             this.offset = offset;
         }
 
-        public void SpawnPlants(List<object> result)
+        public void Dispose()
         {
+            plants.ForEach(x => x.IsAlwaysWatered -= Dummy);
+        }
+
+        public void SpawnPlants(List<object> components)
+        {
+            components.Add(this);
+            
             Plant plant;
             
             for (int i = 0; i < plantCount; i++)
             {
-                plant = new Plant(blueprint);
+                plant = new Plant(flyweight);
 
                 plant.transform.position += Utils.GetRandomFlatPos(dispersal);
                 plant.transform.position += offset;
                 Utils.ApplyRandomRotation(plant.transform);
+                plant.IsAlwaysWatered += Dummy;
 
-                result.Add(plant);
+                plants.Add(plant);
+                components.Add(plant);
             }
+        }
+
+        private bool Dummy()
+        {
+            return false;
         }
     }
 }

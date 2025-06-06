@@ -4,18 +4,18 @@ namespace IntegratedGameplaySystem
 {
     public struct IntWithMax
     {
-        public int value;
+        public int min;
         public int max;
 
-        public void Set(int value, int max)
+        public void Set(int min, int max)
         {
-            this.value = value;
+            this.min = min;
             this.max = max;
         }
 
         public void Clamp() 
         {
-            value = Mathf.Clamp(value, 0, max);
+            min = Mathf.Clamp(min, 0, max);
         }
     }
 }

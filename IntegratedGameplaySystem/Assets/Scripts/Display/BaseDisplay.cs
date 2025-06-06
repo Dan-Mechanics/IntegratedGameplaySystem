@@ -43,11 +43,11 @@ namespace IntegratedGameplaySystem
             image.sprite = sprite;
         }
 
-        public void SpriteIntoImageSettings(Sprite sprite, Image image)
+        /*public void SpriteIntoImageSettings(Sprite sprite, Image image)
         {
             //image.color = sprite == null ? Color.clear : Color.white;
             image.sprite = sprite == null ? Settings.defaultSprite : sprite;
-        }
+        }*/
 
         public static void BoolIntoRedText(bool isRed, Text text) => text.color = isRed ? Color.red : Color.black;
 

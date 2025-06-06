@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
@@ -20,11 +19,18 @@ namespace IntegratedGameplaySystem
         public int cost;
         public GameObject buttonPrefab;
     }
-    
-    //[System.Serializable]
-    public class PermaUpgrade : IInteractable, IHoverable
+
+    public abstract class UpgradeBase : IInteractable, IHoverable 
     {
-        public event Action OnBuy;
+
+    }
+
+    /// <summary>
+    /// See how to reduce the repeating between these ??
+    /// Make interface seems best.
+    /// </summary>
+    public class PermanentUpgrade : IInteractable, IHoverable
+    {
         public event Func<int, bool> OnCanAfford;
 
         public UpgradeValues values;
@@ -57,8 +63,6 @@ namespace IntegratedGameplaySystem
             return $"{values.name} upgrade for ${values.cost}";
         }
 
-        //public bool GetCanAfford() => OnCanAfford.Invoke(cost);
-
         public void Interact()
         {
             if (hasBought)
@@ -69,42 +73,43 @@ namespace IntegratedGameplaySystem
 
             EventManager<int>.RaiseEvent(Occasion.LoseMoney, values.cost);
             hasBought = true;
-            OnBuy?.Invoke();
             world.Remove(button);
         }
     }
 
-   /* public class ConsumableUpgrade : IInteractable, IHoverable
+    public class RepeatableUpgrade : IInteractable, IHoverable
     {
         public event Action OnBuy;
         public event Func<int, bool> OnCanAfford;
 
-        private readonly string name;
-        private readonly int cost;
+        public UpgradeValues values;
+        private GameObject button;
 
-        public ConsumableUpgrade(string name, int cost, GameObject go, IWorldService world)
+        public void Setup(UpgradeValues values, IWorldService world, Vector3 offset)
         {
-            this.name = name;
-            this.cost = cost;
-            world.Add(go, this);
+            this.values = values;
+
+            button = Utils.SpawnPrefab(values.buttonPrefab);
+            button.transform.position += offset;
+
+            world.Add(button, this);
         }
 
         public string GetHoverTitle()
         {
-            if (!OnCanAfford.Invoke(cost))
+            if (!OnCanAfford.Invoke(values.cost))
                 return "Can't afford yet!";
 
-            return $"buy {name} for ${cost}";
+            return $"{values.name} for ${values.cost}";
         }
 
         public void Interact()
         {
-            if (!OnCanAfford.Invoke(cost))
+            if (!OnCanAfford.Invoke(values.cost))
                 return;
 
-            EventManager<int>.RaiseEvent(Occasion.LoseMoney, cost);
+            EventManager<int>.RaiseEvent(Occasion.LoseMoney, values.cost);
             OnBuy?.Invoke();
         }
-    }*/
-
+    }
 }

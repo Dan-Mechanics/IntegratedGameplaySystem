@@ -8,6 +8,6 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IPlantSpawner 
     {
-        public void SetupPlot(List<object> result);
+        public void Spawn(List<object> result);
     }
 }

@@ -15,5 +15,6 @@ namespace IntegratedGameplaySystem
         //public int sprinklerCost;
 
         public UpgradeValues sprinkler;
+        public UpgradeValues grenade;
     }
 }

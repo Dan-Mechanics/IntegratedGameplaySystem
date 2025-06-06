@@ -1,36 +1,41 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace IntegratedGameplaySystem
 {
     public class FarmingFrenzyDisplay : IStartable, IDisposable
     {
-        private readonly BaseDisplay baseDisplay = new BaseDisplay();
-        
-        //private readonly List<IDisposable> disposables = new();
-
+        private readonly BaseDisplay baseDisplay;
+  
         private readonly DataChannel<string, Text> interactor;
         private readonly DataChannel<float, Text> score;
         private readonly DataChannel<ItemStack, Slot> hand;
         private readonly DataChannel<Range, Image> moneyBar;
         private readonly DataChannel<Range, Text> moneyText;
 
-       // public DisplaySettings settings;
-       // public Transform canvas;
-
         public FarmingFrenzyDisplay(IChangeTracker<string> interactor, IChangeTracker<Range> money, IChangeTracker<float> score, 
             IChangeTracker<ItemStack> hand) 
         {
+            baseDisplay = new BaseDisplay();
+
             this.interactor = new DataChannel<string, Text>(interactor, baseDisplay.Disposables);
             this.score = new DataChannel<float, Text>(score, baseDisplay.Disposables);
             this.hand = new DataChannel<ItemStack, Slot>(hand, baseDisplay.Disposables);
             moneyBar = new DataChannel<Range, Image>(money, baseDisplay.Disposables);
             moneyText = new DataChannel<Range, Text>(money, baseDisplay.Disposables);
 
-            InitializeUI(baseDisplay.BaseSettings, baseDisplay.Canvas);
+            InitializeUI(baseDisplay.Settings, baseDisplay.Canvas);
         }
-        
+
+        public void Start()
+        {
+            interactor.OnChange += baseDisplay.StringIntoTextSettings;
+            moneyBar.OnChange += BaseDisplay.RangeIntoFillImage;
+            score.OnChange += BaseDisplay.FloatIntoText;
+            hand.OnChange += BaseDisplay.ItemStackIntoSlot;
+            moneyText.OnChange += BaseDisplay.RangeIntoText;
+        }
+
         /// <summary>
         /// Amazing code here.
         /// </summary>
@@ -51,7 +56,7 @@ namespace IntegratedGameplaySystem
             rect.SetSize(200, 30f);
             rect.SnapTo(Snap.Bottom, 200f * Vector2.left + (15f * Vector2.up));
             
-            moneyBar.ui = BaseDisplay.AddFillImage(canvas, settings.image, settings.pixel);
+            moneyBar.ui = baseDisplay.AddFillImage();
             rect.Set(moneyBar.ui.rectTransform);
             moneyBar.ui.color = Color.yellow;
             rect.SetSize(200f, 30f);
@@ -79,21 +84,12 @@ namespace IntegratedGameplaySystem
             rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
         }
 
-        public void Start()
-        {
-            moneyBar.OnChange += BaseDisplay.RangeIntoFillImage;
-            interactor.OnChange += BaseDisplay.StringIntoText;
-            score.OnChange += BaseDisplay.FloatIntoText;
-            hand.OnChange += BaseDisplay.ItemStackIntoSlot;
-            moneyText.OnChange += BaseDisplay.RangeIntoText;
-        }
-
         public void Dispose()
         {
             baseDisplay.Dispose();
 
+            interactor.OnChange -= baseDisplay.StringIntoTextSettings;
             moneyBar.OnChange -= BaseDisplay.RangeIntoFillImage;
-            interactor.OnChange -= BaseDisplay.StringIntoText;
             score.OnChange -= BaseDisplay.FloatIntoText;
             hand.OnChange -= BaseDisplay.ItemStackIntoSlot;
             moneyText.OnChange -= BaseDisplay.RangeIntoText;

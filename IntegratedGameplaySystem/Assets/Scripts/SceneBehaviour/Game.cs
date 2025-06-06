@@ -40,7 +40,7 @@ namespace IntegratedGameplaySystem
             
             var interactor = new Interactor();
 
-            Display display = new Display(interactor, money, score, hand);
+            var display = new FarmingFrenzyDisplay(interactor, money, score, hand);
             components.Add(display);
 
             components.Add(score);

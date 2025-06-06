@@ -13,26 +13,35 @@ namespace IntegratedGameplaySystem
     /// 
     /// You could say that the sprinkler lasts X amount of secodns right.
     /// </summary>
+    [Serializable]
+    public class UpgradeValues 
+    {
+        public string name;
+        public int cost;
+        public GameObject buttonPrefab;
+    }
+    
+    //[System.Serializable]
     public class PermaUpgrade : IInteractable, IHoverable
     {
         public event Action OnBuy;
         public event Func<int, bool> OnCanAfford;
 
-        private readonly string name;
-        private readonly int cost;
-        private readonly GameObject go;
-        private readonly IWorldService world;
+        public UpgradeValues values;
 
+        private IWorldService world;
+        private GameObject button;
         private bool hasBought;
 
-        public PermaUpgrade(string name, int cost, GameObject go, IWorldService world)
+        public void Setup(UpgradeValues values, IWorldService world, Vector3 offset)
         {
-            this.name = name;
-            this.cost = cost;
             this.world = world;
-            this.go = go;
+            this.values = values;
 
-            world.Add(go, this);
+            button = Utils.SpawnPrefab(values.buttonPrefab);
+            button.transform.position += offset;
+
+            world.Add(button, this);
         }
 
         public bool GetHasBought() => hasBought;
@@ -42,10 +51,10 @@ namespace IntegratedGameplaySystem
             if (hasBought)
                 return string.Empty;
 
-            if (!OnCanAfford.Invoke(cost))
+            if (!OnCanAfford.Invoke(values.cost))
                 return "Can't afford yet!";
 
-            return $"{name} upgrade for ${cost}";
+            return $"{values.name} upgrade for ${values.cost}";
         }
 
         //public bool GetCanAfford() => OnCanAfford.Invoke(cost);
@@ -55,13 +64,13 @@ namespace IntegratedGameplaySystem
             if (hasBought)
                 return;
 
-            if (!OnCanAfford.Invoke(cost))
+            if (!OnCanAfford.Invoke(values.cost))
                 return;
 
-            EventManager<int>.RaiseEvent(Occasion.LoseMoney, cost);
+            EventManager<int>.RaiseEvent(Occasion.LoseMoney, values.cost);
             hasBought = true;
             OnBuy?.Invoke();
-            world.Remove(go);
+            world.Remove(button);
         }
     }
 

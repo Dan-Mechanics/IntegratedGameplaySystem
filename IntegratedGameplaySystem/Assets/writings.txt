@@ -1,3 +1,8 @@
+ok the upgrades work but i wanna seperate it from the plot
+and i need to helicopter view it and design an acutal code?
+pattenr somewhere here ? maybe builder ??
+
+
 stuff to do:
 
 look in all de dispose methods and see if you loojk for a service there, make sure its the same

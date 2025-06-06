@@ -14,8 +14,8 @@ namespace IntegratedGameplaySystem
         private readonly Vector3 position;
         private readonly MoneyCentral money;
 
-        private Plant[] plantOnPlot;
-        private PermaUpgrade sprinkler;
+        private Plant[] plantsOnPlot;
+        private PermaUpgrade sprinkler = new PermaUpgrade();
 
         public Plot(PlotSettings settings, PlantFlyweight flyweight, int index, MoneyCentral money)
         {
@@ -26,16 +26,15 @@ namespace IntegratedGameplaySystem
             position = new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
         }
 
-        public void Spawn(List<object> result)
+        public void SetupPlot(List<object> result)
         {
-            GameObject sprinklerButton = Utils.SpawnPrefab(settings.sprinklerButtonPrefab);
-            sprinklerButton.transform.position += position;
+            IWorldService world = ServiceLocator<IWorldService>.Locate();
 
-            sprinkler = new PermaUpgrade("Sprinkler", settings.sprinklerCost, sprinklerButton, ServiceLocator<IWorldService>.Locate());
+            sprinkler.Setup(settings.sprinkler, world, position);
             //sprinkler.OnHovering += GetSprinklerHoverTitle;
             sprinkler.OnCanAfford += money.CanAfford;
 
-            plantOnPlot = new Plant[settings.width * settings.width];
+            plantsOnPlot = new Plant[settings.width * settings.width];
             int index;
 
             for (int x = 0; x < settings.width; x++)
@@ -44,13 +43,13 @@ namespace IntegratedGameplaySystem
                 {
                     index = x + (z * settings.width);
 
-                    plantOnPlot[index] = new Plant(flyweight);
-                    plantOnPlot[index].IsAlwaysWatered += sprinkler.GetHasBought;
+                    plantsOnPlot[index] = new Plant(flyweight);
+                    plantsOnPlot[index].IsAlwaysWatered += sprinkler.GetHasBought;
 
-                    plantOnPlot[index].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + position;
-                    Utils.ApplyRandomRotation(plantOnPlot[index].transform);
+                    plantsOnPlot[index].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + position;
+                    Utils.ApplyRandomRotation(plantsOnPlot[index].transform);
 
-                    result.Add(plantOnPlot[index]);
+                    result.Add(plantsOnPlot[index]);
                 }
             }
 
@@ -59,9 +58,9 @@ namespace IntegratedGameplaySystem
 
         public void Dispose() 
         {
-            for (int i = 0; i < plantOnPlot.Length; i++)
+            for (int i = 0; i < plantsOnPlot.Length; i++)
             {
-                plantOnPlot[i].IsAlwaysWatered -= sprinkler.GetHasBought;
+                plantsOnPlot[i].IsAlwaysWatered -= sprinkler.GetHasBought;
             }
 
             sprinkler.OnCanAfford -= money.CanAfford;

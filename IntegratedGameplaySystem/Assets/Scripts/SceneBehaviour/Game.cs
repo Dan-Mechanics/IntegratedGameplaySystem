@@ -25,7 +25,7 @@ namespace IntegratedGameplaySystem
             for (int i = 0; i < flyweights.Count; i++)
             {
                 var plot = new Plot(settings, flyweights[i], i, money);
-                plot.Spawn(components);
+                plot.SetupPlot(components);
             }
 
             // factory for this ??

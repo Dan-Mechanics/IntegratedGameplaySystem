@@ -3,6 +3,8 @@ stuff to do:
 implement upgrades ( inventory movement, insta farm etc ), grenade and sprinker first.
 make plotsettigns thing, make a button for the plot.
 
+extract the interactor to an upgrade thing.
+
 make display more modulair with IChangible VV
 make dispaly more modulir with not using utils but something else. VV
 make different class for keeping trakc of scorre. VV

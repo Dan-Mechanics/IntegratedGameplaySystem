@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// You could rename to scene context. because it spawns all the stuff and confiures it.
+    /// Scene Assembler?
+    /// </summary>
     public abstract class SceneBehaviour : ScriptableObject, IStartable, IDisposable
     {
         public NextSceneHandler sceneHandler;

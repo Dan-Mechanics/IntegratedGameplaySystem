@@ -22,14 +22,11 @@ namespace IntegratedGameplaySystem
             
             var hand = new Hand();
             var money = new MoneyCentral(hand);
-            
-            //List<PlantFlyweight> flyweights = assetService.GetAllAssetsOfType<PlantFlyweight>();
             var plots = assetService.GetAllAssetsOfType<PlotSettings>();
 
             for (int i = 0; i < plots.Count; i++)
             {
                 IPlantDistribution spawner = new Plot(plots[i], i, money);
-                //IPlantDistribution plot = new Dispersal(30, 15f, flyweights[i], Vector3.zero);
                 spawner.SpawnPlants(components);
             }
 

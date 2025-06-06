@@ -6,10 +6,12 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(PlotSettings), fileName = "New " + nameof(PlotSettings))]
     public class PlotSettings : ScriptableObject
     {
-        public GameObject buttonPrefab;
+        public GameObject sprinklerButtonPrefab;
+        public GameObject grenadeButtonPrefab;
+
         public int width;
         public float spacing;
 
-        public int upgradeCost;
+        public int sprinklerCost;
     }
 }

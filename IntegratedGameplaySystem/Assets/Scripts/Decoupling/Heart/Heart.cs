@@ -88,7 +88,7 @@ namespace IntegratedGameplaySystem
         }
 
         /// <summary>
-        /// THIS MUST WORK FOR WHEN SWITCHING SCENES !! TEST THAT !!
+        /// THIS MUST WORK FOR WHEN SWITCHING SCENES !! 
         /// </summary>
         public void Dispose() 
         {

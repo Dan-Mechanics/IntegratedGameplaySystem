@@ -9,9 +9,9 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Plant : IStartable, IInteractable, IHoverable, IDisposable
     {
-        public Func<bool> HasSprinkler;
-        public bool IsWatered => intervalWater || HasSprinkler();
-        public string HoverTitle => GetHovering();
+        public event Func<bool> IsAlwaysWatered;
+        public bool IsWatered => intervalWater || IsAlwaysWatered.Invoke();
+        //public string HoverTitle => GetHovering();
         public bool IsHarvestable => progression >= blueprint.materials.Length - 1;
 
         public readonly GameObject gameObject;
@@ -52,7 +52,7 @@ namespace IntegratedGameplaySystem
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
         }
 
-        public string GetHovering() 
+        public string GetHoverTitle() 
         {
             if (!IsWatered && !IsHarvestable)
                 return $"dry {blueprint.name}";

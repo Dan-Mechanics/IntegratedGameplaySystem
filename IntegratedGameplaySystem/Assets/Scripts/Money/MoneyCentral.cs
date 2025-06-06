@@ -15,16 +15,13 @@ namespace IntegratedGameplaySystem
         private readonly ParticleSystem particle;
         private readonly MoneyCentralSettings settings;
         private readonly IItemHolder itemHolder;
-        //private int money;
 
         private Range money;
 
-        // public Func<bool> CanInteract;
-        // public Func<int> GetEarnings;
-
-        // use Func ??? i dont fucking know how it works.
-
-        public string HoverTitle => CanInteract() ? "Sell crop" : "No crop to sell";
+        public string GetHoverTitle() 
+        {
+            return CanInteract() ? "Sell crop" : "No crop to sell";
+        }
 
         /// <summary>
         /// Do we need something to deallocate sellall ??

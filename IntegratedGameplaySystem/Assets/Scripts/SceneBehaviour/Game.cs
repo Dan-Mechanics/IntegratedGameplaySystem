@@ -9,9 +9,6 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
     public class Game : SceneBehaviour
     {
-        private Plot[] plots;
-        private MoneyCentral money;
-
         public override List<object> GetSceneComponents()
         {
             IAssetService assetService = ServiceLocator<IAssetService>.Locate();
@@ -20,16 +17,15 @@ namespace IntegratedGameplaySystem
             components.Add(new FirstPersonPlayer(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
             
             var hand = new Hand();
-            money = new MoneyCentral(hand);
+            var money = new MoneyCentral(hand);
             
             List<PlantFlyweight> flyweights = assetService.GetAllAssetsOfType<PlantFlyweight>();
-            plots = new Plot[flyweights.Count];
+            var settings = assetService.GetAssetByType<PlotSettings>();
 
             for (int i = 0; i < flyweights.Count; i++)
             {
-                plots[i] = new Plot(assetService.GetAssetByType<PlotSettings>(), flyweights[i], i);
-                plots[i].CanAffordUpgrade += money.CanAfford;
-                plots[i].SpawnPlants(components);
+                var plot = new Plot(settings, flyweights[i], i, money);
+                plot.Spawn(components);
             }
 
             // factory for this ??
@@ -50,19 +46,6 @@ namespace IntegratedGameplaySystem
             components.Add(hand);
 
             return components;
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
-
-            for (int i = 0; i < plots.Length; i++)
-            {
-                plots[i].CanAffordUpgrade -= money.CanAfford;
-            }
-
-            money = null;
-            plots = null;
         }
     }
 }

@@ -1,5 +1,8 @@
 stuff to do:
 
+look in all de dispose methods and see if you loojk for a service there, make sure its the same
+service basically.
+
 implement upgrades ( inventory movement, insta farm etc ), grenade and sprinker first.
 make plotsettigns thing, make a button for the plot.
 

@@ -14,6 +14,7 @@ namespace IntegratedGameplaySystem
         void Add(GameObject go, object obj);
         void Remove(GameObject go);
         void Reset();
+        //bool Contains(Transform transform);
     }
 
     public interface IScoreService

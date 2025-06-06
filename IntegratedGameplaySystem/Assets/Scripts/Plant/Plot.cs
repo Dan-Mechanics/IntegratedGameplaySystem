@@ -4,95 +4,67 @@ using System;
 
 namespace IntegratedGameplaySystem
 {
-    public class Plot : IPlantSpawner, IInteractable, IDisposable, IHoverable
+    /// <summary>
+    /// Extract to plantupgrades so that we can have both dipseral and other hsit.
+    /// </summary>
+    public class Plot : IPlantSpawner, IDisposable
     {
-        public Func<int, bool> CanAffordUpgrade;
-        public string HoverTitle => GetHoverTitle();
-
-        //private readonly string title;
         private readonly PlotSettings settings;
         private readonly PlantFlyweight flyweight;
         private readonly Vector3 position;
+        private readonly MoneyCentral money;
 
-        private GameObject button;
-        private Plant[] plants;
-        private bool isSprinkled;
+        private Plant[] plantOnPlot;
+        private PermaUpgrade sprinkler;
 
-        public Plot(PlotSettings settings, PlantFlyweight flyweight, int index)
+        public Plot(PlotSettings settings, PlantFlyweight flyweight, int index, MoneyCentral money)
         {
             this.settings = settings;
             this.flyweight = flyweight;
+            this.money = money;
 
-            //title = $"Sprinkler upgrade for {settings.upgradeCost}";
             position = new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
         }
 
-        public void Interact()
+        public void Spawn(List<object> result)
         {
-            if (isSprinkled)
-                return;
+            GameObject sprinklerButton = Utils.SpawnPrefab(settings.sprinklerButtonPrefab);
+            sprinklerButton.transform.position += position;
 
-            if (!CanAffordUpgrade(settings.upgradeCost))
-                return;
+            sprinkler = new PermaUpgrade("Sprinkler", settings.sprinklerCost, sprinklerButton, ServiceLocator<IWorldService>.Locate());
+            //sprinkler.OnHovering += GetSprinklerHoverTitle;
+            sprinkler.OnCanAfford += money.CanAfford;
 
-            ServiceLocator<IWorldService>.Locate().Remove(button);
-            isSprinkled = true;
-            EventManager<int>.RaiseEvent(Occasion.LoseMoney, settings.upgradeCost);
-        }
-
-        public void SpawnPlants(List<object> result)
-        {
-            button = Utils.SpawnPrefab(settings.buttonPrefab);
-            button.transform.position += position;
-
-            ServiceLocator<IWorldService>.Locate().Add(button, this);
-
-            plants = new Plant[settings.width * settings.width];
-            int i;
+            plantOnPlot = new Plant[settings.width * settings.width];
+            int index;
 
             for (int x = 0; x < settings.width; x++)
             {
                 for (int z = 0; z < settings.width; z++)
                 {
-                    i = x + (z * settings.width);
+                    index = x + (z * settings.width);
 
-                    plants[i] = new Plant(flyweight);
-                    plants[i].HasSprinkler += HasSprinkler;
+                    plantOnPlot[index] = new Plant(flyweight);
+                    plantOnPlot[index].IsAlwaysWatered += sprinkler.GetHasBought;
 
-                    plants[i].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + position;
-                    Utils.ApplyRandomRotation(plants[i].transform);
+                    plantOnPlot[index].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + position;
+                    Utils.ApplyRandomRotation(plantOnPlot[index].transform);
 
-                    result.Add(plants[i]);
+                    result.Add(plantOnPlot[index]);
                 }
             }
 
             result.Add(this);
         }
 
-        private string GetHoverTitle() 
-        {
-            if (isSprinkled)
-                return string.Empty;
-
-            if (!CanAffordUpgrade(settings.upgradeCost))
-                return "Can't afford yet!";
-
-            return $"Sprinkler upgrade for {settings.upgradeCost}";
-        }
-
         public void Dispose() 
         {
-            for (int i = 0; i < plants.Length; i++)
+            for (int i = 0; i < plantOnPlot.Length; i++)
             {
-                plants[i].HasSprinkler -= HasSprinkler;
+                plantOnPlot[i].IsAlwaysWatered -= sprinkler.GetHasBought;
             }
 
-            plants = null;
-        }
-
-        private bool HasSprinkler() 
-        {
-            return isSprinkled;
+            sprinkler.OnCanAfford -= money.CanAfford;
         }
     }
 }

@@ -41,5 +41,6 @@ namespace IntegratedGameplaySystem
         public void Remove(GameObject go) => world.Remove(go);
 
         public void Reset() => world.Clear();
+        //public bool Contains(Transform transform) => world.ContainsKey(transform.gameObject);
     }
 }

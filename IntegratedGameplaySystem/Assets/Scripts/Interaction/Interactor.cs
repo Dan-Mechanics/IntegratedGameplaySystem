@@ -42,7 +42,7 @@ namespace IntegratedGameplaySystem
 
         public void FixedUpdate() 
         {
-            string newHover = GetHoverable(out IHoverable hoverable) ? hoverable.HoverTitle : string.Empty;
+            string newHover = GetHoverable()?.GetHoverTitle();
 
             if (newHover == currentHover)
                 return;
@@ -59,15 +59,14 @@ namespace IntegratedGameplaySystem
             worldService.GetComponent<IInteractable>(hitTransform)?.Interact();
         }
 
-        private bool GetHoverable(out IHoverable hoverable)
+        private IHoverable GetHoverable()
         {
-            hoverable = null;
-
             if (!raycaster.Raycast(cam.position, cam.forward, out Transform hitTransform))
-                return false;
+                return null;
 
-            hoverable = worldService.GetComponent<IHoverable>(hitTransform);
-            return true;
+            //Debug.Log(worldService.Contains(hitTransform));
+
+            return worldService.GetComponent<IHoverable>(hitTransform);
         }
 
         public void Dispose()

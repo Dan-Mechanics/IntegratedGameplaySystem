@@ -18,7 +18,7 @@ namespace IntegratedGameplaySystem
             this.offset = offset;
         }
 
-        public void SpawnPlants(List<object> result)
+        public void Spawn(List<object> result)
         {
             Plant plant;
             

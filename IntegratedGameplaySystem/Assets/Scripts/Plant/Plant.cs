@@ -9,6 +9,8 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Plant : IStartable, IInteractable, IHoverable, IDisposable
     {
+        public Func<bool> hasSprinkler;
+        
         public readonly GameObject gameObject;
         public readonly Transform transform;
 

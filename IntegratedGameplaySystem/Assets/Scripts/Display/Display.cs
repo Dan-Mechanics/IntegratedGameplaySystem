@@ -52,15 +52,15 @@ namespace IntegratedGameplaySystem
             // Amazing code here:
             interactor.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
             EasyUI temp = new EasyUI(interactor.ui.rectTransform);
-            temp.SnapTo(Snap.Bottom, 1f * temp.GetHeight() * Vector2.down);
+            temp.SnapTo(Snap.Center, 1f * temp.GetHeight() * Vector2.down);
 
             score.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
             temp.Set(score.ui.rectTransform);
-            temp.SnapTo(Snap.Bottom, 2f * temp.GetHeight() * Vector2.down);
+            temp.SnapTo(Snap.Center, 2f * temp.GetHeight() * Vector2.down);
 
             money.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
             temp.Set(money.ui.rectTransform);
-            temp.SnapTo(Snap.Bottom, 3f * temp.GetHeight() * Vector2.down);
+            temp.SnapTo(Snap.Center, 3f * temp.GetHeight() * Vector2.down);
 
             hand.ui.image = Utils.AddToCanvas<Image>(canvas, settings.image);
             temp.Set(hand.ui.image.rectTransform);

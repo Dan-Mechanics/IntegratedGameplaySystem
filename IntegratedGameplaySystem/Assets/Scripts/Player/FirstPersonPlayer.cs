@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class Player : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
+    public class FirstPersonPlayer : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
         private readonly IPlayerInput playerInput;
         
@@ -11,7 +11,7 @@ namespace IntegratedGameplaySystem
         private MouseMovement mouseMovement;
         private CameraExtrapolation cameraHandler;
 
-        public Player(IPlayerInput playerInput)
+        public FirstPersonPlayer(IPlayerInput playerInput)
         {
             this.playerInput = playerInput;
         }

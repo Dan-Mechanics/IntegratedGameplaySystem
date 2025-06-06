@@ -71,7 +71,7 @@ namespace IntegratedGameplaySystem
                     conversion[bindings[i].playerAction].onUp?.Invoke();
             }
         }
-
+         
         public InputSource GetInputSource(PlayerAction playerAction) => conversion[playerAction];
 
         /// <summary>

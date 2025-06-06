@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem 
 { 
-    public class Plot : IPlantSpawner
+    public class Plot : IPlantSpawner, IInteractable, IStartable
     {
         public readonly int width;
         public readonly float spacing;
@@ -15,6 +15,11 @@ namespace IntegratedGameplaySystem
         {
             this.width = width;
             this.spacing = spacing;
+        }
+
+        public void Interact()
+        {
+            throw new System.NotImplementedException();
         }
 
         public void Spawn(List<object> output, PlantFlyweight blueprint, Vector3 offset)
@@ -34,6 +39,11 @@ namespace IntegratedGameplaySystem
                     output.Add(temp);
                 }
             }
+        }
+
+        public void Start()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

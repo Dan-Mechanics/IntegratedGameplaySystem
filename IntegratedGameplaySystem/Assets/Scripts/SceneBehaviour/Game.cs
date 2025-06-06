@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
             List<object> components = base.GetSceneComponents();
 
             //ServiceLocator<IWorldService>.Provide(new GameWorld());
-            components.Add(new Player(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
+            components.Add(new FirstPersonPlayer(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
 
             List<PlantFlyweight> plantBlueprints = assetService.GetAssetsOfType<PlantFlyweight>();
             //IPlantSpawner spawner = new Dispersal() { dispersal = 20, plantCount = 30 };
@@ -34,6 +34,7 @@ namespace IntegratedGameplaySystem
             Display display = new Display(interactor, money, score, hand);
             components.Add(display);
 
+            components.Add(score);
             components.Add(tickClock);
             components.Add(money);            
             components.Add(interactor);

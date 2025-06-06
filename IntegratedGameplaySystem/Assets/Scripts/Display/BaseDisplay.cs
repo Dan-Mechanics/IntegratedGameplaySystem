@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// This class is not perfect but you get the point.
+    /// </summary>
     public class BaseDisplay : IDisposable
     {
         public List<IDisposable> Disposables { get; private set; }
@@ -27,7 +30,7 @@ namespace IntegratedGameplaySystem
             text.text = Utils.IsStringValid(str) ? str : string.Empty;
         }
 
-        public void StringIntoTextSettings(string str, Text text)
+        public void SettingsStrIntoText(string str, Text text)
         {
             text.text = Utils.IsStringValid(str) ? str : Settings.defaultText;
         }
@@ -43,11 +46,11 @@ namespace IntegratedGameplaySystem
             image.sprite = sprite;
         }
 
-        /*public void SpriteIntoImageSettings(Sprite sprite, Image image)
+        public void SettingsSpriteIntoImg(Sprite sprite, Image image)
         {
             //image.color = sprite == null ? Color.clear : Color.white;
             image.sprite = sprite == null ? Settings.defaultSprite : sprite;
-        }*/
+        }
 
         public static void BoolIntoRedText(bool isRed, Text text) => text.color = isRed ? Color.red : Color.black;
 
@@ -66,7 +69,7 @@ namespace IntegratedGameplaySystem
             return transform.GetComponent<T>();
         }
 
-        public static Image AddFillImage(Transform canvas, GameObject prefab, Sprite sprite)
+        /*public static Image AddFillImage(Transform canvas, GameObject prefab, Sprite sprite)
         {
             Image image = AddToCanvas<Image>(canvas, prefab);
             image.sprite = sprite;
@@ -77,7 +80,7 @@ namespace IntegratedGameplaySystem
             image.fillMethod = Image.FillMethod.Horizontal;
 
             return image;
-        }
+        }*/
 
         public Image AddFillImage()
         {

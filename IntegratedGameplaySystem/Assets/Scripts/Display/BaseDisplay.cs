@@ -7,14 +7,14 @@ namespace IntegratedGameplaySystem
     public class BaseDisplay : IDisposable
     {
         public List<IDisposable> Disposables { get; private set; }
-        public DisplaySettings Settings { get; private set; }
+        public DisplaySettings BaseSettings { get; private set; }
         public Transform Canvas { get; private set; }
 
         public BaseDisplay() 
         {
             Disposables = new List<IDisposable>();
-            Settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<DisplaySettings>();
-            Canvas = Utils.SpawnPrefab(Settings.canvas).transform;
+            BaseSettings = ServiceLocator<IAssetService>.Locate().GetAssetByType<DisplaySettings>();
+            Canvas = Utils.SpawnPrefab(BaseSettings.canvas).transform;
         }
 
         public void Dispose()
@@ -22,7 +22,6 @@ namespace IntegratedGameplaySystem
             Disposables.ForEach(x => x.Dispose());
         }
 
-        //public static void StringIntoText(string str, Text text) => text.text = string.IsNullOrEmpty(str) ? Settings.defaultText : str;
         public static void StringIntoText(string str, Text text) 
         {
             text.text = string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str) ? string.Empty : str;
@@ -32,7 +31,7 @@ namespace IntegratedGameplaySystem
         public static void FloatIntoText(float value, Text text) => text.text = value.ToString();
         public static void RangeIntoFillImage(Range range, Image fillImg) => fillImg.fillAmount = (float)range.value / range.max;
         public static void IntIntoText(int value, Text text) => text.text = value.ToString();
-        //public static void SpriteIntoImage(Sprite sprite, Image image) => image.sprite = sprite == null ? Settings.defaultSprite : sprite;
+
         public static void SpriteIntoImage(Sprite sprite, Image image) 
         {
             image.color = sprite == null ? Color.clear : Color.white;
@@ -40,6 +39,7 @@ namespace IntegratedGameplaySystem
         }
 
         public static void BoolIntoRedText(bool isRed, Text text) => text.color = isRed ? Color.red : Color.black;
+
         public static void ItemStackIntoSlot(ItemStack stack, Slot slot)
         {
             SpriteIntoImage(stack.item?.Sprite, slot.image);

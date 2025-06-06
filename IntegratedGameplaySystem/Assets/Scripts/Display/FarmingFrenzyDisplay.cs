@@ -28,7 +28,7 @@ namespace IntegratedGameplaySystem
             moneyBar = new DataChannel<Range, Image>(money, baseDisplay.Disposables);
             moneyText = new DataChannel<Range, Text>(money, baseDisplay.Disposables);
 
-            InitializeUI(baseDisplay.Settings, baseDisplay.Canvas);
+            InitializeUI(baseDisplay.BaseSettings, baseDisplay.Canvas);
         }
         
         /// <summary>

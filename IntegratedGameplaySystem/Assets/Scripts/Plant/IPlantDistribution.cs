@@ -6,8 +6,8 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// I dont think i wanna have it in the inteffaces folder.
     /// </summary>
-    public interface IPlantSpawner 
+    public interface IPlantDistribution 
     {
-        public void Spawn(List<object> result);
+        public void SpawnPlants(List<object> worldPlants);
     }
 }

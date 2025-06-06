@@ -19,6 +19,6 @@ MonoBehaviour:
     cost: 50
     buttonPrefab: {fileID: 5604457068642857581, guid: 8f56ebe545301834d80d99d075e48cb2, type: 3}
   grenade:
-    name: Grenade
+    name: Collect all
     cost: 50
     buttonPrefab: {fileID: 5604457068642857581, guid: 217496b748f34cb49ae7a97a68c0bd91, type: 3}

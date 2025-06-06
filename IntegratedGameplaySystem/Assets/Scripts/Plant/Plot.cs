@@ -6,7 +6,7 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Extract to plantupgrades so that we can have both dipseral and other hsit.
     /// </summary>
-    public class Plot : IPlantSpawner, IDisposable
+    public class Plot : IPlantDistribution, IDisposable, IStartable
     {
         private readonly PermanentUpgrade sprinkler = new();
         private readonly RepeatableUpgrade grenade = new();
@@ -27,7 +27,7 @@ namespace IntegratedGameplaySystem
             position = new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
         }
 
-        public void Spawn(List<object> result)
+        public void SpawnPlants(List<object> worldPlants)
         {
             plantsOnPlot = new Plant[settings.width * settings.width];
             int index;
@@ -37,27 +37,29 @@ namespace IntegratedGameplaySystem
                 for (int z = 0; z < settings.width; z++)
                 {
                     index = x + (z * settings.width);
-                    var temp = new Plant(flyweight);
+                    plantsOnPlot[index] = new Plant(flyweight);
 
                     plantsOnPlot[index].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + position;
                     Utils.ApplyRandomRotation(plantsOnPlot[index].transform);
-
-                    plantsOnPlot[index] = temp;
-                    result.Add(plantsOnPlot[index]);
+                    worldPlants.Add(plantsOnPlot[index]);
                 }
             }
 
-            result.Add(this);
+            //Start();
         }
 
         public void Start() 
         {
             IWorldService world = ServiceLocator<IWorldService>.Locate();
 
-            sprinkler.Setup(settings.sprinkler, world, position);
-            sprinkler.OnCanAfford += money.CanAfford;
+            sprinkler.SetValues(settings.sprinkler);
+            grenade.SetValues(settings.grenade);
 
-            grenade.Setup(settings.grenade, world, position);
+            sprinkler.Setup(world, position);
+            grenade.Setup(world, position);
+
+            sprinkler.OnBuy += OnSprinklerInstalled;
+            sprinkler.OnCanAfford += money.CanAfford;
             grenade.OnCanAfford += money.CanAfford;
             grenade.OnBuy += HarvestAll;
 
@@ -67,25 +69,33 @@ namespace IntegratedGameplaySystem
             }
         }
 
-        public void HarvestAll() 
+        private void HarvestAll() 
         {
             for (int i = 0; i < plantsOnPlot.Length; i++)
             {
-                plantsOnPlot[i].Interact();
+                plantsOnPlot[i].TryHarvest();
+            }
+        }
+
+        private void OnSprinklerInstalled() 
+        {
+            for (int i = 0; i < plantsOnPlot.Length; i++)
+            {
+                plantsOnPlot[i].RefreshRainEffects();
             }
         }
 
         public void Dispose() 
         {
+            sprinkler.OnBuy -= OnSprinklerInstalled;
+            sprinkler.OnCanAfford -= money.CanAfford;
+            grenade.OnCanAfford -= money.CanAfford;
+            grenade.OnBuy -= HarvestAll;
+
             for (int i = 0; i < plantsOnPlot.Length; i++)
             {
                 plantsOnPlot[i].IsAlwaysWatered -= sprinkler.GetHasBought;
             }
-
-            sprinkler.OnCanAfford -= money.CanAfford;
-
-            grenade.OnCanAfford -= money.CanAfford;
-            grenade.OnBuy -= HarvestAll;
         }
     }
 }

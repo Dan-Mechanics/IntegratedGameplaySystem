@@ -35,9 +35,9 @@ namespace IntegratedGameplaySystem
             text.text = Utils.IsStringValid(str) ? str : Settings.defaultText;
         }
 
-        public static void RangeIntoText(Range range, Text text) => text.text = $"({range.value} / {range.max})";
+        public static void RangeIntoText(IntWithMax range, Text text) => text.text = $"({range.value} / {range.max})";
         public static void FloatIntoText(float value, Text text) => text.text = value.ToString();
-        public static void RangeIntoFillImage(Range range, Image fillImg) => fillImg.fillAmount = (float)range.value / range.max;
+        public static void RangeIntoFillImage(IntWithMax range, Image fillImg) => fillImg.fillAmount = (float)range.value / range.max;
         public static void IntIntoText(int value, Text text) => text.text = value.ToString();
 
         public static void SpriteIntoImage(Sprite sprite, Image image) 

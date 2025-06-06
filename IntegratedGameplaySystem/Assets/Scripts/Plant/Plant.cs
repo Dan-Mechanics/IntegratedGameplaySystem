@@ -10,8 +10,7 @@ namespace IntegratedGameplaySystem
     public class Plant : IStartable, IInteractable, IHoverable, IDisposable
     {
         public event Func<bool> IsAlwaysWatered;
-        public bool IsWatered => intervalWater || IsAlwaysWatered.Invoke();
-        //public string HoverTitle => GetHovering();
+        public bool IsWatered => wateredByHand || IsAlwaysWatered.Invoke();
         public bool IsHarvestable => progression >= blueprint.materials.Length - 1;
 
         public readonly GameObject gameObject;
@@ -24,7 +23,7 @@ namespace IntegratedGameplaySystem
         private readonly ParticleSystem waterEffect;
 
         private int progression;
-        private bool intervalWater;
+        private bool wateredByHand;
         private bool showingEffects;
 
         /// <summary>
@@ -62,11 +61,10 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            UpdateIntervalWatered(false);
-
             ServiceLocator<IWorldService>.Locate().Add(gameObject, this);
             EventManager.AddListener(Occasion.Tick, Tick);
-            Refresh();
+
+            RefreshAll();
         }
 
         /// <summary>
@@ -80,18 +78,22 @@ namespace IntegratedGameplaySystem
 
         private void Tick()
         {
-            UpdateEffects();
-
             if (!Utils.OneIn(IsWatered ? blueprint.wateredGrowOdds : blueprint.growOdds))
                 return;
 
-            UpdateIntervalWatered(false);
-            progression++;
-            progression = Mathf.Clamp(progression, 0, blueprint.materials.Length - 1);
-            Refresh();
+            Grow();
         }
 
-        private void Refresh() 
+        private void Grow()
+        {
+            wateredByHand = false;
+            progression++;
+            progression = Mathf.Clamp(progression, 0, blueprint.materials.Length - 1);
+
+            RefreshAll();
+        }
+
+        private void RefreshAll() 
         {
             for (int i = 0; i < meshRenderers.Length; i++)
             {
@@ -100,15 +102,14 @@ namespace IntegratedGameplaySystem
 
             sphereCollider.center = Vector3.down * (IsHarvestable ? 0f : 0.5f);
             sphereCollider.enabled = IsHarvestable || !IsWatered;
+
+            RefreshRainEffects();
         }
 
-        private void UpdateIntervalWatered(bool intervalWater)
-        {
-            this.intervalWater = intervalWater;
-            UpdateEffects();
-        }
-
-        private void UpdateEffects()
+        /// <summary>
+        /// USE OBJECT POOL !!!!!!!!!!!!!!!!! COOL CODE TO BE FOUND THERE.
+        /// </summary>
+        public void RefreshRainEffects()
         {
             if (showingEffects == IsWatered)
                 return;
@@ -131,17 +132,34 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Interact()
         {
-            if (IsHarvestable)
-            {
-                progression = 0;
-                EventManager<IItemArchitype>.RaiseEvent(Occasion.SetOrAddItem, blueprint);
-            }
-            else if (!IsWatered)
-            {
-                UpdateIntervalWatered(true);
+            if (IsHarvestable) 
+            { 
+                TryHarvest();
+                return;
             }
 
-            Refresh();
+            TryWater();
+            RefreshAll();
+        }
+
+        public void TryHarvest()
+        {
+            if (!IsHarvestable)
+                return;
+
+            progression = 0;
+            wateredByHand = false;
+            EventManager<IItemArchitype>.RaiseEvent(Occasion.SetOrAddItem, blueprint);
+
+            RefreshAll();
+        }
+
+        private void TryWater() 
+        {
+            if (IsWatered)
+                return;
+
+            wateredByHand = true;
         }
     }
 }

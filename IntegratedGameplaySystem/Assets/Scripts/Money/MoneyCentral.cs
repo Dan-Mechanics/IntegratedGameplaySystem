@@ -8,15 +8,15 @@ namespace IntegratedGameplaySystem
     /// 
     /// Barter interface
     /// </summary>
-    public class MoneyCentral :  IStartable, IInteractable, IHoverable, IDisposable, IChangeTracker<Range>
+    public class MoneyCentral :  IStartable, IInteractable, IHoverable, IDisposable, IChangeTracker<IntWithMax>
     {
-        public event Action<Range> OnChange;
+        public event Action<IntWithMax> OnChange;
 
         private readonly ParticleSystem particle;
         private readonly MoneyCentralSettings settings;
         private readonly IItemHolder itemHolder;
 
-        private Range money;
+        private IntWithMax money;
 
         public string GetHoverTitle() 
         {

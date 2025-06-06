@@ -1,3 +1,9 @@
+cool object pool with cool service locator doulbe yeetus.
+next upgrade: speedboost.
+
+i would say generally in my personal projects use more
+delegates to abstract things away between classes but in this project it kinda annoying.
+
 ok the upgrades work but i wanna seperate it from the plot
 and i need to helicopter view it and design an acutal code?
 pattenr somewhere here ? maybe builder ??

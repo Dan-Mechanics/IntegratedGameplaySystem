@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace IntegratedGameplaySystem
 {
-    public struct Range
+    public struct IntWithMax
     {
         public int value;
         public int max;
 
-        public void Set(int min, int max)
+        public void Set(int value, int max)
         {
-            this.value = min;
+            this.value = value;
             this.max = max;
         }
 

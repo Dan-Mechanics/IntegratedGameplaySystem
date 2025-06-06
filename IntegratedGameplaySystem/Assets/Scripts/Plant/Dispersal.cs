@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class Dispersal : IPlantSpawner
+    public class Dispersal : IPlantDistribution
     {
         public readonly int plantCount;
         public readonly float dispersal;
@@ -18,7 +18,7 @@ namespace IntegratedGameplaySystem
             this.offset = offset;
         }
 
-        public void Spawn(List<object> result)
+        public void SpawnPlants(List<object> result)
         {
             Plant plant;
             

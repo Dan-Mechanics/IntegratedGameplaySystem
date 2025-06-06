@@ -37,7 +37,7 @@ namespace IntegratedGameplaySystem
                 return;
 
             bindings.Add(binding);
-            Debug.Log($"added binding {binding}");
+            //Debug.Log($"added binding {binding}");
         }
 
         public void RemoveBinding(Binding binding) => bindings.Remove(binding);

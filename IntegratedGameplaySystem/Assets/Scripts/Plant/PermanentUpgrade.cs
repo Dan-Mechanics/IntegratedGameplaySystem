@@ -13,7 +13,7 @@ namespace IntegratedGameplaySystem
     /// You could say that the sprinkler lasts X amount of secodns right.
     /// </summary>
     [Serializable]
-    public class UpgradeValues 
+    public class UpgradeValues
     {
         public string name;
         public int cost;
@@ -22,27 +22,40 @@ namespace IntegratedGameplaySystem
 
     public abstract class UpgradeBase : IInteractable, IHoverable 
     {
+        public Action OnBuy;
+        public Func<int, bool> OnCanAfford;
 
+        protected UpgradeValues values;
+        protected GameObject button;
+
+        /// <summary>
+        /// Do this before Setup().
+        /// </summary>
+        public void SetValues(UpgradeValues values) => this.values = values;
+        public abstract void Setup(IWorldService world, Vector3 offset);
+        public abstract string GetHoverTitle();
+        public abstract void Interact();
     }
 
     /// <summary>
     /// See how to reduce the repeating between these ??
     /// Make interface seems best.
     /// </summary>
-    public class PermanentUpgrade : IInteractable, IHoverable
+    [Serializable]
+    public class PermanentUpgrade : UpgradeBase
     {
-        public event Func<int, bool> OnCanAfford;
-
-        public UpgradeValues values;
-
         private IWorldService world;
-        private GameObject button;
         private bool hasBought;
 
-        public void Setup(UpgradeValues values, IWorldService world, Vector3 offset)
+        public override void Setup(IWorldService world, Vector3 offset)
         {
+            if (values == null) 
+            {
+                Debug.LogError("SetValues() first please.");
+                return;
+            }
+            
             this.world = world;
-            this.values = values;
 
             button = Utils.SpawnPrefab(values.buttonPrefab);
             button.transform.position += offset;
@@ -52,7 +65,7 @@ namespace IntegratedGameplaySystem
 
         public bool GetHasBought() => hasBought;
 
-        public string GetHoverTitle()
+        public override string GetHoverTitle()
         {
             if (hasBought)
                 return string.Empty;
@@ -63,7 +76,7 @@ namespace IntegratedGameplaySystem
             return $"{values.name} upgrade for ${values.cost}";
         }
 
-        public void Interact()
+        public override void Interact()
         {
             if (hasBought)
                 return;
@@ -71,31 +84,27 @@ namespace IntegratedGameplaySystem
             if (!OnCanAfford.Invoke(values.cost))
                 return;
 
+            OnBuy?.Invoke();
             EventManager<int>.RaiseEvent(Occasion.LoseMoney, values.cost);
             hasBought = true;
             world.Remove(button);
         }
     }
 
-    public class RepeatableUpgrade : IInteractable, IHoverable
+    [Serializable]
+    public class RepeatableUpgrade : UpgradeBase
     {
-        public event Action OnBuy;
-        public event Func<int, bool> OnCanAfford;
+        //public event Action OnBuy;
 
-        public UpgradeValues values;
-        private GameObject button;
-
-        public void Setup(UpgradeValues values, IWorldService world, Vector3 offset)
+        public override void Setup(IWorldService world, Vector3 offset)
         {
-            this.values = values;
-
             button = Utils.SpawnPrefab(values.buttonPrefab);
             button.transform.position += offset;
 
             world.Add(button, this);
         }
 
-        public string GetHoverTitle()
+        public override string GetHoverTitle()
         {
             if (!OnCanAfford.Invoke(values.cost))
                 return "Can't afford yet!";
@@ -103,7 +112,7 @@ namespace IntegratedGameplaySystem
             return $"{values.name} for ${values.cost}";
         }
 
-        public void Interact()
+        public override void Interact()
         {
             if (!OnCanAfford.Invoke(values.cost))
                 return;

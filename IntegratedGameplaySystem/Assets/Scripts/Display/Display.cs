@@ -45,7 +45,7 @@ namespace IntegratedGameplaySystem
 
         private void Setup() 
         {
-            settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<DisplaySettings>();
+            settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<DisplaySettings>();
             Transform canvas = Utils.SpawnPrefab(settings.canvas).transform;
 
 

@@ -7,26 +7,30 @@ namespace IntegratedGameplaySystem
     {
         public readonly int plantCount;
         public readonly float dispersal;
+        public readonly PlantFlyweight blueprint;
+        public readonly Vector3 offset;
 
-        public Dispersal(int plantCount, float dispersal)
+        public Dispersal(int plantCount, float dispersal, PlantFlyweight blueprint, Vector3 offset)
         {
             this.plantCount = plantCount;
             this.dispersal = dispersal;
+            this.blueprint = blueprint;
+            this.offset = offset;
         }
 
-        public void Spawn(List<object> output, PlantFlyweight blueprint, Vector3 offset)
+        public void Spawn(List<object> result)
         {
-            Plant temp;
+            Plant plant;
             
             for (int i = 0; i < plantCount; i++)
             {
-                temp = new Plant(blueprint);
+                plant = new Plant(blueprint);
 
-                temp.transform.position += Utils.GetRandomFlatPos(dispersal);
-                temp.transform.position += offset;
-                Utils.ApplyRandomRotation(temp.transform);
+                plant.transform.position += Utils.GetRandomFlatPos(dispersal);
+                plant.transform.position += offset;
+                Utils.ApplyRandomRotation(plant.transform);
 
-                output.Add(temp);
+                result.Add(plant);
             }
         }
     }

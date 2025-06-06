@@ -34,7 +34,7 @@ namespace IntegratedGameplaySystem
         public MoneyCentral(IItemHolder itemHolder)
         {
             this.itemHolder = itemHolder;
-            settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<MoneyCentralSettings>();
+            settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<MoneyCentralSettings>();
 
             GameObject go = Utils.SpawnPrefab(settings.prefab);
             particle = go.transform.GetComponentInChildren<ParticleSystem>();
@@ -47,19 +47,30 @@ namespace IntegratedGameplaySystem
         {
             OnChange?.Invoke(money);
             EventManager<int>.AddListener(Occasion.EarnMoney, EarnMoney);
+            EventManager<int>.AddListener(Occasion.LoseMoney, LoseMoney);
         }
 
-        private void EarnMoney(int incoming)
+        private void EarnMoney(int amount)
         {
-            if (incoming <= 0)
+            if (amount <= 0)
                 return;
 
-            money.value += incoming;
+            money.value += amount;
             money.Clamp();
             OnChange?.Invoke(money);
 
             if (money.value >= money.max)
                 EventManager.RaiseEvent(Occasion.GameOver);
+        }
+
+        private void LoseMoney(int amount)
+        {
+            if (amount <= 0)
+                return;
+
+            money.value -= amount;
+            money.Clamp();
+            OnChange?.Invoke(money);
         }
 
         public void Interact()
@@ -116,6 +127,7 @@ namespace IntegratedGameplaySystem
         public void Dispose()
         {
             EventManager<int>.RemoveListener(Occasion.EarnMoney, EarnMoney);
+            EventManager<int>.RemoveListener(Occasion.LoseMoney, LoseMoney);
         }
     }
 }

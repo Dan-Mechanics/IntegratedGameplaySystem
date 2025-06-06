@@ -14,16 +14,17 @@ namespace IntegratedGameplaySystem
             //ServiceLocator<IWorldService>.Provide(new GameWorld());
             components.Add(new FirstPersonPlayer(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
 
-            List<PlantFlyweight> plantBlueprints = assetService.GetAssetsOfType<PlantFlyweight>();
+            List<PlantFlyweight> flyweights = assetService.GetAllAssetsOfType<PlantFlyweight>();
             //IPlantSpawner spawner = new Dispersal() { dispersal = 20, plantCount = 30 };
-            IPlantSpawner spawner = new Plot(5, 1f);
-            for (int i = 0; i < plantBlueprints.Count; i++)
+            //IPlantSpawner spawner = new Plot(assetService.GetAssetByType<PlotSettings>(), );
+            for (int i = 0; i < flyweights.Count; i++)
             {
-                spawner.Spawn(components, plantBlueprints[i], new Vector3(i * 5f + 0.5f, 0f, 0.5f));
+                IPlantSpawner spawner = new Plot(assetService.GetAssetByType<PlotSettings>(), flyweights[i], new Vector3(i * 5f + 0.5f, 0f, 0.5f));
+                spawner.Spawn(components);
             }
 
             // factory for this ??
-            var tickClock = new Clock(assetService.GetAssetWithType<ClockSettings>().interval);
+            var tickClock = new Clock(assetService.GetAssetByType<ClockSettings>().interval);
             var score = new Score();
             ServiceLocator<IScoreService>.Provide(score);
 

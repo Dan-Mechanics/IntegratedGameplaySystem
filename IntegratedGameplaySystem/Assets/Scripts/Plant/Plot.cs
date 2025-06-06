@@ -1,49 +1,69 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IntegratedGameplaySystem 
-{ 
-    public class Plot : IPlantSpawner, IInteractable, IStartable
+namespace IntegratedGameplaySystem
+{
+    public class Plot : IPlantSpawner, IInteractable, IDisposable, IHoverable
     {
-        public readonly int width;
-        public readonly float spacing;
+        public string HoverTitle => $"Sprinkler upgrade for {settings.sprinklerPrice}";
+        private readonly PlotSettings settings;
+        private Plant[] plants;
+        private bool isSprinkled;
+        private readonly PlantFlyweight flyweight;
+        private readonly Vector3 offset;
 
-        /// <summary>
-        /// Consider moving to a settigns scriptableobject asset . 
-        /// </summary>
-        public Plot(int width, float spacing)
+        public Plot(PlotSettings settings, PlantFlyweight flyweight, Vector3 offset)
         {
-            this.width = width;
-            this.spacing = spacing;
+            this.settings = settings;
+            this.flyweight = flyweight;
+            this.offset = offset;
         }
 
         public void Interact()
         {
-            throw new System.NotImplementedException();
+            isSprinkled = true;
+            EventManager<int>.RaiseEvent(Occasion.LoseMoney, settings.sprinklerPrice);
         }
 
-        public void Spawn(List<object> output, PlantFlyweight blueprint, Vector3 offset)
+        public void Spawn(List<object> result)
         {
-            Plant temp;
+            GameObject button = Utils.SpawnPrefab(settings.buttonPrefab);
+            button.transform.position += offset;
 
-            for (int x = 0; x < width; x++)
+            ServiceLocator<IWorldService>.Locate().Add(button, this);
+
+            plants = new Plant[settings.width * settings.width];
+
+            for (int x = 0; x < settings.width; x++)
             {
-                for (int z = 0; z < width; z++)
+                for (int z = 0; z < settings.width; z++)
                 {
-                    temp = new Plant(blueprint);
+                    plants[x + (z * settings.width)] = new Plant(flyweight);
+                    plants[x + (z * settings.width)].HasSprinkler += HasSprinkler;
 
-                    temp.transform.position += new Vector3(x * spacing, 0f, z * spacing);
-                    temp.transform.position += offset;
+                    plants[x + (z * settings.width)].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + offset;
                     // Utils.ApplyRandomRotation(temp.gameObject.transform);
 
-                    output.Add(temp);
+                    result.Add(plants[x + (z * settings.width)]);
                 }
             }
+
+            result.Add(this);
         }
 
-        public void Start()
+        public void Dispose() 
         {
-            throw new System.NotImplementedException();
+            for (int i = 0; i < plants.Length; i++)
+            {
+                plants[i].HasSprinkler -= HasSprinkler;
+            }
+
+            plants = null;
+        }
+
+        private bool HasSprinkler() 
+        {
+            return isSprinkled;
         }
     }
 }

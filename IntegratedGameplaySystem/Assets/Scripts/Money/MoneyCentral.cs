@@ -50,6 +50,11 @@ namespace IntegratedGameplaySystem
             EventManager<int>.AddListener(Occasion.LoseMoney, LoseMoney);
         }
 
+        public bool CanAfford(int cost) 
+        {
+            return money.value >= cost;
+        }
+
         private void EarnMoney(int amount)
         {
             if (amount <= 0)
@@ -69,7 +74,7 @@ namespace IntegratedGameplaySystem
                 return;
 
             money.value -= amount;
-            money.Clamp();
+            //money.Clamp();
             OnChange?.Invoke(money);
         }
 

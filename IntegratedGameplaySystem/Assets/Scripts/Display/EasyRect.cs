@@ -5,11 +5,11 @@ namespace IntegratedGameplaySystem
 {
     public enum Snap { Center, Left, Right, Bottom, Top }
     
-    public class EasyUI
+    public class EasyRect
     {
         private RectTransform rect;
 
-        public EasyUI(RectTransform rect)
+        public EasyRect(RectTransform rect)
         {
             Set(rect);
         }
@@ -19,6 +19,11 @@ namespace IntegratedGameplaySystem
         public float GetHeight()
         {
             return rect.sizeDelta.y;
+        }
+
+        public void SetSize(float x, float y) 
+        {
+            rect.sizeDelta = new Vector2(x, y);
         }
 
         public float GetWidth()

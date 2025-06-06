@@ -27,69 +27,94 @@ namespace IntegratedGameplaySystem
         private readonly DataChannel<string, Text> interactor;
         private readonly DataChannel<float, Text> score;
         private readonly DataChannel<ItemStack, Slot> hand;
-        private readonly DataChannel<Range, Text> money;
-        
-        private DisplaySettings settings;
-        
+        private readonly DataChannel<Range, Image> moneyBar;
+        private readonly DataChannel<Range, Text> moneyText;
+
+        public DisplaySettings settings;
+        public Transform canvas;
+
         public Display(IChangeTracker<string> interactor, IChangeTracker<Range> money, IChangeTracker<float> score, 
-            IChangeTracker<ItemStack> hand)
+            IChangeTracker<ItemStack> hand) 
         {
             this.interactor = new DataChannel<string, Text>(interactor, disposables);
-            this.money = new DataChannel<Range, Text>(money, disposables);
             this.score = new DataChannel<float, Text>(score, disposables);
             this.hand = new DataChannel<ItemStack, Slot>(hand, disposables);
-            //this.atCapacity = new DataChannel<bool, Text>(atCapacity, disposables);
+            moneyBar = new DataChannel<Range, Image>(money, disposables);
+            moneyText = new DataChannel<Range, Text>(money, disposables);
 
             Setup();
         }
-
+        
+        /// <summary>
+        /// Amazing code here.
+        /// </summary>
         private void Setup() 
         {
             settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<DisplaySettings>();
             Transform canvas = Utils.SpawnPrefab(settings.canvas).transform;
 
+            interactor.ui = AddToCanvas<Text>(canvas, settings.text);
+            EasyRect rect = new EasyRect(interactor.ui.rectTransform);
+            rect.SnapTo(Snap.Center, 1f * rect.GetHeight() * Vector2.down);
 
-            // Amazing code here:
-            interactor.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
-            EasyUI temp = new EasyUI(interactor.ui.rectTransform);
-            temp.SnapTo(Snap.Center, 1f * temp.GetHeight() * Vector2.down);
+            score.ui = AddToCanvas<Text>(canvas, settings.text);
+            rect.Set(score.ui.rectTransform);
+            rect.SetSize(200, 30f);
+            rect.SnapTo(Snap.Bottom, 200f * Vector2.right + (15f * Vector2.up));
 
-            score.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
-            temp.Set(score.ui.rectTransform);
-            temp.SnapTo(Snap.Center, 2f * temp.GetHeight() * Vector2.down);
+            moneyBar.ui = AddToCanvas<Image>(canvas, settings.image);
+            rect.Set(moneyBar.ui.rectTransform);
+            moneyBar.ui.color = Color.black;
+            rect.SetSize(200, 30f);
+            rect.SnapTo(Snap.Bottom, 200f * Vector2.left + (15f * Vector2.up));
+            
+            moneyBar.ui = AddFillImage(canvas, settings.image, settings.pixel);
+            rect.Set(moneyBar.ui.rectTransform);
+            moneyBar.ui.color = Color.yellow;
+            rect.SetSize(200f, 30f);
+            rect.SnapTo(Snap.Bottom, 200f * Vector2.left + (15f * Vector2.up));
 
-            money.ui = Utils.AddToCanvas<Text>(canvas, settings.text);
-            temp.Set(money.ui.rectTransform);
-            temp.SnapTo(Snap.Center, 3f * temp.GetHeight() * Vector2.down);
+            moneyText.ui = AddToCanvas<Text>(canvas, settings.text);
+            rect.Set(moneyText.ui.rectTransform);
+            moneyText.ui.color = Color.white;
+            rect.SetSize(200, 30f);
+            rect.SnapTo(Snap.Bottom, 200f * Vector2.left + (15f * Vector2.up));
+            
+            hand.ui.image = AddToCanvas<Image>(canvas, settings.image);
+            rect.Set(hand.ui.image.rectTransform);
+            rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
 
-            hand.ui.image = Utils.AddToCanvas<Image>(canvas, settings.image);
-            temp.Set(hand.ui.image.rectTransform);
-            temp.SnapTo(Snap.Bottom, Vector2.up * 15f);
+            //Vector2 itemCountOffset = (15f + rect.GetHeight() / 2f) * (Vector2.up + Vector2.left);
 
-            Vector2 itemCountOffset = (15f + temp.GetHeight() / 2f) * (Vector2.up + Vector2.left);
+            hand.ui.text = AddToCanvas<Text>(canvas, settings.text);
+            hand.ui.text.color = Color.white;
+            hand.ui.text.fontSize = 40;
+            rect.Set(hand.ui.text.rectTransform);
+            rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
 
-            hand.ui.text = Utils.AddToCanvas<Text>(canvas, settings.text);
-            hand.ui.text.color = Color.black;
-            temp.Set(hand.ui.text.rectTransform);
-            temp.SnapTo(Snap.Bottom, itemCountOffset);
-
-            Image overlay = Utils.AddToCanvas<Image>(canvas, settings.image);
+            Image overlay = AddToCanvas<Image>(canvas, settings.image);
             overlay.sprite = settings.defaultSprite;
-            temp.Set(overlay.rectTransform);
-            temp.SnapTo(Snap.Bottom, Vector2.up * 15f);
+            rect.Set(overlay.rectTransform);
+            rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
         }
 
+        /// <summary>
+        /// We might be able to make this class a little more modualir if we break
+        /// this sub / unsub rule. That's really annoying me atm.
+        /// </summary>
         public void Start()
         {
-            money.OnChange += RangeIntoText;
+            moneyBar.OnChange += RangeIntoFillImage;
             interactor.OnChange += StringIntoText;
             score.OnChange += FloatIntoText;
             hand.OnChange += ItemStackIntoSlot;
+            moneyText.OnChange += RangeIntoText;
         }
 
         public void StringIntoText(string str, Text text) => text.text = string.IsNullOrEmpty(str) ? settings.defaultText : str;
         public void RangeIntoText(Range range, Text text) => text.text = $"({range.value} / {range.max})";
         public void FloatIntoText(float value, Text text) => text.text = value.ToString();
+        public void RangeIntoFillImage(Range range, Image fillImg) => fillImg.fillAmount = (float)range.value / range.max;
         public void IntIntoText(int value, Text text) => text.text = value.ToString();
         public void SpriteIntoImage(Sprite sprite, Image image) => image.sprite = sprite == null ? settings.defaultSprite : sprite;
 
@@ -109,33 +134,32 @@ namespace IntegratedGameplaySystem
         {
             disposables.ForEach(x => x.Dispose());
 
-            money.OnChange -= RangeIntoText;
+            moneyBar.OnChange -= RangeIntoFillImage;
             interactor.OnChange -= StringIntoText;
             score.OnChange -= FloatIntoText;
             hand.OnChange -= ItemStackIntoSlot;
+            moneyText.OnChange -= RangeIntoText;
         }
 
-        /// <summary>
-        /// T1 --> T2
-        /// </summary>
-        public class DataChannel<T1, T2> : IDisposable
+        public static T AddToCanvas<T>(Transform canvas, GameObject prefab)
         {
-            private readonly IChangeTracker<T1> changeTracker;
-            public T2 ui;
+            Transform transform = Utils.SpawnPrefab(prefab).transform;
+            transform.SetParent(canvas);
+            transform.localPosition = Vector3.zero;
+            return transform.GetComponent<T>();
+        }
 
-            public DataChannel(IChangeTracker<T1> changeTracker, List<IDisposable> disposables)
-            {
-                this.changeTracker = changeTracker;
-                changeTracker.OnChange += Combine;
+        public static Image AddFillImage(Transform canvas, GameObject prefab, Sprite sprite)
+        {
+            Image image = AddToCanvas<Image>(canvas, prefab);
+            image.sprite = sprite;
 
-                disposables.Add(this);
-            }
+            image.type = Image.Type.Filled;
+            image.fillAmount = 0f;
+            image.fillOrigin = 0;
+            image.fillMethod = Image.FillMethod.Horizontal;
 
-            private void Combine(T1 a) => OnChange?.Invoke(a, ui);
-
-            public void Dispose() => changeTracker.OnChange -= Combine;
-
-            public event Action<T1, T2> OnChange;
+            return image;
         }
     }
 }

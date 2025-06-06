@@ -10,6 +10,6 @@ namespace IntegratedGameplaySystem
         public int width;
         public float spacing;
 
-        public int sprinklerPrice;
+        public int upgradeCost;
     }
 }

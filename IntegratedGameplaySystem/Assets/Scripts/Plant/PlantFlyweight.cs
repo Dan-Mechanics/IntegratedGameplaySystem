@@ -5,6 +5,7 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// "Flyweight" ish.
+    /// Plant arhcittype ???
     /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(PlantFlyweight), fileName = "New " + nameof(PlantFlyweight))]
     public class PlantFlyweight : ScriptableObject, IItemArchitype

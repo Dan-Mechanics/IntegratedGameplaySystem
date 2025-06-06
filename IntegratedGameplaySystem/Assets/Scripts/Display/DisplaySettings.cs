@@ -11,5 +11,6 @@ namespace IntegratedGameplaySystem
         public string defaultText;
         public GameObject text;
         public GameObject image;
+        public Sprite pixel;
     }
 }

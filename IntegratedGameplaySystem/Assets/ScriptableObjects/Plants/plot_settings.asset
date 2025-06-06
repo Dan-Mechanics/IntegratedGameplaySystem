@@ -15,4 +15,4 @@ MonoBehaviour:
   buttonPrefab: {fileID: 5604457068642857581, guid: 8f56ebe545301834d80d99d075e48cb2, type: 3}
   width: 5
   spacing: 1
-  sprinklerPrice: 100
+  upgradeCost: 100

@@ -25,7 +25,7 @@ namespace IntegratedGameplaySystem
 
         private int progression;
         private bool intervalWater;
-        private bool prev;
+        private bool showingEffects;
 
         /// <summary>
         /// This is kinda nutty becasue we want to save load time but ok,
@@ -80,11 +80,12 @@ namespace IntegratedGameplaySystem
 
         private void Tick()
         {
-            UpdateIntervalWatered(false);
+            UpdateEffects();
 
             if (!Utils.OneIn(IsWatered ? blueprint.wateredGrowOdds : blueprint.growOdds))
                 return;
 
+            UpdateIntervalWatered(false);
             progression++;
             progression = Mathf.Clamp(progression, 0, blueprint.materials.Length - 1);
             Refresh();
@@ -104,8 +105,12 @@ namespace IntegratedGameplaySystem
         private void UpdateIntervalWatered(bool intervalWater)
         {
             this.intervalWater = intervalWater;
+            UpdateEffects();
+        }
 
-            if (prev == IsWatered)
+        private void UpdateEffects()
+        {
+            if (showingEffects == IsWatered)
                 return;
 
             if (IsWatered)
@@ -117,7 +122,7 @@ namespace IntegratedGameplaySystem
                 waterEffect.Stop();
             }
 
-            prev = IsWatered;
+            showingEffects = IsWatered;
         }
 
         /// <summary>

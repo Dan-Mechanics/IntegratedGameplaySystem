@@ -52,7 +52,7 @@ namespace IntegratedGameplaySystem
 
             output.Enable();
 
-            if (!inactivePool.Contains(output))
+            if (!activePool.Contains(output))
                 activePool.Add(output);
 
             return output;
@@ -66,78 +66,54 @@ namespace IntegratedGameplaySystem
     {
         public event Func<T> AllocateNew;
 
-        private readonly PoolItem[] pool;
-        private readonly Dictionary<T, int> dict = new();
+        //public int WrappedHead => head % pool.Length;
+        private int index;
 
-        private struct PoolItem 
-        {
-            public T t;
-            public bool active;
-        }
+        //private T temp;
+        private readonly T[] pool;
+        //private readonly Dictionary<T, int> dict = new();
 
-        /*public enum Request { Get, Give }
-        private struct Command 
+        public FastPool(int size)
         {
-            public Request request;
-            public T t;
-        }*/
-
-        public FastPool(int maxExpected)
-        {
-            // lol
-            if (maxExpected < 1)
-                maxExpected = 1;
+            if (size < 1)
+                size = 1;
             
-            pool = new PoolItem[maxExpected];
-            /*for (int i = 0; i < pool.Length; i++)
-            {
-                pool[i].t = AllocateNew.Invoke();
-                dict.Add(pool[i].t, i);
-            }*/
+            pool = new T[size];
         }
 
-        /// <summary>
-        /// Or do it more dynamically
-        /// </summary>
-        public void Fill() 
+        public void Populate() 
         {
             for (int i = 0; i < pool.Length; i++)
             {
-                pool[i].t = AllocateNew.Invoke();
-                dict.Add(pool[i].t, i);
+                pool[i] = AllocateNew.Invoke();
             }
         }
 
+        private int Wrap(int x) => x % pool.Length;
+
+        /// <summary>
+        /// Finna see if this works tho.
+        /// </summary>
         public void Give(T input)
         {
-            pool[dict[input]].t.Disable();
-            pool[dict[input]].active = false;
+            input.Disable();
+            pool[Wrap(index + 1)] = input;
         }
 
         public void Flush()
         {
             for (int i = 0; i < pool.Length; i++)
             {
-                pool[i].t.Flush();
+                pool[i].Flush();
             }
         }
 
         public T Get()
         {
-            for (int i = 0; i < pool.Length; i++)
-            {
-                if (!pool[i].active)
-                    return Send(ref pool[i]);
-            }
-
-            return Send(ref pool[0]);
-        }
-
-        private T Send(ref PoolItem pair) 
-        {
-            pair.active = true;
-            pair.t.Enable();
-            return pair.t;
+            T t = pool[Wrap(index)];
+            t.Enable();
+            index++;
+            return t;
         }
     }
 }

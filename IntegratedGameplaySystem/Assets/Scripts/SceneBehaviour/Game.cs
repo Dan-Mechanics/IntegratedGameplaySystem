@@ -33,7 +33,7 @@ namespace IntegratedGameplaySystem
 
             var rainPool = new FastPool<PoolableParticle>(strat.GetPlantCount());
             rainPool.AllocateNew += AllocateNewRain;
-            rainPool.Fill();
+            rainPool.Populate();
             ServiceLocator<IPoolService<PoolableParticle>>.Provide(rainPool);
 
             for (int i = 0; i < plants.Count; i++)

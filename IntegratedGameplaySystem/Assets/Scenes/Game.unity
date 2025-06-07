@@ -130,38 +130,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
-      propertyPath: inspectorAssets.assets.Array.size
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
-      propertyPath: inspectorAssets.assets.Array.data[7]
-      value: 
-      objectReference: {fileID: 11400000, guid: 603f03c725928b346bf33651294e7731, type: 2}
-    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
-      propertyPath: inspectorAssets.assets.Array.data[8]
-      value: 
-      objectReference: {fileID: 11400000, guid: fea0b6872a59f284da25ba69885c92f6, type: 2}
-    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
-      propertyPath: inspectorAssets.assets.Array.data[9]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3aa9be92a0736b0439525ba630c79984, type: 2}
-    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
-      propertyPath: inspectorAssets.assets.Array.data[10]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3ebb730b163218140a8ba66d3715d408, type: 2}
-    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
-      propertyPath: inspectorAssets.assets.Array.data[11]
-      value: 
-      objectReference: {fileID: 11400000, guid: 85cf921d03f7688479dbfbf625d0ef4c, type: 2}
-    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
-      propertyPath: inspectorAssets.assets.Array.data[12]
-      value: 
-      objectReference: {fileID: 11400000, guid: 11a2fca0d496bac4e9a5131c9ea8c2b4, type: 2}
-    - target: {fileID: 3873894960500641815, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
-      propertyPath: inspectorAssets.assets.Array.data[13]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3aa9be92a0736b0439525ba630c79984, type: 2}
     - target: {fileID: 8097411516312560828, guid: 0672d1d8a1dc4f14c8730ca37d0d4bf3, type: 3}
       propertyPath: m_Name
       value: game_manager

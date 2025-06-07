@@ -31,7 +31,7 @@ namespace IntegratedGameplaySystem
             // Note: youcould add theup grade settings to the shit or not.
             IPlantPlacementStrategy strat = new Plot(assetService.GetAssetByType<PlotSettings>());
 
-            var rainPool = new FastPool<PoolableParticle>(strat.GetPlantCount());
+            var rainPool = new ClassicObjectPool<PoolableParticle>(strat.GetPlantCount());
             rainPool.AllocateNew += AllocateNewRain;
             rainPool.Populate();
             ServiceLocator<IPoolService<PoolableParticle>>.Provide(rainPool);

@@ -62,18 +62,13 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Changes: array, preallocate, spread burden, event queue !!
     /// </summary>
-    public class FastPool<T> : IPoolService<T> where T : IPoolable
+    public class ClassicObjectPool<T> : IPoolService<T> where T : IPoolable
     {
         public event Func<T> AllocateNew;
-
-        //public int WrappedHead => head % pool.Length;
+        private readonly T[] pool;
         private int index;
 
-        //private T temp;
-        private readonly T[] pool;
-        //private readonly Dictionary<T, int> dict = new();
-
-        public FastPool(int size)
+        public ClassicObjectPool(int size)
         {
             if (size < 1)
                 size = 1;
@@ -89,15 +84,9 @@ namespace IntegratedGameplaySystem
             }
         }
 
-        private int Wrap(int x) => x % pool.Length;
-
-        /// <summary>
-        /// Finna see if this works tho.
-        /// </summary>
-        public void Give(T input)
+        public void Give(T t)
         {
-            input.Disable();
-            pool[Wrap(index + 1)] = input;
+            t.Disable();
         }
 
         public void Flush()
@@ -108,11 +97,15 @@ namespace IntegratedGameplaySystem
             }
         }
 
+        /// <summary>
+        /// NOTE: int.maxvalue for index ??
+        /// </summary>
         public T Get()
         {
-            T t = pool[Wrap(index)];
+            T t = pool[index % pool.Length];
             t.Enable();
             index++;
+
             return t;
         }
     }

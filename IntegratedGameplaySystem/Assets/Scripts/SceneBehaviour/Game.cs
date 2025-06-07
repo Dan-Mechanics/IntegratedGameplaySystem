@@ -17,11 +17,7 @@ namespace IntegratedGameplaySystem
         /// </summary>
         /// <returns></returns>
         public override List<object> GetSceneComponents()
-        {
-            var rainPool = new ObjectPool<PoolableParticle>();
-            rainPool.AllocateNew += AllocateNewRain;
-            ServiceLocator<IPoolService<PoolableParticle>>.Provide(rainPool);
-            
+        {            
             IAssetService assetService = ServiceLocator<IAssetService>.Locate();
             List<object> components = base.GetSceneComponents();
 
@@ -29,12 +25,21 @@ namespace IntegratedGameplaySystem
             
             var hand = new Hand();
             var money = new MoneyCentral(hand);
-            var plots = assetService.GetAllAssetsOfType<PlotSettings>();
+            List<PlantFlyweight> plants = assetService.GetAllAssetsOfType<PlantFlyweight>();
+            UpgradeSettings upgrade = assetService.GetAssetByType<UpgradeSettings>();
 
-            for (int i = 0; i < plots.Count; i++)
+            // Note: youcould add theup grade settings to the shit or not.
+            IPlantPlacementStrategy strat = new Plot(assetService.GetAssetByType<PlotSettings>());
+
+            var rainPool = new FastPool<PoolableParticle>(strat.GetPlantCount());
+            rainPool.AllocateNew += AllocateNewRain;
+            rainPool.Fill();
+            ServiceLocator<IPoolService<PoolableParticle>>.Provide(rainPool);
+
+            for (int i = 0; i < plants.Count; i++)
             {
-                IPlantDistribution spawner = new Plot(plots[i], i, money);
-                spawner.SpawnPlants(components);
+                var plantHolder = new PlantHolder(upgrade, i, plants[i], money, strat);
+                plantHolder.SpawnPlants(components);
             }
 
             // factory for this ??

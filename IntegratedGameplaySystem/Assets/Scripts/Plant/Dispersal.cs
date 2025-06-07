@@ -4,53 +4,79 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// This class is not my main class but you get the idea.
+    /// Does this count as strat pattern?
     /// </summary>
-    public class Dispersal : IPlantDistribution, IDisposable
+    public interface IPlantPlacementStrategy
     {
-        private readonly int plantCount;
-        private readonly float dispersal;
-        private readonly PlantFlyweight flyweight;
-        private readonly Vector3 offset;
+        Vector3 GetPlotPos(int index);
+        void PlacePlants(Plant[] plants, int index);
+        int GetPlantCount();
+    }
 
-        private readonly List<Plant> plants = new();
+    public class Dispersal : IPlantPlacementStrategy
+    {
+        private readonly DispersalSettings settings;
 
-        public Dispersal(int plantCount, float dispersal, PlantFlyweight flyweight, Vector3 offset)
+        public Dispersal(DispersalSettings settings)
         {
-            this.plantCount = plantCount;
-            this.dispersal = dispersal;
-            this.flyweight = flyweight;
-            this.offset = offset;
+            this.settings = settings;
         }
 
-        public void Dispose()
+        public int GetPlantCount()
         {
-            plants.ForEach(x => x.IsAlwaysWatered -= Dummy);
+            return settings.plantCount;
         }
 
-        public void SpawnPlants(List<object> components)
+        public Vector3 GetPlotPos(int index)
         {
-            components.Add(this);
-            
-            Plant plant;
-            
-            for (int i = 0; i < plantCount; i++)
+            return settings.offset + (2f * index * Vector3.right);
+        }
+
+        public void PlacePlants(Plant[] plants, int index)
+        {
+            for (int i = 0; i < plants.Length; i++)
             {
-                plant = new Plant(flyweight);
-
-                plant.transform.position += Utils.GetRandomFlatPos(dispersal);
-                plant.transform.position += offset;
-                Utils.ApplyRandomRotation(plant.transform);
-                plant.IsAlwaysWatered += Dummy;
-
-                plants.Add(plant);
-                components.Add(plant);
+                plants[i].transform.position += Utils.GetRandomFlatPos(settings.dispersal);
+                plants[i].transform.position += settings.offset;
+                Utils.ApplyRandomRotation(plants[i].transform);
             }
         }
+    }
 
-        private bool Dummy()
+    public class Plot : IPlantPlacementStrategy
+    {
+        private readonly PlotSettings settings;
+
+        public Plot(PlotSettings settings)
         {
-            return false;
+            this.settings = settings;
+        }
+
+        public int GetPlantCount()
+        {
+            return settings.width * settings.width;
+        }
+
+        public Vector3 GetPlotPos(int index)
+        {
+            return new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
+        }
+
+        public void PlacePlants(Plant[] plants, int index)
+        {
+            Vector3 plotPos = GetPlotPos(index);
+
+            int i;
+            for (int x = 0; x < settings.width; x++)
+            {
+                for (int z = 0; z < settings.width; z++)
+                {
+                    i = x + (z * settings.width);
+
+                    plants[i].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + plotPos;
+                    //Utils.ApplyRandomRotation(plants[i].transform);
+                }
+            }
         }
     }
 }

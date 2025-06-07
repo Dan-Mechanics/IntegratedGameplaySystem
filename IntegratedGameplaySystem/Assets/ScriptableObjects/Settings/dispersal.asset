@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a8f479d59bf1dc40a3166b6b8866dbb, type: 3}
-  m_Name: game
+  m_Script: {fileID: 11500000, guid: dfd1a7914e8e9e44bb9142710d32b874, type: 3}
+  m_Name: dispersal
   m_EditorClassIdentifier: 
-  sceneHandler:
-    nextScene: End
-  rainEffectPrefab: {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}
+  plantCount: 20
+  dispersal: 15
+  offset: {x: 0, y: 0, z: 0}

@@ -3,14 +3,60 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    public interface IPlantState 
+    {
+        void Interact();
+        void Tick();
+    }
+
+    public class Dry : IPlantState
+    {
+        public void Interact()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Tick()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class Wet : IPlantState
+    {
+        public void Interact()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Tick()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class Harvestable : IPlantState
+    {
+        public void Interact()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Tick()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     /// <summary>
     /// Give this plant an Ipositioner that positions it according to some rules ya know?
     /// I want this to be able to work with plots instead of patches.
+    /// 
+    /// Statemachine ?? --> Dry, Watered, Grown
     /// </summary>
     public class Plant : IStartable, IInteractable, IHoverable, IDisposable
     {
-        public event Func<bool> IsAlwaysWatered;
-        public bool IsWatered => wateredByHand || IsAlwaysWatered.Invoke();
+        public bool IsWatered => alwaysWatered || wateredByHand;
         public bool IsHarvestable => progression >= flyweight.materials.Length - 1;
 
         public readonly GameObject gameObject;
@@ -23,9 +69,10 @@ namespace IntegratedGameplaySystem
         private readonly IPoolService<PoolableParticle> pool;
 
         private int progression;
+        private bool alwaysWatered;
         private bool wateredByHand;
         private bool showingEffects;
-        private PoolableParticle currentParticle;
+        private PoolableParticle rainParticles;
 
         /// <summary>
         /// This is kinda nutty becasue we want to save load time but ok,
@@ -51,6 +98,12 @@ namespace IntegratedGameplaySystem
             pool = ServiceLocator<IPoolService<PoolableParticle>>.Locate();
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
+        }
+
+        public void SetAlwaysWatered(bool value) 
+        {
+            alwaysWatered = value;
+            RefreshRainEffects();
         }
 
         public string GetHoverTitle() 
@@ -118,12 +171,12 @@ namespace IntegratedGameplaySystem
 
             if (IsWatered)
             {
-                currentParticle = pool.Get();
-                currentParticle.Place(transform.position + Vector3.up);
+                rainParticles = pool.Get();
+                rainParticles.Place(transform.position + Vector3.up);
             }
             else
             {
-                pool.Give(currentParticle);
+                pool.Give(rainParticles);
             }
 
             showingEffects = IsWatered;
@@ -141,8 +194,7 @@ namespace IntegratedGameplaySystem
                 return;
             }
 
-            TryWater();
-            RefreshAll();
+            TryWaterManually();
         }
 
         public void TryHarvest()
@@ -157,12 +209,13 @@ namespace IntegratedGameplaySystem
             RefreshAll();
         }
 
-        private void TryWater() 
+        private void TryWaterManually() 
         {
             if (IsWatered)
                 return;
 
             wateredByHand = true;
+            RefreshRainEffects();
         }
     }
 }

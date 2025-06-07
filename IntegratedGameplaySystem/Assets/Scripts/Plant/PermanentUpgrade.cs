@@ -20,6 +20,9 @@ namespace IntegratedGameplaySystem
         public GameObject buttonPrefab;
     }
 
+    /// <summary>
+    /// LOOK INTO INTERFACCCCCCEEEE
+    /// </summary>
     public abstract class UpgradeBase : IInteractable, IHoverable 
     {
         public Action OnBuy;
@@ -39,6 +42,7 @@ namespace IntegratedGameplaySystem
 
     /// <summary>
     /// See how to reduce the repeating between these ??
+    /// Make interface ??? ========
     /// Make interface seems best.
     /// </summary>
     [Serializable]

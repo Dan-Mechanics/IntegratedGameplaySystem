@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab67e53213b21b5468b468ab3834278d, type: 3}
-  m_Name: moon_plot
+  m_Name: plot
   m_EditorClassIdentifier: 
-  plant: {fileID: 11400000, guid: 3aa9be92a0736b0439525ba630c79984, type: 2}
+  plant: {fileID: 11400000, guid: fea0b6872a59f284da25ba69885c92f6, type: 2}
   width: 5
   spacing: 1
   sprinkler:

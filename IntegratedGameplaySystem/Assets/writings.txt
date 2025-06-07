@@ -1,3 +1,25 @@
+fix dispersla vs plot VVV
+fix interface upgrades ( or like inhertience idk ) ??
+fix pooling  V
+and make fast pooling.
+
+so now we officialyl have 3 patterns and like 30000 more.
+
+===
+
+idea: you could make the default text + and then place it in center ipv crosshair.
+
+i feel like the code of dev opdracht is a little strange because
+it is both decoupled with Func but like that is a little strange because we want
+to cleanly dispose of everythign and that makes the code strange or smth.
+i dont know if its very solid either but maybe thats because so it runs better ???/
+
+paradigm where all the classes are connected via func memes and then dont gaf about memory correctness lolol
+.
+
+
+===
+
 i think it would be useufl to make a chart to describe the pipeline of scripts in this meme.
 
 cool object pool with cool service locator doulbe yeetus.

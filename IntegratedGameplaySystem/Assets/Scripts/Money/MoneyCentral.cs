@@ -49,7 +49,7 @@ namespace IntegratedGameplaySystem
 
         public bool CanAfford(int cost) 
         {
-            return money.min >= cost;
+            return money.value >= cost;
         }
 
         private void EarnMoney(int amount)
@@ -57,11 +57,11 @@ namespace IntegratedGameplaySystem
             if (amount <= 0)
                 return;
 
-            money.min += amount;
+            money.value += amount;
             money.Clamp();
             OnChange?.Invoke(money);
 
-            if (money.min >= money.max)
+            if (money.value >= money.max)
                 EventManager.RaiseEvent(Occasion.GameOver);
         }
 
@@ -70,7 +70,7 @@ namespace IntegratedGameplaySystem
             if (amount <= 0)
                 return;
 
-            money.min -= amount;
+            money.value -= amount;
             //money.Clamp();
             OnChange?.Invoke(money);
         }

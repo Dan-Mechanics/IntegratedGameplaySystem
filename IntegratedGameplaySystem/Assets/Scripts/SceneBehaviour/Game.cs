@@ -9,12 +9,19 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
     public class Game : SceneBehaviour
     {
+        public GameObject rainEffectPrefab;
+        //public ObjectPool<PoolableParticle> rainPool;
+
         /// <summary>
         /// Builder for this /???
         /// </summary>
         /// <returns></returns>
         public override List<object> GetSceneComponents()
         {
+            var rainPool = new ObjectPool<PoolableParticle>();
+            rainPool.AllocateNew += AllocateNewRain;
+            ServiceLocator<IPoolService<PoolableParticle>>.Provide(rainPool);
+            
             IAssetService assetService = ServiceLocator<IAssetService>.Locate();
             List<object> components = base.GetSceneComponents();
 
@@ -37,6 +44,7 @@ namespace IntegratedGameplaySystem
             var score = new Score();
             ServiceLocator<IScoreService>.Provide(score);
 
+
             var display = new FarmingFrenzyDisplay(interactor, money, score, hand);
             components.Add(display);
 
@@ -47,6 +55,25 @@ namespace IntegratedGameplaySystem
             components.Add(hand);
 
             return components;
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            var pool = ServiceLocator<IPoolService<PoolableParticle>>.Locate();
+            pool.AllocateNew -= AllocateNewRain;
+            pool.Flush();
+        }
+
+        /// <summary>
+        /// ?/ where do the assets belong at tho??
+        /// </summary>
+        /// <returns></returns>
+        private PoolableParticle AllocateNewRain()
+        {
+            GameObject rain = Utils.SpawnPrefab(rainEffectPrefab);
+            return new PoolableParticle(rain.GetComponent<ParticleSystem>());
         }
     }
 }

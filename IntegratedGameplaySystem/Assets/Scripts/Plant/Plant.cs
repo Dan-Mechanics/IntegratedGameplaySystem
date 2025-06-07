@@ -11,20 +11,21 @@ namespace IntegratedGameplaySystem
     {
         public event Func<bool> IsAlwaysWatered;
         public bool IsWatered => wateredByHand || IsAlwaysWatered.Invoke();
-        public bool IsHarvestable => progression >= blueprint.materials.Length - 1;
+        public bool IsHarvestable => progression >= flyweight.materials.Length - 1;
 
         public readonly GameObject gameObject;
         public readonly Transform transform;
 
         // Composite this ??
-        private readonly PlantFlyweight blueprint;
+        private readonly PlantFlyweight flyweight;
         private readonly MeshRenderer[] meshRenderers;
         private readonly SphereCollider sphereCollider;
-        private readonly ParticleSystem waterEffect;
+        private readonly IPoolService<PoolableParticle> pool;
 
         private int progression;
         private bool wateredByHand;
         private bool showingEffects;
+        private PoolableParticle currentParticle;
 
         /// <summary>
         /// This is kinda nutty becasue we want to save load time but ok,
@@ -34,19 +35,20 @@ namespace IntegratedGameplaySystem
         /// 
         /// Factory here !!!
         /// </summary>
-        public Plant(PlantFlyweight blueprint)
+        public Plant(PlantFlyweight flyweight)
         {
-            this.blueprint = blueprint;
+            this.flyweight = flyweight;
 
-            gameObject = Utils.SpawnPrefab(blueprint.plantPrefab);
+            gameObject = Utils.SpawnPrefab(flyweight.plantPrefab);
             transform = gameObject.transform;
-            transform.name = blueprint.name;
+            transform.name = flyweight.name;
 
-            GameObject rain = Utils.SpawnPrefab(blueprint.rainPrefab);
+            /*GameObject rain = Utils.SpawnPrefab(blueprint.rainPrefab);
             rain.transform.SetParent(transform);
             rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
-            waterEffect = rain.GetComponent<ParticleSystem>();
+            rainEffect = rain.GetComponent<ParticleSystem>();*/
 
+            pool = ServiceLocator<IPoolService<PoolableParticle>>.Locate();
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
         }
@@ -54,9 +56,9 @@ namespace IntegratedGameplaySystem
         public string GetHoverTitle() 
         {
             if (!IsWatered && !IsHarvestable)
-                return $"dry {blueprint.name}";
+                return $"dry {flyweight.name}";
 
-            return blueprint.name;
+            return flyweight.name;
         }
 
         public void Start()
@@ -78,7 +80,7 @@ namespace IntegratedGameplaySystem
 
         private void Tick()
         {
-            if (!Utils.OneIn(IsWatered ? blueprint.wateredGrowOdds : blueprint.growOdds))
+            if (!Utils.OneIn(IsWatered ? flyweight.wateredGrowOdds : flyweight.growOdds))
                 return;
 
             Grow();
@@ -88,7 +90,7 @@ namespace IntegratedGameplaySystem
         {
             wateredByHand = false;
             progression++;
-            progression = Mathf.Clamp(progression, 0, blueprint.materials.Length - 1);
+            progression = Mathf.Clamp(progression, 0, flyweight.materials.Length - 1);
 
             RefreshAll();
         }
@@ -97,7 +99,7 @@ namespace IntegratedGameplaySystem
         {
             for (int i = 0; i < meshRenderers.Length; i++)
             {
-                meshRenderers[i].material = blueprint.materials[progression];
+                meshRenderers[i].material = flyweight.materials[progression];
             }
 
             sphereCollider.center = Vector3.down * (IsHarvestable ? 0f : 0.5f);
@@ -116,11 +118,12 @@ namespace IntegratedGameplaySystem
 
             if (IsWatered)
             {
-                waterEffect.Play();
+                currentParticle = pool.Get();
+                currentParticle.Place(transform.position + Vector3.up);
             }
             else
             {
-                waterEffect.Stop();
+                pool.Give(currentParticle);
             }
 
             showingEffects = IsWatered;
@@ -149,7 +152,7 @@ namespace IntegratedGameplaySystem
 
             progression = 0;
             wateredByHand = false;
-            EventManager<IItemArchitype>.RaiseEvent(Occasion.SetOrAddItem, blueprint);
+            EventManager<IItemArchitype>.RaiseEvent(Occasion.SetOrAddItem, flyweight);
 
             RefreshAll();
         }

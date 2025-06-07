@@ -6,7 +6,7 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Extract to plantupgrades so that we can have both dipseral and other hsit.
     /// </summary>
-    public class Plot : IPlantDistribution, IDisposable, IStartable
+    public abstract class Plot : IPlantDistribution, IDisposable, IStartable
     {
         private readonly PermanentUpgrade sprinkler = new();
         private readonly RepeatableUpgrade grenade = new();
@@ -39,9 +39,25 @@ namespace IntegratedGameplaySystem
                     index = x + (z * settings.width);
                     plantsOnPlot[index] = new Plant(settings.plant);
 
+                    //plantsOnPlot[index].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + position;
+                    //Utils.ApplyRandomRotation(plantsOnPlot[index].transform);
+                    components.Add(plantsOnPlot[index]);
+                }
+            }
+        }
+
+        public abstract void PlacePlants()
+        {
+            int index;
+
+            for (int x = 0; x < settings.width; x++)
+            {
+                for (int z = 0; z < settings.width; z++)
+                {
+                    index = x + (z * settings.width);
+
                     plantsOnPlot[index].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + position;
                     Utils.ApplyRandomRotation(plantsOnPlot[index].transform);
-                    components.Add(plantsOnPlot[index]);
                 }
             }
         }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
@@ -14,13 +13,12 @@ namespace IntegratedGameplaySystem
         public int MaxStackSize => maxCount;
         public int MonetaryValue => monetaryValue;
 
-        public GameObject plantPrefab;
-        public GameObject rainPrefab;
-        public int monetaryValue;
         [Min(1), Tooltip("One in ...")] public int growOdds;
         [Min(1), Tooltip("One in ...")] public int wateredGrowOdds;
+        [Min(1)] public int monetaryValue;
         [Min(1)] public int maxCount;
 
+        public GameObject plantPrefab;
         public Sprite sprite;
         public Material[] materials;
 

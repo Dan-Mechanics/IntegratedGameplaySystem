@@ -8,5 +8,7 @@ namespace IntegratedGameplaySystem
     {
         public UpgradeValues sprinkler;
         public UpgradeValues grenade;
+
+        public GameObject grenadeEffect;
     }
 }

@@ -31,14 +31,13 @@ namespace IntegratedGameplaySystem
             // Note: youcould add theup grade settings to the shit or not.
             IPlantPlacementStrategy strat = new Plot(assetService.GetAssetByType<PlotSettings>());
 
-            var rainPool = new ClassicObjectPool<PoolableParticle>(strat.GetPlantCount());
+            var rainPool = new ObjectPool<PoolableParticle>();
             rainPool.AllocateNew += AllocateNewRain;
-            rainPool.Populate();
             ServiceLocator<IPoolService<PoolableParticle>>.Provide(rainPool);
 
             for (int i = 0; i < plants.Count; i++)
             {
-                var plantHolder = new PlantHolder(upgrade, i, plants[i], money, strat);
+                var plantHolder = new PlantCollectionHandler(upgrade, i, plants[i], money, strat);
                 plantHolder.SpawnPlants(components);
             }
 

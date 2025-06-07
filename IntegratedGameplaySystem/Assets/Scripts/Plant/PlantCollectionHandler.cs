@@ -6,7 +6,7 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Extract to plantupgrades so that we can have both dipseral and other hsit.
     /// </summary>
-    public class PlantHolder : IDisposable, IStartable
+    public class PlantCollectionHandler : IDisposable, IStartable
     {
         private readonly PermanentUpgrade sprinkler = new();
         private readonly RepeatableUpgrade grenade = new();
@@ -21,7 +21,7 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// Builder ??
         /// </summary>
-        public PlantHolder(UpgradeSettings upgradeSettings, int index, PlantFlyweight flyweight, MoneyCentral money, IPlantPlacementStrategy strategy)
+        public PlantCollectionHandler(UpgradeSettings upgradeSettings, int index, PlantFlyweight flyweight, MoneyCentral money, IPlantPlacementStrategy strategy)
         {
             this.index = index;
             this.flyweight = flyweight;

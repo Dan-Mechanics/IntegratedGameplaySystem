@@ -1,7 +1,12 @@
 fix dispersla vs plot VVV
 fix interface upgrades ( or like inhertience idk ) ??
 fix pooling  V
-and make fast pooling.
+and make fast pooling. VV
+
+tomorrow add movement speed and holding size,
+perhcance also add a thing where it has blow up particle LOLOl.
+
+rename / refactoring EVERYTHIGN !!
 
 so now we officialyl have 3 patterns and like 30000 more.
 

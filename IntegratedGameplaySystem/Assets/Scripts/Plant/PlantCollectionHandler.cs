@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
     public class PlantCollectionHandler : IDisposable, IStartable
     {
         private readonly PermanentUpgrade sprinkler = new();
-        private readonly RepeatableUpgrade grenade = new();
+        private readonly TemporaryUpgrade grenade = new();
 
         private readonly PlantFlyweight flyweight;
         private readonly MoneyCentral money;
@@ -30,13 +30,10 @@ namespace IntegratedGameplaySystem
 
 
             IWorldService world = ServiceLocator<IWorldService>.Locate();
-            Vector3 plotPos = strategy.GetPlotPos(index);
+            Vector3 offset = strategy.GetPlotPos(index);
 
-            sprinkler.SetValues(upgradeSettings.sprinkler);
-            grenade.SetValues(upgradeSettings.grenade);
-            
-            sprinkler.Setup(world, plotPos);
-            grenade.Setup(world, plotPos);
+            sprinkler.Setup(world, offset, upgradeSettings.sprinkler);
+            grenade.Setup(world, offset, upgradeSettings.grenade);
         }
 
         public void SpawnPlants(List<object> components)

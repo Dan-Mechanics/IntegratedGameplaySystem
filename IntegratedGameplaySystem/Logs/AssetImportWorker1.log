@@ -8036,3 +8036,78 @@ Start importing Assets/Prefabs/start_manager Variant.prefab using Guid(81ab7e767
  -> (artifact id: '2601e3d327f90ad1ecf0929ae63ebad8') in 0.212319 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 206
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.429 seconds
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.475 seconds
+Domain Reload Profiling: 902ms
+	BeginReloadAssembly (234ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (22ms)
+	RebuildCommonClasses (29ms)
+	RebuildNativeTypeToScriptingClass (11ms)
+	initialDomainReloadingComplete (33ms)
+	LoadAllAssembliesAndSetupDomain (119ms)
+		LoadAssemblies (190ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (12ms)
+			TypeCache.Refresh (5ms)
+				TypeCache.ScanAssembly (1ms)
+			ScanForSourceGeneratedMonoScriptInfo (4ms)
+			ResolveRequiredComponents (3ms)
+	FinalizeReload (475ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (244ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (12ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (44ms)
+			ProcessInitializeOnLoadAttributes (155ms)
+			ProcessInitializeOnLoadMethodAttributes (20ms)
+			AfterProcessingInitializeOnLoad (9ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Refreshing native plugins compatible for Editor in 1.00 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1059 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 5 unused Assets / (24.0 KB). Loaded Objects now: 1889.
+Memory consumption went from 145.5 MB to 145.5 MB.
+Total: 3.132100 ms (FindLiveObjects: 0.201000 ms CreateObjectMapping: 0.088000 ms MarkObjects: 2.809100 ms  DeleteObjects: 0.032400 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/GameScene.cs: bdf43124a20cd6b9179ed97bc8f53008 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/Plant.cs: 2fba8e09ce2dc87226cc90e0706eb946 -> 62ba4f5aa2dbbed39a5f15fe599a088c
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/UpgradeSettings.cs: ef1b73fb9a7df729f9e77a9f3c981cf2 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/PlantHolder.cs: 4e2d8f0b89dea3fba2c47be051f55717 -> 
+  custom:scripting/monoscript/fileName/DispersalSettings.cs: 06a98bd381b086e07679e6b548c51c8c -> 
+  custom:scripting/monoscript/fileName/MenuScene.cs: f8b7f84e6c78d9b90660b0babb5bc0fd -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/PlantCollectionHandler.cs: c0d6dcbfe1d0011c026ce8173cebd1bd -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/Dispersal.cs: 6e4eb803aaf2348b85473ae0b297516d -> 20ee83fce2569df07e8d5b1cec4181d9
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: bf461d774a836f90297f4f54c22001ca -> 70588a009c8f711fd8d473f0a0e0971e
+  custom:scripting/monoscript/fileName/PoolableParticle.cs: dd765600c049d095f613f85c50effc14 -> 
+  custom:scripting/monoscript/fileName/IPoolable.cs: 73a370ef05be54c3d2b076e772f42712 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/ObjectPool.cs: 849ed7f5b11c9db237ef61b01c5a5104 -> 

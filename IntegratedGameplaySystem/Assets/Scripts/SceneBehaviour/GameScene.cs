@@ -6,8 +6,8 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Currently somewhat serves as a context class.
     /// </summary>
-    [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(Game), fileName = "New " + nameof(Game))]
-    public class Game : SceneBehaviour
+    [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(GameScene), fileName = "New " + nameof(GameScene))]
+    public class GameScene : SceneBehaviour
     {
         public GameObject rainEffectPrefab;
         //public ObjectPool<PoolableParticle> rainPool;

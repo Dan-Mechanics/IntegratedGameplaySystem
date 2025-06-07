@@ -16,7 +16,7 @@ namespace IntegratedGameplaySystem
         private readonly IPlantPlacementStrategy strategy;
         private readonly int index;
 
-        private Plant[] plantsOnPlot;
+        private Plant[] plants;
 
         /// <summary>
         /// Builder ??
@@ -40,15 +40,15 @@ namespace IntegratedGameplaySystem
         {
             components.Add(this);
 
-            plantsOnPlot = new Plant[strategy.GetPlantCount()];
+            plants = new Plant[strategy.GetPlantCount()];
 
-            for (int i = 0; i < plantsOnPlot.Length; i++)
+            for (int i = 0; i < plants.Length; i++)
             {
-                plantsOnPlot[i] = new Plant(flyweight);
-                components.Add(plantsOnPlot[i]);
+                plants[i] = new Plant(flyweight);
+                components.Add(plants[i]);
             }
 
-            strategy.PlacePlants(plantsOnPlot, index);
+            strategy.PlacePlants(plants, index);
         }
 
         public void Start() 
@@ -64,9 +64,9 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private void UseGrenade() 
         {
-            for (int i = 0; i < plantsOnPlot.Length; i++)
+            for (int i = 0; i < plants.Length; i++)
             {
-                plantsOnPlot[i].TryHarvest();
+                plants[i].TryHarvest();
             }
         }
 
@@ -75,10 +75,9 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private void InstallSprinkler() 
         {
-            for (int i = 0; i < plantsOnPlot.Length; i++)
+            for (int i = 0; i < plants.Length; i++)
             {
-                plantsOnPlot[i].SetAlwaysWatered(true);
-                //plantsOnPlot[i].RefreshRainEffects();
+                plants[i].SetAlwaysWatered(true);
             }
         }
 

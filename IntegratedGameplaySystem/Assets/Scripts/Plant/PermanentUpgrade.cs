@@ -5,11 +5,6 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// is there a way to make this use a pattern?
-    /// Commonalityies:
-    /// price
-    /// interactable
-    /// afford
-    /// 
     /// You could say that the sprinkler lasts X amount of secodns right.
     /// </summary>
     [Serializable]
@@ -29,13 +24,14 @@ namespace IntegratedGameplaySystem
 
     public class PermanentUpgrade : IUpgradable
     {
+        public event Action OnBuy;
+        public event Func<int, bool> OnCanAfford;
+        
         private IWorldService world;
         private bool hasBought;
         private UpgradeValues values;
         private GameObject button;
 
-        public event Action OnBuy;
-        public event Func<int, bool> OnCanAfford;
 
         public void Setup(IWorldService world, Vector3 offset, UpgradeValues values)
         {
@@ -47,8 +43,6 @@ namespace IntegratedGameplaySystem
 
             world.Add(button, this);
         }
-
-        //public bool GetHasBought() => hasBought;
 
         public string GetHoverTitle()
         {

@@ -16,7 +16,7 @@ namespace IntegratedGameplaySystem
                 "no score yet ..." :
                 $"your time: {service.GetScore()}";
 
-            Text text = BaseDisplay.AddToCanvas<Text>(canvas, textPrefab);
+            Text text = Display.AddToCanvas<Text>(canvas, textPrefab);
             text.text = scoreText;
 
             EasyRect ui = new EasyRect(text.rectTransform);

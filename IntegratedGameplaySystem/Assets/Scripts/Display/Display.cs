@@ -7,13 +7,13 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// This class is not perfect but you get the point.
     /// </summary>
-    public class BaseDisplay : IDisposable
+    public class Display : IDisposable
     {
         public List<IDisposable> Disposables { get; private set; }
         public DisplaySettings Settings { get; private set; }
         public Transform Canvas { get; private set; }
 
-        public BaseDisplay() 
+        public Display() 
         {
             Disposables = new List<IDisposable>();
             Settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<DisplaySettings>();

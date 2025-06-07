@@ -3,75 +3,29 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public interface IPlantState 
-    {
-        void Interact();
-        void Tick();
-    }
-
-    public class Dry : IPlantState
-    {
-        public void Interact()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Tick()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Wet : IPlantState
-    {
-        public void Interact()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Tick()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Harvestable : IPlantState
-    {
-        public void Interact()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Tick()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     /// <summary>
     /// Give this plant an Ipositioner that positions it according to some rules ya know?
     /// I want this to be able to work with plots instead of patches.
     /// 
     /// Statemachine ?? --> Dry, Watered, Grown
     /// </summary>
-    public class Plant : IStartable, IInteractable, IHoverable, IDisposable
+    public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
-        public bool IsWatered => alwaysWatered || wateredByHand;
+        //public bool IsWatered => alwaysWatered || wateredByHand;
         public bool IsHarvestable => progression >= flyweight.materials.Length - 1;
 
         public readonly GameObject gameObject;
         public readonly Transform transform;
 
-        // Composite this ??
         private readonly PlantFlyweight flyweight;
         private readonly MeshRenderer[] meshRenderers;
         private readonly SphereCollider sphereCollider;
         private readonly IPoolService<PoolableParticle> pool;
 
         private int progression;
-        private bool alwaysWatered;
-        private bool wateredByHand;
-        private bool showingEffects;
+        //private bool alwaysWatered;
+        private bool watered;
+        private bool rainEffectShowing;
         private PoolableParticle rainParticles;
 
         /// <summary>
@@ -90,25 +44,14 @@ namespace IntegratedGameplaySystem
             transform = gameObject.transform;
             transform.name = flyweight.name;
 
-            /*GameObject rain = Utils.SpawnPrefab(blueprint.rainPrefab);
-            rain.transform.SetParent(transform);
-            rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
-            rainEffect = rain.GetComponent<ParticleSystem>();*/
-
             pool = ServiceLocator<IPoolService<PoolableParticle>>.Locate();
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
         }
 
-        public void SetAlwaysWatered(bool value) 
-        {
-            alwaysWatered = value;
-            RefreshRainEffects();
-        }
-
         public string GetHoverTitle() 
         {
-            if (!IsWatered && !IsHarvestable)
+            if (!watered && !IsHarvestable)
                 return $"dry {flyweight.name}";
 
             return flyweight.name;
@@ -119,7 +62,9 @@ namespace IntegratedGameplaySystem
             ServiceLocator<IWorldService>.Locate().Add(gameObject, this);
             EventManager.AddListener(Occasion.Tick, Tick);
 
-            RefreshAll();
+            RefreshMaterials();
+            RefreshCollider();
+            RefreshRainEffect();
         }
 
         /// <summary>
@@ -133,7 +78,7 @@ namespace IntegratedGameplaySystem
 
         private void Tick()
         {
-            if (!Utils.OneIn(IsWatered ? flyweight.wateredGrowOdds : flyweight.growOdds))
+            if (!Utils.RandomWithPercentage(watered ? flyweight.wateredGrowGrowPercentage : flyweight.dryGrowPercentage))
                 return;
 
             Grow();
@@ -141,35 +86,35 @@ namespace IntegratedGameplaySystem
 
         private void Grow()
         {
-            wateredByHand = false;
+            watered = false;
             progression++;
             progression = Mathf.Clamp(progression, 0, flyweight.materials.Length - 1);
 
-            RefreshAll();
+            RefreshMaterials();
+            RefreshCollider();
+            RefreshRainEffect();
         }
 
-        private void RefreshAll() 
+        private void RefreshMaterials() 
         {
             for (int i = 0; i < meshRenderers.Length; i++)
             {
                 meshRenderers[i].material = flyweight.materials[progression];
             }
-
-            sphereCollider.center = Vector3.down * (IsHarvestable ? 0f : 0.5f);
-            sphereCollider.enabled = IsHarvestable || !IsWatered;
-
-            RefreshRainEffects();
         }
 
-        /// <summary>
-        /// USE OBJECT POOL !!!!!!!!!!!!!!!!! COOL CODE TO BE FOUND THERE.
-        /// </summary>
-        public void RefreshRainEffects()
+        private void RefreshCollider() 
         {
-            if (showingEffects == IsWatered)
+            sphereCollider.center = Vector3.down * (IsHarvestable ? 0f : 0.5f);
+            sphereCollider.enabled = IsHarvestable || !watered;
+        }
+
+        public void RefreshRainEffect()
+        {
+            if (rainEffectShowing == watered)
                 return;
 
-            if (IsWatered)
+            if (watered)
             {
                 rainParticles = pool.Get();
                 rainParticles.Place(transform.position + Vector3.up);
@@ -179,43 +124,84 @@ namespace IntegratedGameplaySystem
                 pool.Give(rainParticles);
             }
 
-            showingEffects = IsWatered;
+            rainEffectShowing = watered;
         }
 
-        /// <summary>
-        /// We should not be able to interact with this if not full-grown
-        /// but i dont do protective coding, i would rather instantly find bugs right.
-        /// </summary>
         public void Interact()
         {
-            if (IsHarvestable) 
-            { 
-                TryHarvest();
-                return;
-            }
-
-            TryWaterManually();
+            Water();
+            Harvest();
         }
 
-        public void TryHarvest()
+        public void Harvest()
         {
             if (!IsHarvestable)
                 return;
 
             progression = 0;
-            wateredByHand = false;
-            EventManager<IItemArchitype>.RaiseEvent(Occasion.SetOrAddItem, flyweight);
+            watered = false;
+            EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, flyweight);
 
-            RefreshAll();
+            RefreshMaterials();
+            RefreshCollider();
+            RefreshRainEffect();
         }
 
-        private void TryWaterManually() 
+        public void Water()
         {
-            if (IsWatered)
+            if (watered)
                 return;
 
-            wateredByHand = true;
-            RefreshRainEffects();
+            watered = true;
+
+            RefreshRainEffect();
+            RefreshCollider();
         }
     }
+
+    /*public interface IPlantState 
+{
+    void Interact();
+    void Tick();
+}
+
+public class Dry : IPlantState
+{
+    public void Interact()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Tick()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class Wet : IPlantState
+{
+    public void Interact()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Tick()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class Harvestable : IPlantState
+{
+    public void Interact()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Tick()
+    {
+        throw new NotImplementedException();
+    }
+}*/
+
 }

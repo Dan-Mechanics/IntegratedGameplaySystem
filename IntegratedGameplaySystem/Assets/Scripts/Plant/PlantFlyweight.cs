@@ -10,13 +10,13 @@ namespace IntegratedGameplaySystem
     public class PlantFlyweight : ScriptableObject, IItemArchitype
     {
         public Sprite Sprite => sprite;
-        public int MaxStackSize => maxCount;
+        public int MaxStackSize => maxStackSize;
         public int MonetaryValue => monetaryValue;
 
-        [Min(1), Tooltip("One in ...")] public int growOdds;
-        [Min(1), Tooltip("One in ...")] public int wateredGrowOdds;
+        [Range(0f, 100f)] public float dryGrowPercentage;
+        [Range(0f, 100f)] public float wateredGrowGrowPercentage;
         [Min(1)] public int monetaryValue;
-        [Min(1)] public int maxCount;
+        [Min(1)] public int maxStackSize;
 
         public GameObject plantPrefab;
         public Sprite sprite;

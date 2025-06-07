@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprinkler:
     name: Sprinkler
-    cost: 50
+    cost: 100
     buttonPrefab: {fileID: 5604457068642857581, guid: 8f56ebe545301834d80d99d075e48cb2, type: 3}
   grenade:
-    name: Sprinkler
-    cost: 50
+    name: Grenade
+    cost: 25
     buttonPrefab: {fileID: 5604457068642857581, guid: 217496b748f34cb49ae7a97a68c0bd91, type: 3}
+  grenadeEffect: {fileID: 6104260903218439826, guid: 525daebab04350c41b9ae0f9433bad8c, type: 3}

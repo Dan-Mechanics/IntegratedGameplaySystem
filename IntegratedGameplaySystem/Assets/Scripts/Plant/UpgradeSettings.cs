@@ -6,8 +6,8 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(UpgradeSettings), fileName = "New " + nameof(UpgradeSettings))]
     public class UpgradeSettings : ScriptableObject
     {
-        public UpgradeValues sprinkler;
-        public UpgradeValues grenade;
+        public UpgradeValuesInspector sprinkler;
+        public UpgradeValuesInspector grenade;
 
         public GameObject grenadeEffect;
     }

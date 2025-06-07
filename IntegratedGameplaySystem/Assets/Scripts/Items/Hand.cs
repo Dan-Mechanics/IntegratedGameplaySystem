@@ -23,7 +23,7 @@ namespace IntegratedGameplaySystem
         
         public void Start()
         {
-            EventManager<IItemArchitype>.AddListener(Occasion.SetOrAddItem, SetOrAddItem);
+            EventManager<IItemArchitype>.AddListener(Occasion.PickupItem, SetOrAddItem);
 
             Clear();
             OnChange?.Invoke(heldItem);
@@ -47,7 +47,7 @@ namespace IntegratedGameplaySystem
 
         public void Dispose()
         {
-            EventManager<IItemArchitype>.RemoveListener(Occasion.SetOrAddItem, SetOrAddItem);
+            EventManager<IItemArchitype>.RemoveListener(Occasion.PickupItem, SetOrAddItem);
         }
 
         public ItemStack[] GetItems()

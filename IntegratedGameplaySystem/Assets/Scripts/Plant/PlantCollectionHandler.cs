@@ -10,31 +10,35 @@ namespace IntegratedGameplaySystem
     {
         private readonly PermanentUpgrade sprinkler = new();
         private readonly TemporaryUpgrade grenade = new();
+        private readonly List<IUpgradable> upgradables = new();
 
         private readonly PlantFlyweight flyweight;
         private readonly MoneyCentral money;
         private readonly IPlantPlacementStrategy strategy;
         private readonly int index;
+        private readonly UpgradeSettings settings;
 
         private Plant[] plants;
 
         /// <summary>
         /// Builder ??
         /// </summary>
-        public PlantCollectionHandler(UpgradeSettings upgradeSettings, int index, PlantFlyweight flyweight, MoneyCentral money, IPlantPlacementStrategy strategy)
+        public PlantCollectionHandler(UpgradeSettings settings, int index, PlantFlyweight flyweight, MoneyCentral money, IPlantPlacementStrategy strategy)
         {
             this.index = index;
+            this.settings = settings;
             this.flyweight = flyweight;
             this.money = money;
             this.strategy = strategy;
 
+            GiveValues(sprinkler, settings.sprinkler);
+            GiveValues(grenade, settings.grenade);
 
-            IWorldService world = ServiceLocator<IWorldService>.Locate();
-            Vector3 offset = strategy.GetPlotPos(index);
-
-            sprinkler.Setup(world, offset, upgradeSettings.sprinkler);
-            grenade.Setup(world, offset, upgradeSettings.grenade);
+            upgradables.Add(sprinkler);
+            upgradables.Add(grenade);
         }
+
+        private void GiveValues(IUpgradable upgradable, UpgradeValuesInspector values) => upgradable.SetValues(values);
 
         public void SpawnPlants(List<object> components)
         {
@@ -53,40 +57,46 @@ namespace IntegratedGameplaySystem
 
         public void Start() 
         {
+            IWorldService world = ServiceLocator<IWorldService>.Locate();
+            Vector3 offset = strategy.GetPlotPos(index);
+
+            upgradables.ForEach(x => x.Setup(offset, world));
+
             sprinkler.OnBuy += InstallSprinkler;
-            sprinkler.OnCanAfford += money.CanAfford;
-            grenade.OnCanAfford += money.CanAfford;
             grenade.OnBuy += UseGrenade;
+            upgradables.ForEach(x => x.OnCanBuy += money.CanAfford);
         }
 
         /// <summary>
-        /// Harvest all.
+        /// Harvest all ...
         /// </summary>
         private void UseGrenade() 
         {
             for (int i = 0; i < plants.Length; i++)
             {
-                plants[i].TryHarvest();
+                plants[i].Harvest();
             }
+
+            Transform effect = Utils.SpawnPrefab(settings.grenadeEffect).transform;
+            effect.position = strategy.GetPlotPos(index);
         }
 
         /// <summary>
-        /// Plot always wet.
+        /// Make the whole plot rain ...
         /// </summary>
         private void InstallSprinkler() 
         {
             for (int i = 0; i < plants.Length; i++)
             {
-                plants[i].SetAlwaysWatered(true);
+                plants[i].Water();
             }
         }
 
         public void Dispose() 
         {
             sprinkler.OnBuy -= InstallSprinkler;
-            sprinkler.OnCanAfford -= money.CanAfford;
-            grenade.OnCanAfford -= money.CanAfford;
             grenade.OnBuy -= UseGrenade;
+            upgradables.ForEach(x => x.OnCanBuy -= money.CanAfford);
         }
     }
 }

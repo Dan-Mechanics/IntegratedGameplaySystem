@@ -5,7 +5,7 @@ namespace IntegratedGameplaySystem
 {
     public class FarmingFrenzyDisplay : IStartable, IDisposable
     {
-        private readonly BaseDisplay display;
+        private readonly Display display;
   
         private readonly DataChannel<string, Text> interactor;
         private readonly DataChannel<float, Text> score;
@@ -16,7 +16,7 @@ namespace IntegratedGameplaySystem
         public FarmingFrenzyDisplay(IChangeTracker<string> interactor, IChangeTracker<IntWithMax> money, IChangeTracker<float> score, 
             IChangeTracker<ItemStack> hand) 
         {
-            display = new BaseDisplay();
+            display = new Display();
 
             this.interactor = new DataChannel<string, Text>(interactor, display.Disposables);
             this.score = new DataChannel<float, Text>(score, display.Disposables);
@@ -32,10 +32,10 @@ namespace IntegratedGameplaySystem
             InitializeUI(display.Settings, display.Canvas);
 
             interactor.OnChange += display.SettingsStrIntoText;
-            moneyBar.OnChange += BaseDisplay.RangeIntoFillImage;
-            score.OnChange += BaseDisplay.FloatIntoText;
-            hand.OnChange += BaseDisplay.ItemStackIntoSlot;
-            moneyText.OnChange += BaseDisplay.RangeIntoText;
+            moneyBar.OnChange += Display.RangeIntoFillImage;
+            score.OnChange += Display.FloatIntoText;
+            hand.OnChange += Display.ItemStackIntoSlot;
+            moneyText.OnChange += Display.RangeIntoText;
         }
 
         /// <summary>
@@ -43,16 +43,17 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private void InitializeUI(DisplaySettings settings, Transform canvas) 
         {
-            interactor.ui = BaseDisplay.AddToCanvas<Text>(canvas, settings.text);
+            interactor.ui = Display.AddToCanvas<Text>(canvas, settings.text);
             EasyRect rect = new EasyRect(interactor.ui.rectTransform);
-            rect.SnapTo(Snap.Center, 1f * rect.GetHeight() * Vector2.down);
+            //rect.SnapTo(Snap.Center, 1f * rect.GetHeight() * Vector2.down);
+            rect.SnapTo(Snap.Center);
 
-            score.ui = BaseDisplay.AddToCanvas<Text>(canvas, settings.text);
+            score.ui = Display.AddToCanvas<Text>(canvas, settings.text);
             rect.Set(score.ui.rectTransform);
             rect.SetSize(200, 30f);
             rect.SnapTo(Snap.Bottom, 200f * Vector2.right + (15f * Vector2.up));
 
-            moneyBar.ui = BaseDisplay.AddToCanvas<Image>(canvas, settings.image);
+            moneyBar.ui = Display.AddToCanvas<Image>(canvas, settings.image);
             rect.Set(moneyBar.ui.rectTransform);
             moneyBar.ui.color = Color.black;
             rect.SetSize(200, 30f);
@@ -64,23 +65,23 @@ namespace IntegratedGameplaySystem
             rect.SetSize(200f, 30f);
             rect.SnapTo(Snap.Bottom, 200f * Vector2.left + (15f * Vector2.up));
 
-            moneyText.ui = BaseDisplay.AddToCanvas<Text>(canvas, settings.text);
+            moneyText.ui = Display.AddToCanvas<Text>(canvas, settings.text);
             rect.Set(moneyText.ui.rectTransform);
             moneyText.ui.color = Color.white;
             rect.SetSize(200, 30f);
             rect.SnapTo(Snap.Bottom, 200f * Vector2.left + (15f * Vector2.up));
             
-            hand.ui.image = BaseDisplay.AddToCanvas<Image>(canvas, settings.image);
+            hand.ui.image = Display.AddToCanvas<Image>(canvas, settings.image);
             rect.Set(hand.ui.image.rectTransform);
             rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
 
-            hand.ui.text = BaseDisplay.AddToCanvas<Text>(canvas, settings.text);
+            hand.ui.text = Display.AddToCanvas<Text>(canvas, settings.text);
             hand.ui.text.color = Color.white;
             hand.ui.text.fontSize = 40;
             rect.Set(hand.ui.text.rectTransform);
             rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
 
-            Image overlay = BaseDisplay.AddToCanvas<Image>(canvas, settings.image);
+            Image overlay = Display.AddToCanvas<Image>(canvas, settings.image);
             overlay.sprite = settings.defaultSprite;
             rect.Set(overlay.rectTransform);
             rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
@@ -91,10 +92,10 @@ namespace IntegratedGameplaySystem
             display.Dispose();
 
             interactor.OnChange -= display.SettingsStrIntoText;
-            moneyBar.OnChange -= BaseDisplay.RangeIntoFillImage;
-            score.OnChange -= BaseDisplay.FloatIntoText;
-            hand.OnChange -= BaseDisplay.ItemStackIntoSlot;
-            moneyText.OnChange -= BaseDisplay.RangeIntoText;
+            moneyBar.OnChange -= Display.RangeIntoFillImage;
+            score.OnChange -= Display.FloatIntoText;
+            hand.OnChange -= Display.ItemStackIntoSlot;
+            moneyText.OnChange -= Display.RangeIntoText;
         }
     }
 }

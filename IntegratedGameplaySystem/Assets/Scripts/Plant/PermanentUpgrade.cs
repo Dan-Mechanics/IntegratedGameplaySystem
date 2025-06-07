@@ -5,10 +5,10 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// is there a way to make this use a pattern?
-    /// You could say that the sprinkler lasts X amount of secodns right.
+    /// You could say that the sprinkler lasts X amount of secodns right. --> i like that it lasts.
     /// </summary>
     [Serializable]
-    public class UpgradeValues
+    public class UpgradeValuesInspector
     {
         public string name;
         public int cost;
@@ -17,25 +17,24 @@ namespace IntegratedGameplaySystem
 
     public interface IUpgradable : IInteractable, IHoverable 
     {
+        public event Func<int, bool> OnCanBuy;
         public event Action OnBuy;
-        public event Func<int, bool> OnCanAfford;
-        void Setup(IWorldService world, Vector3 offset, UpgradeValues values);
+        void SetValues(UpgradeValuesInspector values);
+        void Setup(Vector3 offset, IWorldService world);
     }
 
     public class PermanentUpgrade : IUpgradable
     {
         public event Action OnBuy;
-        public event Func<int, bool> OnCanAfford;
+        public event Func<int, bool> OnCanBuy;
         
         private IWorldService world;
         private bool hasBought;
-        private UpgradeValues values;
+        private UpgradeValuesInspector values;
         private GameObject button;
 
-
-        public void Setup(IWorldService world, Vector3 offset, UpgradeValues values)
+        public void Setup(Vector3 offset, IWorldService world)
         {
-            this.values = values;
             this.world = world;
 
             button = Utils.SpawnPrefab(values.buttonPrefab);
@@ -44,12 +43,14 @@ namespace IntegratedGameplaySystem
             world.Add(button, this);
         }
 
+        public void SetValues(UpgradeValuesInspector values) => this.values = values;
+
         public string GetHoverTitle()
         {
             if (hasBought)
                 return string.Empty;
 
-            if (!OnCanAfford.Invoke(values.cost))
+            if (!OnCanBuy.Invoke(values.cost))
                 return "Can't afford yet!";
 
             return $"{values.name} upgrade for ${values.cost}";
@@ -60,7 +61,7 @@ namespace IntegratedGameplaySystem
             if (hasBought)
                 return;
 
-            if (!OnCanAfford.Invoke(values.cost))
+            if (!OnCanBuy.Invoke(values.cost))
                 return;
 
             OnBuy?.Invoke();
@@ -73,23 +74,24 @@ namespace IntegratedGameplaySystem
     public class TemporaryUpgrade : IUpgradable
     {
         public event Action OnBuy;
-        public event Func<int, bool> OnCanAfford;
+        public event Func<int, bool> OnCanBuy;
 
-        private UpgradeValues values;
+        private UpgradeValuesInspector values;
         private GameObject button;
 
-        public void Setup(IWorldService world, Vector3 offset, UpgradeValues values)
+        public void SetValues(UpgradeValuesInspector values) => this.values = values;
+        public void Setup(Vector3 offset, IWorldService world)
         {
-            this.values = values;
             button = Utils.SpawnPrefab(values.buttonPrefab);
             button.transform.position += offset;
 
             world.Add(button, this);
         }
 
+
         public string GetHoverTitle()
         {
-            if (!OnCanAfford.Invoke(values.cost))
+            if (!OnCanBuy.Invoke(values.cost))
                 return "Can't afford yet!";
 
             return $"{values.name} for ${values.cost}";
@@ -97,7 +99,7 @@ namespace IntegratedGameplaySystem
 
         public void Interact()
         {
-            if (!OnCanAfford.Invoke(values.cost))
+            if (!OnCanBuy.Invoke(values.cost))
                 return;
 
             EventManager<int>.RaiseEvent(Occasion.LoseMoney, values.cost);

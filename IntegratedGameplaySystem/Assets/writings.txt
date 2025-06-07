@@ -1,5 +1,21 @@
+consider a water once type beat
+or if you gonna do thatj ust change the class easy peazy
+i think the Sprinkkler.cs class realyl makes it work ngl --> because we are leveraging components
+
+idea: have IHarvestable and IWaterable
+and then the sprinkler and grenade is decoupled because of the physics system. Food for thought.
+
+bug: wet thing is still display
+make: speed boost and then more item space or smth?? meaning the max it based on the inventory not the item then
+
+make a class UpgreadeHolder for all upgrades ??
+
+...
+
+debatable: different prices per plot upgrade, easy fix if i want to make it diff or not i think.
+
 fix dispersla vs plot VVV
-fix interface upgrades ( or like inhertience idk ) ??
+fix interface upgrades ( or like inhertience idk ) VV
 fix pooling  V
 and make fast pooling. VV
 

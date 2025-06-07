@@ -12,6 +12,17 @@ namespace IntegratedGameplaySystem
         {
             return Random.Range(0, x) == 0;
         }
+         
+        public static bool RandomWithPercentage(float p) 
+        {
+            if (p <= 0f)
+                return false;
+
+            if (p >= 100f)
+                return true;
+            
+            return Random.Range(0f, 100f) <= p;
+        }
 
         public static bool GetRandBool() 
         {

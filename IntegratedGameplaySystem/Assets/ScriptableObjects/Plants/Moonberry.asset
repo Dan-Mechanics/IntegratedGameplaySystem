@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff6a27d827763c14bb119215246c475d, type: 3}
   m_Name: Moonberry
   m_EditorClassIdentifier: 
+  dryGrowPercentage: 2.5
+  wateredGrowGrowPercentage: 12.5
+  monetaryValue: 40
+  maxStackSize: 25
   plantPrefab: {fileID: 6319714984396151695, guid: 048e399419656db4b9c9aa6ae6023c6f, type: 3}
-  rainPrefab: {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}
-  monetaryValue: 100
-  growOdds: 30
-  wateredGrowOdds: 1
-  maxCount: 25
   sprite: {fileID: 21300000, guid: b46e013e234f51f4185b55c3c4df03fe, type: 3}
   materials:
   - {fileID: 2100000, guid: 55dd53f572eb36e498e98c17e0d11268, type: 2}

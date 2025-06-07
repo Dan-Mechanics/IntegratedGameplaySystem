@@ -17,7 +17,7 @@ namespace IntegratedGameplaySystem
     {
         private readonly Dictionary<GameObject, object> world = new();
 
-        public T GetComponent<T>(GameObject go) 
+        private T GetComponent<T>(GameObject go)
         {
             if (!world.ContainsKey(go))
                 return default;

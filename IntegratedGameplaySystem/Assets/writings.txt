@@ -1,3 +1,29 @@
+i need to make the decoupling for speed boost and inventory fix
+and also the red text dont work anymore right.
+but i feel like im done for now with this.
+
+so tomorrow:
+
+make inventory item remove max capacity
+make UI different.
+make it so that there is some inventory settings 
+and have a set inventory size method and the settings for the boosted ivnentoy 
+is in the upgrade settigns the boosted invemtroy, bighands --> bag upgrade
+it might make more sense to have unqiue setting SO for all the shit. abd then make it use some interface.
+
+make position of buttons more depednant on the position of the prefab instead
+make it more simple to set the material fo the buttons color, dont have to make bullshit
+and maybe even while your at it make the pos a tihng.
+
+see if u wanna add the ground soil or add the bare soil state right
+add rareberries is purple moonberries
+
+balance the game a little and then is gucci.
+
+i feel like the seed and plot state is a luxary not a need.
+
+===
+
 i would say make it work now and smooth out the code later.
 
 here my plan:

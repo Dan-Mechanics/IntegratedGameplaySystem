@@ -1,18 +1,9 @@
-using System;
 using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// Give this plant an Ipositioner that positions it according to some rules ya know?
-    /// I want this to be able to work with plots instead of patches.
-    /// 
-    /// Statemachine ?? --> Dry, Watered, Grown
-    /// </summary>
     public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
-        //public bool IsWatered => alwaysWatered || wateredByHand;
-
         /// <summary>
         /// Yes, I know we are defining a hard rule here.
         /// </summary>
@@ -27,19 +18,10 @@ namespace IntegratedGameplaySystem
         private readonly IPoolService<PoolableParticle> pool;
 
         private int progression;
-        //private bool alwaysWatered;
         private bool isWatered;
         private bool rainEffectShowing;
         private PoolableParticle rainParticles;
 
-        /// <summary>
-        /// This is kinda nutty becasue we want to save load time but ok,
-        /// maybe prioirtize SOLID instead right.
-        /// If u gonna makethis solid do it in da start pls.
-        /// I doubt the reviewers would notice.
-        /// 
-        /// Factory here !!!
-        /// </summary>
         public Plant(PlantFlyweight flyweight)
         {
             this.flyweight = flyweight;
@@ -71,10 +53,6 @@ namespace IntegratedGameplaySystem
             RefreshRainEffect();
         }
 
-        /// <summary>
-        /// We could say we remove the gameobject from the gamewolrd
-        /// here but it gets cleared when we move scene anyway...
-        /// </summary>
         public void Dispose()
         {
             EventManager.RemoveListener(Occasion.Tick, Tick);
@@ -162,50 +140,4 @@ namespace IntegratedGameplaySystem
             RefreshCollider();
         }
     }
-
-    /*public interface IPlantState 
-{
-    void Interact();
-    void Tick();
-}
-
-public class Dry : IPlantState
-{
-    public void Interact()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Tick()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-public class Wet : IPlantState
-{
-    public void Interact()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Tick()
-    {
-        throw new NotImplementedException();
-    }
-}
-
-public class Harvestable : IPlantState
-{
-    public void Interact()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Tick()
-    {
-        throw new NotImplementedException();
-    }
-}*/
-
 }

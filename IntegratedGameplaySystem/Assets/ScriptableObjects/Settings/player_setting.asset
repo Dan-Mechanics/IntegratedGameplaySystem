@@ -17,7 +17,7 @@ MonoBehaviour:
   runSpeed: 6
   flySpeed: 6
   movAccel: 50
-  airborneAccelMult: 0.35
+  accelMult: 0.35
   mask:
     serializedVersion: 2
     m_Bits: 1

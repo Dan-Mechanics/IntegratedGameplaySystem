@@ -37,7 +37,7 @@ namespace IntegratedGameplaySystem
                 return;
 
             bindings.Add(binding);
-            Debug.Log($"added binding {binding}");
+            //Debug.Log($"added binding {binding}");
         }
 
         public void RemoveBinding(Binding binding) => bindings.Remove(binding);
@@ -71,7 +71,7 @@ namespace IntegratedGameplaySystem
                     conversion[bindings[i].playerAction].onUp?.Invoke();
             }
         }
-
+         
         public InputSource GetInputSource(PlayerAction playerAction) => conversion[playerAction];
 
         /// <summary>

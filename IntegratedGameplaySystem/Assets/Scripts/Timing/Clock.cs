@@ -6,14 +6,10 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// I feel like this *could* be seperated into two different classes.
     /// </summary>
-    public class Clock : IStartable, IFixedUpdatable, IScoreService
+    public class Clock : IStartable, IFixedUpdatable
     {
-        public Action<float> OnNewTime;
-         
         public float interval;
         private readonly Timer timer = new();
-
-        private float time;
 
         public Clock(float interval)
         {
@@ -27,19 +23,11 @@ namespace IntegratedGameplaySystem
 
         public void FixedUpdate() 
         {
-            time = Time.timeSinceLevelLoad;
-            OnNewTime?.Invoke(time);
-            
             if (!timer.Tick(Time.fixedDeltaTime))
                 return;
 
             timer.SetValue(interval);
             EventManager.RaiseEvent(Occasion.Tick);
-        }
-
-        public float GetScore()
-        {
-            return time;
         }
     }
 }

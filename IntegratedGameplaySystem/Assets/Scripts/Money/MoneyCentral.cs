@@ -5,67 +5,131 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// This class should respond to the events yo.
+    /// 
+    /// Barter interface
     /// </summary>
-    public class MoneyCentral :  IStartable, IInteractable, IHoverable
+    public class MoneyCentral :  IStartable, IInteractable, IHoverable, IDisposable, IChangeTracker<IntWithMax>
     {
-        public event Action<int, int> OnMoneyChanged;
+        public event Action<IntWithMax> OnChange;
 
-        public delegate int SellAll();
-        public delegate bool HasSomethingToSell();
         private readonly ParticleSystem particle;
         private readonly MoneyCentralSettings settings;
-        private int money;
+        private readonly IItemHolder itemHolder;
 
-        private readonly SellAll sellAll;
-        private readonly HasSomethingToSell hasSomethingToSell;
+        private IntWithMax money;
 
-        public string Name => hasSomethingToSell() ? "Sell crop" : string.Empty;
-
-        public MoneyCentral(SellAll sellAll, HasSomethingToSell interactable)
+        public string GetHoverTitle() 
         {
-            this.sellAll = sellAll;
-            this.hasSomethingToSell = interactable;
+            return CanInteract() ? "Sell crop" : "No crop to sell";
+        }
 
-            settings = ServiceLocator<IAssetService>.Locate().GetAssetWithType<MoneyCentralSettings>();
+        /// <summary>
+        /// Do we need something to deallocate sellall ??
+        /// Dont use delegates i dont understand them bruuhhhhh
+        /// Like it works but i dont know what happens to the memory AT ALL
+        /// </summary>
+        public MoneyCentral(IItemHolder itemHolder)
+        {
+            this.itemHolder = itemHolder;
+            settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<MoneyCentralSettings>();
 
             GameObject go = Utils.SpawnPrefab(settings.prefab);
             particle = go.transform.GetComponentInChildren<ParticleSystem>();
+            money.max = settings.moneyToWin;
 
             ServiceLocator<IWorldService>.Locate().Add(go, this);
         }
 
         public void Start()
         {
-            OnMoneyChanged?.Invoke(money, settings.moneyToWin);
-            //EventManager<int>.AddListener(Occasion.EarnMoney, EarnMoney);
+            OnChange?.Invoke(money);
+            EventManager<int>.AddListener(Occasion.EarnMoney, EarnMoney);
+            EventManager<int>.AddListener(Occasion.LoseMoney, LoseMoney);
         }
 
-        public void EarnMoney(int incoming)
+        public bool CanAfford(int cost) 
         {
-            if (incoming <= 0)
+            return money.value >= cost;
+        }
+
+        private void EarnMoney(int amount)
+        {
+            if (amount <= 0)
                 return;
 
-            money += incoming;
+            money.value += amount;
+            money.Clamp();
+            OnChange?.Invoke(money);
 
-            money = Mathf.Clamp(money, 0, settings.moneyToWin);
-            OnMoneyChanged?.Invoke(money, settings.moneyToWin);
-
-            if (money >= settings.moneyToWin)
+            if (money.value >= money.max)
                 EventManager.RaiseEvent(Occasion.GameOver);
         }
 
-        /*public void Dispose()
+        private void LoseMoney(int amount)
         {
-            EventManager<int>.RemoveListener(Occasion.EarnMoney, EarnMoney);
-        }*/
-        
+            if (amount <= 0)
+                return;
+
+            money.value -= amount;
+            //money.Clamp();
+            OnChange?.Invoke(money);
+        }
+
         public void Interact()
         {
-            if (!hasSomethingToSell())
+            if (!CanInteract())
                 return;
             
             particle.Play();
-            EarnMoney(sellAll());
+            EventManager<int>.RaiseEvent(Occasion.EarnMoney, GetEarnings());
+        }
+
+        public bool CanInteract() 
+        {
+            int count = 0;
+
+            ItemStack[] stacks = itemHolder.GetItems();
+            ItemStack stack;
+
+            for (int i = 0; i < stacks.Length; i++)
+            {
+                stack = stacks[i];
+                if (stack.item != null)
+                    count += stack.count;
+            }
+
+            return count > 0;
+        }
+
+        public int GetEarnings() 
+        {
+            int earnings = 0;
+
+            ItemStack[] stacks = itemHolder.GetItems();
+            ItemStack stack;
+
+            for (int i = 0; i < stacks.Length; i++)
+            {
+                stack = stacks[i];
+                if (stack.item == null)
+                    continue;
+
+                earnings += stack.count * stack.item.MonetaryValue;
+            }
+
+            itemHolder.Clear();
+
+            return earnings;
+        }
+
+        /// <summary>
+        /// I think this works chat.
+        /// Hopefully it's clear how this would work.
+        /// </summary>
+        public void Dispose()
+        {
+            EventManager<int>.RemoveListener(Occasion.EarnMoney, EarnMoney);
+            EventManager<int>.RemoveListener(Occasion.LoseMoney, LoseMoney);
         }
     }
 }

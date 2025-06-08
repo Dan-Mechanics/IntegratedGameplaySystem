@@ -130,10 +130,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1835141702186142786, guid: 81ab7e76749b57647810dbb34c8a40e3, type: 3}
-      propertyPath: sceneBehaviour
-      value: 
-      objectReference: {fileID: 11400000, guid: 15fc7658334dd784189adbdf2555d04b, type: 2}
     - target: {fileID: 6695345807818307817, guid: 81ab7e76749b57647810dbb34c8a40e3, type: 3}
       propertyPath: m_Name
       value: start_manager

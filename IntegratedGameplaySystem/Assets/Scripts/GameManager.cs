@@ -19,7 +19,7 @@ namespace IntegratedGameplaySystem
 
         private readonly Heart heart = new Heart();
 
-        private void Start() => Setup();
+        private void Start() => SetupScene();
         private void Update() => heart.Update();
         private void OnDisable() => heart.Dispose();
         private void OnApplicationQuit() => EventManager.RaiseEvent(Occasion.CloseGame);
@@ -42,7 +42,7 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// NOTE: this code is a little over-abstracted but that's part of the learning !
         /// </summary>
-        private void Setup()
+        private void SetupScene()
         {
             sceneSetup.Setup();
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));

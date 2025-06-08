@@ -1,3 +1,111 @@
+consider a water once type beat
+or if you gonna do thatj ust change the class easy peazy
+i think the Sprinkkler.cs class realyl makes it work ngl --> because we are leveraging components
+
+idea: have IHarvestable and IWaterable
+and then the sprinkler and grenade is decoupled because of the physics system. Food for thought.
+
+bug: wet thing is still display
+make: speed boost and then more item space or smth?? meaning the max it based on the inventory not the item then
+
+make a class UpgreadeHolder for all upgrades ??
+
+...
+
+debatable: different prices per plot upgrade, easy fix if i want to make it diff or not i think.
+
+fix dispersla vs plot VVV
+fix interface upgrades ( or like inhertience idk ) VV
+fix pooling  V
+and make fast pooling. VV
+
+tomorrow add movement speed and holding size,
+perhcance also add a thing where it has blow up particle LOLOl.
+
+rename / refactoring EVERYTHIGN !!
+
+so now we officialyl have 3 patterns and like 30000 more.
+
+===
+
+idea: you could make the default text + and then place it in center ipv crosshair.
+
+i feel like the code of dev opdracht is a little strange because
+it is both decoupled with Func but like that is a little strange because we want
+to cleanly dispose of everythign and that makes the code strange or smth.
+i dont know if its very solid either but maybe thats because so it runs better ???/
+
+paradigm where all the classes are connected via func memes and then dont gaf about memory correctness lolol
+.
+
+
+===
+
+i think it would be useufl to make a chart to describe the pipeline of scripts in this meme.
+
+cool object pool with cool service locator doulbe yeetus.
+next upgrade: speedboost.
+
+i would say generally in my personal projects use more
+delegates to abstract things away between classes but in this project it kinda annoying.
+
+ok the upgrades work but i wanna seperate it from the plot
+and i need to helicopter view it and design an acutal code?
+pattenr somewhere here ? maybe builder ??
+
+
+stuff to do:
+
+look in all de dispose methods and see if you loojk for a service there, make sure its the same
+service basically.
+
+implement upgrades ( inventory movement, insta farm etc ), grenade and sprinker first.
+make plotsettigns thing, make a button for the plot.
+
+extract the interactor to an upgrade thing.
+
+make display more modulair with IChangible VV
+make dispaly more modulir with not using utils but something else. VV
+make different class for keeping trakc of scorre. VV
+
+
+==
+
+add more facotries.
+
+scope: ivnentory selection overrides current shit = hostile design
+that would make it smoother
+
+
+ik vind het basically valid om alleen te focuseen op dev nu en niet outer wilds totdat dat af is.
+
+think about the decoupling between classes and that classes basically know nothing about eachother and communicate via
+indireciton aka interface or delegate ( how many safe ?? ) or events ! check that for all the main and important stuff.
+
+you could add something that not harbestble colliders are lower down.
+
+ok, dit hele projecti s uit elkaar aan het storten, ik denk dat ik terug moet
+naar hostile design in the sense dat je gewoon items kwijt raakt als je shit verkeerd doet basically.
+
+i think that actually makes sense because its confusing for the player either way rigth.
+and then we simplify the system ten fold and make sure all the composites know nothing about eachother.
+and work in isolation basically.
+
+so we have inventory
+and we have interactor
+and we have moneypoint
+
+and we have ISellableItem or something
+we equip something via the evenysystem.
+i want to make the text red when the player is fullll.
+
+===
+
+three paradim ideas: unity disaster 
+   fake functional
+   and whereby you have classes that make all the dependancies work via like events or something idk.
+
+
 ok so now we have a responsbility that the inventory says which things the interactor can interact with.
 i dont want the plant to handle, this, i do think it makes sense that the plant
 

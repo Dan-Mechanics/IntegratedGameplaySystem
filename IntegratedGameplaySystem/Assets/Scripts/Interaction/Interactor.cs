@@ -4,30 +4,32 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// We need:
+    /// Input:
     /// input
     /// world
+    /// 
+    /// Output:
+    /// OnHoverChange
+    /// IInteractable.interact.
     /// </summary>
-    public class Interactor : IStartable, IFixedUpdatable, IDisposable
+    public class Interactor : IStartable, IFixedUpdatable, IDisposable, IChangeTracker<string>
     {
-        public event Action<IHoverable> OnHoverChange;
+        public event Action<string> OnChange;
         
         private readonly Raycaster raycaster;
         private readonly Transform cam;
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
 
-        private IHoverable currentlyHovering;
+        private string currentHover;
 
         /// <summary>
-        /// Or we could push the asset name upward.
+        /// Or we could push all of this upwards but that would make the game script messy.
         /// </summary>
         public Interactor()
         {
-            // or something idk.
-            raycaster = new Raycaster(ServiceLocator<IAssetService>.Locate().GetAssetWithType<RaycastSettings>());
             cam = Camera.main.transform;
-
+            raycaster = new Raycaster(ServiceLocator<IAssetService>.Locate().GetAssetByType<RaycastSettings>());
             inputService = ServiceLocator<IInputService>.Locate();
             worldService = ServiceLocator<IWorldService>.Locate();
         }
@@ -35,38 +37,36 @@ namespace IntegratedGameplaySystem
         public void Start() 
         {
             inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteract;
-            OnHoverChange?.Invoke(null);
+            OnChange?.Invoke(string.Empty);
         }
 
         public void FixedUpdate() 
         {
-            IHoverable hoverable = GetHoverHit();
+            string newHover = GetHoverable()?.GetHoverTitle();
 
-            if (hoverable == currentlyHovering)
+            if (newHover == currentHover)
                 return;
 
-            currentlyHovering = hoverable;
-            OnHoverChange?.Invoke(currentlyHovering);
+            currentHover = newHover;
+            OnChange?.Invoke(currentHover);
         }
 
         private void TryInteract()
         {
-            Transform hit = raycaster.Raycast(cam.position, cam.forward);
-
-            if (!hit)
+            if (!raycaster.Raycast(cam.position, cam.forward, out Transform hitTransform))
                 return;
 
-            worldService.GetComponent<IInteractable>(hit)?.Interact();
+            worldService.GetComponent<IInteractable>(hitTransform)?.Interact();
         }
 
-        private IHoverable GetHoverHit()
+        private IHoverable GetHoverable()
         {
-            Transform hit = raycaster.Raycast(cam.position, cam.forward);
-
-            if (!hit)
+            if (!raycaster.Raycast(cam.position, cam.forward, out Transform hitTransform))
                 return null;
 
-            return worldService.GetComponent<IHoverable>(hit);
+            //Debug.Log(worldService.Contains(hitTransform));
+
+            return worldService.GetComponent<IHoverable>(hitTransform);
         }
 
         public void Dispose()

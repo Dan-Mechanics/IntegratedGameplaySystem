@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff6a27d827763c14bb119215246c475d, type: 3}
+  m_Name: Moonberry
+  m_EditorClassIdentifier: 
+  dryGrowPercentage: 2.5
+  wateredGrowGrowPercentage: 12.5
+  monetaryValue: 40
+  maxStackSize: 25
+  plantPrefab: {fileID: 6319714984396151695, guid: 048e399419656db4b9c9aa6ae6023c6f, type: 3}
+  sprite: {fileID: 21300000, guid: b46e013e234f51f4185b55c3c4df03fe, type: 3}
+  materials:
+  - {fileID: 2100000, guid: 55dd53f572eb36e498e98c17e0d11268, type: 2}
+  - {fileID: 2100000, guid: 0beb2384c590e8444a54f781165df185, type: 2}
+  - {fileID: 2100000, guid: 0cdad1c699b8abf4fb1db7013fb5a8fb, type: 2}
+  - {fileID: 2100000, guid: c2f4bfd2e43d9da4f97a24ee2513e3f0, type: 2}
+  - {fileID: 2100000, guid: ed6a655a093c53e47aee5c3070918db4, type: 2}

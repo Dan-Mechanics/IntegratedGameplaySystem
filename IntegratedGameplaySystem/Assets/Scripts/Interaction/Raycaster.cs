@@ -4,22 +4,26 @@ namespace IntegratedGameplaySystem
 {
     public class Raycaster
     {
-        private readonly RaycastSettings data;
+        private readonly RaycastSettings settings;
 
-        public Raycaster(RaycastSettings data)
+        public Raycaster(RaycastSettings settings)
         {
-            this.data = data;
+            this.settings = settings;
         }
 
-        public Transform Raycast(Vector3 pos, Vector3 dir) 
+        public bool Raycast(Vector3 pos, Vector3 dir, out Transform hitTransform) 
         {
-            if (!Physics.Raycast(pos, dir, out RaycastHit hit, data.range, data.mask, data.triggerInteraction))
-                return null;
+            hitTransform = null;
+            
+            if (!Physics.Raycast(pos, dir, out RaycastHit hit, settings.range, settings.mask, settings.triggerInteraction))
+                return false;
 
-            if (!data.tags.Contains(hit.transform.tag))
-                return null;
+            if (!settings.tags.Contains(hit.transform.tag))
+                return false;
 
-            return hit.transform;
+            // Or use transform.root.
+            hitTransform = hit.transform;
+            return true;
         }
     }
 }

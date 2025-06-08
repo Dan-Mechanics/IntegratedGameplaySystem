@@ -14,7 +14,7 @@ namespace IntegratedGameplaySystem
 
         public void Setup()
         {
-            Debug.Log($"loading {name}");
+            Debug.Log($"loading {name.ToUpper()}");
 
             // Idk I think this makes sense.
             Random.InitState(0);

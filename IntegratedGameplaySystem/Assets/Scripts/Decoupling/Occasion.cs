@@ -9,6 +9,7 @@
         GameOver = 2,
         Tick = 3,
         EarnMoney = 4,
-        EquipItem = 5
+        PickupItem = 5,
+        LoseMoney = 6
     }
 }

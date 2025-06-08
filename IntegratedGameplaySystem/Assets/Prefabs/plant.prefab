@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4532888620864329896}
   - component: {fileID: 1337836260825798187}
   - component: {fileID: 5210506126860401678}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Quad (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 8027112800679435226}
   - component: {fileID: 5699889246347688614}
   - component: {fileID: 2657915211032933184}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Quad (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 1967125903122747742}
   - component: {fileID: 7049593621827644899}
   - component: {fileID: 703451716450949852}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Quad (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6319714984396151694}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: plant
   m_TagString: Plant
   m_Icon: {fileID: 0}
@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 170395012277215038}
   - component: {fileID: 5027463836113481666}
   - component: {fileID: 33135117075937001}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}

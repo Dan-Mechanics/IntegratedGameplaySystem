@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
         public float runSpeed;
         public float flySpeed;
         public float movAccel;
-        public float airborneAccelMult;
+        public float accelMult;
 
         [Header("Grounded")]
         public LayerMask mask;

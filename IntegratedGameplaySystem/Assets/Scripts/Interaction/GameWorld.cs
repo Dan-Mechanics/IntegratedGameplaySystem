@@ -17,7 +17,7 @@ namespace IntegratedGameplaySystem
     {
         private readonly Dictionary<GameObject, object> world = new();
 
-        public T GetComponent<T>(GameObject go) 
+        private T GetComponent<T>(GameObject go)
         {
             if (!world.ContainsKey(go))
                 return default;
@@ -41,5 +41,6 @@ namespace IntegratedGameplaySystem
         public void Remove(GameObject go) => world.Remove(go);
 
         public void Reset() => world.Clear();
+        //public bool Contains(Transform transform) => world.ContainsKey(transform.gameObject);
     }
 }

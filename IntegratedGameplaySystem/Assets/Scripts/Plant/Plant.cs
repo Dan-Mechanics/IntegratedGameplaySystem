@@ -6,64 +6,71 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Give this plant an Ipositioner that positions it according to some rules ya know?
     /// I want this to be able to work with plots instead of patches.
+    /// 
+    /// Statemachine ?? --> Dry, Watered, Grown
     /// </summary>
-    public class Plant : IStartable, IInteractable, IHoverable, IDisposable
+    public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
+        //public bool IsWatered => alwaysWatered || wateredByHand;
+        public bool IsHarvestable => progression >= flyweight.materials.Length - 1;
+
         public readonly GameObject gameObject;
         public readonly Transform transform;
 
-        // Composite this ??
-        private readonly PlantBlueprint blueprint;
+        private readonly PlantFlyweight flyweight;
         private readonly MeshRenderer[] meshRenderers;
         private readonly SphereCollider sphereCollider;
-        private readonly ParticleSystem waterEffect;
+        private readonly IPoolService<PoolableParticle> pool;
 
         private int progression;
-        private bool isWatered;
-
-        public string Name => GetHovering();
-        public bool IsHarvestable => progression >= blueprint.materials.Length - 1;
+        //private bool alwaysWatered;
+        private bool watered;
+        private bool rainEffectShowing;
+        private PoolableParticle rainParticles;
 
         /// <summary>
         /// This is kinda nutty becasue we want to save load time but ok,
         /// maybe prioirtize SOLID instead right.
         /// If u gonna makethis solid do it in da start pls.
         /// I doubt the reviewers would notice.
+        /// 
+        /// Factory here !!!
         /// </summary>
-        public Plant(PlantBlueprint blueprint)
+        public Plant(PlantFlyweight flyweight)
         {
-            this.blueprint = blueprint;
+            this.flyweight = flyweight;
 
-            gameObject = Utils.SpawnPrefab(blueprint.plantPrefab);
+            gameObject = Utils.SpawnPrefab(flyweight.plantPrefab);
             transform = gameObject.transform;
-            transform.name = blueprint.name;
+            transform.name = flyweight.name;
 
-            GameObject rain = Utils.SpawnPrefab(blueprint.rainPrefab);
-            rain.transform.SetParent(transform);
-            rain.transform.localPosition = blueprint.rainPrefab.transform.localPosition;
-            waterEffect = rain.GetComponent<ParticleSystem>();
-
+            pool = ServiceLocator<IPoolService<PoolableParticle>>.Locate();
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
         }
 
-        public string GetHovering() 
+        public string GetHoverTitle() 
         {
-            if (!isWatered && !IsHarvestable)
-                return $"dry {blueprint.name}";
+            if (!watered && !IsHarvestable)
+                return $"dry {flyweight.name}";
 
-            return blueprint.name;
+            return flyweight.name;
         }
 
         public void Start()
         {
-            UpdateWatered(false);
-
             ServiceLocator<IWorldService>.Locate().Add(gameObject, this);
             EventManager.AddListener(Occasion.Tick, Tick);
-            Refresh();
+
+            RefreshMaterials();
+            RefreshCollider();
+            RefreshRainEffect();
         }
 
+        /// <summary>
+        /// We could say we remove the gameobject from the gamewolrd
+        /// here but it gets cleared when we move scene anyway...
+        /// </summary>
         public void Dispose()
         {
             EventManager.RemoveListener(Occasion.Tick, Tick);
@@ -71,60 +78,130 @@ namespace IntegratedGameplaySystem
 
         private void Tick()
         {
-            if (!Utils.OneIn(isWatered ? blueprint.wateredGrowOdds : blueprint.growOdds))
+            if (!Utils.RandomWithPercentage(watered ? flyweight.wateredGrowGrowPercentage : flyweight.dryGrowPercentage))
                 return;
 
-            UpdateWatered(false);
-            progression++;
-            progression = Mathf.Clamp(progression, 0, blueprint.materials.Length - 1);
-            Refresh();
+            Grow();
         }
 
-        private void Refresh() 
+        private void Grow()
+        {
+            watered = false;
+            progression++;
+            progression = Mathf.Clamp(progression, 0, flyweight.materials.Length - 1);
+
+            RefreshMaterials();
+            RefreshCollider();
+            RefreshRainEffect();
+        }
+
+        private void RefreshMaterials() 
         {
             for (int i = 0; i < meshRenderers.Length; i++)
             {
-                meshRenderers[i].material = blueprint.materials[progression];
+                meshRenderers[i].material = flyweight.materials[progression];
             }
-
-            sphereCollider.enabled = IsHarvestable || !isWatered;
         }
 
-        /// <summary>
-        /// Use events ??
-        /// </summary>
-        /// <param name="water"></param>
-        private void UpdateWatered(bool water)
+        private void RefreshCollider() 
         {
-            isWatered = water;
+            sphereCollider.center = Vector3.down * (IsHarvestable ? 0f : 0.5f);
+            sphereCollider.enabled = IsHarvestable || !watered;
+        }
 
-            if (isWatered)
+        public void RefreshRainEffect()
+        {
+            if (rainEffectShowing == watered)
+                return;
+
+            if (watered)
             {
-                waterEffect.Play();
+                rainParticles = pool.Get();
+                rainParticles.Place(transform.position + Vector3.up);
             }
             else
             {
-                waterEffect.Stop();
+                pool.Give(rainParticles);
             }
+
+            rainEffectShowing = watered;
         }
 
-        /// <summary>
-        /// We should not be able to interact with this if not full-grown
-        /// but i dont do protective coding, i would rather instantly find bugs right.
-        /// </summary>
         public void Interact()
         {
-            if (progression >= blueprint.materials.Length - 1)
-            {
-                progression = 0;
-                EventManager<IItem>.RaiseEvent(Occasion.EquipItem, blueprint);
-            }
-            else if (!isWatered)
-            {
-                UpdateWatered(true);
-            }
+            Water();
+            Harvest();
+        }
 
-            Refresh();
+        public void Harvest()
+        {
+            if (!IsHarvestable)
+                return;
+
+            progression = 0;
+            watered = false;
+            EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, flyweight);
+
+            RefreshMaterials();
+            RefreshCollider();
+            RefreshRainEffect();
+        }
+
+        public void Water()
+        {
+            if (watered)
+                return;
+
+            watered = true;
+
+            RefreshRainEffect();
+            RefreshCollider();
         }
     }
+
+    /*public interface IPlantState 
+{
+    void Interact();
+    void Tick();
+}
+
+public class Dry : IPlantState
+{
+    public void Interact()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Tick()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class Wet : IPlantState
+{
+    public void Interact()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Tick()
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class Harvestable : IPlantState
+{
+    public void Interact()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Tick()
+    {
+        throw new NotImplementedException();
+    }
+}*/
+
 }

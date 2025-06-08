@@ -7,9 +7,9 @@ namespace IntegratedGameplaySystem
     {
         public UpgradeCommonality Upgrade { get; set; }
         private readonly FirstPersonPlayer movement;
-        private readonly UpgradeSettings settings;
+        private readonly AllUpgradeSettings settings;
 
-        public RunningShoes(UpgradeCommonality Upgrade, UpgradeSettings settings, FirstPersonPlayer movement)
+        public RunningShoes(UpgradeCommonality Upgrade, AllUpgradeSettings settings, FirstPersonPlayer movement)
         {
             this.Upgrade = Upgrade;
             this.settings = settings;

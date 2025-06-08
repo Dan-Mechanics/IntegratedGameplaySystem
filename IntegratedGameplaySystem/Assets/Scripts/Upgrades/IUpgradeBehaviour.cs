@@ -22,13 +22,13 @@ namespace IntegratedGameplaySystem
         public event Action OnBuy;
         public event Func<int, bool> OnCanBuy;
 
-        private readonly UpgradeProfile values;
+        private readonly UpgradeValues values;
         private readonly IWorldService world;
         private readonly GameObject button;
 
        // private bool hasBeenBought;
 
-        public UpgradeCommonality(Vector3 position, UpgradeProfile values)
+        public UpgradeCommonality(Vector3 position, UpgradeValues values)
         {
             this.values = values;
             button = Utils.SpawnPrefab(values.buttonPrefab);

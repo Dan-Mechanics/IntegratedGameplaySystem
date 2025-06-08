@@ -7,10 +7,10 @@ namespace IntegratedGameplaySystem
     {
         public UpgradeCommonality Upgrade { get; set; }
 
-        private readonly UpgradeSettings settings;
+        private readonly AllUpgradeSettings settings;
         private readonly Hand hand;
 
-        public BigHands(UpgradeCommonality Upgrade, UpgradeSettings settings, Hand hand)
+        public BigHands(UpgradeCommonality Upgrade, AllUpgradeSettings settings, Hand hand)
         {
             this.settings = settings;
             this.Upgrade = Upgrade;

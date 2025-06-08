@@ -12,7 +12,7 @@ namespace IntegratedGameplaySystem
         private readonly List<IUpgradeBehaviour> upgrades = new();
 
         private MoneyCentral money;
-        private UpgradeSettings upgradeSettings;
+        private AllUpgradeSettings upgradeSettings;
 
         /// <summary>
         /// Builder for this ??
@@ -28,7 +28,7 @@ namespace IntegratedGameplaySystem
             var hand = new Hand();
             money = new MoneyCentral(hand);
             List<PlantFlyweight> plants = assetService.GetAllAssetsOfType<PlantFlyweight>();
-            upgradeSettings = assetService.GetAssetByType<UpgradeSettings>();
+            upgradeSettings = assetService.GetAssetByType<AllUpgradeSettings>();
 
             // Note: youcould add theup grade settings to the shit or not.
             

@@ -7,9 +7,9 @@ namespace IntegratedGameplaySystem
     {
         public UpgradeCommonality Upgrade { get; set; }
         private readonly IWorldService world;
-        private readonly UpgradeSettings settings;
+        private readonly AllUpgradeSettings settings;
 
-        public Grenade(UpgradeCommonality Upgrade, UpgradeSettings settings)
+        public Grenade(UpgradeCommonality Upgrade, AllUpgradeSettings settings)
         {
             this.settings = settings;
             this.Upgrade = Upgrade;

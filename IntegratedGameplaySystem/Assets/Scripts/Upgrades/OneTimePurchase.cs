@@ -16,7 +16,7 @@ namespace IntegratedGameplaySystem
         public event Action OnBuy;
         public event Func<int, bool> OnCanBuy;
 
-        private readonly UpgradeValuesInspector values;
+        private readonly UpgradeProfile values;
         private readonly IWorldService world;
         private readonly GameObject button;
 
@@ -25,7 +25,7 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private bool hasBought;
 
-        public OneTimePurchase(Vector3 position, UpgradeValuesInspector values)
+        public OneTimePurchase(Vector3 position, UpgradeProfile values)
         {
             this.values = values;
             button = Utils.SpawnPrefab(values.buttonPrefab);

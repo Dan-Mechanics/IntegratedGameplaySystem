@@ -8,9 +8,9 @@ namespace IntegratedGameplaySystem
         public event Action OnBuy;
         public event Func<int, bool> OnCanBuy;
 
-        private readonly UpgradeValuesInspector values;
+        private readonly UpgradeProfile values;
 
-        public MultiblePurchase(Vector3 position, UpgradeValuesInspector values)
+        public MultiblePurchase(Vector3 position, UpgradeProfile values)
         {
             this.values = values;
             GameObject button = Utils.SpawnPrefab(values.buttonPrefab);

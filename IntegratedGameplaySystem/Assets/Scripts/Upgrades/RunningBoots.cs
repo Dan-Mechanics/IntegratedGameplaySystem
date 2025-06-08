@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class RunningBoots : IGradeUp
+    public class RunningBoots : IUpgradeBehaviour
     {
         public IPurchasable Purchasable => purchase;
         

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class BigHands : IGradeUp
+    public class BigHands : IUpgradeBehaviour
     {
         private readonly OneTimePurchase purchase;
         private readonly Hand hand;

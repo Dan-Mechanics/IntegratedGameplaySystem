@@ -5,6 +5,7 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// Extract to plantupgrades so that we can have both dipseral and other hsit.
+    /// What is this class even for ??
     /// </summary>
     public class PlantCollectionHandler 
     {

@@ -11,14 +11,14 @@ namespace IntegratedGameplaySystem
     {
         // make game assets SO or something.
         // move all of this to ugpradesettigns.
-        public GameObject rainEffectPrefab;
+        // public GameObject rainEffectPrefab;
         //public GameObject buttonPrefab;
         //public GameObject grenadeEffectPrefab;
-        public float range;
-        public LayerMask mask;
+        // public float range;
+        //public LayerMask mask;
         //public ObjectPool<PoolableParticle> rainPool;
 
-        private List<IGradeUp> gradeUps = new List<IGradeUp>();
+        private readonly List<IUpgradeBehaviour> gradeUps = new();
         private MoneyCentral money;
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace IntegratedGameplaySystem
             var hand = new Hand();
             money = new MoneyCentral(hand);
             List<PlantFlyweight> plants = assetService.GetAllAssetsOfType<PlantFlyweight>();
-            UpgradeSettings upgrade = assetService.GetAssetByType<UpgradeSettings>();
+            UpgradeSettings upgradeSettings = assetService.GetAssetByType<UpgradeSettings>();
 
             // Note: youcould add theup grade settings to the shit or not.
             
@@ -51,11 +51,11 @@ namespace IntegratedGameplaySystem
                 Vector3 pos = strat.GetCenter();
                 //pos += Vector3.forward;
 
-                IGradeUp sprinkler = new Sprinkler(new OneTimePurchase(pos, upgrade.sprinkler), strat.GetPlantCount(), range, pos, mask);
+                IUpgradeBehaviour sprinkler = new Sprinkler(new OneTimePurchase(pos, upgradeSettings.grenade), strat.GetPlantCount(), pos, upgradeSettings);
 
                 pos += Vector3.up * 2f;
 
-                IGradeUp grenade = new Grenade(new MultiblePurchase(pos, upgrade.grenade), strat.GetPlantCount(), range, pos, mask, upgrade.grenadeEffect);
+                IUpgradeBehaviour grenade = new Grenade(new MultiblePurchase(pos, upgradeSettings.grenade), strat.GetPlantCount(), pos, upgradeSettings);
 
                 components.Add(sprinkler);
                 components.Add(grenade);

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class Sprinkler : IGradeUp
+    public class Sprinkler : IUpgradeBehaviour
     {
         private readonly OneTimePurchase purchase;
         private readonly Collider[] colliders;
@@ -18,7 +18,7 @@ namespace IntegratedGameplaySystem
 
         public IPurchasable Purchasable => purchase;
 
-        public Sprinkler(OneTimePurchase purchase, int expectedColliders, float range, Vector3 pos, LayerMask mask)
+        public Sprinkler(OneTimePurchase purchase, int expectedColliders, Vector3 pos, UpgradeSettings settings)
         {
             this.purchase = purchase;
             //this.plants = plants;

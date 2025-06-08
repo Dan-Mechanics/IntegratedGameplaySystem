@@ -9,8 +9,17 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(GameScene), fileName = "New " + nameof(GameScene))]
     public class GameScene : SceneBehaviour
     {
+        // make game assets SO or something.
+        // move all of this to ugpradesettigns.
         public GameObject rainEffectPrefab;
+        //public GameObject buttonPrefab;
+        //public GameObject grenadeEffectPrefab;
+        public float range;
+        public LayerMask mask;
         //public ObjectPool<PoolableParticle> rainPool;
+
+        private List<IGradeUp> gradeUps = new List<IGradeUp>();
+        private MoneyCentral money;
 
         /// <summary>
         /// Builder for this /???
@@ -24,7 +33,7 @@ namespace IntegratedGameplaySystem
             components.Add(new FirstPersonPlayer(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
             
             var hand = new Hand();
-            var money = new MoneyCentral(hand);
+            money = new MoneyCentral(hand);
             List<PlantFlyweight> plants = assetService.GetAllAssetsOfType<PlantFlyweight>();
             UpgradeSettings upgrade = assetService.GetAssetByType<UpgradeSettings>();
 
@@ -37,7 +46,21 @@ namespace IntegratedGameplaySystem
 
             for (int i = 0; i < plants.Count; i++)
             {
-                var plantHolder = new PlantCollectionHandler(upgrade, i, plants[i], money, strat);
+                var plantHolder = new PlantCollectionHandler(i, plants[i], strat);
+
+                Vector3 pos = strat.GetPlotPos(i) + Vector3.up * 2;
+                pos += Vector3.forward;
+
+                IGradeUp sprinkler = new Sprinkler(new OneTimePurchase(pos, upgrade.sprinkler), strat.GetPlantCount(), range, pos, mask);
+
+                pos += Vector3.forward * 2f;
+
+                IGradeUp grenade = new Grenade(new MultiblePurchase(pos, upgrade.grenade), strat.GetPlantCount(), range, pos, mask, upgrade.grenadeEffect);
+
+                components.Add(sprinkler);
+                components.Add(grenade);
+                gradeUps.Add(sprinkler);
+                gradeUps.Add(grenade);
                 plantHolder.SpawnPlants(components);
             }
 
@@ -58,6 +81,8 @@ namespace IntegratedGameplaySystem
             components.Add(interactor);
             components.Add(hand);
 
+            gradeUps.ForEach(x => x.Purchasable.OnCanBuy += money.CanAfford);
+
             return components;
         }
 
@@ -68,6 +93,8 @@ namespace IntegratedGameplaySystem
             var pool = ServiceLocator<IPoolService<PoolableParticle>>.Locate();
             pool.AllocateNew -= AllocateNewRain;
             pool.Flush();
+
+            gradeUps.ForEach(x => x.Purchasable.OnCanBuy -= money.CanAfford);
         }
 
         /// <summary>

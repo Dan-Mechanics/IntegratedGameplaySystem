@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    ///  you could say remove interface and then make bool for onetime purchse ?? or something ??
+    /// </summary>
     public class OneTimePurchase : IPurchasable
     {
         // <summary>
@@ -17,12 +20,15 @@ namespace IntegratedGameplaySystem
         private readonly IWorldService world;
         private readonly GameObject button;
 
+        /// <summary>
+        /// Technically speaking this doesnt need to be here.
+        /// </summary>
         private bool hasBought;
 
-        public OneTimePurchase(Vector3 position, UpgradeValuesInspector values, GameObject buttonPrefab)
+        public OneTimePurchase(Vector3 position, UpgradeValuesInspector values)
         {
             this.values = values;
-            button = Utils.SpawnPrefab(buttonPrefab);
+            button = Utils.SpawnPrefab(values.buttonPrefab);
             button.transform.position = position;
             world = ServiceLocator<IWorldService>.Locate();
             world.Add(button, this);
@@ -30,8 +36,8 @@ namespace IntegratedGameplaySystem
 
         public string GetHoverTitle()
         {
-            if (hasBought)
-                return string.Empty;
+            /*if (hasBought)
+                return string.Empty;*/
 
             if (!OnCanBuy.Invoke(values.cost))
                 return "Can't afford yet!";

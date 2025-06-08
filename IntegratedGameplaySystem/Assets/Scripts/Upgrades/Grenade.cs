@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class Grenade : IStartable, IDisposable
+    public class Grenade : IGradeUp
     {
         private readonly MultiblePurchase purchase;
         private readonly Collider[] colliders;
@@ -12,6 +12,8 @@ namespace IntegratedGameplaySystem
         private readonly Vector3 pos;
         private readonly LayerMask mask;
         private readonly GameObject effectPrefab;
+
+        public IPurchasable Purchasable => purchase;
 
         public Grenade(MultiblePurchase purchase, int expectedColliders, float range, Vector3 pos, LayerMask mask, GameObject effectPrefab)
         {

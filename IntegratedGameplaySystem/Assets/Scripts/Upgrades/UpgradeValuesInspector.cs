@@ -8,5 +8,6 @@ namespace IntegratedGameplaySystem
     {
         public string name;
         public int cost;
+        public GameObject buttonPrefab;
     }
 }

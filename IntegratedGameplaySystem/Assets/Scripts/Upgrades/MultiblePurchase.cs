@@ -10,10 +10,10 @@ namespace IntegratedGameplaySystem
 
         private readonly UpgradeValuesInspector values;
 
-        public MultiblePurchase(Vector3 position, UpgradeValuesInspector values, GameObject buttonPrefab)
+        public MultiblePurchase(Vector3 position, UpgradeValuesInspector values)
         {
             this.values = values;
-            GameObject button = Utils.SpawnPrefab(buttonPrefab);
+            GameObject button = Utils.SpawnPrefab(values.buttonPrefab);
             button.transform.position = position;
             ServiceLocator<IWorldService>.Locate().Add(button, this);
         }

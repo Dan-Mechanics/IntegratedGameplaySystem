@@ -28,6 +28,7 @@ namespace IntegratedGameplaySystem
 
             timer.SetValue(interval);
             EventManager.RaiseEvent(Occasion.Tick);
+            EventManager.RaiseEvent(Occasion.LateTick);
         }
     }
 }

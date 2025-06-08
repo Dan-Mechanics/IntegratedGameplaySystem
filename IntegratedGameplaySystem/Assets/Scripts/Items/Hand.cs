@@ -21,8 +21,8 @@ namespace IntegratedGameplaySystem
         private ItemStack heldItem;
         // and then the max count in in the thing.
 
-        private int maxCount;
-        private bool isBoosted;
+        private int maxCount = 10;
+        public bool isBoosted;
 
         public void Start()
         {

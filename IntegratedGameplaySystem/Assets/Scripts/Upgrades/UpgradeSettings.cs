@@ -13,7 +13,7 @@ namespace IntegratedGameplaySystem
 
         public AOE area;
         public float grenadeHeight;
-        //public GameObject buttonPrefab;
+        public float runningShoesBoost;
         public GameObject sprinklerEffect;
         public GameObject grenadeEffect;
     }

@@ -5,15 +5,16 @@ namespace IntegratedGameplaySystem
 {
     public class BigHands : IUpgradeBehaviour
     {
+        public UpgradeCommonality Upgrade { get; set; }
+
         private readonly UpgradeSettings settings;
         private readonly Hand hand;
-
-        public UpgradeCommonality Upgrade { get; set; }
 
         public BigHands(UpgradeCommonality Upgrade, UpgradeSettings settings, Hand hand)
         {
             this.settings = settings;
             this.Upgrade = Upgrade;
+            this.hand = hand;
         }
 
         public void Start()
@@ -23,7 +24,7 @@ namespace IntegratedGameplaySystem
 
         private void Upgrade_OnBuy()
         {
-            throw new NotImplementedException();
+            hand.isBoosted = true;
         }
 
         public void Dispose()

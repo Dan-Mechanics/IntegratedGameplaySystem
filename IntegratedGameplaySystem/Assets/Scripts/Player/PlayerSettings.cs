@@ -8,9 +8,9 @@ namespace IntegratedGameplaySystem
         public GameObject prefab;
 
         [Header("Movement")]
-        public float walkSpeed;
-        public float runSpeed;
-        public float flySpeed;
+        public float speed;
+        //public float runSpeed;
+        //public float flySpeed;
         public float movAccel;
         public float accelMult;
 

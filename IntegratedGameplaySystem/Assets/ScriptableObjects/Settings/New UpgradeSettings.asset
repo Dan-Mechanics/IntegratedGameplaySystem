@@ -65,5 +65,6 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
   grenadeHeight: 1
+  runningShoesBoost: 1.5
   sprinklerEffect: {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}
   grenadeEffect: {fileID: 6104260903218439826, guid: 525daebab04350c41b9ae0f9433bad8c, type: 3}

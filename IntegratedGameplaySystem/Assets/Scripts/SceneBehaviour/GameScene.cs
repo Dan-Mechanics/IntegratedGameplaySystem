@@ -62,7 +62,7 @@ namespace IntegratedGameplaySystem
                 upgrades.Add(grenade);
             }
 
-            var shoes = new RunningShoes(new UpgradeCommonality(Vector3.zero, upgradeSettings.runningShoes), upgradeSettings, fps.Movement);
+            var shoes = new RunningShoes(new UpgradeCommonality(Vector3.zero, upgradeSettings.runningShoes), upgradeSettings, fps);
             var bigHands = new BigHands(new UpgradeCommonality(Vector3.up, upgradeSettings.bigHands), upgradeSettings, hand);
 
             upgrades.Add(shoes);

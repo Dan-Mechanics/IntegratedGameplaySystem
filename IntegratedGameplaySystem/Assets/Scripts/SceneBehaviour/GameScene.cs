@@ -38,7 +38,7 @@ namespace IntegratedGameplaySystem
             UpgradeSettings upgrade = assetService.GetAssetByType<UpgradeSettings>();
 
             // Note: youcould add theup grade settings to the shit or not.
-            IPlantPlacementStrategy strat = new Plot(assetService.GetAssetByType<PlotSettings>());
+            
 
             var rainPool = new ObjectPool<PoolableParticle>();
             rainPool.AllocateNew += AllocateNewRain;
@@ -46,14 +46,14 @@ namespace IntegratedGameplaySystem
 
             for (int i = 0; i < plants.Count; i++)
             {
+                IPlantPlacementStrategy strat = new Plot(assetService.GetAssetByType<PlotSettings>(), i);
                 var plantHolder = new PlantCollectionHandler(i, plants[i], strat);
-
-                Vector3 pos = strat.GetPlotPos(i) + Vector3.up * 2;
-                pos += Vector3.forward;
+                Vector3 pos = strat.GetCenter();
+                //pos += Vector3.forward;
 
                 IGradeUp sprinkler = new Sprinkler(new OneTimePurchase(pos, upgrade.sprinkler), strat.GetPlantCount(), range, pos, mask);
 
-                pos += Vector3.forward * 2f;
+                pos += Vector3.up * 2f;
 
                 IGradeUp grenade = new Grenade(new MultiblePurchase(pos, upgrade.grenade), strat.GetPlantCount(), range, pos, mask, upgrade.grenadeEffect);
 

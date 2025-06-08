@@ -36,7 +36,7 @@ namespace IntegratedGameplaySystem
                 components.Add(plants[i]);
             }
 
-            strategy.PlacePlants(plants, index);
+            strategy.PlacePlants(plants);
         }
     }
 }

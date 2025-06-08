@@ -27,8 +27,8 @@ namespace IntegratedGameplaySystem
                 return;
 
             timer.SetValue(interval);
-            EventManager.RaiseEvent(Occasion.UpgradeTick);
-            EventManager.RaiseEvent(Occasion.PlantTick);
+            EventManager.RaiseEvent(Occasion.Tick);
+            EventManager.RaiseEvent(Occasion.LateTick);
         }
     }
 }

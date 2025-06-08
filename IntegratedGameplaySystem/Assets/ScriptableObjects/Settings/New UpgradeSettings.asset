@@ -9,17 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: defaf9c39ed259b4aa77f4239c2aef6f, type: 3}
-  m_Name: upgrades
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 0}
+  m_Name: New UpgradeSettings
+  m_EditorClassIdentifier: Assembly-CSharp:IntegratedGameplaySystem:UpgradeSettings
   sprinkler:
     name: Sprinkler
     cost: 100
-    range: 0
     buttonPrefab: {fileID: 5604457068642857581, guid: 8f56ebe545301834d80d99d075e48cb2, type: 3}
   grenade:
     name: Grenade
     cost: 25
-    range: 0
     buttonPrefab: {fileID: 5604457068642857581, guid: 217496b748f34cb49ae7a97a68c0bd91, type: 3}
   grenadeEffect: {fileID: 6104260903218439826, guid: 525daebab04350c41b9ae0f9433bad8c, type: 3}

@@ -12,6 +12,8 @@ namespace IntegratedGameplaySystem
         private readonly Vector3 pos;
         private readonly LayerMask mask;
 
+        //private readonly GameObject[] plants;
+
         private bool isTicking;
 
         public IPurchasable Purchasable => purchase;
@@ -19,6 +21,7 @@ namespace IntegratedGameplaySystem
         public Sprinkler(OneTimePurchase purchase, int expectedColliders, float range, Vector3 pos, LayerMask mask)
         {
             this.purchase = purchase;
+            //this.plants = plants;
             this.range = range;
             this.pos = pos;
             this.mask = mask;
@@ -33,7 +36,7 @@ namespace IntegratedGameplaySystem
 
         private void SubscribeToTicks()
         {
-            EventManager.AddListener(Occasion.UpgradeTick, Tick);
+            EventManager.AddListener(Occasion.LateTick, Tick);
             isTicking = true;
         }
 
@@ -41,7 +44,7 @@ namespace IntegratedGameplaySystem
         {
             // is this needed ?
             if (isTicking)
-                EventManager.RemoveListener(Occasion.UpgradeTick, Tick);
+                EventManager.RemoveListener(Occasion.LateTick, Tick);
 
             purchase.OnBuy -= SubscribeToTicks;
         }

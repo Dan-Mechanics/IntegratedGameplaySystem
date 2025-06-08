@@ -64,7 +64,7 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             ServiceLocator<IWorldService>.Locate().Add(gameObject, this);
-            EventManager.AddListener(Occasion.PlantTick, Tick);
+            EventManager.AddListener(Occasion.Tick, Tick);
 
             RefreshMaterials();
             RefreshCollider();
@@ -77,7 +77,7 @@ namespace IntegratedGameplaySystem
         /// </summary>
         public void Dispose()
         {
-            EventManager.RemoveListener(Occasion.PlantTick, Tick);
+            EventManager.RemoveListener(Occasion.Tick, Tick);
         }
 
         private void Tick()

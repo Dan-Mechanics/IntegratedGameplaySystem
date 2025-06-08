@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    [Serializable]
+    [System.Serializable]
     public class UpgradeValuesInspector
     {
         public string name;

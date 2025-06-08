@@ -8,9 +8,10 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public interface IPlantPlacementStrategy
     {
-        Vector3 GetPlotPos(int index);
-        void PlacePlants(Plant[] plants, int index);
+        Vector3 GetPosition();
+        void PlacePlants(Plant[] plants);
         int GetPlantCount();
+        Vector3 GetCenter();
     }
 
     public class Dispersal : IPlantPlacementStrategy
@@ -22,17 +23,22 @@ namespace IntegratedGameplaySystem
             this.settings = settings;
         }
 
+        public Vector3 GetCenter()
+        {
+            return GetPosition();
+        }
+
         public int GetPlantCount()
         {
             return settings.plantCount;
         }
 
-        public Vector3 GetPlotPos(int index)
+        public Vector3 GetPosition()
         {
-            return settings.offset + (2f * index * Vector3.right);
+            return settings.offset;
         }
 
-        public void PlacePlants(Plant[] plants, int index)
+        public void PlacePlants(Plant[] plants)
         {
             for (int i = 0; i < plants.Length; i++)
             {
@@ -46,10 +52,22 @@ namespace IntegratedGameplaySystem
     public class Plot : IPlantPlacementStrategy
     {
         private readonly PlotSettings settings;
+        private readonly int index;
 
-        public Plot(PlotSettings settings)
+        public Plot(PlotSettings settings, int index)
         {
             this.settings = settings;
+            this.index = index;
+        }
+
+        public Vector3 GetCenter() 
+        {
+            Vector3 center = GetPosition();
+            center += 0.5f * settings.spacing * settings.width * Vector3.forward;
+            center -= (settings.spacing / 2f) * Vector3.forward;
+            center += 0.5f * settings.spacing * settings.width * Vector3.right;
+            center -= (settings.spacing / 2f) * Vector3.right;
+            return center;
         }
 
         public int GetPlantCount()
@@ -57,14 +75,14 @@ namespace IntegratedGameplaySystem
             return settings.width * settings.width;
         }
 
-        public Vector3 GetPlotPos(int index)
+        public Vector3 GetPosition()
         {
             return new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
         }
 
-        public void PlacePlants(Plant[] plants, int index)
+        public void PlacePlants(Plant[] plants)
         {
-            Vector3 plotPos = GetPlotPos(index);
+            Vector3 plotPos = GetPosition();
 
             int i;
             for (int x = 0; x < settings.width; x++)

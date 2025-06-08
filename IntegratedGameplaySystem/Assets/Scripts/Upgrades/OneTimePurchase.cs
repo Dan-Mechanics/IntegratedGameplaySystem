@@ -11,7 +11,7 @@ namespace IntegratedGameplaySystem
         // <summary>
         // Havent found use for this yet.
         // </summary>
-        //public bool HasBought => hasBought;
+        public bool HasBought => hasBought;
         
         public event Action OnBuy;
         public event Func<int, bool> OnCanBuy;

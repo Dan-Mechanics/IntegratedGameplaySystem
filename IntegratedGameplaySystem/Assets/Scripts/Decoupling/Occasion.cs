@@ -7,10 +7,10 @@
     {
         CloseGame = 1,
         GameOver = 2,
-        Tick = 3, // plant tick/
+        PlantTick = 3, // plant tick/
         EarnMoney = 4,
         PickupItem = 5,
         LoseMoney = 6,
-        LateTick = 7 // UpgreadeTick
+        UpgradeTick = 7 // UpgreadeTick
     }
 }

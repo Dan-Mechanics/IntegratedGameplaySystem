@@ -33,7 +33,7 @@ namespace IntegratedGameplaySystem
 
         private void SubscribeToTicks()
         {
-            EventManager.AddListener(Occasion.LateTick, LateTick);
+            EventManager.AddListener(Occasion.UpgradeTick, Tick);
             isTicking = true;
         }
 
@@ -41,7 +41,7 @@ namespace IntegratedGameplaySystem
         {
             // is this needed ?
             if (isTicking)
-                EventManager.RemoveListener(Occasion.LateTick, LateTick);
+                EventManager.RemoveListener(Occasion.UpgradeTick, Tick);
 
             purchase.OnBuy -= SubscribeToTicks;
         }
@@ -49,7 +49,7 @@ namespace IntegratedGameplaySystem
         /// <summary>
         /// Mihgt nee dto add late tick.
         /// </summary>
-        private void LateTick() 
+        private void Tick() 
         {
             int length = Physics.OverlapSphereNonAlloc(pos, range, colliders, mask, QueryTriggerInteraction.Ignore);
             

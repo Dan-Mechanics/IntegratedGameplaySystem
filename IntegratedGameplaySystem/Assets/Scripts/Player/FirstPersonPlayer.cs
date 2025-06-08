@@ -4,10 +4,10 @@ namespace IntegratedGameplaySystem
 {
     public class FirstPersonPlayer : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
+        public ForcesMovement Movement { get; set; }
         private readonly IPlayerInput playerInput;
         
         private Transform eyes;
-        private ForcesMovement movement;
         private MouseMovement mouseMovement;
         private CameraExtrapolation cameraHandler;
 
@@ -25,7 +25,7 @@ namespace IntegratedGameplaySystem
             eyes.SetParent(transform);
             eyes.localPosition = Vector3.up * settings.eyesHeight;
 
-            movement = new ForcesMovement(transform, eyes, settings);
+            Movement = new ForcesMovement(transform, eyes, settings);
             mouseMovement = new MouseMovement(eyes, transform, settings.sens);
             cameraHandler = new CameraExtrapolation(Camera.main.transform);
         }
@@ -40,12 +40,12 @@ namespace IntegratedGameplaySystem
 
         public void FixedUpdate()
         {
-            movement.DoMovement(playerInput.GetVertical(), playerInput.GetHorizontal());
+            Movement.DoMovement(playerInput.GetVertical(), playerInput.GetHorizontal());
         }
 
         public void LateFixedUpdate()
         {
-            cameraHandler.SetSnapshot(movement.GetSnapshot());
+            cameraHandler.SetSnapshot(Movement.GetSnapshot());
         }
     }
 }

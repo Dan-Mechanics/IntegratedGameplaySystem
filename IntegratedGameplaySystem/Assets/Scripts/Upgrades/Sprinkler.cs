@@ -5,61 +5,45 @@ namespace IntegratedGameplaySystem
 {
     public class Sprinkler : IUpgradeBehaviour
     {
-        private readonly OneTimePurchase purchase;
-        private readonly Collider[] colliders;
+        public UpgradeCommonality Upgrade { get; set; }
         private readonly IWorldService world;
-        private readonly float range;
-        private readonly Vector3 pos;
-        private readonly LayerMask mask;
+        private readonly UpgradeSettings settings;
 
-        //private readonly GameObject[] plants;
-
-        private bool isTicking;
-
-        public IPurchasable Purchasable => purchase;
-
-        public Sprinkler(OneTimePurchase purchase, int expectedColliders, Vector3 pos, UpgradeSettings settings)
+        public Sprinkler(UpgradeCommonality Upgrade, UpgradeSettings settings)
         {
-            this.purchase = purchase;
-            //this.plants = plants;
-            this.range = range;
-            this.pos = pos;
-            this.mask = mask;
-            colliders = new Collider[expectedColliders];
+            this.settings = settings;
+            this.Upgrade = Upgrade;
             world = ServiceLocator<IWorldService>.Locate();
         }
 
+        private bool isSubscribed;
+
         public void Start() 
         {
-            purchase.OnBuy += SubscribeToTicks;
+            Upgrade.OnBuy += SubscribeToTicks;
         }
 
         private void SubscribeToTicks()
         {
-            EventManager.AddListener(Occasion.LateTick, Tick);
-            isTicking = true;
+            EventManager.AddListener(Occasion.LateTick, LateTick);
+            isSubscribed = true;
         }
 
         public void Dispose()
         {
             // is this needed ?
-            if (isTicking)
-                EventManager.RemoveListener(Occasion.LateTick, Tick);
+            if (isSubscribed)
+                EventManager.RemoveListener(Occasion.LateTick, LateTick);
 
-            purchase.OnBuy -= SubscribeToTicks;
+            Upgrade.OnBuy -= SubscribeToTicks;
         }
 
-        /// <summary>
-        /// Mihgt nee dto add late tick.
-        /// </summary>
-        private void Tick() 
+        private void LateTick()
         {
-            int length = Physics.OverlapSphereNonAlloc(pos, range, colliders, mask, QueryTriggerInteraction.Ignore);
-            
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < settings.area.OverlapSphere(Upgrade.Position); i++)
             {
                 // you could add a ? here but I think we can assume it works.
-                world.GetComponent<IWaterable>(colliders[i].transform).Water();
+                world.GetComponent<IWaterable>(settings.area.colliders[i].transform).Water();
             }
         }
     }

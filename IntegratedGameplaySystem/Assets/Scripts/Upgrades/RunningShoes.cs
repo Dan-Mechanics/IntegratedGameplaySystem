@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class BigHands : IUpgradeBehaviour
+    public class RunningShoes : IUpgradeBehaviour
     {
         private readonly UpgradeSettings settings;
-        private readonly Hand hand;
+        private readonly ForcesMovement movement;
 
         public UpgradeCommonality Upgrade { get; set; }
 
-        public BigHands(UpgradeCommonality Upgrade, UpgradeSettings settings, Hand hand)
+        public RunningShoes(UpgradeCommonality Upgrade, UpgradeSettings settings, ForcesMovement movement)
         {
             this.settings = settings;
             this.Upgrade = Upgrade;
@@ -18,17 +18,17 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            Upgrade.OnBuy += Upgrade_OnBuy;
+            Upgrade.OnBuy += Buy;
         }
 
-        private void Upgrade_OnBuy()
+        private void Buy()
         {
             throw new NotImplementedException();
         }
 
         public void Dispose()
         {
-            Upgrade.OnBuy -= Upgrade_OnBuy;
+            Upgrade.OnBuy -= Buy;
         }
 
     }

@@ -7,29 +7,22 @@ namespace IntegratedGameplaySystem
     /// Extract to plantupgrades so that we can have both dipseral and other hsit.
     /// What is this class even for ??
     /// </summary>
-    public class PlantCollectionHandler 
+    public class PlantSpawner 
     {
-        private readonly PlantFlyweight flyweight;
-        private readonly IPlantPlacementStrategy strategy;
-        private readonly int index;
+        private readonly IPlantDistributionStrategy strategy;
+        private PlantFlyweight flyweight;
 
-        private Plant[] plants;
-
-        /// <summary>
-        /// Builder ??
-        /// </summary>
-        public PlantCollectionHandler(int index, PlantFlyweight flyweight, IPlantPlacementStrategy strategy)
+        public PlantSpawner( IPlantDistributionStrategy strategy)
         {
-            this.index = index;
-            this.flyweight = flyweight;
+            //this.flyweight = flyweight;
             this.strategy = strategy;
         }
 
+        public void SetPlant(PlantFlyweight flyweight) => this.flyweight = flyweight;
+
         public void SpawnPlants(List<object> components)
         {
-            //components.Add(this);
-
-            plants = new Plant[strategy.GetPlantCount()];
+            Plant[] plants = new Plant[strategy.GetPlantCount()];
 
             for (int i = 0; i < plants.Length; i++)
             {

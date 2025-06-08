@@ -8,10 +8,11 @@ namespace IntegratedGameplaySystem
     {
         public UpgradeProfile sprinkler;
         public UpgradeProfile grenade;
+        public UpgradeProfile runningShoes;
+        public UpgradeProfile bigHands;
 
-        public float range;
-        public LayerMask mask;
-
+        public AOE area;
+        public float grenadeHeight;
         //public GameObject buttonPrefab;
         public GameObject sprinklerEffect;
         public GameObject grenadeEffect;

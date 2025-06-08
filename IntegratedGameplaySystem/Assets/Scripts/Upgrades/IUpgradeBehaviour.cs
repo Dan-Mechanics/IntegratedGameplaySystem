@@ -11,10 +11,10 @@ namespace IntegratedGameplaySystem
 
     public interface IUpgradeBehaviour : IStartable, IDisposable
     {
-        public Upgrade Upgrade { get; set; }
+        public UpgradeCommonality Upgrade { get; set; }
     }
 
-    public class Upgrade : IInteractable, IHoverable 
+    public class UpgradeCommonality : IInteractable, IHoverable 
     {
         public Vector3 Position => button.transform.position;
         //public bool HasBeenBought => hasBeenBought;
@@ -28,11 +28,11 @@ namespace IntegratedGameplaySystem
 
        // private bool hasBeenBought;
 
-        public Upgrade(Vector3 position, UpgradeProfile values)
+        public UpgradeCommonality(Vector3 position, UpgradeProfile values)
         {
             this.values = values;
-            GameObject button = Utils.SpawnPrefab(values.buttonPrefab);
-            button.transform.position = position;
+            button = Utils.SpawnPrefab(values.buttonPrefab);
+            button.transform.position = position + values.buttonPrefab.transform.position;
 
             world = ServiceLocator<IWorldService>.Locate();
             world.Add(button, this);
@@ -41,9 +41,9 @@ namespace IntegratedGameplaySystem
         public string GetHoverTitle()
         {
             if (!OnCanBuy.Invoke(values.cost))
-                return $"Can't {values.name}afford yet!";
+                return $"Can't afford {values.name.ToLower()} yet!";
 
-            return $"Buy {values.name} for ${values.cost}";
+            return $"Buy {values.name.ToLower()} for ${values.cost}";
         }
 
         public void Interact()

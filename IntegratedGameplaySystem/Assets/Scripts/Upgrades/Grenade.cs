@@ -5,43 +5,36 @@ namespace IntegratedGameplaySystem
 {
     public class Grenade : IUpgradeBehaviour
     {
-        private readonly MultiblePurchase purchase;
-        private readonly Collider[] colliders;
+        public UpgradeCommonality Upgrade { get; set; }
         private readonly IWorldService world;
-        private readonly Vector3 pos;
         private readonly UpgradeSettings settings;
 
-        public Upgrade Upgrade { get; set; }
-
-        public Grenade(MultiblePurchase purchase, int expectedColliders, Vector3 pos, UpgradeSettings settings)
+        public Grenade(UpgradeCommonality Upgrade, UpgradeSettings settings)
         {
-            this.purchase = purchase;
-            this.pos = pos;
             this.settings = settings;
-            colliders = new Collider[expectedColliders];
+            this.Upgrade = Upgrade;
             world = ServiceLocator<IWorldService>.Locate();
         }
 
         public void Start() 
         {
-            purchase.OnBuy += FarmAll;
+            Upgrade.OnBuy += HarvestAll;
         }
 
         public void Dispose()
         {
-            purchase.OnBuy -= FarmAll;
+            Upgrade.OnBuy -= HarvestAll;
         }
 
-        private void FarmAll() 
+        private void HarvestAll() 
         {
             Transform effect = Utils.SpawnPrefab(settings.grenadeEffect).transform;
-            effect.position = pos;
+            effect.position = Upgrade.Position;
 
-            int length = Physics.OverlapSphereNonAlloc(pos, settings.range, colliders, settings.mask, QueryTriggerInteraction.Ignore);
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < settings.area.OverlapSphere(Upgrade.Position); i++)
             {
                 // you could add a ? here but I think we can assume it works.
-                world.GetComponent<IHarvestable>(colliders[i].transform).Harvest();
+                world.GetComponent<IHarvestable>(settings.area.colliders[i].transform).Harvest();
             }
         }
     }

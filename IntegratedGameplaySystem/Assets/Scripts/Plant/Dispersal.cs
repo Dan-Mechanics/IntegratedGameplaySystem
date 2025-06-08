@@ -6,7 +6,7 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Does this count as strat pattern?
     /// </summary>
-    public interface IPlantPlacementStrategy
+    public interface IPlantDistributionStrategy
     {
         Vector3 GetPosition();
         void PlacePlants(Plant[] plants);
@@ -14,7 +14,7 @@ namespace IntegratedGameplaySystem
         Vector3 GetCenter();
     }
 
-    public class Dispersal : IPlantPlacementStrategy
+    public class Dispersal : IPlantDistributionStrategy
     {
         private readonly DispersalSettings settings;
 
@@ -49,16 +49,18 @@ namespace IntegratedGameplaySystem
         }
     }
 
-    public class Plot : IPlantPlacementStrategy
+    public class Plot : IPlantDistributionStrategy
     {
         private readonly PlotSettings settings;
-        private readonly int index;
+        private int index;
 
-        public Plot(PlotSettings settings, int index)
+        public Plot(PlotSettings settings)
         {
             this.settings = settings;
-            this.index = index;
+            //this.index = index;
         }
+
+        public void SetPlotIndex(int index) => this.index = index;
 
         public Vector3 GetCenter() 
         {

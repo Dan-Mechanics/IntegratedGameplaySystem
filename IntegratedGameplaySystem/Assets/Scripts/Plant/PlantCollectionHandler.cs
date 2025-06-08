@@ -88,7 +88,7 @@ namespace IntegratedGameplaySystem
         {
             for (int i = 0; i < plants.Length; i++)
             {
-                plants[i].Water();
+                plants[i].SetAlwaysWatered(true);
             }
         }
 

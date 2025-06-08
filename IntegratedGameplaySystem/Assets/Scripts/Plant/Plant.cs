@@ -11,7 +11,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
-        //public bool IsWatered => alwaysWatered || wateredByHand;
+        public bool IsWatered => alwaysWatered || wateredByHand;
         public bool IsHarvestable => progression >= flyweight.materials.Length - 1;
 
         public readonly GameObject gameObject;
@@ -23,8 +23,8 @@ namespace IntegratedGameplaySystem
         private readonly IPoolService<PoolableParticle> pool;
 
         private int progression;
-        //private bool alwaysWatered;
-        private bool watered;
+        private bool alwaysWatered;
+        private bool wateredByHand;
         private bool rainEffectShowing;
         private PoolableParticle rainParticles;
 
@@ -51,7 +51,7 @@ namespace IntegratedGameplaySystem
 
         public string GetHoverTitle() 
         {
-            if (!watered && !IsHarvestable)
+            if (!IsWatered && !IsHarvestable)
                 return $"dry {flyweight.name}";
 
             return flyweight.name;
@@ -78,7 +78,7 @@ namespace IntegratedGameplaySystem
 
         private void Tick()
         {
-            if (!Utils.RandomWithPercentage(watered ? flyweight.wateredGrowGrowPercentage : flyweight.dryGrowPercentage))
+            if (!Utils.RandomWithPercentage(IsWatered ? flyweight.wateredGrowGrowPercentage : flyweight.dryGrowPercentage))
                 return;
 
             Grow();
@@ -86,13 +86,20 @@ namespace IntegratedGameplaySystem
 
         private void Grow()
         {
-            watered = false;
+            wateredByHand = false;
             progression++;
             progression = Mathf.Clamp(progression, 0, flyweight.materials.Length - 1);
 
             RefreshMaterials();
             RefreshCollider();
             RefreshRainEffect();
+        }
+
+        public void SetAlwaysWatered(bool value) 
+        {
+            alwaysWatered = value;
+            RefreshRainEffect();
+            RefreshCollider();
         }
 
         private void RefreshMaterials() 
@@ -106,15 +113,15 @@ namespace IntegratedGameplaySystem
         private void RefreshCollider() 
         {
             sphereCollider.center = Vector3.down * (IsHarvestable ? 0f : 0.5f);
-            sphereCollider.enabled = IsHarvestable || !watered;
+            sphereCollider.enabled = IsHarvestable || !IsWatered;
         }
 
         public void RefreshRainEffect()
         {
-            if (rainEffectShowing == watered)
+            if (rainEffectShowing == IsWatered)
                 return;
 
-            if (watered)
+            if (IsWatered)
             {
                 rainParticles = pool.Get();
                 rainParticles.Place(transform.position + Vector3.up);
@@ -124,7 +131,7 @@ namespace IntegratedGameplaySystem
                 pool.Give(rainParticles);
             }
 
-            rainEffectShowing = watered;
+            rainEffectShowing = IsWatered;
         }
 
         public void Interact()
@@ -139,7 +146,7 @@ namespace IntegratedGameplaySystem
                 return;
 
             progression = 0;
-            watered = false;
+            wateredByHand = false;
             EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, flyweight);
 
             RefreshMaterials();
@@ -149,10 +156,10 @@ namespace IntegratedGameplaySystem
 
         public void Water()
         {
-            if (watered)
+            if (IsWatered)
                 return;
 
-            watered = true;
+            wateredByHand = true;
 
             RefreshRainEffect();
             RefreshCollider();

@@ -15,6 +15,12 @@ namespace IntegratedGameplaySystem
         }
 
         public bool AtCapacity() => item != null && count >= item.MaxStackSize;
-        public void Clamp() => count = Mathf.Clamp(count, 0, item.MaxStackSize);
+        public void Clamp(int overrideCount = 0) 
+        {
+            if (overrideCount <= 0)
+                overrideCount = item.MaxStackSize;
+
+            count = Mathf.Clamp(count, 0, overrideCount);
+        }
     }
 }

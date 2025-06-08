@@ -20,7 +20,10 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private ItemStack heldItem;
         // and then the max count in in the thing.
-        
+
+        private int maxCount;
+        private bool isBoosted;
+
         public void Start()
         {
             EventManager<IItemArchitype>.AddListener(Occasion.PickupItem, SetOrAddItem);
@@ -34,7 +37,9 @@ namespace IntegratedGameplaySystem
             if (newItem != null && heldItem.item == newItem)
             {
                 heldItem.count++;
-                heldItem.Clamp();
+
+                // or something.
+                heldItem.Clamp(maxCount * (isBoosted ? 2 : 1));
             }
             else
             {

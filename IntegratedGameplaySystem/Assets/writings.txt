@@ -1,3 +1,16 @@
+i would say make it work now and smooth out the code later.
+
+here my plan:
+
+make inventory have like a fixed max for all the items ish
+being like 20 or smth
+
+and then make 4 upgrades total:
+sprinker ( permanent )
+grenade ( single )
+running shoes ( perm )
+big hands ( perm )
+
 consider a water once type beat
 or if you gonna do thatj ust change the class easy peazy
 i think the Sprinkkler.cs class realyl makes it work ngl --> because we are leveraging components

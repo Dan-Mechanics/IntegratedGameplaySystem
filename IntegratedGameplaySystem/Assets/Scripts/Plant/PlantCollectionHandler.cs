@@ -10,7 +10,7 @@ namespace IntegratedGameplaySystem
     {
         private readonly TemporaryUpgrade sprinkler = new();
         private readonly TemporaryUpgrade grenade = new();
-        private readonly List<IUpgradable> upgradables = new();
+        private readonly List<IPurchasable> upgradables = new();
 
         private readonly PlantFlyweight flyweight;
         private readonly MoneyCentral money;
@@ -38,7 +38,7 @@ namespace IntegratedGameplaySystem
             upgradables.Add(grenade);
         }
 
-        private void GiveValues(IUpgradable upgradable, UpgradeValuesInspector values) => upgradable.SetValues(values);
+        private void GiveValues(IPurchasable upgradable, UpgradeValuesInspector values) => upgradable.SetValues(values);
 
         public void SpawnPlants(List<object> components)
         {

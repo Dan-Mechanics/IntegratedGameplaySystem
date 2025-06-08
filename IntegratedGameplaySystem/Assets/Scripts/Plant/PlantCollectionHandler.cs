@@ -8,7 +8,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class PlantCollectionHandler : IDisposable, IStartable
     {
-        private readonly PermanentUpgrade sprinkler = new();
+        private readonly TemporaryUpgrade sprinkler = new();
         private readonly TemporaryUpgrade grenade = new();
         private readonly List<IUpgradable> upgradables = new();
 

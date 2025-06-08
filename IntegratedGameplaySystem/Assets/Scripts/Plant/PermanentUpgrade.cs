@@ -25,6 +25,8 @@ namespace IntegratedGameplaySystem
 
     public class PermanentUpgrade : IUpgradable
     {
+        public bool HasBought => hasBought;
+        
         public event Action OnBuy;
         public event Func<int, bool> OnCanBuy;
         

@@ -35,7 +35,28 @@ namespace IntegratedGameplaySystem
         /// This code sux. Fit it!
         /// REFACTOR !! --> consider splitting into smaller things.
         /// </summary>
-        public void DoMovement(float vert, float hori) 
+        public void DoMovement(float vert, float hori)
+        {
+            isGrounded = GetIsGrounded();
+            //Debug.Log(isGrounded);
+            float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.accelMult;
+            Vector3 mov = GetMovement(vert, hori, trans);
+
+            Vector3 flatVel = rb.velocity;
+            flatVel.y = 0f;
+
+            float mag = flatVel.magnitude;
+            
+            rb.AddForce(accel * Time.fixedDeltaTime * mov, ForceMode.VelocityChange);
+
+            Vector3 counterMovement = accel * Time.fixedDeltaTime * settings.accelMult * -(flatVel.normalized - mov);
+            if (mag >= 0f && counterMovement.magnitude > mag)
+                counterMovement = -flatVel;
+
+            rb.AddForce(counterMovement, ForceMode.VelocityChange);
+        }
+
+        /*public void DoMovement(float vert, float hori) 
         {
             isGrounded = GetIsGrounded();
 
@@ -60,7 +81,7 @@ namespace IntegratedGameplaySystem
                 counterMovement = -flatVel;
 
             rb.AddForce(counterMovement, ForceMode.VelocityChange);
-        }
+        }*/
 
         public CameraMotionSnapshot GetSnapshot() 
         {
@@ -69,12 +90,12 @@ namespace IntegratedGameplaySystem
             return snapshot;
         }
 
-        private Vector3 GetMovement(float vert, float hori, Transform orientedBody) 
+        private Vector3 GetMovement(float vert, float hori, Transform trans) 
         {
             Vector3 mov = Vector3.zero;
 
-            mov += orientedBody.right * hori;
-            mov += orientedBody.forward * vert;
+            mov += trans.right * hori;
+            mov += trans.forward * vert;
             mov.Normalize();
 
             return mov;

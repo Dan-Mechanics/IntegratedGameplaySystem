@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1ac128ede6065e4499dd06b179cc6e2, type: 3}
-  m_Name: New GrenadeSettings
+  m_Script: {fileID: 11500000, guid: defaf9c39ed259b4aa77f4239c2aef6f, type: 3}
+  m_Name: sprinkler
   m_EditorClassIdentifier: 
-  cost: 50
-  singlePurchase: 0
+  cost: 100
+  singlePurchase: 1
   buttonPrefab: {fileID: 5604457068642857581, guid: 217496b748f34cb49ae7a97a68c0bd91, type: 3}
-  color: {r: 0.3890174, g: 0.8867924, b: 0.48230594, a: 1}
+  color: {r: 0.5481933, g: 0.7218141, b: 0.9150943, a: 1}
   offset: {x: 0, y: 0, z: 0}
   area:
     range: 2.5
@@ -24,4 +24,4 @@ MonoBehaviour:
       m_Bits: 64
     interaction: 1
     colliders: []
-  grenadeEffect: {fileID: 6104260903218439826, guid: 525daebab04350c41b9ae0f9433bad8c, type: 3}
+  rainEffect: {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}

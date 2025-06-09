@@ -95,7 +95,7 @@ namespace IntegratedGameplaySystem
 
         public CameraMotionSnapshot GetSnapshot() 
         {
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, settings.speed * (speedSource == null ? 1f : speedSource.GetSpeed()));
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, speedSource.GetSpeed());
             snapshot.Set(eyes.position, rb.velocity, Time.time);
             return snapshot;
         }

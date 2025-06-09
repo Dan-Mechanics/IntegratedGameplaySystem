@@ -31,9 +31,9 @@ namespace IntegratedGameplaySystem
         public string GetHoverTitle()
         {
             if (!OnCanBuy.Invoke(values.Cost))
-                return $"Can't afford {values.Name.ToLower()} yet!";
+                return $"Can't afford {values.Name} yet!";
 
-            return $"Buy {values.Name.ToLower()} for ${values.Cost}";
+            return $"Buy {values.Name} for ${values.Cost}";
         }
 
         public void Interact()

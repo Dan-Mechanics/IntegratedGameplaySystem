@@ -45,7 +45,7 @@ namespace IntegratedGameplaySystem
         {
             interactor.ui = Display.AddToCanvas<Text>(canvas, settings.text);
             EasyRect rect = new EasyRect(interactor.ui.rectTransform);
-            //rect.SnapTo(Snap.Center, 1f * rect.GetHeight() * Vector2.down);
+            rect.SetSize(500f, rect.GetHeight());
             rect.SnapTo(Snap.Center);
 
             score.ui = Display.AddToCanvas<Text>(canvas, settings.text);

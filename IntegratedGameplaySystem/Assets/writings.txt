@@ -24,6 +24,13 @@ balance the game a little and then is gucci.
 
 i feel like the seed and plot state is a luxary not a need.
 
+ - pretty skybox.
+ - rare berries --> give each item a tint setting
+ - seed state and visible soil
+ - make sure the grenade and the sprinkler get all the stuff
+
+ = overall code clean at the end in tandem with documetnation etc etc
+
 ===
 
 i would say make it work now and smooth out the code later.

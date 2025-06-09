@@ -6,7 +6,7 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Consider not having interface usage here?
     /// </summary>
-    public class ChillBindingRules : INewBindingRules
+    public class BaseBindingRules : INewBindingRules
     {
         public bool AllowBinding(List<Binding> alreadyBound, Binding newBinding)
         {

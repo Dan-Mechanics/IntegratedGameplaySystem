@@ -40,6 +40,7 @@ namespace IntegratedGameplaySystem
 
             pool = ServiceLocator<IPoolService<PoolableParticle>>.Locate();
             sphereCollider = gameObject.AddComponent<SphereCollider>();
+            sphereCollider.radius = 0.6f;
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
         }
 
@@ -70,6 +71,7 @@ namespace IntegratedGameplaySystem
         private void MakeSoil()
         {
             Transform soil = GameObject.CreatePrimitive(PrimitiveType.Quad).transform;
+            soil.name = "soil";
             soil.position = transform.position;
             soil.position += Vector3.down * 0.49f;
             soil.rotation = Quaternion.Euler(90f, 0f, 0f);

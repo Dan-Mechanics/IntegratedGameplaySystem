@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class RestrictiveBindingRules : INewBindingRules
     {
-        private readonly ChillBindingRules chillBindingRules = new();
+        private readonly BaseBindingRules chillBindingRules = new();
         
         public bool AllowBinding(List<Binding> alreadyBound, Binding newBinding)
         {

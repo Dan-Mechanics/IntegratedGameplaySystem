@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d47de6b141e7d1c42bd24b156195a3f2, type: 3}
   m_Name: item_settings
   m_EditorClassIdentifier: 
-  maxStack: 12
+  maxStack: 15

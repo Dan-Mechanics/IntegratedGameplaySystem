@@ -21,12 +21,12 @@ namespace IntegratedGameplaySystem
                 if (!Utils.IsStringValid(line))
                     continue;
 
-                if (line == "done")
-                    break;
+                /*if (line == "done")
+                    break;*/
 
                 // Ignore statment
-                if (line.Contains('!'))
-                    continue;
+                /*if (line.Contains('!'))
+                    continue;*/
 
                 // Comments
                 if (line.Length > 0 && line[0] == '#')
@@ -34,7 +34,7 @@ namespace IntegratedGameplaySystem
 
                 string[] tokens = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                if (tokens.Length < 2)
+                if (tokens.Length != 2)
                     continue;
                 
                 Debug.Log(line);

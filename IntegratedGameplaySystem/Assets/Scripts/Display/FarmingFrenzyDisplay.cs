@@ -83,6 +83,7 @@ namespace IntegratedGameplaySystem
 
             Image overlay = Display.AddToCanvas<Image>(canvas, settings.image);
             overlay.sprite = settings.defaultSprite;
+            overlay.color = Color.black;
             rect.Set(overlay.rectTransform);
             rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
         }

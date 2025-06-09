@@ -58,7 +58,7 @@ namespace IntegratedGameplaySystem
             IInputService inputService;
             if (!ServiceLocator<IInputService>.HasBeenProvided())
             {
-                inputService = new InputHandler(new ChillBindingRules(), new ConfigTextFile());
+                inputService = new InputHandler(new BaseBindingRules(), new ConfigTextFile());
                 ServiceLocator<IInputService>.Provide(inputService);
             }
             else 
@@ -68,7 +68,7 @@ namespace IntegratedGameplaySystem
 
             if (sceneBehaviour == null)
             {
-                Debug.LogError($"please assign a valid {nameof(sceneBehaviour)}.");
+                Debug.LogError($"please assign a valid {nameof(SceneBehaviour)}.");
                 return;
             }
 

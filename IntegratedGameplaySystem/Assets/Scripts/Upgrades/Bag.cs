@@ -8,9 +8,9 @@ namespace IntegratedGameplaySystem
         public UpgradeCommonality Upgrade { get; set; }
 
         private readonly BagSettings settings;
-        private readonly SingleItemHolder hand;
+        private readonly Hand hand;
 
-        public Bag(UpgradeCommonality Upgrade, BagSettings settings, SingleItemHolder hand)
+        public Bag(UpgradeCommonality Upgrade, BagSettings settings, Hand hand)
         {
             this.settings = settings;
             this.Upgrade = Upgrade;

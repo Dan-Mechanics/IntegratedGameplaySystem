@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     [Serializable]
-    public struct AOE
+    public struct SphereAOE
     {
         public float range;
         public LayerMask mask;

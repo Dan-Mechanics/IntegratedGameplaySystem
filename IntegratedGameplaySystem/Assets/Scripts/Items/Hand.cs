@@ -2,19 +2,16 @@ using System;
 
 namespace IntegratedGameplaySystem
 {
-    public class SingleItemHolder : IStartable, IDisposable, IItemHolder, IChangeTracker<ItemStack>
+    public class Hand : IStartable, IDisposable, IItemHolder, IChangeTracker<ItemStack>
     {
         public event Action<ItemStack> OnChange;
-
         public Action<int> OnCountChange;
         public Action<bool> AtMaxCapacity;
 
         private ItemStack heldItem;
-        //private readonly SingleItemHolderSettings settings;
-
         private IMaxStackSource maxStackSource;
 
-        public SingleItemHolder(SingleItemHolderSettings settings)
+        public Hand(HandSettings settings)
         {
            // this.settings = settings;
             SetMaxStackSource(settings);

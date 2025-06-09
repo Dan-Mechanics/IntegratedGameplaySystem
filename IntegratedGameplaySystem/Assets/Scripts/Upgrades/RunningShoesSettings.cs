@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IntegratedGameplaySystem 
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(RunningShoesSettings), fileName = "New " + nameof(RunningShoesSettings))]
-    public class RunningShoesSettings : ScriptableObject, IUpgradeValues
+    public class RunningShoesSettings : ScriptableObject, IUpgradeValues, ISpeedSource
     {
         public string Name => name;
         public int Cost => cost;
@@ -24,5 +24,10 @@ namespace IntegratedGameplaySystem
         public Vector3 offset;
 
         public float runninShoesOnSpeed;
+
+        public float GetSpeed()
+        {
+            return runninShoesOnSpeed;
+        }
     }
 }

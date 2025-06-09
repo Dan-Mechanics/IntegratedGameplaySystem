@@ -1,3 +1,8 @@
+the running shoes work
+the greande not so much, working on it...
+
+...
+
 make sure to remove all references to Pulbic in the interfaces, is a convention thing.
 
 i need to make the decoupling for speed boost and inventory fix

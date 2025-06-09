@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class RunningShoes : IUpgradeBehaviour, ISpeedSource
+    public class RunningShoes : IUpgradeBehaviour
     {
         public UpgradeCommonality Upgrade { get; set; }
 
@@ -24,17 +24,12 @@ namespace IntegratedGameplaySystem
 
         private void PutOnShoes()
         {
-            movement.SetSpeedSource(this);
+            movement.SetSpeedSource(settings);
         }
 
         public void Dispose()
         {
             Upgrade.OnBuy -= PutOnShoes;
-        }
-
-        public float GetSpeed()
-        {
-            return settings.runninShoesOnSpeed;
         }
     }
 }

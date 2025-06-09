@@ -27,8 +27,8 @@ namespace IntegratedGameplaySystem
             var player = new FirstPersonPlayer(new KeyboardSource(ServiceLocator<IInputService>.Locate()));
             components.Add(player);
             
-            var singleItemHolder = new SingleItemHolder(assets.GetAssetByType<SingleItemHolderSettings>());
-            money = new MoneyCentral(singleItemHolder);
+            var hand = new Hand(assets.GetAssetByType<HandSettings>());
+            money = new MoneyCentral(hand);
             List<PlantFlyweight> plantsFlyweights = assets.GetAllAssetsOfType<PlantFlyweight>();
 
             // ======================
@@ -74,7 +74,7 @@ namespace IntegratedGameplaySystem
             var bagSettings = assets.GetAssetByType<BagSettings>();
 
             IUpgradeBehaviour shoes = new RunningShoes(new UpgradeCommonality(Vector3.zero, shoesSettings), shoesSettings, player.Movement);
-            IUpgradeBehaviour bag = new Bag(new UpgradeCommonality(Vector3.zero, bagSettings), bagSettings, singleItemHolder);
+            IUpgradeBehaviour bag = new Bag(new UpgradeCommonality(Vector3.zero, bagSettings), bagSettings, hand);
 
             upgrades.Add(shoes);
             upgrades.Add(bag);
@@ -94,14 +94,14 @@ namespace IntegratedGameplaySystem
 
             // ======================
 
-            var display = new FarmingFrenzyDisplay(interactor, money, score, singleItemHolder);
+            var display = new FarmingFrenzyDisplay(interactor, money, score, hand);
             components.Add(display);
 
             components.Add(score);
             components.Add(tickClock);
             components.Add(money);            
             components.Add(interactor);
-            components.Add(singleItemHolder);
+            components.Add(hand);
 
             // ======================
 

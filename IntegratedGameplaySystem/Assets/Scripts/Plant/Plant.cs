@@ -120,6 +120,11 @@ namespace IntegratedGameplaySystem
             if (!IsHarvestable)
                 return;
 
+            if (flyweight.name != "Feathercup")
+                Debug.LogWarning($"{flyweight.name} harvested !");
+            else
+                Debug.Log($"{flyweight.name} harvested !");
+
             progression = 0;
             isWatered = false;
             EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, flyweight);

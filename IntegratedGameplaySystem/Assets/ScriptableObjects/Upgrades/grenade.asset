@@ -18,10 +18,35 @@ MonoBehaviour:
   color: {r: 0.3890174, g: 0.8867924, b: 0.48230594, a: 1}
   offset: {x: 0, y: 1, z: 0}
   area:
-    range: 2.5
+    halfExtents: {x: 2, y: 5, z: 2}
     mask:
       serializedVersion: 2
       m_Bits: 64
     interaction: 1
-    colliders: []
+    colliders:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   grenadeEffect: {fileID: 6104260903218439826, guid: 525daebab04350c41b9ae0f9433bad8c, type: 3}

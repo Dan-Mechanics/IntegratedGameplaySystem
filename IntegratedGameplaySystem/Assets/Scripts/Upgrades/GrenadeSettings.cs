@@ -23,7 +23,7 @@ namespace IntegratedGameplaySystem
         public Color color;
         public Vector3 offset;
 
-        public AOE area;
+        public BoxAOE area;
         public GameObject grenadeEffect;
     }
 }

@@ -5,8 +5,8 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// MaxStackSettings.cs ??
     /// </summary>
-    [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(SingleItemHolderSettings), fileName = "New " + nameof(SingleItemHolderSettings))]
-    public class SingleItemHolderSettings : ScriptableObject, IMaxStackSource
+    [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(HandSettings), fileName = "New " + nameof(HandSettings))]
+    public class HandSettings : ScriptableObject, IMaxStackSource
     {
         public int maxStack;
 

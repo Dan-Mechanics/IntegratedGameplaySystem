@@ -15,7 +15,7 @@ MonoBehaviour:
   dryGrowPercentage: 5
   wateredGrowGrowPercentage: 25
   monetaryValue: 20
-  maxStackSize: 25
+  itemTint: {r: 1, g: 1, b: 1, a: 1}
   plantPrefab: {fileID: 6319714984396151695, guid: 048e399419656db4b9c9aa6ae6023c6f, type: 3}
   sprite: {fileID: 21300000, guid: 7c768b292b4ad1c44b99ed372216f18c, type: 3}
   materials:

@@ -42,14 +42,10 @@ namespace IntegratedGameplaySystem
 
         public static void SpriteIntoImage(Sprite sprite, Image image) 
         {
-            image.color = sprite == null ? Color.clear : Color.white;
-            image.sprite = sprite;
-        }
+            if (sprite == null)
+                image.color = Color.clear;
 
-        public void SettingsSpriteIntoImg(Sprite sprite, Image image)
-        {
-            //image.color = sprite == null ? Color.clear : Color.white;
-            image.sprite = sprite == null ? Settings.defaultSprite : sprite;
+            image.sprite = sprite;
         }
 
         public static void BoolIntoRedText(bool isRed, Text text) => text.color = isRed ? Color.red : Color.black;
@@ -57,6 +53,8 @@ namespace IntegratedGameplaySystem
         public static void ItemStackIntoSlot(ItemStack stack, Slot slot)
         {
             SpriteIntoImage(stack.item?.Sprite, slot.image);
+            slot.image.color = stack.item == null ? Color.clear : stack.item.ItemTint;
+
             IntIntoText(stack.count, slot.text);
             BoolIntoRedText(stack.isAtCapacity, slot.text);
         }

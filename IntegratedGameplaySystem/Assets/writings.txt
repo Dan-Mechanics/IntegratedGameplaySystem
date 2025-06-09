@@ -34,6 +34,7 @@ i feel like the seed and plot state is a luxary not a need.
  - rare berries --> give each item a tint setting
  - seed state and visible soil
  - make sure the grenade and the sprinkler get all the stuff
+ ? sprinkler also use box collider ?? --> make AOE an interface given that we have two?
 
  = overall code clean at the end in tandem with documetnation etc etc
 

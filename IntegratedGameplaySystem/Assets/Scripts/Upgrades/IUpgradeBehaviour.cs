@@ -5,6 +5,6 @@ namespace IntegratedGameplaySystem
 {
     public interface IUpgradeBehaviour : IStartable, IDisposable
     {
-        public UpgradeCommonality Upgrade { get; set; }
+        UpgradeCommonality Upgrade { get; set; }
     }
 }

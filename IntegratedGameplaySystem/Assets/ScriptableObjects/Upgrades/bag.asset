@@ -15,6 +15,6 @@ MonoBehaviour:
   cost: 50
   singlePurchase: 1
   buttonPrefab: {fileID: 5604457068642857581, guid: 217496b748f34cb49ae7a97a68c0bd91, type: 3}
-  color: {r: 0.7264151, g: 0.5438359, b: 0.46942863, a: 1}
+  color: {r: 0.4528302, g: 0.3444035, b: 0.3011748, a: 1}
   offset: {x: -2.5, y: 1, z: 2.5}
   bagMaxItems: 25

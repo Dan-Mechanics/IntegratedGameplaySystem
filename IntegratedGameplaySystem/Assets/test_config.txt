@@ -23,7 +23,7 @@ D Right !
 
 # Interaction ==============
 
-done
+DISABLE
 now we have disabled interaction
 we can literally wrtie whatever here because this is basically return;
 
@@ -31,7 +31,11 @@ Mouse0 Interact
 Mouse1 Interact
 E Interact
 
-# Debug ==============
+COMMENT Debug
+
+ENABLE
 
 R Reload
 Escape Escape
+
+so we have # ! ENABLE DISABLE

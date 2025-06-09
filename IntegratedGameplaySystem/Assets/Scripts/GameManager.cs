@@ -49,21 +49,24 @@ namespace IntegratedGameplaySystem
 
             ServiceLocator<IAssetService>.Provide(inspectorAssets);
 
-            IWorldService worldService = ServiceLocator<IWorldService>.Locate();
-            if (worldService == null)
+            if (!ServiceLocator<IInputService>.HasBeenProvided())
             {
                 ServiceLocator<IWorldService>.Provide(new GameWorld());
             }
             else
             {
-                worldService.Reset();
+                ServiceLocator<IWorldService>.Locate().Reset();
             }
 
-            IInputService inputService = ServiceLocator<IInputService>.Locate();
-            if (inputService == null)
+            IInputService inputService;
+            if (!ServiceLocator<IInputService>.HasBeenProvided())
             {
                 inputService = new InputHandler(new ChillBindingRules(), new ConfigTextFile());
                 ServiceLocator<IInputService>.Provide(inputService);
+            }
+            else 
+            {
+                inputService = ServiceLocator<IInputService>.Locate();
             }
 
             if (sceneBehaviour == null)

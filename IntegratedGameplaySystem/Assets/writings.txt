@@ -24,6 +24,7 @@ balance the game a little and then is gucci.
 
 i feel like the seed and plot state is a luxary not a need.
 
+ - test if all the shit works.
  - pretty skybox.
  - rare berries --> give each item a tint setting
  - seed state and visible soil

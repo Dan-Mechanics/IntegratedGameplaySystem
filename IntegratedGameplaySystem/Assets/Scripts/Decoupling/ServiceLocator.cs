@@ -16,18 +16,20 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public static class ServiceLocator<T>
     {
-        public static T instance;
+        private static T instance;
 
         /// <summary>
         /// Please cache. Or dont.
         /// </summary>
         public static T Locate()
         {
-            //if (instance == null)
-                //throw new Exception("No instance provided yet !!");
+            if (instance == null)
+                throw new Exception("No instance provided yet !!");
 
             return instance;
         }
+
+        public static bool HasBeenProvided() => instance != null;
 
         public static void Provide(T service) 
         {

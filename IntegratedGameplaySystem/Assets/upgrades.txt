@@ -1,3 +1,6 @@
+potentially: upgrade so you dont have to click urself ??
+or just make that standard.
+
 idea:
 enum Upgrade
 

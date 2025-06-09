@@ -20,6 +20,8 @@ namespace IntegratedGameplaySystem
         private readonly Transform cam;
         private readonly IInputService inputService;
         private readonly IWorldService worldService;
+        private readonly Timer timer = new Timer();
+        private readonly InputSource interacting;
 
         private string currentHover;
 
@@ -32,11 +34,14 @@ namespace IntegratedGameplaySystem
             raycaster = new Raycaster(ServiceLocator<IAssetService>.Locate().GetAssetByType<RaycastSettings>());
             inputService = ServiceLocator<IInputService>.Locate();
             worldService = ServiceLocator<IWorldService>.Locate();
+            interacting = inputService.GetInputSource(PlayerAction.Interact);
+
+            //timer.SetValue(0.1f);
         }
 
         public void Start() 
         {
-            inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteract;
+            inputService.GetInputSource(PlayerAction.Interact).onDown += Interact;
             OnChange?.Invoke(string.Empty);
         }
 
@@ -44,15 +49,23 @@ namespace IntegratedGameplaySystem
         {
             string newHover = GetHoverable()?.GetHoverTitle();
 
-            if (newHover == currentHover)
-                return;
+            if (newHover == currentHover) 
+            {
+                currentHover = newHover;
+                OnChange?.Invoke(currentHover);
+            }
 
-            currentHover = newHover;
-            OnChange?.Invoke(currentHover);
+            if (interacting.IsPressed && timer.Tick(Time.fixedDeltaTime))
+                Interact();
+
+            /*if (inputService.GetInputSource(PlayerAction.Interact).IsPressed)
+                TryInteract();*/
         }
 
-        private void TryInteract()
+        private void Interact()
         {
+            timer.SetValue(0.1f);
+            
             if (!raycaster.Raycast(cam.position, cam.forward, out Transform hitTransform))
                 return;
 
@@ -71,7 +84,7 @@ namespace IntegratedGameplaySystem
 
         public void Dispose()
         {
-            inputService.GetInputSource(PlayerAction.Interact).onDown -= TryInteract;
+            inputService.GetInputSource(PlayerAction.Interact).onDown -= Interact;
         }
     }
 }

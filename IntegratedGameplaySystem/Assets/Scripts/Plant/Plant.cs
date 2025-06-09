@@ -4,6 +4,8 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// State machine here ?? That might screw performance ??
+    /// 
+    /// PlantUnit.cs ?? SoilUnit ?
     /// </summary>
     public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
@@ -43,6 +45,9 @@ namespace IntegratedGameplaySystem
 
         public string GetHoverTitle() 
         {
+            if (!isPlanted)
+                return $"barren {flyweight.name} soil";
+
             if (!isWatered && !IsHarvestable)
                 return $"dry {flyweight.name}";
 
@@ -69,7 +74,8 @@ namespace IntegratedGameplaySystem
             Object.Destroy(soil.GetComponent<Collider>());
             soilRend = soil.GetComponent<MeshRenderer>();
             soilRend.material = flyweight.drySoil;
-            
+            soilRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
             soil.gameObject.isStatic = true;
         }
 
@@ -176,9 +182,6 @@ namespace IntegratedGameplaySystem
                 return;
 
             isWatered = true;
-
-            if (isPlanted)
-                Debug.Log("watered" + Time.time);
 
             RefreshRainEffect();
             RefreshCollider();

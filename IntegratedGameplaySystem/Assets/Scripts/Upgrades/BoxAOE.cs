@@ -16,8 +16,9 @@ namespace IntegratedGameplaySystem
             colliders = new Collider[maxExpectedColliders];
         }
 
-        public int GetCollidersHitSphere(Vector3 position)
+        public int GetCollidersHitBox(Vector3 position)
         {
+            //return Physics.OverlapBox(position, halfExtents, Quaternion.identity, mask, interaction);
             return Physics.OverlapBoxNonAlloc(position, halfExtents, colliders, Quaternion.identity, mask, interaction);
         }
     }

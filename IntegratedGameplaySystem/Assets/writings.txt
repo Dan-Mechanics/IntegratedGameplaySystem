@@ -1,6 +1,17 @@
 the running shoes work
 the greande not so much, working on it...
 
+nwe feature pipeline for upgrade:
+
+make new script, inherti the shit and add fucntionality
+make new settings SO script and add the settings
+in the gamescene.cs add it to the ugprades and in tern it adds it automatically to the components
+make new settings and configure, drag it the game manager thign, boom done.
+
+possible improvements ? 
+ - auto load all the assets ?
+ - dont have to say which scripts exist in the game scene ?? --> this reducuses expection possibility.
+
 ...
 
 make sure to remove all references to Pulbic in the interfaces, is a convention thing.

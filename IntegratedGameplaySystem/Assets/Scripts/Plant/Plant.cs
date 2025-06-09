@@ -17,6 +17,7 @@ namespace IntegratedGameplaySystem
         private readonly SphereCollider sphereCollider;
         private readonly IPoolService<PoolableParticle> pool;
 
+        private MeshRenderer soilRend;
         private int progression;
         private bool isWatered;
         private bool rainEffectShowing;
@@ -47,10 +48,24 @@ namespace IntegratedGameplaySystem
         {
             ServiceLocator<IWorldService>.Locate().Add(gameObject, this);
             EventManager.AddListener(Occasion.Tick, Tick);
+            MakeSoil();
 
             RefreshMaterials();
             RefreshCollider();
             RefreshRainEffect();
+        }
+
+        private void MakeSoil()
+        {
+            Transform soil = GameObject.CreatePrimitive(PrimitiveType.Quad).transform;
+            soil.position = transform.position;
+            soil.position += Vector3.down * 0.49f;
+            soil.rotation = Quaternion.Euler(90f, 0f, 0f);
+            Object.Destroy(soil.GetComponent<Collider>());
+            soilRend = soil.GetComponent<MeshRenderer>();
+            soilRend.material = flyweight.drySoil;
+            
+            soil.gameObject.isStatic = true;
         }
 
         public void Dispose()
@@ -100,10 +115,12 @@ namespace IntegratedGameplaySystem
             {
                 rainParticles = pool.Get();
                 rainParticles.Place(transform.position + Vector3.up);
+                soilRend.material = flyweight.wetSoil;
             }
             else
             {
                 pool.Give(rainParticles);
+                soilRend.material = flyweight.drySoil;
             }
 
             rainEffectShowing = isWatered;

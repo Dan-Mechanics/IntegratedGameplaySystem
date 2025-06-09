@@ -5,12 +5,12 @@ namespace IntegratedGameplaySystem
 {
     public interface IUpgradeValues 
     {
-        public string Name { get; }
-        public int Cost { get; }
-        public bool SinglePurchase { get; }
-        public GameObject ButtonPrefab { get; }
-        public Color Color { get; }
-        public Vector3 Offset { get; }
+        string Name { get; }
+        int Cost { get; }
+        bool SinglePurchase { get; }
+        GameObject ButtonPrefab { get; }
+        Color Color { get; }
+        Vector3 Offset { get; }
     }
     
     /*[Serializable]

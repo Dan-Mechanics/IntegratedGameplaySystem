@@ -18,6 +18,8 @@ namespace IntegratedGameplaySystem
         [Min(1)] public int monetaryValue;
         public Color itemTint;
 
+        public Material drySoil;
+        public Material wetSoil;
         public GameObject plantPrefab;
         public Sprite sprite;
         public Material[] materials;

@@ -63,6 +63,8 @@ namespace IntegratedGameplaySystem
             RefreshMaterials();
             RefreshCollider();
             RefreshRainEffect();
+
+            Interact();
         }
 
         private void MakeSoil()

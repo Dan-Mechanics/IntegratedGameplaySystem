@@ -1,3 +1,7 @@
+repeat: cosnider making interface for AEO stuff
+
+for build make the sens 0.66 ipv 0.33 becuase 800 is defualt.
+
 the running shoes work
 the greande not so much, working on it...
 
@@ -13,6 +17,8 @@ possible improvements ?
  - dont have to say which scripts exist in the game scene ?? --> this reducuses expection possibility.
 
 ...
+
+cosnider moving all the stuff besides cofnig.txt to something else.
 
 make sure to remove all references to Pulbic in the interfaces, is a convention thing.
 

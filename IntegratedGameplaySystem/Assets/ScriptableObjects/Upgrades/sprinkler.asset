@@ -16,12 +16,37 @@ MonoBehaviour:
   singlePurchase: 1
   buttonPrefab: {fileID: 5604457068642857581, guid: 217496b748f34cb49ae7a97a68c0bd91, type: 3}
   color: {r: 0.5481933, g: 0.7218141, b: 0.9150943, a: 1}
-  offset: {x: 0, y: 0, z: 0}
-  area:
-    range: 2.5
+  offset: {x: 0, y: 1, z: 0}
+  overlapBox:
+    halfExtents: {x: 2, y: 5, z: 2}
     mask:
       serializedVersion: 2
       m_Bits: 64
     interaction: 1
-    colliders: []
+    colliders:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   rainEffect: {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}

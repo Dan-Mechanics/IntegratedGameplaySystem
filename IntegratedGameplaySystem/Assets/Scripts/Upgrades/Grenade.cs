@@ -31,10 +31,10 @@ namespace IntegratedGameplaySystem
             Transform effect = Utils.SpawnPrefab(settings.grenadeEffect).transform;
             effect.position = Upgrade.Position;
 
-            for (int i = 0; i < settings.area.GetCollidersHitSphere(Upgrade.Position); i++)
+            for (int i = 0; i < settings.overlapSphere.GetCollidersHitSphere(Upgrade.Position); i++)
             {
                 // you could add a ? here but I think we can assume it works.
-                world.GetComponent<IHarvestable>(settings.area.colliders[i].transform).Harvest();
+                world.GetComponent<IHarvestable>(settings.overlapSphere.colliders[i].transform).Harvest();
             }
         }
     }

@@ -2,12 +2,16 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// State machine here ?? That might screw performance ??
+    /// </summary>
     public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
         /// <summary>
         /// Yes, I know we are defining a hard rule here.
         /// </summary>
-        public bool IsHarvestable => progression >= flyweight.materials.Length - 1;
+        public bool IsHarvestable => progression >= flyweight.materials.Length - 1 && isPlanted;
+        public bool IsInteractable => IsHarvestable || !isWatered || !isPlanted;
 
         public readonly GameObject gameObject;
         public readonly Transform transform;
@@ -20,7 +24,8 @@ namespace IntegratedGameplaySystem
         private MeshRenderer soilRend;
         private int progression;
         private bool isWatered;
-        private bool rainEffectShowing;
+        private bool isPlanted;
+        private bool prevIsWatered;
         private PoolableParticle rainParticles;
 
         public Plant(PlantFlyweight flyweight)
@@ -47,7 +52,7 @@ namespace IntegratedGameplaySystem
         public void Start()
         {
             ServiceLocator<IWorldService>.Locate().Add(gameObject, this);
-            EventManager.AddListener(Occasion.Tick, Tick);
+            //EventManager.AddListener(Occasion.Tick, Tick);
             MakeSoil();
 
             RefreshMaterials();
@@ -70,11 +75,16 @@ namespace IntegratedGameplaySystem
 
         public void Dispose()
         {
-            EventManager.RemoveListener(Occasion.Tick, Tick);
+            if (isPlanted)
+                EventManager.RemoveListener(Occasion.Tick, Tick);
         }
 
         private void Tick()
         {
+            // You could also just unsub here ??
+            /*if (!isPlanted)
+                return;*/
+            
             if (!Utils.RandomWithPercentage(isWatered ? flyweight.wateredGrowGrowPercentage : flyweight.dryGrowPercentage))
                 return;
 
@@ -83,6 +93,9 @@ namespace IntegratedGameplaySystem
 
         private void Grow()
         {
+            if (IsHarvestable)
+                return;
+            
             isWatered = false;
             progression++;
             progression = Mathf.Clamp(progression, 0, flyweight.materials.Length - 1);
@@ -96,19 +109,20 @@ namespace IntegratedGameplaySystem
         {
             for (int i = 0; i < meshRenderers.Length; i++)
             {
+                meshRenderers[i].enabled = isPlanted;
                 meshRenderers[i].material = flyweight.materials[progression];
             }
         }
 
         private void RefreshCollider() 
         {
+            sphereCollider.enabled = IsInteractable;
             sphereCollider.center = Vector3.down * (IsHarvestable ? 0f : 0.5f);
-            sphereCollider.enabled = IsHarvestable || !isWatered;
         }
 
         public void RefreshRainEffect()
         {
-            if (rainEffectShowing == isWatered)
+            if (prevIsWatered == isWatered)
                 return;
 
             if (isWatered)
@@ -123,11 +137,19 @@ namespace IntegratedGameplaySystem
                 soilRend.material = flyweight.drySoil;
             }
 
-            rainEffectShowing = isWatered;
+            prevIsWatered = isWatered;
         }
 
         public void Interact()
         {
+            if (!isPlanted) 
+            {
+                isPlanted = true;
+                EventManager.AddListener(Occasion.Tick, Tick);
+                RefreshMaterials();
+                return;
+            }
+            
             Water();
             Harvest();
         }
@@ -139,6 +161,8 @@ namespace IntegratedGameplaySystem
 
             progression = 0;
             isWatered = false;
+            isPlanted = false;
+            EventManager.RemoveListener(Occasion.Tick, Tick);
             EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, flyweight);
 
             RefreshMaterials();
@@ -152,6 +176,9 @@ namespace IntegratedGameplaySystem
                 return;
 
             isWatered = true;
+
+            if (isPlanted)
+                Debug.Log("watered" + Time.time);
 
             RefreshRainEffect();
             RefreshCollider();

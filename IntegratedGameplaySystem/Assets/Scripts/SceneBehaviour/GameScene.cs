@@ -45,12 +45,12 @@ namespace IntegratedGameplaySystem
             // ======================
 
             var sprinklerSettings = assets.GetAssetByType<SprinklerSettings>();
-            sprinklerSettings.area.Setup(plot.GetPlantCount());
+            sprinklerSettings.overlapBox.Setup(plot.GetPlantCount());
 
             rainEffect = sprinklerSettings.rainEffect;
 
             var grenadeSettings = assets.GetAssetByType<GrenadeSettings>();
-            grenadeSettings.area.Setup(plot.GetPlantCount());
+            grenadeSettings.overlapSphere.Setup(plot.GetPlantCount());
 
             // ======================
 

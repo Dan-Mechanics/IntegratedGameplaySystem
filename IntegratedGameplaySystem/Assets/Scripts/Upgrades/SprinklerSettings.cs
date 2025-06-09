@@ -23,7 +23,7 @@ namespace IntegratedGameplaySystem
         public Color color;
         public Vector3 offset;
 
-        public SphereAOE area;
+        public BoxAOE overlapBox;
         public GameObject rainEffect;
     }
 }

@@ -16,9 +16,9 @@ MonoBehaviour:
   singlePurchase: 0
   buttonPrefab: {fileID: 5604457068642857581, guid: 217496b748f34cb49ae7a97a68c0bd91, type: 3}
   color: {r: 0.53333336, g: 0.93333334, b: 0.63529414, a: 1}
-  offset: {x: 0, y: 1, z: 0}
-  area:
-    halfExtents: {x: 2, y: 5, z: 2}
+  offset: {x: 0, y: 0, z: 0}
+  overlapSphere:
+    range: 2.5
     mask:
       serializedVersion: 2
       m_Bits: 64

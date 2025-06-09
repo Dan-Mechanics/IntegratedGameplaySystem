@@ -40,10 +40,10 @@ namespace IntegratedGameplaySystem
 
         private void LateTick()
         {
-            for (int i = 0; i < settings.area.GetCollidersHitSphere(Upgrade.Position); i++)
+            for (int i = 0; i < settings.overlapBox.GetCollidersHitSphere(Upgrade.Position); i++)
             {
                 // you could add a ? here but I think we can assume it works.
-                world.GetComponent<IWaterable>(settings.area.colliders[i].transform).Water();
+                world.GetComponent<IWaterable>(settings.overlapBox.colliders[i].transform).Water();
             }
         }
     }

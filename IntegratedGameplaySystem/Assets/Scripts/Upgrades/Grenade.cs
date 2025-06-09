@@ -7,9 +7,9 @@ namespace IntegratedGameplaySystem
     {
         public UpgradeCommonality Upgrade { get; set; }
         private readonly IWorldService world;
-        private readonly AllUpgradeSettings settings;
+        private readonly GrenadeSettings settings;
 
-        public Grenade(UpgradeCommonality Upgrade, AllUpgradeSettings settings)
+        public Grenade(UpgradeCommonality Upgrade, GrenadeSettings settings)
         {
             this.settings = settings;
             this.Upgrade = Upgrade;
@@ -31,7 +31,7 @@ namespace IntegratedGameplaySystem
             Transform effect = Utils.SpawnPrefab(settings.grenadeEffect).transform;
             effect.position = Upgrade.Position;
 
-            for (int i = 0; i < settings.area.OverlapSphere(Upgrade.Position); i++)
+            for (int i = 0; i < settings.area.GetCollidersHitSphere(Upgrade.Position); i++)
             {
                 // you could add a ? here but I think we can assume it works.
                 world.GetComponent<IHarvestable>(settings.area.colliders[i].transform).Harvest();

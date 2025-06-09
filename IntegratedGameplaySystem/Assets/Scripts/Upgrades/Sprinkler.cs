@@ -7,9 +7,9 @@ namespace IntegratedGameplaySystem
     {
         public UpgradeCommonality Upgrade { get; set; }
         private readonly IWorldService world;
-        private readonly AllUpgradeSettings settings;
+        private readonly SprinklerSettings settings;
 
-        public Sprinkler(UpgradeCommonality Upgrade, AllUpgradeSettings settings)
+        public Sprinkler(UpgradeCommonality Upgrade, SprinklerSettings settings)
         {
             this.settings = settings;
             this.Upgrade = Upgrade;
@@ -40,7 +40,7 @@ namespace IntegratedGameplaySystem
 
         private void LateTick()
         {
-            for (int i = 0; i < settings.area.OverlapSphere(Upgrade.Position); i++)
+            for (int i = 0; i < settings.area.GetCollidersHitSphere(Upgrade.Position); i++)
             {
                 // you could add a ? here but I think we can assume it works.
                 world.GetComponent<IWaterable>(settings.area.colliders[i].transform).Water();

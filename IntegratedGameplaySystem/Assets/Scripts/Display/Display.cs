@@ -58,7 +58,7 @@ namespace IntegratedGameplaySystem
         {
             SpriteIntoImage(stack.item?.Sprite, slot.image);
             IntIntoText(stack.count, slot.text);
-            BoolIntoRedText(stack.AtCapacity(), slot.text);
+            BoolIntoRedText(stack.isAtCapacity, slot.text);
         }
 
         public static T AddToCanvas<T>(Transform canvas, GameObject prefab)

@@ -3,13 +3,14 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class RunningShoes : IUpgradeBehaviour, ISpeedMod
+    public class RunningShoes : IUpgradeBehaviour, ISpeedSource
     {
         public UpgradeCommonality Upgrade { get; set; }
-        private readonly FirstPersonPlayer movement;
-        private readonly AllUpgradeSettings settings;
 
-        public RunningShoes(UpgradeCommonality Upgrade, AllUpgradeSettings settings, FirstPersonPlayer movement)
+        private readonly ForcesMovement movement;
+        private readonly RunningShoesSettings settings;
+
+        public RunningShoes(UpgradeCommonality Upgrade, RunningShoesSettings settings, ForcesMovement movement)
         {
             this.Upgrade = Upgrade;
             this.settings = settings;
@@ -18,22 +19,22 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            Upgrade.OnBuy += Buy;
+            Upgrade.OnBuy += PutOnShoes;
         }
 
-        private void Buy()
+        private void PutOnShoes()
         {
-            movement.Movement.SetSpeedMod(this);
+            movement.SetSpeedSource(this);
         }
 
         public void Dispose()
         {
-            Upgrade.OnBuy -= Buy;
+            Upgrade.OnBuy -= PutOnShoes;
         }
 
-        public float GetSpeedBoost()
+        public float GetSpeed()
         {
-            return settings.runningShoesBoost;
+            return settings.runninShoesOnSpeed;
         }
     }
 }

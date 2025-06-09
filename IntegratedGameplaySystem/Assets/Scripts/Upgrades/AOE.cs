@@ -16,7 +16,7 @@ namespace IntegratedGameplaySystem
             colliders = new Collider[maxExpectedColliders];
         }
 
-        public int OverlapSphere(Vector3 position) 
+        public int GetCollidersHitSphere(Vector3 position) 
         {
             return Physics.OverlapSphereNonAlloc(position, range, colliders, mask, interaction);
         }

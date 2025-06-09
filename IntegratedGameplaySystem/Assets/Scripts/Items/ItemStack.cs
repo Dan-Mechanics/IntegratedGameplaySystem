@@ -7,20 +7,17 @@ namespace IntegratedGameplaySystem
     {
         public IItemArchitype item;
         public int count;
+        public bool isAtCapacity;
 
-        public ItemStack(IItemArchitype item, int count)
+        public ItemStack(IItemArchitype item, int count, bool atCapacity)
         {
             this.item = item;
             this.count = count;
+            this.isAtCapacity = atCapacity;
         }
 
-        public bool AtCapacity() => item != null && count >= item.MaxStackSize;
-        public void Clamp(int overrideCount = 0) 
-        {
-            if (overrideCount <= 0)
-                overrideCount = item.MaxStackSize;
 
-            count = Mathf.Clamp(count, 0, overrideCount);
-        }
+        //public bool AtCapacity(int max) => item != null && count >= max;
+        public void Clamp(int max) => count = Mathf.Clamp(count, 0, max);
     }
 }

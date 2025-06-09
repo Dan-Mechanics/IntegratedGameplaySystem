@@ -3,9 +3,9 @@ using System;
 
 namespace IntegratedGameplaySystem
 {
-    public interface ISpeedMod 
+    public interface ISpeedSource 
     {
-        float GetSpeedBoost();
+        float GetSpeed();
     }
 
     /// <summary>
@@ -22,7 +22,7 @@ namespace IntegratedGameplaySystem
         private readonly Transform eyes;
         private readonly Rigidbody rb;
 
-        private ISpeedMod speedMod;
+        private ISpeedSource speedSource;
 
         /// <summary>
         /// DEPENDACY !!! AHHH FIX !!
@@ -36,10 +36,10 @@ namespace IntegratedGameplaySystem
             this.eyes = eyes;
             this.settings = settings;
             rb = trans.GetComponent<Rigidbody>();
-            //SetSpeedMod(new DefaultSpeed());
+            SetSpeedSource(settings);
         }
 
-        public void SetSpeedMod(ISpeedMod speedMod) => this.speedMod = speedMod;
+        public void SetSpeedSource(ISpeedSource speedSource) => this.speedSource = speedSource;
 
         /// <summary>
         /// This code sux. Fit it!
@@ -95,7 +95,7 @@ namespace IntegratedGameplaySystem
 
         public CameraMotionSnapshot GetSnapshot() 
         {
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, settings.speed * (speedMod == null ? 1f : speedMod.GetSpeedBoost()));
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, settings.speed * (speedSource == null ? 1f : speedSource.GetSpeed()));
             snapshot.Set(eyes.position, rb.velocity, Time.time);
             return snapshot;
         }

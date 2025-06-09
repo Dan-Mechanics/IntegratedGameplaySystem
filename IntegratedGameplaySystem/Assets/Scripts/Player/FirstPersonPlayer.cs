@@ -4,7 +4,7 @@ namespace IntegratedGameplaySystem
 {
     public class FirstPersonPlayer : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
-        public ForcesMovement Movement { get; set; }
+        public ForcesMovement Movement { get; private set; }
         private readonly IPlayerInput playerInput;
         
         private Transform eyes;

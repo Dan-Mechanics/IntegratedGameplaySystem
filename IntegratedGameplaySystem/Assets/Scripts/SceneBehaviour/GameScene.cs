@@ -64,7 +64,7 @@ namespace IntegratedGameplaySystem
 
                 plantSpawner.SpawnPlants(components);
                 
-                Vector3 plotCenter = plot.GetCenter();
+                Vector3 plotCenter = plot.GetWorldCenter();
 
                 IUpgradeBehaviour sprinkler = new Sprinkler(new UpgradeCommonality(plotCenter, sprinklerSettings), sprinklerSettings);
                 IUpgradeBehaviour grenade = new Grenade(new UpgradeCommonality(plotCenter, grenadeSettings), grenadeSettings);

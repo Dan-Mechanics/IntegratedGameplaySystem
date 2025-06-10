@@ -6,6 +6,10 @@ namespace IntegratedGameplaySystem
     /// State machine here ?? That might screw performance ??
     /// 
     /// PlantUnit.cs ?? SoilUnit ?
+    /// 
+    /// Does this class need to be improved further because we have quite a lot of bool bullshit
+    /// going on here.
+    /// IDKkkkk i dont feel like making another 100000 classsi for this dumb shit.
     /// </summary>
     public class SoilUnit : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {

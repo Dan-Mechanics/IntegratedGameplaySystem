@@ -6,15 +6,15 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Does this count as strat pattern?
     /// </summary>
-    public interface IPlantDistributionStrategy
+    public interface IPlantDistribution
     {
-        Vector3 GetPosition();
+        Vector3 GetWorldPosition();
         void PlacePlants(SoilUnit[] plants);
         int GetPlantCount();
-        Vector3 GetCenter();
+        Vector3 GetWorldCenter();
     }
 
-    public class Dispersal : IPlantDistributionStrategy
+    public class Dispersal : IPlantDistribution
     {
         private readonly DispersalSettings settings;
 
@@ -23,9 +23,9 @@ namespace IntegratedGameplaySystem
             this.settings = settings;
         }
 
-        public Vector3 GetCenter()
+        public Vector3 GetWorldCenter()
         {
-            return GetPosition();
+            return GetWorldPosition();
         }
 
         public int GetPlantCount()
@@ -33,7 +33,7 @@ namespace IntegratedGameplaySystem
             return settings.plantCount;
         }
 
-        public Vector3 GetPosition()
+        public Vector3 GetWorldPosition()
         {
             return settings.offset;
         }
@@ -49,7 +49,7 @@ namespace IntegratedGameplaySystem
         }
     }
 
-    public class Plot : IPlantDistributionStrategy
+    public class Plot : IPlantDistribution
     {
         private readonly PlotSettings settings;
         private int index;
@@ -57,14 +57,13 @@ namespace IntegratedGameplaySystem
         public Plot(PlotSettings settings)
         {
             this.settings = settings;
-            //this.index = index;
         }
 
         public void SetPlotIndex(int index) => this.index = index;
 
-        public Vector3 GetCenter() 
+        public Vector3 GetWorldCenter() 
         {
-            Vector3 center = GetPosition();
+            Vector3 center = GetWorldPosition();
             center += 0.5f * settings.spacing * settings.width * Vector3.forward;
             center -= (settings.spacing / 2f) * Vector3.forward;
             center += 0.5f * settings.spacing * settings.width * Vector3.right;
@@ -77,23 +76,23 @@ namespace IntegratedGameplaySystem
             return settings.width * settings.width;
         }
 
-        public Vector3 GetPosition()
+        public Vector3 GetWorldPosition()
         {
             return new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
         }
 
         public void PlacePlants(SoilUnit[] plants)
         {
-            Vector3 plotPos = GetPosition();
+            Vector3 plotPos = GetWorldPosition();
 
-            int i;
+            int index;
             for (int x = 0; x < settings.width; x++)
             {
                 for (int z = 0; z < settings.width; z++)
                 {
-                    i = x + (z * settings.width);
+                    index = x + (z * settings.width);
 
-                    plants[i].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + plotPos;
+                    plants[index].transform.position += new Vector3(x * settings.spacing, 0f, z * settings.spacing) + plotPos;
                     //Utils.ApplyRandomRotation(plants[i].transform);
                 }
             }

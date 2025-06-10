@@ -20,9 +20,7 @@ namespace IntegratedGameplaySystem
         }
 
         private void Combine(T1 a) => OnChange?.Invoke(a, ui);
-
         public void Dispose() => changeTracker.OnChange -= Combine;
-
         public event Action<T1, T2> OnChange;
     }
 }

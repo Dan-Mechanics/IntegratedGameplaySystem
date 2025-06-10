@@ -62,13 +62,13 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Changes: array, preallocate, spread burden, event queue !!
     /// </summary>
-    public class ClassicObjectPool<T> : IPoolService<T> where T : IPoolable
+    public class FastPool<T> : IPoolService<T> where T : IPoolable
     {
         public event Func<T> AllocateNew;
         private readonly T[] pool;
         private int index;
 
-        public ClassicObjectPool(int size)
+        public FastPool(int size)
         {
             if (size < 1)
                 size = 1;

@@ -58,7 +58,7 @@ namespace IntegratedGameplaySystem
             IInputService inputService;
             if (!ServiceLocator<IInputService>.HasBeenProvided())
             {
-                inputService = new InputHandler(new BaseBindingRules(), new ConfigTextFile());
+                inputService = new InputHandler(new ChillBindingRules(), new ConfigTextFile());
                 ServiceLocator<IInputService>.Provide(inputService);
             }
             else 

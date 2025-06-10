@@ -31,7 +31,7 @@ namespace IntegratedGameplaySystem
             Transform effect = Utils.SpawnPrefab(settings.grenadeEffect).transform;
             effect.position = Upgrade.Position;
 
-            int count = settings.overlapSphere.GetCollidersHitSphere(Upgrade.Position);
+            int count = settings.overlapSphere.GetColliderCount(Upgrade.Position);
 
             for (int i = 0; i < count; i++)
             {

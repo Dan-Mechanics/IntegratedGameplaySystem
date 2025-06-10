@@ -1,15 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// Note to self: this is shti and needs to be fixed !!!
-    /// It doesnt make sense because we can add and remove bindings dynamically but then if something is bound to it you have uno issue.
-    /// No, it still makes sense.
-    /// </summary>
     public class InputHandler : IInputService
     {
         private readonly List<Binding> bindings = new();
@@ -27,17 +21,12 @@ namespace IntegratedGameplaySystem
             }
         }
 
-        /// <summary>
-        /// It would be cool if these rules worked with a func<> type beat.
-        /// But for now i like the interface.
-        /// </summary>
         public void AddBinding(Binding binding)
         {
             if (!newBindingRules.AllowBinding(bindings, binding))
                 return;
 
             bindings.Add(binding);
-            //Debug.Log($"added binding {binding}");
         }
 
         public void RemoveBinding(Binding binding) => bindings.Remove(binding);
@@ -75,7 +64,7 @@ namespace IntegratedGameplaySystem
         public InputSource GetInputSource(PlayerAction playerAction) => conversion[playerAction];
 
         /// <summary>
-        /// Because we want all the stuff to reset.
+        /// Add this because we want all the listeners to be reset back to normal.
         /// </summary>
         public void Dispose()
         {

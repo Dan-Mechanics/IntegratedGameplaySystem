@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 namespace IntegratedGameplaySystem
 {
-    public enum Snap { Center = 0, Left = 1, Right = 2, Bottom = 3, Top = 4 }
-    
+    /// <summary>
+    /// I made this class because I think the fields of the RectTransform are confusing to use.
+    /// </summary>
     public class EasyRect
     {
         private RectTransform rect;

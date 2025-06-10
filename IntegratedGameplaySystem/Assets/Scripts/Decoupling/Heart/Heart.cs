@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// This class is a little creative.
+    /// Sends start, update, dispose, etc pulses to all the script in the game that need it.
     /// </summary>
     public class Heart
     {

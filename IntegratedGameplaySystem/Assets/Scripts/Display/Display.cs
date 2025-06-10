@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// This class is not perfect but you get the point.
+    /// Reusable class for UI.
     /// </summary>
     public class Display : IDisposable
     {
@@ -50,7 +50,7 @@ namespace IntegratedGameplaySystem
 
         public static void BoolIntoRedText(bool isRed, Text text) => text.color = isRed ? Color.red : Color.black;
 
-        public static void ItemStackIntoSlot(ItemStack stack, Slot slot)
+        public static void ItemStackIntoSlot(ItemStack stack, ItemSlot slot)
         {
             SpriteIntoImage(stack.item?.Sprite, slot.image);
             slot.image.color = stack.item == null ? Color.clear : stack.item.ItemTint;
@@ -66,19 +66,6 @@ namespace IntegratedGameplaySystem
             transform.localPosition = Vector3.zero;
             return transform.GetComponent<T>();
         }
-
-        /*public static Image AddFillImage(Transform canvas, GameObject prefab, Sprite sprite)
-        {
-            Image image = AddToCanvas<Image>(canvas, prefab);
-            image.sprite = sprite;
-
-            image.type = Image.Type.Filled;
-            image.fillAmount = 0f;
-            image.fillOrigin = 0;
-            image.fillMethod = Image.FillMethod.Horizontal;
-
-            return image;
-        }*/
 
         public Image AddFillImage()
         {

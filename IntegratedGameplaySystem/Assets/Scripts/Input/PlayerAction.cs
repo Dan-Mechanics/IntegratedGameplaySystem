@@ -1,7 +1,7 @@
 ﻿namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// We do interact not primary fire, there is no shooting in thisgame basically.
+    /// What can the player do?
     /// </summary>
     public enum PlayerAction
     {

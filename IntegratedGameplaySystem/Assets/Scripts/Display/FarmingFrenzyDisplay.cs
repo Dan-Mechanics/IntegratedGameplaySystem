@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
   
         private readonly DataChannel<string, Text> interactor;
         private readonly DataChannel<float, Text> score;
-        private readonly DataChannel<ItemStack, Slot> hand;
+        private readonly DataChannel<ItemStack, ItemSlot> hand;
         private readonly DataChannel<IntWithMax, Image> moneyBar;
         private readonly DataChannel<IntWithMax, Text> moneyText;
         private readonly DataChannel<float, Text> sensitivity;
@@ -21,12 +21,10 @@ namespace IntegratedGameplaySystem
 
             this.interactor = new DataChannel<string, Text>(interactor, display.Disposables);
             this.score = new DataChannel<float, Text>(score, display.Disposables);
-            this.hand = new DataChannel<ItemStack, Slot>(hand, display.Disposables);
+            this.hand = new DataChannel<ItemStack, ItemSlot>(hand, display.Disposables);
             this.sensitivity = new DataChannel<float, Text>(sensitivity, display.Disposables);
             moneyBar = new DataChannel<IntWithMax, Image>(money, display.Disposables);
             moneyText = new DataChannel<IntWithMax, Text>(money, display.Disposables);
-
-            //InitializeUI(display.Settings, display.Canvas);
         }
 
         public void Start()
@@ -42,7 +40,7 @@ namespace IntegratedGameplaySystem
         }
 
         /// <summary>
-        /// Amazing code here.
+        /// Create all the game UI.
         /// </summary>
         private void InitializeUI(DisplaySettings settings, Transform canvas) 
         {

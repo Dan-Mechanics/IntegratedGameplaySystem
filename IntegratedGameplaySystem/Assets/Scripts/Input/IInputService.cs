@@ -1,12 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-namespace IntegratedGameplaySystem
+﻿namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// Perchance add update here since thats important right.
-    /// </summary>
     public interface IInputService : IUpdatable, IDisposable
     {
         InputSource GetInputSource(PlayerAction playerAction);

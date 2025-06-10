@@ -2,7 +2,7 @@
 
 namespace IntegratedGameplaySystem
 {
-    public struct Slot
+    public struct ItemSlot
     {
         public Image image;
         public Text text;

@@ -24,7 +24,10 @@ namespace IntegratedGameplaySystem
 
             // ======================
 
-            var player = new FirstPersonPlayer(new KeyboardSource(ServiceLocator<IInputService>.Locate()));
+            var sensitivity = new Sensitivity();
+            //components.Add(sensitivity);
+
+            var player = new FirstPersonPlayer(new KeyboardSource(ServiceLocator<IInputService>.Locate()), sensitivity);
             components.Add(player);
             
             var hand = new Hand(assets.GetAssetByType<HandSettings>());
@@ -94,9 +97,10 @@ namespace IntegratedGameplaySystem
 
             // ======================
 
-            var display = new FarmingFrenzyDisplay(interactor, money, score, hand);
+            var display = new FarmingFrenzyDisplay(interactor, money, score, hand, sensitivity);
             components.Add(display);
 
+            components.Add(sensitivity);
             components.Add(score);
             components.Add(tickClock);
             components.Add(money);            

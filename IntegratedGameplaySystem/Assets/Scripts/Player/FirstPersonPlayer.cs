@@ -11,7 +11,7 @@ namespace IntegratedGameplaySystem
         private readonly MouseMovement mouseMovement;
         private readonly CameraExtrapolation cameraHandler;
 
-        public FirstPersonPlayer(IPlayerInput playerInput)
+        public FirstPersonPlayer(IPlayerInput playerInput, Sensitivity sensitivity)
         {
             this.playerInput = playerInput;
 
@@ -23,23 +23,9 @@ namespace IntegratedGameplaySystem
             eyes.localPosition = Vector3.up * settings.eyesHeight;
 
             Movement = new ForcesMovement(transform, eyes, settings);
-            mouseMovement = new MouseMovement(eyes, transform, settings.sens);
+            mouseMovement = new MouseMovement(eyes, transform, sensitivity);
             cameraHandler = new CameraExtrapolation(Camera.main.transform);
         }
-
-        /*public void Start()
-        {
-            PlayerSettings settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<PlayerSettings>();
-            Transform transform = Utils.SpawnPrefab(settings.prefab).transform;
-
-            eyes = new GameObject("eyes").transform;
-            eyes.SetParent(transform);
-            eyes.localPosition = Vector3.up * settings.eyesHeight;
-
-            Movement = new ForcesMovement(transform, eyes, settings);
-            mouseMovement = new MouseMovement(eyes, transform, settings.sens);
-            cameraHandler = new CameraExtrapolation(Camera.main.transform);
-        }*/
 
         public void Update()
         {

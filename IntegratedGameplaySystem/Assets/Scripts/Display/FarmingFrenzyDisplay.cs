@@ -12,15 +12,17 @@ namespace IntegratedGameplaySystem
         private readonly DataChannel<ItemStack, Slot> hand;
         private readonly DataChannel<IntWithMax, Image> moneyBar;
         private readonly DataChannel<IntWithMax, Text> moneyText;
+        private readonly DataChannel<float, Text> sensitivity;
 
         public FarmingFrenzyDisplay(IChangeTracker<string> interactor, IChangeTracker<IntWithMax> money, IChangeTracker<float> score, 
-            IChangeTracker<ItemStack> hand) 
+            IChangeTracker<ItemStack> hand, Sensitivity sensitivity) 
         {
             display = new Display();
 
             this.interactor = new DataChannel<string, Text>(interactor, display.Disposables);
             this.score = new DataChannel<float, Text>(score, display.Disposables);
             this.hand = new DataChannel<ItemStack, Slot>(hand, display.Disposables);
+            this.sensitivity = new DataChannel<float, Text>(sensitivity, display.Disposables);
             moneyBar = new DataChannel<IntWithMax, Image>(money, display.Disposables);
             moneyText = new DataChannel<IntWithMax, Text>(money, display.Disposables);
 
@@ -36,6 +38,7 @@ namespace IntegratedGameplaySystem
             score.OnChange += Display.FloatIntoText;
             hand.OnChange += Display.ItemStackIntoSlot;
             moneyText.OnChange += Display.RangeIntoText;
+            sensitivity.OnChange += Display.FloatIntoText;
         }
 
         /// <summary>
@@ -81,6 +84,10 @@ namespace IntegratedGameplaySystem
             rect.Set(hand.ui.text.rectTransform);
             rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
 
+            sensitivity.ui = Display.AddToCanvas<Text>(canvas, settings.text);
+            rect.Set(sensitivity.ui.rectTransform);
+            rect.SnapToTop();
+
             Image overlay = Display.AddToCanvas<Image>(canvas, settings.image);
             overlay.sprite = settings.defaultSprite;
             overlay.color = Color.black;
@@ -97,6 +104,7 @@ namespace IntegratedGameplaySystem
             score.OnChange -= Display.FloatIntoText;
             hand.OnChange -= Display.ItemStackIntoSlot;
             moneyText.OnChange -= Display.RangeIntoText;
+            sensitivity.OnChange -= Display.FloatIntoText;
         }
     }
 }

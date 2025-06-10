@@ -16,24 +16,21 @@ namespace IntegratedGameplaySystem
         private const float MIN_CAM_ANGLE = -90f;
         private const float MAX_CAM_ANGLE = 90f;
 
-        private readonly float sens;
+        private readonly Sensitivity sensitivity;
         private readonly Transform eyes;
         private readonly Transform transform;
         private Vector2 lookingDirection;
 
-        public MouseMovement(Transform eyes, Transform transform, float sens)
+        public MouseMovement(Transform eyes, Transform transform, Sensitivity sensitivity)
         {
             this.eyes = eyes;
-            this.sens = sens;
+            this.sensitivity = sensitivity;
             this.transform = transform;
         }
 
-        /// <summary>
-        /// Use PlayerInput. VV
-        /// </summary>
         public void Update(Vector2 mouseDirectionChange)
         {
-            lookingDirection += mouseDirectionChange * sens;
+            lookingDirection += mouseDirectionChange * sensitivity.Value;
             lookingDirection.y = Mathf.Clamp(lookingDirection.y, MIN_CAM_ANGLE, MAX_CAM_ANGLE);
 
             eyes.localRotation = Quaternion.AngleAxis(-lookingDirection.y, Vector3.right);

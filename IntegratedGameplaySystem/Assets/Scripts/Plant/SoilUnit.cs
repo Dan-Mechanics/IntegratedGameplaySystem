@@ -7,7 +7,7 @@ namespace IntegratedGameplaySystem
     /// 
     /// PlantUnit.cs ?? SoilUnit ?
     /// </summary>
-    public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
+    public class SoilUnit : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
         /// <summary>
         /// Yes, I know we are defining a hard rule here.
@@ -30,7 +30,7 @@ namespace IntegratedGameplaySystem
         private bool prevIsWatered;
         private PoolableParticle rainParticles;
 
-        public Plant(PlantFlyweight flyweight)
+        public SoilUnit(PlantFlyweight flyweight)
         {
             this.flyweight = flyweight;
 

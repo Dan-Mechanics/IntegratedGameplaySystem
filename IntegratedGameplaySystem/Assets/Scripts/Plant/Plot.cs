@@ -9,7 +9,7 @@ namespace IntegratedGameplaySystem
     public interface IPlantDistributionStrategy
     {
         Vector3 GetPosition();
-        void PlacePlants(Plant[] plants);
+        void PlacePlants(SoilUnit[] plants);
         int GetPlantCount();
         Vector3 GetCenter();
     }
@@ -38,7 +38,7 @@ namespace IntegratedGameplaySystem
             return settings.offset;
         }
 
-        public void PlacePlants(Plant[] plants)
+        public void PlacePlants(SoilUnit[] plants)
         {
             for (int i = 0; i < plants.Length; i++)
             {
@@ -82,7 +82,7 @@ namespace IntegratedGameplaySystem
             return new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
         }
 
-        public void PlacePlants(Plant[] plants)
+        public void PlacePlants(SoilUnit[] plants)
         {
             Vector3 plotPos = GetPosition();
 

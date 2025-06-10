@@ -12,6 +12,8 @@
         Left = 4,
         Right = 5,
         Reload = 6,
-        Escape = 7
+        Escape = 7,
+        Up = 8,
+        Down = 9
     }
 }

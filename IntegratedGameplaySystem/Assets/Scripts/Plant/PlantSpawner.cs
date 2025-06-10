@@ -22,11 +22,11 @@ namespace IntegratedGameplaySystem
 
         public void SpawnPlants(List<object> components)
         {
-            Plant[] plants = new Plant[strategy.GetPlantCount()];
+            SoilUnit[] plants = new SoilUnit[strategy.GetPlantCount()];
 
             for (int i = 0; i < plants.Length; i++)
             {
-                plants[i] = new Plant(flyweight);
+                plants[i] = new SoilUnit(flyweight);
                 components.Add(plants[i]);
             }
 

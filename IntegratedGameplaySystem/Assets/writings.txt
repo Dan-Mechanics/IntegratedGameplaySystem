@@ -1,3 +1,9 @@
+i want to make a sens meme but i dont want there saving meme
+because it always messes up and also float.parse is trashy.
+
+
+===
+
 idk if i like that the shit is not already planted but idk.
 i think its fine, we could also say that its planted by default
 but then the player has to replant themselves right. ??

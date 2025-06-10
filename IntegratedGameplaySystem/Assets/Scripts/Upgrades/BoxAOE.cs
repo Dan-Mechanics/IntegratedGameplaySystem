@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    [Serializable]
+    //[Serializable]
     public abstract class OverlapNonAlloc 
     {
         public LayerMask mask;

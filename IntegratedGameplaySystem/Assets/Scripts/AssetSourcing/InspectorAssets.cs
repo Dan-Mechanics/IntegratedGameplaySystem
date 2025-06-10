@@ -16,7 +16,7 @@ namespace IntegratedGameplaySystem
     /// 
     /// AssetBudnle term drop.
     /// </summary>
-    [Serializable]
+    [System.Serializable]
     public class InspectorAssets : IAssetService
     {
         [SerializeField] private List<UnityEngine.Object> assets = default;

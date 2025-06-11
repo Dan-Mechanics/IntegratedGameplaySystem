@@ -49,7 +49,7 @@ namespace IntegratedGameplaySystem
             if (component is IDestroyable destroyable)
                 destroyable.OnDestroy -= DestroyComponent;
 
-            ServiceLocator<IWorldService>.Locate().Remove(go);
+            ServiceLocator<IWorldService>.Locate().Remove(go.transform);
         }
 
         private void Sort<T>(object component, List<T> list)

@@ -64,7 +64,7 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            ServiceLocator<IWorldService>.Locate().Add(gameObject, this);
+            ServiceLocator<IWorldService>.Locate().Add(transform, this);
             EventManager.AddListener(Occasion.Tick, Tick);
             MakeSoilGraphics();
 

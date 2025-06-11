@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
@@ -9,15 +8,13 @@ namespace IntegratedGameplaySystem
         public int count;
         public bool isAtCapacity;
 
-        public ItemStack(IItemArchitype item, int count, bool atCapacity)
+        public ItemStack(IItemArchitype item, int count, bool isAtCapacity)
         {
             this.item = item;
             this.count = count;
-            this.isAtCapacity = atCapacity;
+            this.isAtCapacity = isAtCapacity;
         }
 
-
-        //public bool AtCapacity(int max) => item != null && count >= max;
         public void Clamp(int max) => count = Mathf.Clamp(count, 0, max);
     }
 }

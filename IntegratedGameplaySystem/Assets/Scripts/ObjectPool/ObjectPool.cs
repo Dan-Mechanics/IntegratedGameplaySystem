@@ -60,7 +60,7 @@ namespace IntegratedGameplaySystem
     }
 
     /// <summary>
-    /// Changes: array, preallocate, spread burden, event queue !!
+    /// Object pool with ringbuffer.
     /// </summary>
     public class FastPool<T> : IPoolService<T> where T : IPoolable
     {
@@ -98,13 +98,16 @@ namespace IntegratedGameplaySystem
         }
 
         /// <summary>
-        /// NOTE: int.maxvalue for index ??
+        /// Consider that the 
         /// </summary>
         public T Get()
         {
             T t = pool[index % pool.Length];
             t.Enable();
             index++;
+
+            if (index >= int.MaxValue)
+                index = 0;
 
             return t;
         }

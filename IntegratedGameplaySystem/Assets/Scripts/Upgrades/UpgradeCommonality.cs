@@ -25,7 +25,7 @@ namespace IntegratedGameplaySystem
             button.GetComponent<MeshRenderer>().material.color = values.Color;
 
             world = ServiceLocator<IWorldService>.Locate();
-            world.Add(button, this);
+            world.Add(button.transform, this);
         }
 
         public string GetHoverTitle()
@@ -46,7 +46,7 @@ namespace IntegratedGameplaySystem
                 if (hasBeenBought)
                     return;
 
-                world.Remove(button);
+                world.Remove(button.transform);
             }
 
             hasBeenBought = true;

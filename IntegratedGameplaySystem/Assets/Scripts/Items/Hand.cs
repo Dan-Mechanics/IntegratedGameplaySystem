@@ -2,6 +2,9 @@ using System;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// Inventory with single slot.
+    /// </summary>
     public class Hand : IStartable, IDisposable, IItemHolder, IChangeTracker<ItemStack>
     {
         public event Action<ItemStack> OnChange;
@@ -13,7 +16,6 @@ namespace IntegratedGameplaySystem
 
         public Hand(HandSettings settings)
         {
-           // this.settings = settings;
             SetMaxStackSource(settings);
         }
 
@@ -32,8 +34,6 @@ namespace IntegratedGameplaySystem
             if (newItem != null && heldItem.item == newItem)
             {
                 heldItem.count++;
-
-                // or something.
                 heldItem.Clamp(maxStackSource.GetMaxStack());
             }
             else

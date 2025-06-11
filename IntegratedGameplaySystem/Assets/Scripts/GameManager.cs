@@ -73,7 +73,6 @@ namespace IntegratedGameplaySystem
             }
 
             Debug.Log($"loading {sceneBehaviour.name.ToUpper()}");
-            
             List<object> components = sceneBehaviour.GetSceneComponents();
 
             components.Add(sceneBehaviour);

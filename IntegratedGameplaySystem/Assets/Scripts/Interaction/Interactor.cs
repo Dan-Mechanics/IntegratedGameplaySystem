@@ -4,13 +4,7 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// Input:
-    /// input
-    /// world
-    /// 
-    /// Output:
-    /// OnHoverChange
-    /// IInteractable.interact.
+    /// The player can interact with the world.
     /// </summary>
     public class Interactor : IStartable, IFixedUpdatable, IDisposable, IChangeTracker<string>
     {
@@ -23,9 +17,6 @@ namespace IntegratedGameplaySystem
 
         private string currentHover;
 
-        /// <summary>
-        /// Or we could push all of this upwards but that would make the game script messy.
-        /// </summary>
         public Interactor()
         {
             cam = Camera.main.transform;

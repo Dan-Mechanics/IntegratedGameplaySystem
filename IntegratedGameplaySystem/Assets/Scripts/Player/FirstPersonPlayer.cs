@@ -11,6 +11,8 @@ namespace IntegratedGameplaySystem
         private readonly MouseMovement mouseMovement;
         private readonly CameraExtrapolation cameraHandler;
 
+        private CameraMotionSnapshot snapshot;
+
         public FirstPersonPlayer(IPlayerInput playerInput, Sensitivity sensitivity)
         {
             this.playerInput = playerInput;
@@ -42,7 +44,9 @@ namespace IntegratedGameplaySystem
 
         public void LateFixedUpdate()
         {
-            cameraHandler.SetSnapshot(Movement.GetSnapshot());
+            Movement.GetClampedSnapshot(out Vector3 eyes, out Vector3 vel, out float time);
+            snapshot.Set(eyes, vel, time);
+            cameraHandler.SetSnapshot(snapshot);
         }
     }
 }

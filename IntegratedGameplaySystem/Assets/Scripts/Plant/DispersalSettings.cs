@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace IntegratedGameplaySystem 
+namespace IntegratedGameplaySystem
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(DispersalSettings), fileName = "New " + nameof(DispersalSettings))]
     public class DispersalSettings : ScriptableObject

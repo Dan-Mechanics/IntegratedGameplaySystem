@@ -230,7 +230,6 @@ namespace IntegratedGameplaySystem
             Plant.Progress = 0;
             EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, Plant.flyweight);
 
-            //Unit.RefreshCollider(false, false);
             Plant.SetColliderHeight(-0.5f);
 
             Plant.SetState(typeof(Soil));

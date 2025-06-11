@@ -10,7 +10,6 @@ namespace IntegratedGameplaySystem
         private readonly Rigidbody rb;
 
         private ISpeedSource speedSource;
-        private CameraMotionSnapshot snapshot;
         private bool isGrounded;
 
         public ForcesMovement(Transform trans, Transform eyes, PlayerSettings settings)
@@ -29,7 +28,7 @@ namespace IntegratedGameplaySystem
             isGrounded = GetIsGrounded();
 
             float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.accelMult;
-            Vector3 mov = GetMovement(vert, hori, trans);
+            Vector3 mov = GetMovementDirection(vert, hori, trans);
 
             Vector3 flatVel = rb.velocity;
             flatVel.y = 0f;
@@ -45,14 +44,15 @@ namespace IntegratedGameplaySystem
             rb.AddForce(counterMovement, ForceMode.VelocityChange);
         }
 
-        public CameraMotionSnapshot GetSnapshot() 
+        public void GetClampedSnapshot(out Vector3 eyesPos, out Vector3 velocity, out float time)
         {
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, speedSource.GetSpeed());
-            snapshot.Set(eyes.position, rb.velocity, Time.time);
-            return snapshot;
+            velocity = Vector3.ClampMagnitude(rb.velocity, speedSource.GetSpeed());
+            rb.velocity = velocity;
+            eyesPos = eyes.position;
+            time = Time.time;
         }
 
-        private Vector3 GetMovement(float vert, float hori, Transform trans) 
+        private Vector3 GetMovementDirection(float vert, float hori, Transform trans) 
         {
             Vector3 mov = Vector3.zero;
 

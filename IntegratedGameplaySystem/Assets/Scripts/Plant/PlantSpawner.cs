@@ -1,12 +1,7 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// Extract to plantupgrades so that we can have both dipseral and other hsit.
-    /// What is this class even for ??
-    /// </summary>
     public class PlantSpawner 
     {
         private readonly PlantDistribution distribution;
@@ -28,8 +23,6 @@ namespace IntegratedGameplaySystem
                 plants[i] = new PlantCommonality(flyweight);
                 components.Add(plants[i]);
             }
-
-            //distribution.PlacePlants(plants);
 
             return plants;
         }

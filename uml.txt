@@ -16,7 +16,6 @@ class GameManager
     - sceneBehaviour: SceneBehaviour
     - SceneSetup sceneSetup
     - InspectorAssets inspectorAssets
-
 }
 
 abstract class SceneBehaviour implements ScriptableObject, IStartable, IDisposable
@@ -29,145 +28,42 @@ abstract class SceneBehaviour implements ScriptableObject, IStartable, IDisposab
 
 class GameScene implements SceneBehaviour
 {
-    upgrades: List<IUpgradeBehaviour>
+    upgrades: readonly List<IUpgradeBehaviour>
+    money: MoneyCentral
 }
 
-interface IDamagable
+class NextSceneHandler implements IStartable, IDisposable
 {
-    + void Damage(amount: float)
+    + void Start()
+    + void GoNextScene()
+    + void Dispose()
 }
 
-interface IState 
+class SceneSetup implements ScriptableObject
 {
-    + OnTransitionRequest: event Action<string>
-    + void EnterState()
-    + void Update()
-    + void ExitState()
+    + maxFPS: int
+    + fixedUpdatesPerSecond: float
+    + mouseLocked: bool
 }
 
-interface IWeapon 
+class MenuScene implements SceneBehaviour
 {
-    + string GetName()
-    + float GetReloadTime()
-    + int GetMaxBullets()
-    + float GetDamage()
-    + float GetShootInterval()
-    + float GetMaxBulletRange()
-    + float GetSpread()
-    + AudioClip GetShootSound()
-    + AudioClip GetReloadSound()
+    decorators: Object[]
 }
 
-class WeaponState implements IState
+class ScoreMenuDecorator implements ScriptableObject, IMenuDecorator
 {
-    + OnTransitionRequest: event Action<string>
-    # fsm: FSM<WeaponState>
-    # inputHandler: InputHandler 
-    # weapon: IWeapon
-    # source: AudioSource 
-    + void SetupBase()
-    + virutal void EnterState()
-    + virutal void Update()
-    + virutal void ExitState()
-    + void UpdateWeapon(weapon: IWeapon)
+    + void Decorate(components: List<object>, canvas: Transform)
 }
 
-class BaseWeapon implements ScriptableObject, IWeapon
+interface IMenuDecorator
 {
-    + maxBullets: int
-    + damage: float
-    + shootInterval: float
-    + maxBulletRange: float
-    + shootSound: AudioClip
-    + reloadSound: AudioClip
-}
-
-class WeaponDecorator implements ScriptableObject, IWeapon
-{
-    - weapon: IWeapon
-    + IWeapon GetUnderlyingWeapon()
-    + WeaponDecorator Decorate(weapon: IWeapon)
-}
-
-class SilencerDecorator implements WeaponDecorator
-{
-    + newSound: AudioClip
-}
-
-class ExtendedMagDecorator implements WeaponDecorator
-{
-    + bulletsGained: int
-}
-
-class SpreadDecorator implements WeaponDecorator
-{
-    + spread: float
-}
-
-class ReadyWeaponState implements WeaponState
-{
-    + void EnterState()
-    + void Update()
-    + void ExitState()
-    + void Reload()
-}
-
-class ReloadingWeaponState implements WeaponState
-{
-    + onReload : event Action
-    + void EnterState()
-    + void Update()
-    + void ExitState()
-}
-
-class ToggleDecoratorWeaponState implements WeaponState
-{
-    - removableDecorator: WeaponDecorator
-    + onNewWeapon : event Action
-}
-
-class InputHandler
-{
-    + void Update()
-    + InputEvents GetInputEvents(playerAction: PlayerAction)
-    + AddBinding(binding: Binding)
-    + RemoveBinding(binding: Binding)
-}
-
-class GameObjectPool
-{
-    + void GiveToPool(go: GameOjbect)
-    + GameObject GetFromPool()
-    + void DumpAll()
-}
-
-class PoolableGameObject
-{
-    + void Setup(pool: GameObjectPool)
-}
-
-class Timer
-{
-    + bool Tick()
-    + void SetValue(value: float)
+    + void Decorate(components: List<object>, canvas: Transform)
 }
 
 SceneSetup --* GameManager
 SceneBehaviour --* GameManager
 InspectorAssets --* GameManager
 Heart --* GameManager
-
-PoolableGameObject --* GameObjectPool
-GameObjectPool ..> PoolableGameObject
-WeaponDecorator --* ToggleDecoratorWeaponState
-Timer --* ToggleDecoratorWeaponState
-Timer --* ReloadingWeaponState
-IWeapon --* WeaponDecorator
-FSM --* WeaponState
-FSM ..> IState
-InputHandler --* WeaponState
-IWeapon --* WeaponState
-ReadyWeaponState ..> IDamagable
-GameObjectPool ..* ReadyWeaponState
 
 @enduml

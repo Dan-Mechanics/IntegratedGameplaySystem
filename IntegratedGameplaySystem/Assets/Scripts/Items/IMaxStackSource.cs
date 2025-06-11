@@ -1,7 +1,7 @@
 ﻿namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// This enables the bag upgrade.
+    /// This is so the bag upgrade works.
     /// </summary>
     public interface IMaxStackSource 
     {

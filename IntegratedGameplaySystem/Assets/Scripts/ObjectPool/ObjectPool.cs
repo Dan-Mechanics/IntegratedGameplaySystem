@@ -3,14 +3,6 @@ using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
-    public interface IPoolService<T> where T : IPoolable 
-    {
-        event Func<T> AllocateNew;
-        void Give(T input);
-        T Get();
-        void Flush();
-    }
-    
     public class ObjectPool<T> : IPoolService<T> where T : IPoolable
     {
         public event Func<T> AllocateNew;
@@ -56,60 +48,6 @@ namespace IntegratedGameplaySystem
                 activePool.Add(output);
 
             return output;
-        }
-    }
-
-    /// <summary>
-    /// Object pool with ringbuffer.
-    /// </summary>
-    public class FastPool<T> : IPoolService<T> where T : IPoolable
-    {
-        public event Func<T> AllocateNew;
-        private readonly T[] pool;
-        private int index;
-
-        public FastPool(int size)
-        {
-            if (size < 1)
-                size = 1;
-            
-            pool = new T[size];
-        }
-
-        public void Populate() 
-        {
-            for (int i = 0; i < pool.Length; i++)
-            {
-                pool[i] = AllocateNew.Invoke();
-            }
-        }
-
-        public void Give(T t)
-        {
-            t.Disable();
-        }
-
-        public void Flush()
-        {
-            for (int i = 0; i < pool.Length; i++)
-            {
-                pool[i].Flush();
-            }
-        }
-
-        /// <summary>
-        /// Consider that the 
-        /// </summary>
-        public T Get()
-        {
-            T t = pool[index % pool.Length];
-            t.Enable();
-            index++;
-
-            if (index >= int.MaxValue)
-                index = 0;
-
-            return t;
         }
     }
 }

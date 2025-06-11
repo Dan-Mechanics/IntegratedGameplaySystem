@@ -112,10 +112,6 @@ namespace IntegratedGameplaySystem
             return earnings;
         }
 
-        /// <summary>
-        /// I think this works chat.
-        /// Hopefully it's clear how this would work.
-        /// </summary>
         public void Dispose()
         {
             EventManager<int>.RemoveListener(Occasion.EarnMoney, EarnMoney);

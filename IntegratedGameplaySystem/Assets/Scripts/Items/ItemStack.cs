@@ -2,6 +2,9 @@
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// Item architype + item count.
+    /// </summary>
     public struct ItemStack
     {
         public IItemArchitype item;

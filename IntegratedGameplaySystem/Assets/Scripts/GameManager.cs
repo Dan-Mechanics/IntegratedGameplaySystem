@@ -10,8 +10,6 @@ namespace IntegratedGameplaySystem
 {
     /// <summary>
     /// SINGLE MONOBEHAVIOUR HERE !!
-    /// 
-    /// For some reason this breaks when I move it into a different folder so yes.
     /// </summary>
     public class GameManager : MonoBehaviour
     {
@@ -75,7 +73,7 @@ namespace IntegratedGameplaySystem
             }
 
             Debug.Log($"loading {sceneBehaviour.name.ToUpper()}");
-
+            
             List<object> components = sceneBehaviour.GetSceneComponents();
 
             components.Add(sceneBehaviour);

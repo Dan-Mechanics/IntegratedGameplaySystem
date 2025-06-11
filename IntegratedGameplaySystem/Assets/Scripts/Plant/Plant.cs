@@ -4,35 +4,20 @@ using System;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// State machine here ?? That might screw performance ??
-    /// 
-    /// PlantUnit.cs ?? SoilUnit ?
-    /// 
-    /// Does this class need to be improved further because we have quite a lot of bool bullshit
-    /// going on here.
-    /// IDKkkkk i dont feel like making another 100000 classsi for this dumb shit.
-    /// </summary>
     public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
-        /// <summary>
-        /// Yes, I know we are defining a hard rule here.
-        /// </summary>
-        //public bool IsHarvestable => progression >= flyweight.materials.Length - 1 && isPlanted;
-      //  public bool IsInteractable => IsHarvestable || !isWatered || !isPlanted;
+        public int Progression { get; set; }
+        public bool IsWatered { get; set; }
 
         public readonly GameObject gameObject;
         public readonly Transform transform;
-
         public readonly PlantFlyweight flyweight;
+
         private readonly MeshRenderer[] meshRenderers;
         private readonly SphereCollider sphereCollider;
         private readonly IPoolService<PoolableParticle> pool;
 
         private MeshRenderer soilRend;
-        public int progression;
-        public bool isWatered;
-        //private bool isPlanted;
         private bool prevIsWatered;
         private PoolableParticle rainParticles;
 
@@ -84,7 +69,7 @@ namespace IntegratedGameplaySystem
             MakeSoilGraphics();
 
             RefreshMaterials();
-            SetWatered(isWatered);
+            SetWatered(IsWatered);
             RefreshRainEffect();
 
             // make CONST for this PLEASS!!
@@ -124,14 +109,14 @@ namespace IntegratedGameplaySystem
                 return;*/
 
             SetWatered(false);
-            progression++;
-            progression = Mathf.Clamp(progression, 0, flyweight.materials.Length - 1);
+            Progression++;
+            Progression = Mathf.Clamp(Progression, 0, flyweight.materials.Length - 1);
 
             RefreshMaterials();
             //RefreshCollider(true, false);
             //RefreshRainEffect();
 
-            if (progression >= flyweight.materials.Length - 1)
+            if (Progression >= flyweight.materials.Length - 1)
             {
                 stage = stages[typeof(Harvestable)];
                 SetColliderHeight(0);
@@ -143,7 +128,7 @@ namespace IntegratedGameplaySystem
             for (int i = 0; i < meshRenderers.Length; i++)
             {
                 meshRenderers[i].enabled = typeof(Soil) != stage.GetType();
-                meshRenderers[i].material = flyweight.materials[progression];
+                meshRenderers[i].material = flyweight.materials[Progression];
             }
         }
 
@@ -155,10 +140,10 @@ namespace IntegratedGameplaySystem
 
         public void RefreshRainEffect()
         {
-            if (prevIsWatered == isWatered)
+            if (prevIsWatered == IsWatered)
                 return;
 
-            if (isWatered)
+            if (IsWatered)
             {
                 rainParticles = pool.Get();
                 rainParticles.Place(transform.position + Vector3.up);
@@ -170,7 +155,7 @@ namespace IntegratedGameplaySystem
                 soilRend.material = flyweight.drySoil;
             }
 
-            prevIsWatered = isWatered;
+            prevIsWatered = IsWatered;
         }
 
         public void Interact()
@@ -212,9 +197,9 @@ namespace IntegratedGameplaySystem
             /*if (isWatered == value)
                 return;*/
 
-            isWatered = value;
+            IsWatered = value;
 
-            bool disabled = stage.GetType() == typeof(Growing) && isWatered;
+            bool disabled = stage.GetType() == typeof(Growing) && IsWatered;
 
             sphereCollider.enabled = !disabled;
             RefreshRainEffect();
@@ -271,7 +256,7 @@ namespace IntegratedGameplaySystem
 
         public string GetHoverTitle()
         {
-            if (!Plant.isWatered)
+            if (!Plant.IsWatered)
                 return $"dry {Plant.flyweight.name}";
 
             return Plant.flyweight.name;
@@ -279,7 +264,7 @@ namespace IntegratedGameplaySystem
 
         public void Tick() 
         {
-            if (!Utils.RandomWithPercentage(Plant.isWatered ? Plant.flyweight.wateredGrowGrowPercentage : Plant.flyweight.dryGrowPercentage))
+            if (!Utils.RandomWithPercentage(Plant.IsWatered ? Plant.flyweight.wateredGrowGrowPercentage : Plant.flyweight.dryGrowPercentage))
                 return;
 
             Plant.Grow();
@@ -309,7 +294,7 @@ namespace IntegratedGameplaySystem
 
         public void Harvest() 
         {
-            Plant.progression = 0;
+            Plant.Progression = 0;
             EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, Plant.flyweight);
 
             //Unit.RefreshCollider(false, false);

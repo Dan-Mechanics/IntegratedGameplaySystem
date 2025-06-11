@@ -1,14 +1,35 @@
 @startuml
 
-class FSM<T>
+interface IAssetService
 {
-    - states: readonly Dictionary<Type, T>
-    -current: T
-    + void AddState(name: string, state: T)
-    + void RemoveState(name: string)
-    + void TransitionTo(name: string)
-    + void Update()
-    + List<T> GetStates()
+    + T GetAssetByType()
+    + List<T> GetAllAssetsOfType()
+}
+
+class InspectorAssets implements IAssetService
+{
+    - List<Object> assets
+}
+
+class GameManager
+{
+    - sceneBehaviour: SceneBehaviour
+    - SceneSetup sceneSetup
+    - InspectorAssets inspectorAssets
+
+}
+
+abstract class SceneBehaviour implements ScriptableObject, IStartable, IDisposable
+{
+    + sceneHandler: NextSceneHandler
+    + virtual void Start()
+    + virtual List<object> GetSceneComponents()
+    + virtual void Dispose()
+}
+
+class GameScene implements SceneBehaviour
+{
+    upgrades: List<IUpgradeBehaviour>
 }
 
 interface IDamagable
@@ -130,6 +151,11 @@ class Timer
     + bool Tick()
     + void SetValue(value: float)
 }
+
+SceneSetup --* GameManager
+SceneBehaviour --* GameManager
+InspectorAssets --* GameManager
+Heart --* GameManager
 
 PoolableGameObject --* GameObjectPool
 GameObjectPool ..> PoolableGameObject

@@ -3,14 +3,12 @@
 namespace IntegratedGameplaySystem
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(PlayerSettings), fileName = "New " + nameof(PlayerSettings))]
-    public class PlayerSettings : ScriptableObject
+    public class PlayerSettings : ScriptableObject, ISpeedSource
     {
         public GameObject prefab;
 
         [Header("Movement")]
-        public float walkSpeed;
-        public float runSpeed;
-        public float flySpeed;
+        public float speed;
         public float movAccel;
         public float accelMult;
 
@@ -23,5 +21,7 @@ namespace IntegratedGameplaySystem
         [Header("Camera")]
         public float sens;
         public float eyesHeight;
+
+        public float GetSpeed() => speed;
     }
 }

@@ -3,14 +3,6 @@ using System.Collections.Generic;
 
 namespace IntegratedGameplaySystem
 {
-    public interface IPoolService<T> where T : IPoolable 
-    {
-        event Func<T> AllocateNew;
-        void Give(T input);
-        T Get();
-        void Flush();
-    }
-    
     public class ObjectPool<T> : IPoolService<T> where T : IPoolable
     {
         public event Func<T> AllocateNew;
@@ -56,57 +48,6 @@ namespace IntegratedGameplaySystem
                 activePool.Add(output);
 
             return output;
-        }
-    }
-
-    /// <summary>
-    /// Changes: array, preallocate, spread burden, event queue !!
-    /// </summary>
-    public class ClassicObjectPool<T> : IPoolService<T> where T : IPoolable
-    {
-        public event Func<T> AllocateNew;
-        private readonly T[] pool;
-        private int index;
-
-        public ClassicObjectPool(int size)
-        {
-            if (size < 1)
-                size = 1;
-            
-            pool = new T[size];
-        }
-
-        public void Populate() 
-        {
-            for (int i = 0; i < pool.Length; i++)
-            {
-                pool[i] = AllocateNew.Invoke();
-            }
-        }
-
-        public void Give(T t)
-        {
-            t.Disable();
-        }
-
-        public void Flush()
-        {
-            for (int i = 0; i < pool.Length; i++)
-            {
-                pool[i].Flush();
-            }
-        }
-
-        /// <summary>
-        /// NOTE: int.maxvalue for index ??
-        /// </summary>
-        public T Get()
-        {
-            T t = pool[index % pool.Length];
-            t.Enable();
-            index++;
-
-            return t;
         }
     }
 }

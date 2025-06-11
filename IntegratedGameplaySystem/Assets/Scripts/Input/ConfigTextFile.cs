@@ -21,25 +21,15 @@ namespace IntegratedGameplaySystem
                 if (!Utils.IsStringValid(line))
                     continue;
 
-                if (line == "done")
-                    break;
-
-                // Ignore statment
-                if (line.Contains('!'))
-                    continue;
-
-                // Comments
                 if (line.Length > 0 && line[0] == '#')
                     continue;
 
                 string[] tokens = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                if (tokens.Length < 2)
+                if (tokens.Length != 2)
                     continue;
                 
                 Debug.Log(line);
-
-                // In the future you could say take 2 character only and then define those in the split.
                 bindings.Add(new Binding(tokens[0], Utils.StringToEnum<PlayerAction>(tokens[1])));
             }
 

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ac128ede6065e4499dd06b179cc6e2, type: 3}
+  m_Name: grenade
+  m_EditorClassIdentifier: 
+  cost: 50
+  singlePurchase: 0
+  buttonPrefab: {fileID: 5604457068642857581, guid: 217496b748f34cb49ae7a97a68c0bd91, type: 3}
+  color: {r: 0.53333336, g: 0.93333334, b: 0.63529414, a: 1}
+  offset: {x: 0, y: 0, z: 0}
+  overlapSphere:
+    range: 2.5
+    mask:
+      serializedVersion: 2
+      m_Bits: 64
+    interaction: 1
+    colliders:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  grenadeEffect: {fileID: 6104260903218439826, guid: 525daebab04350c41b9ae0f9433bad8c, type: 3}

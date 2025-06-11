@@ -3,11 +3,6 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// This class should respond to the events yo.
-    /// 
-    /// Barter interface
-    /// </summary>
     public class MoneyCentral :  IStartable, IInteractable, IHoverable, IDisposable, IChangeTracker<IntWithMax>
     {
         public event Action<IntWithMax> OnChange;
@@ -23,11 +18,6 @@ namespace IntegratedGameplaySystem
             return CanInteract() ? "Sell crop" : "No crop to sell";
         }
 
-        /// <summary>
-        /// Do we need something to deallocate sellall ??
-        /// Dont use delegates i dont understand them bruuhhhhh
-        /// Like it works but i dont know what happens to the memory AT ALL
-        /// </summary>
         public MoneyCentral(IItemHolder itemHolder)
         {
             this.itemHolder = itemHolder;
@@ -37,7 +27,7 @@ namespace IntegratedGameplaySystem
             particle = go.transform.GetComponentInChildren<ParticleSystem>();
             money.max = settings.moneyToWin;
 
-            ServiceLocator<IWorldService>.Locate().Add(go, this);
+            ServiceLocator<IWorldService>.Locate().Add(go.transform, this);
         }
 
         public void Start()
@@ -71,7 +61,7 @@ namespace IntegratedGameplaySystem
                 return;
 
             money.value -= amount;
-            //money.Clamp();
+            money.Clamp();
             OnChange?.Invoke(money);
         }
 
@@ -122,10 +112,6 @@ namespace IntegratedGameplaySystem
             return earnings;
         }
 
-        /// <summary>
-        /// I think this works chat.
-        /// Hopefully it's clear how this would work.
-        /// </summary>
         public void Dispose()
         {
             EventManager<int>.RemoveListener(Occasion.EarnMoney, EarnMoney);

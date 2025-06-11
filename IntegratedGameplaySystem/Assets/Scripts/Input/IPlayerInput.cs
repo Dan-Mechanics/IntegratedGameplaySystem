@@ -3,7 +3,8 @@
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// I know this is a little overcomplicated.
+    /// I wanted to leave the door open for controller 
+    /// input devices potentially.
     /// </summary>
     public interface IPlayerInput
     {

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e61f0786bae9d0549821b9c8d54d9c76, type: 3}
+  m_Name: running shoes
+  m_EditorClassIdentifier: 
+  cost: 50
+  singlePurchase: 1
+  buttonPrefab: {fileID: 5604457068642857581, guid: 217496b748f34cb49ae7a97a68c0bd91, type: 3}
+  color: {r: 0, g: 0.60588074, b: 1, a: 1}
+  offset: {x: -2.5, y: 0, z: 2.5}
+  runninShoesOnSpeed: 9

@@ -1,20 +1,23 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
+    /// <summary>
+    /// Item architype + item count.
+    /// </summary>
     public struct ItemStack
     {
         public IItemArchitype item;
         public int count;
+        public bool isAtCapacity;
 
-        public ItemStack(IItemArchitype item, int count)
+        public ItemStack(IItemArchitype item, int count, bool isAtCapacity)
         {
             this.item = item;
             this.count = count;
+            this.isAtCapacity = isAtCapacity;
         }
 
-        public bool AtCapacity() => item != null && count >= item.MaxStackSize;
-        public void Clamp() => count = Mathf.Clamp(count, 0, item.MaxStackSize);
+        public void Clamp(int max) => count = Mathf.Clamp(count, 0, max);
     }
 }

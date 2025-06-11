@@ -4,12 +4,13 @@ using System.Collections.Generic;
 namespace IntegratedGameplaySystem 
 { 
     /// <summary>
-    /// T1 --> T2
+    /// We wan't to channel T1 into T2.
     /// </summary>
     public class DataChannel<T1, T2> : IDisposable
     {
-        private readonly IChangeTracker<T1> changeTracker;
+        public event Action<T1, T2> OnChange;
         public T2 ui;
+        private readonly IChangeTracker<T1> changeTracker;
 
         public DataChannel(IChangeTracker<T1> changeTracker, List<IDisposable> disposables)
         {
@@ -20,9 +21,6 @@ namespace IntegratedGameplaySystem
         }
 
         private void Combine(T1 a) => OnChange?.Invoke(a, ui);
-
         public void Dispose() => changeTracker.OnChange -= Combine;
-
-        public event Action<T1, T2> OnChange;
     }
 }

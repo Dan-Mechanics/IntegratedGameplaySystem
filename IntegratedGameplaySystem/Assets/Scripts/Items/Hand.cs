@@ -1,40 +1,40 @@
 using System;
-using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// And then we can add something called a bag which has more items in it.
+    /// Inventory with single slot.
     /// </summary>
-    public class Hand : IStartable, IDisposable, IItemHolder, IChangeTracker<ItemStack> //, IChangeTracker<int>, IChangeTracker<bool>
+    public class Hand : IStartable, IDisposable, IItemHolder, IChangeTracker<ItemStack>
     {
-        // EITHER Evnet onholdingChange or some typa interface so other scripts can get a reference
-        // to this mainly the interactor and the display
         public event Action<ItemStack> OnChange;
-
         public Action<int> OnCountChange;
         public Action<bool> AtMaxCapacity;
 
-        /// <summary>
-        /// Make this use StackableItem
-        /// </summary>
         private ItemStack heldItem;
-        // and then the max count in in the thing.
-        
+        private IMaxStackSource maxStackSource;
+
+        public Hand(HandSettings settings)
+        {
+            SetMaxStackSource(settings);
+        }
+
         public void Start()
         {
-            EventManager<IItemArchitype>.AddListener(Occasion.PickupItem, SetOrAddItem);
+            EventManager<IItemArchitype>.AddListener(Occasion.PickupItem, PickupItem);
 
             Clear();
             OnChange?.Invoke(heldItem);
         }
 
-        private void SetOrAddItem(IItemArchitype newItem)
+        public void SetMaxStackSource(IMaxStackSource maxStackSource) => this.maxStackSource = maxStackSource;
+
+        private void PickupItem(IItemArchitype newItem)
         {
             if (newItem != null && heldItem.item == newItem)
             {
                 heldItem.count++;
-                heldItem.Clamp();
+                heldItem.Clamp(maxStackSource.GetMaxStack());
             }
             else
             {
@@ -42,12 +42,13 @@ namespace IntegratedGameplaySystem
                 heldItem.count = newItem == null ? 0 : 1;
             }
 
+            heldItem.isAtCapacity = heldItem.count >= maxStackSource.GetMaxStack();
             OnChange?.Invoke(heldItem);
         }
 
         public void Dispose()
         {
-            EventManager<IItemArchitype>.RemoveListener(Occasion.PickupItem, SetOrAddItem);
+            EventManager<IItemArchitype>.RemoveListener(Occasion.PickupItem, PickupItem);
         }
 
         public ItemStack[] GetItems()
@@ -57,7 +58,7 @@ namespace IntegratedGameplaySystem
 
         public void Clear()
         {
-            SetOrAddItem(null);
+            PickupItem(null);
         }
     }
 }

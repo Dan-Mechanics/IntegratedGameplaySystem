@@ -4,18 +4,6 @@ using System;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// This way, there is never confusion which assets do what.
-    /// and because we use interface here, we can add adressables later.
-    /// 
-    /// Rename to insepctor assets, collection called assets.
-    /// 
-    /// 
-    /// Code review: everything is pretty good but i dont wanna
-    /// make a refactoring and all that memes.
-    /// 
-    /// AssetBudnle term drop.
-    /// </summary>
     [Serializable]
     public class InspectorAssets : IAssetService
     {

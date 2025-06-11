@@ -21,7 +21,6 @@ namespace IntegratedGameplaySystem
             if (!settings.tags.Contains(hit.transform.tag))
                 return false;
 
-            // Or use transform.root.
             hitTransform = hit.transform;
             return true;
         }

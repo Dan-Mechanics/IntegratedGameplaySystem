@@ -1,8 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-namespace IntegratedGameplaySystem
+﻿namespace IntegratedGameplaySystem
 {
     public interface IInteractable 
     {

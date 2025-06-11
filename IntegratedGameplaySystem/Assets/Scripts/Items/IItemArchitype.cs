@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
     public interface IItemArchitype
     {
-        public Sprite Sprite { get; }
-        public int MaxStackSize { get; }
-        public int MonetaryValue { get; }
+        Sprite Sprite { get; }
+        Color ItemTint { get; }
+        int MonetaryValue { get; }
     }
 }

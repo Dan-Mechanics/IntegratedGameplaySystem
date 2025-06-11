@@ -4,59 +4,106 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// Currently somewhat serves as a context class.
+    /// This instantiates all the classes for the game scene.
     /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(GameScene), fileName = "New " + nameof(GameScene))]
     public class GameScene : SceneBehaviour
     {
-        public GameObject rainEffectPrefab;
-        //public ObjectPool<PoolableParticle> rainPool;
+        private readonly List<IUpgradeBehaviour> upgrades = new();
 
-        /// <summary>
-        /// Builder for this /???
-        /// </summary>
-        /// <returns></returns>
+        private MoneyCentral money;
+        private GameObject rainEffect;
+
         public override List<object> GetSceneComponents()
         {            
-            IAssetService assetService = ServiceLocator<IAssetService>.Locate();
+            IAssetService assets = ServiceLocator<IAssetService>.Locate();
             List<object> components = base.GetSceneComponents();
 
-            components.Add(new FirstPersonPlayer(new KeyboardSource(ServiceLocator<IInputService>.Locate())));
-            
-            var hand = new Hand();
-            var money = new MoneyCentral(hand);
-            List<PlantFlyweight> plants = assetService.GetAllAssetsOfType<PlantFlyweight>();
-            UpgradeSettings upgrade = assetService.GetAssetByType<UpgradeSettings>();
+            // ======================
 
-            // Note: youcould add theup grade settings to the shit or not.
-            IPlantPlacementStrategy strat = new Plot(assetService.GetAssetByType<PlotSettings>());
+            var sensitivity = new Sensitivity();
+
+            var player = new FirstPersonPlayer(new KeyboardSource(ServiceLocator<IInputService>.Locate()), sensitivity);
+            components.Add(player);
+            
+            var hand = new Hand(assets.GetAssetByType<HandSettings>());
+            money = new MoneyCentral(hand);
+            List<PlantFlyweight> plantsFlyweights = assets.GetAllAssetsOfType<PlantFlyweight>();
+
+            // ======================
 
             var rainPool = new ObjectPool<PoolableParticle>();
             rainPool.AllocateNew += AllocateNewRain;
             ServiceLocator<IPoolService<PoolableParticle>>.Provide(rainPool);
 
-            for (int i = 0; i < plants.Count; i++)
+            // ======================
+
+            var plot = new Plot(assets.GetAssetByType<PlotSettings>());
+            IPlantPlacementStrategy strat = plot;
+            var plantSpawner = new PlantSpawner(plot);
+
+            // ======================
+
+            var sprinklerSettings = assets.GetAssetByType<SprinklerSettings>();
+            sprinklerSettings.overlapBox.Setup(plot.GetPlantCount());
+
+            rainEffect = sprinklerSettings.rainEffect;
+
+            var grenadeSettings = assets.GetAssetByType<GrenadeSettings>();
+            grenadeSettings.overlapSphere.Setup(plot.GetPlantCount());
+
+            // ======================
+
+            for (int i = 0; i < plantsFlyweights.Count; i++)
             {
-                var plantHolder = new PlantCollectionHandler(upgrade, i, plants[i], money, strat);
-                plantHolder.SpawnPlants(components);
+                plot.SetPlotIndex(i);
+                plantSpawner.SetPlant(plantsFlyweights[i]);
+                
+                var plants = plantSpawner.SpawnPlants(components);
+                strat.PlacePlants(plants);
+
+                Vector3 plotCenter = plot.GetWorldCenter();
+
+                IUpgradeBehaviour sprinkler = new Sprinkler(new UpgradeCommonality(plotCenter, sprinklerSettings), sprinklerSettings);
+                IUpgradeBehaviour grenade = new Grenade(new UpgradeCommonality(plotCenter, grenadeSettings), grenadeSettings);
+
+                upgrades.Add(sprinkler);
+                upgrades.Add(grenade);
             }
 
-            // factory for this ??
-            var tickClock = new Clock(assetService.GetAssetByType<ClockSettings>().interval);
+            var shoesSettings = assets.GetAssetByType<RunningShoesSettings>();
+            var bagSettings = assets.GetAssetByType<BagSettings>();
+
+            IUpgradeBehaviour shoes = new RunningShoes(new UpgradeCommonality(Vector3.zero, shoesSettings), shoesSettings, player.Movement);
+            IUpgradeBehaviour bag = new Bag(new UpgradeCommonality(Vector3.zero, bagSettings), bagSettings, hand);
+
+            upgrades.Add(shoes);
+            upgrades.Add(bag);
+
+            upgrades.ForEach(x => components.Add(x));
+            upgrades.ForEach(x => x.Upgrade.OnCanBuy += money.CanAfford);
+
+            // ======================
+
+            var tickClock = new Clock(assets.GetAssetByType<ClockSettings>().interval);
             var interactor = new Interactor();
 
             var score = new Score();
             ServiceLocator<IScoreService>.Provide(score);
 
+            // ======================
 
-            var display = new FarmingFrenzyDisplay(interactor, money, score, hand);
+            var display = new FarmingFrenzyDisplay(interactor, money, score, hand, sensitivity);
             components.Add(display);
 
+            components.Add(sensitivity);
             components.Add(score);
             components.Add(tickClock);
             components.Add(money);            
             components.Add(interactor);
             components.Add(hand);
+
+            // ======================
 
             return components;
         }
@@ -68,16 +115,14 @@ namespace IntegratedGameplaySystem
             var pool = ServiceLocator<IPoolService<PoolableParticle>>.Locate();
             pool.AllocateNew -= AllocateNewRain;
             pool.Flush();
+
+            upgrades.ForEach(x => x.Upgrade.OnCanBuy -= money.CanAfford);
         }
 
-        /// <summary>
-        /// ?/ where do the assets belong at tho??
-        /// </summary>
-        /// <returns></returns>
         private PoolableParticle AllocateNewRain()
         {
-            GameObject rain = Utils.SpawnPrefab(rainEffectPrefab);
-            return new PoolableParticle(rain.GetComponent<ParticleSystem>());
+            return new PoolableParticle(
+                Utils.SpawnPrefab(rainEffect).GetComponent<ParticleSystem>());
         }
     }
 }

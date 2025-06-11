@@ -1,26 +1,15 @@
 ﻿using UnityEngine;
-using System;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// refactor like all of this but #no overthinking
-    /// </summary>
     public class ForcesMovement
     {
-        /// <summary>
-        /// !Coupling !!
-        /// Make different to camerhandler and give better name.
-        /// </summary>
         private readonly PlayerSettings settings;
         private readonly Transform trans;
         private readonly Transform eyes;
         private readonly Rigidbody rb;
 
-        /// <summary>
-        /// DEPENDACY !!! AHHH FIX !!
-        /// </summary>
-        private CameraMotionSnapshot snapshot;
+        private ISpeedSource speedSource;
         private bool isGrounded;
 
         public ForcesMovement(Transform trans, Transform eyes, PlayerSettings settings)
@@ -29,52 +18,46 @@ namespace IntegratedGameplaySystem
             this.eyes = eyes;
             this.settings = settings;
             rb = trans.GetComponent<Rigidbody>();
+            SetSpeedSource(settings);
         }
 
-        /// <summary>
-        /// This code sux. Fit it!
-        /// REFACTOR !! --> consider splitting into smaller things.
-        /// </summary>
-        public void DoMovement(float vert, float hori) 
+        public void SetSpeedSource(ISpeedSource speedSource) => this.speedSource = speedSource;
+
+        public void DoMovement(float vert, float hori)
         {
             isGrounded = GetIsGrounded();
 
             float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.accelMult;
-            Vector3 mov = GetMovement(vert, hori, trans);
+            Vector3 mov = GetMovementDirection(vert, hori, trans);
 
             Vector3 flatVel = rb.velocity;
             flatVel.y = 0f;
-            float mag = flatVel.magnitude;
 
-            if (mag < settings.walkSpeed)
-            {
-                rb.AddForce(Vector3.ClampMagnitude(accel * Time.fixedDeltaTime * mov, settings.walkSpeed - mag), ForceMode.VelocityChange);
-            }
-            else if (isGrounded)
-            {
-                rb.AddForce(Vector3.ClampMagnitude(accel * Time.fixedDeltaTime * -flatVel.normalized, mag - settings.walkSpeed), ForceMode.VelocityChange);
-            }
+            float mag = flatVel.magnitude;
+            
+            rb.AddForce(accel * Time.fixedDeltaTime * mov, ForceMode.VelocityChange);
 
             Vector3 counterMovement = accel * Time.fixedDeltaTime * settings.accelMult * -(flatVel.normalized - mov);
-            if (mag != 0f && counterMovement.magnitude > mag)
+            if (mag >= 0f && counterMovement.magnitude > mag)
                 counterMovement = -flatVel;
 
             rb.AddForce(counterMovement, ForceMode.VelocityChange);
         }
 
-        public CameraMotionSnapshot GetSnapshot() 
+        public void GetClampedSnapshot(out Vector3 eyesPos, out Vector3 velocity, out float time)
         {
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, isGrounded ? settings.runSpeed : settings.flySpeed);
-            snapshot.Set(eyes.position, rb.velocity, Time.time);
-            return snapshot;
+            velocity = Vector3.ClampMagnitude(rb.velocity, speedSource.GetSpeed());
+            rb.velocity = velocity;
+            eyesPos = eyes.position;
+            time = Time.time;
         }
 
-        private Vector3 GetMovement(float vert, float hori, Transform orientedBody) 
+        private Vector3 GetMovementDirection(float vert, float hori, Transform trans) 
         {
             Vector3 mov = Vector3.zero;
 
-            mov += orientedBody.right * hori;
-            mov += orientedBody.forward * vert;
+            mov += trans.right * hori;
+            mov += trans.forward * vert;
             mov.Normalize();
 
             return mov;

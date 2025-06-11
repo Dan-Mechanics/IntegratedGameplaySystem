@@ -15,3 +15,7 @@ MonoBehaviour:
   sceneHandler:
     nextScene: End
   rainEffectPrefab: {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}
+  range: 2.5
+  mask:
+    serializedVersion: 2
+    m_Bits: 64

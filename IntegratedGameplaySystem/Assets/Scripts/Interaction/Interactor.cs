@@ -4,13 +4,7 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// Input:
-    /// input
-    /// world
-    /// 
-    /// Output:
-    /// OnHoverChange
-    /// IInteractable.interact.
+    /// The player can interact with the world.
     /// </summary>
     public class Interactor : IStartable, IFixedUpdatable, IDisposable, IChangeTracker<string>
     {
@@ -23,9 +17,6 @@ namespace IntegratedGameplaySystem
 
         private string currentHover;
 
-        /// <summary>
-        /// Or we could push all of this upwards but that would make the game script messy.
-        /// </summary>
         public Interactor()
         {
             cam = Camera.main.transform;
@@ -36,7 +27,7 @@ namespace IntegratedGameplaySystem
 
         public void Start() 
         {
-            inputService.GetInputSource(PlayerAction.Interact).onDown += TryInteract;
+            inputService.GetInputSource(PlayerAction.Interact).onDown += Interact;
             OnChange?.Invoke(string.Empty);
         }
 
@@ -51,7 +42,7 @@ namespace IntegratedGameplaySystem
             OnChange?.Invoke(currentHover);
         }
 
-        private void TryInteract()
+        private void Interact()
         {
             if (!raycaster.Raycast(cam.position, cam.forward, out Transform hitTransform))
                 return;
@@ -64,14 +55,12 @@ namespace IntegratedGameplaySystem
             if (!raycaster.Raycast(cam.position, cam.forward, out Transform hitTransform))
                 return null;
 
-            //Debug.Log(worldService.Contains(hitTransform));
-
             return worldService.GetComponent<IHoverable>(hitTransform);
         }
 
         public void Dispose()
         {
-            inputService.GetInputSource(PlayerAction.Interact).onDown -= TryInteract;
+            inputService.GetInputSource(PlayerAction.Interact).onDown -= Interact;
         }
     }
 }

@@ -2,22 +2,21 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class FirstPersonPlayer : IStartable, IUpdatable, IFixedUpdatable, ILateFixedUpdatable
+    public class FirstPersonPlayer : IUpdatable, IFixedUpdatable, ILateFixedUpdatable
     {
+        public ForcesMovement Movement { get; private set; }
         private readonly IPlayerInput playerInput;
         
-        private Transform eyes;
-        private ForcesMovement movement;
-        private MouseMovement mouseMovement;
-        private CameraExtrapolation cameraHandler;
+        private readonly Transform eyes;
+        private readonly MouseMovement mouseMovement;
+        private readonly CameraExtrapolation cameraHandler;
 
-        public FirstPersonPlayer(IPlayerInput playerInput)
+        private CameraMotionSnapshot snapshot;
+
+        public FirstPersonPlayer(IPlayerInput playerInput, Sensitivity sensitivity)
         {
             this.playerInput = playerInput;
-        }
 
-        public void Start()
-        {
             PlayerSettings settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<PlayerSettings>();
             Transform transform = Utils.SpawnPrefab(settings.prefab).transform;
 
@@ -25,8 +24,8 @@ namespace IntegratedGameplaySystem
             eyes.SetParent(transform);
             eyes.localPosition = Vector3.up * settings.eyesHeight;
 
-            movement = new ForcesMovement(transform, eyes, settings);
-            mouseMovement = new MouseMovement(eyes, transform, settings.sens);
+            Movement = new ForcesMovement(transform, eyes, settings);
+            mouseMovement = new MouseMovement(eyes, transform, sensitivity);
             cameraHandler = new CameraExtrapolation(Camera.main.transform);
         }
 
@@ -40,12 +39,14 @@ namespace IntegratedGameplaySystem
 
         public void FixedUpdate()
         {
-            movement.DoMovement(playerInput.GetVertical(), playerInput.GetHorizontal());
+            Movement.DoMovement(playerInput.GetVertical(), playerInput.GetHorizontal());
         }
 
         public void LateFixedUpdate()
         {
-            cameraHandler.SetSnapshot(movement.GetSnapshot());
+            Movement.GetClampedSnapshot(out Vector3 eyes, out Vector3 vel, out float time);
+            snapshot.Set(eyes, vel, time);
+            cameraHandler.SetSnapshot(snapshot);
         }
     }
 }

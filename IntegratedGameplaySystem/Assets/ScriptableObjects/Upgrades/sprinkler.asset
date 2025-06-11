@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defaf9c39ed259b4aa77f4239c2aef6f, type: 3}
+  m_Name: sprinkler
+  m_EditorClassIdentifier: 
+  cost: 100
+  singlePurchase: 1
+  buttonPrefab: {fileID: 5604457068642857581, guid: 217496b748f34cb49ae7a97a68c0bd91, type: 3}
+  color: {r: 0.5481933, g: 0.7218141, b: 0.9150943, a: 1}
+  offset: {x: 0, y: 1, z: 0}
+  overlapBox:
+    halfExtents: {x: 2, y: 5, z: 2}
+    mask:
+      serializedVersion: 2
+      m_Bits: 64
+    interaction: 1
+    colliders:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  rainEffect: {fileID: 3841818262479261587, guid: 58293e40ee70c084794189268232dbbd, type: 3}

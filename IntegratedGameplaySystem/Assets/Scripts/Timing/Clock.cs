@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
-using System;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// I feel like this *could* be seperated into two different classes.
-    /// </summary>
     public class Clock : IStartable, IFixedUpdatable
     {
-        public float interval;
-        private readonly Timer timer = new();
+        private readonly Timer tickTimer = new Timer();
+        private readonly float interval;
 
         public Clock(float interval)
         {
@@ -18,16 +14,17 @@ namespace IntegratedGameplaySystem
 
         public void Start()
         {
-            timer.SetValue(interval);
+            tickTimer.SetValue(interval);
         }
 
         public void FixedUpdate() 
         {
-            if (!timer.Tick(Time.fixedDeltaTime))
+            if (!tickTimer.Tick(Time.fixedDeltaTime))
                 return;
 
-            timer.SetValue(interval);
             EventManager.RaiseEvent(Occasion.Tick);
+            EventManager.RaiseEvent(Occasion.LateTick);
+            tickTimer.SetValue(interval);
         }
     }
 }

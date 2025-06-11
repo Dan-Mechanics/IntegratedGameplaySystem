@@ -1,13 +1,8 @@
-﻿using IntegratedGameplaySystem;
-using System.Collections;
-using UnityEngine;
-
-namespace IntegratedGameplaySystem
+﻿namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// Je wilt misschien dat ze samen yappen met een interface, dat is pretty cool.
-    /// ik denk wel handig dat de shit die subscribed de shit ook destroyed thats good
-    /// Dus ze yappen via hun interface samen.
+    /// We want to leave the door open for inventories that hold more
+    /// than one ItemStack.
     /// </summary>
     public interface IItemHolder
     {

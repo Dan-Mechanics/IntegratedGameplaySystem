@@ -4,7 +4,7 @@ using System;
 
 namespace IntegratedGameplaySystem
 {
-    public class PlantCommonality : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
+    public class PlantUnit : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
         public const float LOWERED_COLLIDER_HEIGHT = -0.5f;
         
@@ -25,7 +25,7 @@ namespace IntegratedGameplaySystem
         private PoolableParticle rainParticles;
         private IPlantState currentState;
 
-        public PlantCommonality(PlantFlyweight flyweight)
+        public PlantUnit(PlantFlyweight flyweight)
         {
             this.flyweight = flyweight;
 

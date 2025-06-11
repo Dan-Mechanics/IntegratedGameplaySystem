@@ -4,28 +4,15 @@ namespace IntegratedGameplaySystem
 {
     public static class Utils 
     {
-        /// <summary>
-        /// A one in X chance.
-        /// </summary>
-        public static bool OneIn(int x)
+        public static bool RandomWithPercentage(float percentage) 
         {
-            return Random.Range(0, x) == 0;
-        }
-        
-        public static bool RandomWithPercentage(float p) 
-        {
-            if (p <= 0f)
+            if (percentage <= 0f)
                 return false;
 
-            if (p >= 100f)
+            if (percentage >= 100f)
                 return true;
             
-            return Random.Range(0f, 100f) <= p;
-        }
-
-        public static bool GetRandBool()
-        {
-            return Random.value > 0.5f;
+            return Random.Range(0f, 100f) <= percentage;
         }
 
         public static void ApplyRandomRotation(Transform transform) 

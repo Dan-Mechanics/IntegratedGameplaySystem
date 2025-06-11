@@ -26,7 +26,7 @@ namespace IntegratedGameplaySystem
             return settings.offset;
         }
 
-        public void PlacePlants(PlantCommonality[] plants)
+        public void PlacePlants(PlantUnit[] plants)
         {
             for (int i = 0; i < plants.Length; i++)
             {

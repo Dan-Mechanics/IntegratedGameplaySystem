@@ -2,7 +2,7 @@
 {
     public class SoilState : IPlantState
     {
-        public PlantCommonality Plant { get; set; }
+        public PlantUnit Plant { get; set; }
 
         public string GetHoverTitle()
         {

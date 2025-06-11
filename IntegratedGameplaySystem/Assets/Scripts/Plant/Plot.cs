@@ -34,7 +34,7 @@ namespace IntegratedGameplaySystem
             return new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
         }
 
-        public void PlacePlants(PlantCommonality[] plants)
+        public void PlacePlants(PlantUnit[] plants)
         {
             Vector3 plotPos = GetWorldPosition();
 

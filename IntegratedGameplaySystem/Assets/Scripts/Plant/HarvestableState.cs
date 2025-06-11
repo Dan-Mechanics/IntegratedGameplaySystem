@@ -2,7 +2,7 @@
 {
     public class HarvestableState : IPlantState
     {
-        public PlantCommonality Plant { get; set; }
+        public PlantUnit Plant { get; set; }
 
         public string GetHoverTitle()
         {
@@ -14,7 +14,7 @@
             Plant.Progress = 0;
             EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, Plant.flyweight);
 
-            Plant.SetColliderHeight(PlantCommonality.LOWERED_COLLIDER_HEIGHT);
+            Plant.SetColliderHeight(PlantUnit.LOWERED_COLLIDER_HEIGHT);
 
             Plant.SetState(typeof(SoilState));
             Plant.RefreshMaterials();

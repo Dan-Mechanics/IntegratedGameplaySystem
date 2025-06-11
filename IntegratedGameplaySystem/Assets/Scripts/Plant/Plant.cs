@@ -6,7 +6,7 @@ namespace IntegratedGameplaySystem
 {
     public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
-        public int Progression { get; set; }
+        public int Progress { get; set; }
         public bool IsWatered { get; set; }
 
         public readonly GameObject gameObject;
@@ -109,14 +109,14 @@ namespace IntegratedGameplaySystem
                 return;*/
 
             SetWatered(false);
-            Progression++;
-            Progression = Mathf.Clamp(Progression, 0, flyweight.materials.Length - 1);
+            Progress++;
+            Progress = Mathf.Clamp(Progress, 0, flyweight.materials.Length - 1);
 
             RefreshMaterials();
             //RefreshCollider(true, false);
             //RefreshRainEffect();
 
-            if (Progression >= flyweight.materials.Length - 1)
+            if (Progress >= flyweight.materials.Length - 1)
             {
                 stage = stages[typeof(Harvestable)];
                 SetColliderHeight(0);
@@ -125,10 +125,12 @@ namespace IntegratedGameplaySystem
 
         public void RefreshMaterials() 
         {
+            bool visible = stage.GetType() != typeof(Soil);
+
             for (int i = 0; i < meshRenderers.Length; i++)
             {
-                meshRenderers[i].enabled = typeof(Soil) != stage.GetType();
-                meshRenderers[i].material = flyweight.materials[Progression];
+                meshRenderers[i].enabled = visible;
+                meshRenderers[i].material = flyweight.materials[Progress];
             }
         }
 
@@ -294,7 +296,7 @@ namespace IntegratedGameplaySystem
 
         public void Harvest() 
         {
-            Plant.Progression = 0;
+            Plant.Progress = 0;
             EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, Plant.flyweight);
 
             //Unit.RefreshCollider(false, false);

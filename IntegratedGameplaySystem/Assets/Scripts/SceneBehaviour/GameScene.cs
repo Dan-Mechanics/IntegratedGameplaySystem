@@ -43,6 +43,7 @@ namespace IntegratedGameplaySystem
             // ======================
 
             var plot = new Plot(assets.GetAssetByType<PlotSettings>());
+            IPlantPlacementStrategy strat = plot;
             var plantSpawner = new PlantSpawner(plot);
 
             // ======================
@@ -62,8 +63,9 @@ namespace IntegratedGameplaySystem
                 plot.SetPlotIndex(i);
                 plantSpawner.SetPlant(plantsFlyweights[i]);
 
-                plantSpawner.SpawnPlants(components);
-                
+                SoilUnit[] soilUnits = plantSpawner.SpawnPlants(components);
+                strat.PlacePlants(soilUnits);
+
                 Vector3 plotCenter = plot.GetWorldCenter();
 
                 IUpgradeBehaviour sprinkler = new Sprinkler(new UpgradeCommonality(plotCenter, sprinklerSettings), sprinklerSettings);

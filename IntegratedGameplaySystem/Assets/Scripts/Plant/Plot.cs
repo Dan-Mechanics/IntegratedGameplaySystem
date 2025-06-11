@@ -6,15 +6,19 @@ namespace IntegratedGameplaySystem
     /// <summary>
     /// Does this count as strat pattern?
     /// </summary>
-    public interface IPlantDistribution
+    public abstract class PlantDistribution
     {
-        Vector3 GetWorldPosition();
-        void PlacePlants(SoilUnit[] plants);
-        int GetPlantCount();
-        Vector3 GetWorldCenter();
+        public abstract Vector3 GetWorldPosition();
+        public abstract int GetPlantCount();
+        public abstract Vector3 GetWorldCenter();
     }
 
-    public class Dispersal : IPlantDistribution
+    public interface IPlantPlacementStrategy 
+    {
+        void PlacePlants(SoilUnit[] units);
+    }
+
+    public class Dispersal : PlantDistribution, IPlantPlacementStrategy
     {
         private readonly DispersalSettings settings;
 
@@ -23,17 +27,17 @@ namespace IntegratedGameplaySystem
             this.settings = settings;
         }
 
-        public Vector3 GetWorldCenter()
+        public override Vector3 GetWorldCenter()
         {
             return GetWorldPosition();
         }
 
-        public int GetPlantCount()
+        public override int GetPlantCount()
         {
             return settings.plantCount;
         }
 
-        public Vector3 GetWorldPosition()
+        public override Vector3 GetWorldPosition()
         {
             return settings.offset;
         }
@@ -49,7 +53,7 @@ namespace IntegratedGameplaySystem
         }
     }
 
-    public class Plot : IPlantDistribution
+    public class Plot : PlantDistribution, IPlantPlacementStrategy
     {
         private readonly PlotSettings settings;
         private int index;
@@ -61,7 +65,7 @@ namespace IntegratedGameplaySystem
 
         public void SetPlotIndex(int index) => this.index = index;
 
-        public Vector3 GetWorldCenter() 
+        public override Vector3 GetWorldCenter() 
         {
             Vector3 center = GetWorldPosition();
             center += 0.5f * settings.spacing * settings.width * Vector3.forward;
@@ -71,12 +75,12 @@ namespace IntegratedGameplaySystem
             return center;
         }
 
-        public int GetPlantCount()
+        public override int GetPlantCount()
         {
             return settings.width * settings.width;
         }
 
-        public Vector3 GetWorldPosition()
+        public override Vector3 GetWorldPosition()
         {
             return new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
         }

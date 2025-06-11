@@ -9,17 +9,17 @@ namespace IntegratedGameplaySystem
     /// </summary>
     public class PlantSpawner 
     {
-        private readonly IPlantDistribution distribution;
+        private readonly PlantDistribution distribution;
         private PlantFlyweight flyweight;
 
-        public PlantSpawner(IPlantDistribution distribution)
+        public PlantSpawner(PlantDistribution distribution)
         {
             this.distribution = distribution;
         }
 
         public void SetPlant(PlantFlyweight flyweight) => this.flyweight = flyweight;
 
-        public void SpawnPlants(List<object> components)
+        public SoilUnit[] SpawnPlants(List<object> components)
         {
             SoilUnit[] plants = new SoilUnit[distribution.GetPlantCount()];
 
@@ -29,7 +29,9 @@ namespace IntegratedGameplaySystem
                 components.Add(plants[i]);
             }
 
-            distribution.PlacePlants(plants);
+            //distribution.PlacePlants(plants);
+
+            return plants;
         }
     }
 }

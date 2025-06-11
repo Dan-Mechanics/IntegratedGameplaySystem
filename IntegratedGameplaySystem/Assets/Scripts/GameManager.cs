@@ -45,7 +45,7 @@ namespace IntegratedGameplaySystem
         {
             sceneSetup.Setup();
             scenePrefabs.ForEach(x => Utils.SpawnPrefab(x));
-0
+
             ServiceLocator<IAssetService>.Provide(inspectorAssets);
 
             if (!ServiceLocator<IInputService>.HasBeenProvided())

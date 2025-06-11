@@ -9,8 +9,6 @@ namespace IntegratedGameplaySystem
 
         [Header("Movement")]
         public float speed;
-        //public float runSpeed;
-        //public float flySpeed;
         public float movAccel;
         public float accelMult;
 
@@ -24,9 +22,6 @@ namespace IntegratedGameplaySystem
         public float sens;
         public float eyesHeight;
 
-        public float GetSpeed()
-        {
-            return speed;
-        }
+        public float GetSpeed() => speed;
     }
 }

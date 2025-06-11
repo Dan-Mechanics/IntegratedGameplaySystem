@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 namespace IntegratedGameplaySystem
 {
     public class RunningShoes : IUpgradeBehaviour

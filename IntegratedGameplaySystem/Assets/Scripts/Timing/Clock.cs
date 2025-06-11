@@ -1,11 +1,7 @@
 ﻿using UnityEngine;
-using System;
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// I feel like this *could* be seperated into two different classes.
-    /// </summary>
     public class Clock : IStartable, IFixedUpdatable
     {
         private readonly Timer tickTimer = new Timer();

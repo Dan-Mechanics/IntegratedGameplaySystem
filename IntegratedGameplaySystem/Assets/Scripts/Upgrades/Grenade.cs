@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace IntegratedGameplaySystem
@@ -35,7 +34,6 @@ namespace IntegratedGameplaySystem
 
             for (int i = 0; i < count; i++)
             {
-                // you could add a ? here but I think we can assume it works.
                 world.GetComponent<IHarvestable>(settings.overlapSphere.colliders[i].transform).Harvest();
             }
         }

@@ -1,32 +1,15 @@
 ﻿using UnityEngine;
-using System;
 
 namespace IntegratedGameplaySystem
 {
-    public interface ISpeedSource 
-    {
-        float GetSpeed();
-    }
-
-    /// <summary>
-    /// refactor like all of this but #no overthinking
-    /// </summary>
     public class ForcesMovement
     {
-        /// <summary>
-        /// !Coupling !!
-        /// Make different to camerhandler and give better name.
-        /// </summary>
         private readonly PlayerSettings settings;
         private readonly Transform trans;
         private readonly Transform eyes;
         private readonly Rigidbody rb;
 
         private ISpeedSource speedSource;
-
-        /// <summary>
-        /// DEPENDACY !!! AHHH FIX !!
-        /// </summary>
         private CameraMotionSnapshot snapshot;
         private bool isGrounded;
 
@@ -41,14 +24,10 @@ namespace IntegratedGameplaySystem
 
         public void SetSpeedSource(ISpeedSource speedSource) => this.speedSource = speedSource;
 
-        /// <summary>
-        /// This code sux. Fit it!
-        /// REFACTOR !! --> consider splitting into smaller things.
-        /// </summary>
         public void DoMovement(float vert, float hori)
         {
             isGrounded = GetIsGrounded();
-            //Debug.Log(isGrounded);
+
             float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.accelMult;
             Vector3 mov = GetMovement(vert, hori, trans);
 
@@ -65,33 +44,6 @@ namespace IntegratedGameplaySystem
 
             rb.AddForce(counterMovement, ForceMode.VelocityChange);
         }
-
-        /*public void DoMovement(float vert, float hori) 
-        {
-            isGrounded = GetIsGrounded();
-
-            float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.accelMult;
-            Vector3 mov = GetMovement(vert, hori, trans);
-
-            Vector3 flatVel = rb.velocity;
-            flatVel.y = 0f;
-            float mag = flatVel.magnitude;
-
-            if (mag < settings.walkSpeed)
-            {
-                rb.AddForce(Vector3.ClampMagnitude(accel * Time.fixedDeltaTime * mov, settings.walkSpeed - mag), ForceMode.VelocityChange);
-            }
-            else if (isGrounded)
-            {
-                rb.AddForce(Vector3.ClampMagnitude(accel * Time.fixedDeltaTime * -flatVel.normalized, mag - settings.walkSpeed), ForceMode.VelocityChange);
-            }
-
-            Vector3 counterMovement = accel * Time.fixedDeltaTime * settings.accelMult * -(flatVel.normalized - mov);
-            if (mag != 0f && counterMovement.magnitude > mag)
-                counterMovement = -flatVel;
-
-            rb.AddForce(counterMovement, ForceMode.VelocityChange);
-        }*/
 
         public CameraMotionSnapshot GetSnapshot() 
         {

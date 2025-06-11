@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace IntegratedGameplaySystem 
+namespace IntegratedGameplaySystem
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(RunningShoesSettings), fileName = "New " + nameof(RunningShoesSettings))]
     public class RunningShoesSettings : ScriptableObject, IUpgradeValues, ISpeedSource
@@ -16,18 +15,12 @@ namespace IntegratedGameplaySystem
         public int cost;
         public bool singlePurchase;
 
-        /// <summary>
-        /// Is this needed because we have the color thing ??
-        /// </summary>
         public GameObject buttonPrefab;
         public Color color;
         public Vector3 offset;
 
         public float runninShoesOnSpeed;
 
-        public float GetSpeed()
-        {
-            return runninShoesOnSpeed;
-        }
+        public float GetSpeed() => runninShoesOnSpeed;
     }
 }

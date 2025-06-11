@@ -4,7 +4,7 @@ using System;
 
 namespace IntegratedGameplaySystem
 {
-    public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
+    public class PlantCommonality : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
         public int Progress { get; set; }
         public bool IsWatered { get; set; }
@@ -17,14 +17,13 @@ namespace IntegratedGameplaySystem
         private readonly SphereCollider sphereCollider;
         private readonly IPoolService<PoolableParticle> pool;
 
+        private readonly Dictionary<Type, IPlantState> states = new();
         private MeshRenderer soilRend;
         private bool prevIsWatered;
         private PoolableParticle rainParticles;
+        private IPlantState currentState;
 
-        private IPlantStage stage;
-        private readonly Dictionary<Type, IPlantStage> stages = new();
-
-        public Plant(PlantFlyweight flyweight)
+        public PlantCommonality(PlantFlyweight flyweight)
         {
             this.flyweight = flyweight;
 
@@ -37,42 +36,28 @@ namespace IntegratedGameplaySystem
             sphereCollider.radius = 0.6f;
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
 
-            stages.Add(typeof(Soil), new Soil());
-            stages.Add(typeof(Growing), new Growing());
-            stages.Add(typeof(Harvestable), new Harvestable());
+            states.Add(typeof(Soil), new Soil());
+            states.Add(typeof(Growing), new Growing());
+            states.Add(typeof(Harvestable), new Harvestable());
 
-            foreach (var item in stages)
+            foreach (var item in states)
             {
                 item.Value.Plant = this;
             }
 
-            stage = stages[typeof(Soil)];
-        }
-
-        public string GetHoverTitle() 
-        {
-            return stage.GetHoverTitle();
-            
-            /*if (!isPlanted)
-                return $"barren {flyweight.name} soil";
-
-            if (!isWatered && !IsHarvestable)
-                return $"dry {flyweight.name}";
-
-            return flyweight.name;*/
+            currentState = states[typeof(Soil)];
         }
 
         public void Start()
         {
             ServiceLocator<IWorldService>.Locate().Add(transform, this);
             EventManager.AddListener(Occasion.Tick, Tick);
+
             MakeSoilGraphics();
 
             RefreshMaterials();
             SetWatered(IsWatered);
             RefreshRainEffect();
-
-            // make CONST for this PLEASS!!
             SetColliderHeight(-0.5f);
 
             Interact();
@@ -98,34 +83,24 @@ namespace IntegratedGameplaySystem
             EventManager.RemoveListener(Occasion.Tick, Tick);
         }
 
-        public void Tick()
-        {
-            stage.Tick();
-        }
-
         public void Grow()
         {
-            /*if (IsHarvestable)
-                return;*/
-
             SetWatered(false);
             Progress++;
             Progress = Mathf.Clamp(Progress, 0, flyweight.materials.Length - 1);
 
             RefreshMaterials();
-            //RefreshCollider(true, false);
-            //RefreshRainEffect();
 
             if (Progress >= flyweight.materials.Length - 1)
             {
-                stage = stages[typeof(Harvestable)];
+                currentState = states[typeof(Harvestable)];
                 SetColliderHeight(0);
             }
         }
 
         public void RefreshMaterials() 
         {
-            bool visible = stage.GetType() != typeof(Soil);
+            bool visible = currentState.GetType() != typeof(Soil);
 
             for (int i = 0; i < meshRenderers.Length; i++)
             {
@@ -133,12 +108,6 @@ namespace IntegratedGameplaySystem
                 meshRenderers[i].material = flyweight.materials[Progress];
             }
         }
-
-        /*public void RefreshCollider(bool interactable, bool upPos) 
-        {
-            sphereCollider.enabled = interactable;
-            sphereCollider.center = Vector3.down * (upPos ? 0.5f : 0f);
-        }*/
 
         public void RefreshRainEffect()
         {
@@ -159,77 +128,39 @@ namespace IntegratedGameplaySystem
 
             prevIsWatered = IsWatered;
         }
-
-        public void Interact()
-        {
-            /*if (!isPlanted) 
-            {
-                isPlanted = true;
-                EventManager.AddListener(Occasion.Tick, Tick);
-                RefreshMaterials();
-                return;
-            }
-            
-            Water();
-            Harvest();*/
-
-            stage.Interact();
-        }
-
-        public void Harvest()
-        {
-            stage.Harvest();
-            
-            /*if (!IsHarvestable)
-                return;
-
-            progression = 0;
-            isWatered = false;
-            isPlanted = false;
-            EventManager.RemoveListener(Occasion.Tick, Tick);
-            EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, flyweight);
-
-            RefreshMaterials();
-            RefreshCollider();
-            RefreshRainEffect();*/
-        }
-
+        
+        public void Tick() => currentState.Tick();
+        public void Interact() => currentState.Interact();
+        public string GetHoverTitle() => currentState.GetHoverTitle();
+        public void Harvest() => currentState.Harvest();
+        public void Water() => currentState.Water();
+        public void SetState(Type type) => currentState = states[type];
+        
         public void SetWatered(bool value)
         {
-            /*if (isWatered == value)
-                return;*/
-
             IsWatered = value;
 
-            bool disabled = stage.GetType() == typeof(Growing) && IsWatered;
-
+            bool disabled = currentState.GetType() == typeof(Growing) && IsWatered;
             sphereCollider.enabled = !disabled;
+
             RefreshRainEffect();
-            //RefreshCollider(false, false);
         }
         
-        public void SetColliderHeight(float h) 
+        public void SetColliderHeight(float y) 
         {
-            sphereCollider.center = Vector3.up * h;
-        }
-
-        public void Water() => stage.Water();
-
-        public void GoToStage(Type type) 
-        {
-            stage = stages[type];
+            sphereCollider.center = Vector3.up * y;
         }
     }
 
-    public interface IPlantStage : IInteractable, IHoverable, IWaterable, IHarvestable
+    public interface IPlantState : IInteractable, IHoverable, IWaterable, IHarvestable
     {
-        Plant Plant { get; set; }
+        PlantCommonality Plant { get; set; }
         void Tick();
     }
 
-    public class Soil : IPlantStage
+    public class Soil : IPlantState
     {
-        public Plant Plant { get; set; }
+        public PlantCommonality Plant { get; set; }
 
         public string GetHoverTitle()
         {
@@ -242,7 +173,7 @@ namespace IntegratedGameplaySystem
 
         public void Interact()
         {
-            Plant.GoToStage(typeof(Growing));
+            Plant.SetState(typeof(Growing));
             Plant.RefreshMaterials();
         }
 
@@ -252,9 +183,9 @@ namespace IntegratedGameplaySystem
         }
     }
 
-    public class Growing : IPlantStage
+    public class Growing : IPlantState
     {
-        public Plant Plant { get; set; }
+        public PlantCommonality Plant { get; set; }
 
         public string GetHoverTitle()
         {
@@ -285,9 +216,9 @@ namespace IntegratedGameplaySystem
         }
     }
 
-    public class Harvestable : IPlantStage
+    public class Harvestable : IPlantState
     {
-        public Plant Plant { get; set; }
+        public PlantCommonality Plant { get; set; }
 
         public string GetHoverTitle()
         {
@@ -302,7 +233,7 @@ namespace IntegratedGameplaySystem
             //Unit.RefreshCollider(false, false);
             Plant.SetColliderHeight(-0.5f);
 
-            Plant.GoToStage(typeof(Soil));
+            Plant.SetState(typeof(Soil));
             Plant.RefreshMaterials();
             Plant.SetWatered(false);
         }

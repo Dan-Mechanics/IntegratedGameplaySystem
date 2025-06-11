@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace IntegratedGameplaySystem
@@ -12,15 +11,4 @@ namespace IntegratedGameplaySystem
         Color Color { get; }
         Vector3 Offset { get; }
     }
-    
-    /*[Serializable]
-    public class UpgradeValues
-    {
-        public string name;
-        public int cost;
-        public bool singlePurchase;
-        public GameObject buttonPrefab;
-
-        // Mateiral??
-    }*/
 }

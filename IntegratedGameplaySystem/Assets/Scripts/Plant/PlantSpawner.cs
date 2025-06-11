@@ -19,13 +19,13 @@ namespace IntegratedGameplaySystem
 
         public void SetPlant(PlantFlyweight flyweight) => this.flyweight = flyweight;
 
-        public Plant[] SpawnPlants(List<object> components)
+        public PlantCommonality[] SpawnPlants(List<object> components)
         {
-            Plant[] plants = new Plant[distribution.GetPlantCount()];
+            PlantCommonality[] plants = new PlantCommonality[distribution.GetPlantCount()];
 
             for (int i = 0; i < plants.Length; i++)
             {
-                plants[i] = new Plant(flyweight);
+                plants[i] = new PlantCommonality(flyweight);
                 components.Add(plants[i]);
             }
 

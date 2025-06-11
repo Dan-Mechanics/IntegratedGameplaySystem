@@ -15,7 +15,7 @@ namespace IntegratedGameplaySystem
 
     public interface IPlantPlacementStrategy 
     {
-        void PlacePlants(Plant[] units);
+        void PlacePlants(PlantCommonality[] units);
     }
 
     public class Dispersal : PlantDistribution, IPlantPlacementStrategy
@@ -42,7 +42,7 @@ namespace IntegratedGameplaySystem
             return settings.offset;
         }
 
-        public void PlacePlants(Plant[] plants)
+        public void PlacePlants(PlantCommonality[] plants)
         {
             for (int i = 0; i < plants.Length; i++)
             {
@@ -85,7 +85,7 @@ namespace IntegratedGameplaySystem
             return new Vector3(index * settings.width + settings.spacing / 2f, 0f, settings.spacing / 2f);
         }
 
-        public void PlacePlants(Plant[] plants)
+        public void PlacePlants(PlantCommonality[] plants)
         {
             Vector3 plotPos = GetWorldPosition();
 

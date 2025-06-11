@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace IntegratedGameplaySystem
+﻿namespace IntegratedGameplaySystem
 {
     public interface IScoreService
     {

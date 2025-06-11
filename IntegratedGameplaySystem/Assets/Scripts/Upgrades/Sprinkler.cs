@@ -31,7 +31,6 @@ namespace IntegratedGameplaySystem
 
         public void Dispose()
         {
-            // is this needed ?
             if (isSubscribed)
                 EventManager.RemoveListener(Occasion.LateTick, LateTick);
 
@@ -44,7 +43,6 @@ namespace IntegratedGameplaySystem
 
             for (int i = 0; i < count; i++)
             {
-                // you could add a ? here but I think we can assume it works.
                 world.GetComponent<IWaterable>(settings.overlapBox.colliders[i].transform).Water();
             }
         }

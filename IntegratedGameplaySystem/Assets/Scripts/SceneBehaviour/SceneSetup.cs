@@ -2,9 +2,6 @@
 
 namespace IntegratedGameplaySystem
 {
-    /// <summary>
-    /// Consider making this just a class that rests in the GameManager?? idk, outsourcing CODE!! is always good.
-    /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(SceneSetup), fileName = "New " + nameof(SceneSetup))]
     public class SceneSetup : ScriptableObject
     {
@@ -16,7 +13,6 @@ namespace IntegratedGameplaySystem
         {
             Debug.Log($"loading {name.ToUpper()}");
 
-            // Idk I think this makes sense.
             Random.InitState(0);
 
             Physics.simulationMode = SimulationMode.Script;

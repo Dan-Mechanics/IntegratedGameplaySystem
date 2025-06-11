@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// Currently somewhat serves as a context class.
+    /// This instantiates all the classes for the game scene.
     /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(GameScene), fileName = "New " + nameof(GameScene))]
     public class GameScene : SceneBehaviour
@@ -14,9 +14,6 @@ namespace IntegratedGameplaySystem
         private MoneyCentral money;
         private GameObject rainEffect;
 
-        /// <summary>
-        /// Builder for this ??
-        /// </summary>
         public override List<object> GetSceneComponents()
         {            
             IAssetService assets = ServiceLocator<IAssetService>.Locate();
@@ -25,7 +22,6 @@ namespace IntegratedGameplaySystem
             // ======================
 
             var sensitivity = new Sensitivity();
-            //components.Add(sensitivity);
 
             var player = new FirstPersonPlayer(new KeyboardSource(ServiceLocator<IInputService>.Locate()), sensitivity);
             components.Add(player);
@@ -63,7 +59,7 @@ namespace IntegratedGameplaySystem
                 plot.SetPlotIndex(i);
                 plantSpawner.SetPlant(plantsFlyweights[i]);
                 
-                Plant[] plants = plantSpawner.SpawnPlants(components);
+                PlantCommonality[] plants = plantSpawner.SpawnPlants(components);
                 strat.PlacePlants(plants);
 
                 Vector3 plotCenter = plot.GetWorldCenter();
@@ -84,13 +80,11 @@ namespace IntegratedGameplaySystem
             upgrades.Add(shoes);
             upgrades.Add(bag);
 
-            // idk if this works but whatever.
             upgrades.ForEach(x => components.Add(x));
             upgrades.ForEach(x => x.Upgrade.OnCanBuy += money.CanAfford);
 
             // ======================
 
-            // factory for this ??
             var tickClock = new Clock(assets.GetAssetByType<ClockSettings>().interval);
             var interactor = new Interactor();
 

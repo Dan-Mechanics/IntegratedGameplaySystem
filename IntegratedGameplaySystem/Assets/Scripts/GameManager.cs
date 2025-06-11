@@ -1,11 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-/*using System.Linq;
-using UnityEditor;
-using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;*/
-
 namespace IntegratedGameplaySystem
 {
     /// <summary>
@@ -25,19 +20,8 @@ namespace IntegratedGameplaySystem
         private void OnDisable() => heart.Dispose();
         private void OnApplicationQuit() => EventManager.RaiseEvent(Occasion.CloseGame);
 
-        /*private void OnValidate() => EditorSceneManager.sceneOpened += SelectInHierarchy;
-        private void SelectInHierarchy(Scene scene, OpenSceneMode mode)
-        {
-            // Idk why this needs to be in here but otherwise 
-            // it throws an error sooooo.
-            if (this != null && !Selection.objects.Contains(gameObject))
-                Selection.objects = new Object[] { gameObject };
-
-            EditorSceneManager.sceneOpened -= SelectInHierarchy;
-        }*/
-
         /// <summary>
-        /// NOTE: this code is a little over-abstracted but that's part of the learning !
+        /// Setup the sceen and provide common services between scenes.
         /// </summary>
         private void SetupScene()
         {

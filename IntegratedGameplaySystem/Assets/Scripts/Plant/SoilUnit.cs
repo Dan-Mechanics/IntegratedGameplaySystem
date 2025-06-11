@@ -13,7 +13,7 @@ namespace IntegratedGameplaySystem
     /// going on here.
     /// IDKkkkk i dont feel like making another 100000 classsi for this dumb shit.
     /// </summary>
-    public class SoilUnit : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
+    public class Plant : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
         /// <summary>
         /// Yes, I know we are defining a hard rule here.
@@ -39,7 +39,7 @@ namespace IntegratedGameplaySystem
         private IPlantStage stage;
         private readonly Dictionary<Type, IPlantStage> stages = new();
 
-        public SoilUnit(PlantFlyweight flyweight)
+        public Plant(PlantFlyweight flyweight)
         {
             this.flyweight = flyweight;
 
@@ -55,6 +55,12 @@ namespace IntegratedGameplaySystem
             stages.Add(typeof(Soil), new Soil());
             stages.Add(typeof(Growing), new Growing());
             stages.Add(typeof(Harvestable), new Harvestable());
+
+            foreach (var item in stages)
+            {
+                item.Value.Plant = this;
+            }
+
             stage = stages[typeof(Soil)];
         }
 
@@ -82,7 +88,7 @@ namespace IntegratedGameplaySystem
             RefreshRainEffect();
 
             // make CONST for this PLEASS!!
-            SetHeight(-0.5f);
+            SetColliderHeight(-0.5f);
 
             Interact();
         }
@@ -123,12 +129,12 @@ namespace IntegratedGameplaySystem
 
             RefreshMaterials();
             //RefreshCollider(true, false);
-            RefreshRainEffect();
+            //RefreshRainEffect();
 
             if (progression >= flyweight.materials.Length - 1)
             {
                 stage = stages[typeof(Harvestable)];
-                SetHeight(0);
+                SetColliderHeight(0);
             }
         }
 
@@ -203,16 +209,19 @@ namespace IntegratedGameplaySystem
 
         public void SetWatered(bool value)
         {
-            if (isWatered == value)
-                return;
+            /*if (isWatered == value)
+                return;*/
 
             isWatered = value;
-            sphereCollider.enabled = !value;
+
+            bool disabled = stage.GetType() == typeof(Growing) && isWatered;
+
+            sphereCollider.enabled = !disabled;
             RefreshRainEffect();
             //RefreshCollider(false, false);
         }
-
-        public void SetHeight(float h) 
+        
+        public void SetColliderHeight(float h) 
         {
             sphereCollider.center = Vector3.up * h;
         }
@@ -227,17 +236,17 @@ namespace IntegratedGameplaySystem
 
     public interface IPlantStage : IInteractable, IHoverable, IWaterable, IHarvestable
     {
-        SoilUnit Unit { get; set; }
+        Plant Plant { get; set; }
         void Tick();
     }
 
     public class Soil : IPlantStage
     {
-        public SoilUnit Unit { get; set; }
+        public Plant Plant { get; set; }
 
         public string GetHoverTitle()
         {
-            return $"barren {Unit.flyweight.name} soil";
+            return $"barren {Plant.flyweight.name} soil";
         }
 
         public void Harvest() { }
@@ -246,34 +255,34 @@ namespace IntegratedGameplaySystem
 
         public void Interact()
         {
-            Unit.RefreshMaterials();
-            Unit.GoToStage(typeof(Growing));
+            Plant.GoToStage(typeof(Growing));
+            Plant.RefreshMaterials();
         }
 
         public void Water() 
         {
-            Unit.SetWatered(true);
+            Plant.SetWatered(true);
         }
     }
 
     public class Growing : IPlantStage
     {
-        public SoilUnit Unit { get; set; }
+        public Plant Plant { get; set; }
 
         public string GetHoverTitle()
         {
-            if (!Unit.isWatered)
-                return $"dry {Unit.flyweight.name}";
+            if (!Plant.isWatered)
+                return $"dry {Plant.flyweight.name}";
 
-            return Unit.flyweight.name;
+            return Plant.flyweight.name;
         }
 
         public void Tick() 
         {
-            if (!Utils.RandomWithPercentage(Unit.isWatered ? Unit.flyweight.wateredGrowGrowPercentage : Unit.flyweight.dryGrowPercentage))
+            if (!Utils.RandomWithPercentage(Plant.isWatered ? Plant.flyweight.wateredGrowGrowPercentage : Plant.flyweight.dryGrowPercentage))
                 return;
 
-            Unit.Grow();
+            Plant.Grow();
         }
 
         public void Harvest() { }
@@ -285,30 +294,30 @@ namespace IntegratedGameplaySystem
 
         public void Water()
         {
-            Unit.SetWatered(true);
+            Plant.SetWatered(true);
         }
     }
 
     public class Harvestable : IPlantStage
     {
-        public SoilUnit Unit { get; set; }
+        public Plant Plant { get; set; }
 
         public string GetHoverTitle()
         {
-            return $"barren {Unit.flyweight.name} soil";
+            return Plant.flyweight.name;
         }
 
         public void Harvest() 
         {
-            Unit.progression = 0;
-            Unit.SetWatered(false);
-            EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, Unit.flyweight);
+            Plant.progression = 0;
+            EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, Plant.flyweight);
 
-            Unit.RefreshMaterials();
             //Unit.RefreshCollider(false, false);
-            Unit.SetHeight(-0.5f);
-            
-            //Unit.RefreshRainEffect();
+            Plant.SetColliderHeight(-0.5f);
+
+            Plant.GoToStage(typeof(Soil));
+            Plant.RefreshMaterials();
+            Plant.SetWatered(false);
         }
 
         public void Interact()
@@ -320,7 +329,7 @@ namespace IntegratedGameplaySystem
 
         public void Water()
         {
-            Unit.SetWatered(true);
+            Plant.SetWatered(true);
         }
     }
 }

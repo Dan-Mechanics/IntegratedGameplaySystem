@@ -19,13 +19,13 @@ namespace IntegratedGameplaySystem
 
         public void SetPlant(PlantFlyweight flyweight) => this.flyweight = flyweight;
 
-        public SoilUnit[] SpawnPlants(List<object> components)
+        public Plant[] SpawnPlants(List<object> components)
         {
-            SoilUnit[] plants = new SoilUnit[distribution.GetPlantCount()];
+            Plant[] plants = new Plant[distribution.GetPlantCount()];
 
             for (int i = 0; i < plants.Length; i++)
             {
-                plants[i] = new SoilUnit(flyweight);
+                plants[i] = new Plant(flyweight);
                 components.Add(plants[i]);
             }
 

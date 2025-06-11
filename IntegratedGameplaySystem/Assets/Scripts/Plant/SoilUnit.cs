@@ -37,7 +37,7 @@ namespace IntegratedGameplaySystem
         private PoolableParticle rainParticles;
 
         private IPlantStage stage;
-        private readonly Dictionary<Type, IPlantStage> dict = new();
+        private readonly Dictionary<Type, IPlantStage> stages = new();
 
         public SoilUnit(PlantFlyweight flyweight)
         {
@@ -52,9 +52,10 @@ namespace IntegratedGameplaySystem
             sphereCollider.radius = 0.6f;
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
 
-            dict.Add(typeof(Soil), new Soil());
-            dict.Add(typeof(Growing), new Growing());
-            dict.Add(typeof(Harvestable), new Harvestable());
+            stages.Add(typeof(Soil), new Soil());
+            stages.Add(typeof(Growing), new Growing());
+            stages.Add(typeof(Harvestable), new Harvestable());
+            stage = stages[typeof(Soil)];
         }
 
         public string GetHoverTitle() 
@@ -126,7 +127,7 @@ namespace IntegratedGameplaySystem
 
             if (progression >= flyweight.materials.Length - 1)
             {
-                stage = dict[typeof(Harvestable)];
+                stage = stages[typeof(Harvestable)];
                 SetHeight(0);
             }
         }
@@ -220,7 +221,7 @@ namespace IntegratedGameplaySystem
 
         public void GoToStage(Type type) 
         {
-            stage = dict[type];
+            stage = stages[type];
         }
     }
 

@@ -6,6 +6,8 @@ namespace IntegratedGameplaySystem
 {
     public class PlantCommonality : IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
     {
+        public const float LOWERED_COLLIDER_HEIGHT = -0.5f;
+        
         public int Progress { get; set; }
         public bool IsWatered { get; set; }
 
@@ -35,17 +37,21 @@ namespace IntegratedGameplaySystem
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             sphereCollider.radius = 0.6f;
             meshRenderers = transform.GetComponentsInChildren<MeshRenderer>();
+            SetupStates();
+        }
 
-            states.Add(typeof(Soil), new Soil());
-            states.Add(typeof(Growing), new Growing());
-            states.Add(typeof(Harvestable), new Harvestable());
+        private void SetupStates()
+        {
+            states.Add(typeof(SoilState), new SoilState());
+            states.Add(typeof(GrowingState), new GrowingState());
+            states.Add(typeof(HarvestableState), new HarvestableState());
 
             foreach (var item in states)
             {
                 item.Value.Plant = this;
             }
 
-            currentState = states[typeof(Soil)];
+            currentState = states[typeof(SoilState)];
         }
 
         public void Start()
@@ -58,7 +64,7 @@ namespace IntegratedGameplaySystem
             RefreshMaterials();
             SetWatered(IsWatered);
             RefreshRainEffect();
-            SetColliderHeight(-0.5f);
+            SetColliderHeight(LOWERED_COLLIDER_HEIGHT);
 
             Interact();
         }
@@ -93,14 +99,14 @@ namespace IntegratedGameplaySystem
 
             if (Progress >= flyweight.materials.Length - 1)
             {
-                currentState = states[typeof(Harvestable)];
+                currentState = states[typeof(HarvestableState)];
                 SetColliderHeight(0);
             }
         }
 
         public void RefreshMaterials() 
         {
-            bool visible = currentState.GetType() != typeof(Soil);
+            bool visible = currentState.GetType() != typeof(SoilState);
 
             for (int i = 0; i < meshRenderers.Length; i++)
             {
@@ -140,7 +146,7 @@ namespace IntegratedGameplaySystem
         {
             IsWatered = value;
 
-            bool disabled = currentState.GetType() == typeof(Growing) && IsWatered;
+            bool disabled = currentState.GetType() == typeof(GrowingState) && IsWatered;
             sphereCollider.enabled = !disabled;
 
             RefreshRainEffect();
@@ -149,104 +155,6 @@ namespace IntegratedGameplaySystem
         public void SetColliderHeight(float y) 
         {
             sphereCollider.center = Vector3.up * y;
-        }
-    }
-
-    public interface IPlantState : IInteractable, IHoverable, IWaterable, IHarvestable
-    {
-        PlantCommonality Plant { get; set; }
-        void Tick();
-    }
-
-    public class Soil : IPlantState
-    {
-        public PlantCommonality Plant { get; set; }
-
-        public string GetHoverTitle()
-        {
-            return $"barren {Plant.flyweight.name} soil";
-        }
-
-        public void Harvest() { }
-
-        public void Tick() { }
-
-        public void Interact()
-        {
-            Plant.SetState(typeof(Growing));
-            Plant.RefreshMaterials();
-        }
-
-        public void Water() 
-        {
-            Plant.SetWatered(true);
-        }
-    }
-
-    public class Growing : IPlantState
-    {
-        public PlantCommonality Plant { get; set; }
-
-        public string GetHoverTitle()
-        {
-            if (!Plant.IsWatered)
-                return $"dry {Plant.flyweight.name}";
-
-            return Plant.flyweight.name;
-        }
-
-        public void Tick() 
-        {
-            if (!Utils.RandomWithPercentage(Plant.IsWatered ? Plant.flyweight.wateredGrowGrowPercentage : Plant.flyweight.dryGrowPercentage))
-                return;
-
-            Plant.Grow();
-        }
-
-        public void Harvest() { }
-
-        public void Interact()
-        {
-            Water();
-        }
-
-        public void Water()
-        {
-            Plant.SetWatered(true);
-        }
-    }
-
-    public class Harvestable : IPlantState
-    {
-        public PlantCommonality Plant { get; set; }
-
-        public string GetHoverTitle()
-        {
-            return Plant.flyweight.name;
-        }
-
-        public void Harvest() 
-        {
-            Plant.Progress = 0;
-            EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, Plant.flyweight);
-
-            Plant.SetColliderHeight(-0.5f);
-
-            Plant.SetState(typeof(Soil));
-            Plant.RefreshMaterials();
-            Plant.SetWatered(false);
-        }
-
-        public void Interact()
-        {
-            Harvest();
-        }
-
-        public void Tick() { }
-
-        public void Water()
-        {
-            Plant.SetWatered(true);
         }
     }
 }

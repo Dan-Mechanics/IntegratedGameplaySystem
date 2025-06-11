@@ -3,8 +3,7 @@
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// "Flyweight" ish.
-    /// Plant arhcittype ???
+    /// You could also see this as PlantArchitype.cs.
     /// </summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(PlantFlyweight), fileName = "New " + nameof(PlantFlyweight))]
     public class PlantFlyweight : ScriptableObject, IItemArchitype
@@ -24,10 +23,6 @@ namespace IntegratedGameplaySystem
         public Sprite sprite;
         public Material[] materials;
 
-        /// <summary>
-        /// Does making the textures sprites mess
-        /// with the performance ??
-        /// </summary>
         private void OnValidate() 
         {
             sprite = Resources.Load<Sprite>($"{name}/stage_{materials.Length}_img");

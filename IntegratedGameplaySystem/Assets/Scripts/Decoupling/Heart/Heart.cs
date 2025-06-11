@@ -4,7 +4,7 @@ using UnityEngine;
 namespace IntegratedGameplaySystem
 {
     /// <summary>
-    /// Sends start, update, dispose, etc pulses to all the script in the game that need it.
+    /// Sends Start(), Update(), Dispose(), etc pulses to all the script in the game that need those.
     /// </summary>
     public class Heart
     {
@@ -88,7 +88,8 @@ namespace IntegratedGameplaySystem
         }
 
         /// <summary>
-        /// THIS MUST WORK FOR WHEN SWITCHING SCENES !! 
+        /// This is so that scene switching doesn't create "ghost memory"
+        /// because of statics.
         /// </summary>
         public void Dispose() 
         {

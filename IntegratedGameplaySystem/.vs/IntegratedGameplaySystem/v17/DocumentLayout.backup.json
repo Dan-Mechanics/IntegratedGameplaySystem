@@ -3,28 +3,44 @@
   "WorkspaceRootPath": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|c:\\users\\dan-mechanics\\development\\github\\integratedgameplaysystem\\integratedgameplaysystem\\assets\\scripts\\plant\\plantspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\plant\\plantspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\SoilUnit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Plant\\SoilUnit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\Plot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Plant\\Plot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|c:\\users\\dan-mechanics\\development\\github\\integratedgameplaysystem\\integratedgameplaysystem\\assets\\scripts\\scenebehaviour\\gamescene.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\timing\\clock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\timing\\clock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\timing\\clocksettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\timing\\clocksettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlantBlueprint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Plant\\PlantBlueprint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\upgrades\\sprinkler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\upgrades\\sprinkler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\scenebehaviour\\gamescene.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scenebehaviour\\gamescene.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|c:\\users\\dan-mechanics\\development\\github\\integratedgameplaysystem\\integratedgameplaysystem\\assets\\scripts\\plant\\plotsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\plant\\plantspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\plant\\plantspawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\plant\\plotsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\plant\\plotsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|c:\\users\\dan-mechanics\\development\\github\\integratedgameplaysystem\\integratedgameplaysystem\\assets\\scripts\\plant\\dispersalsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\plant\\dispersalsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\plant\\dispersalsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|c:\\users\\dan-mechanics\\development\\github\\integratedgameplaysystem\\integratedgameplaysystem\\assets\\scripts\\plant\\soilunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\plant\\soilunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Hand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -71,20 +87,8 @@
       "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\scenebehaviour\\nextscenehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\timing\\clock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\timing\\clock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\timing\\clocksettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\timing\\clocksettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\timing\\timer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\timing\\timer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\assets\\writings.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -101,10 +105,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\Plant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Plant\\Plant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlantBlueprint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\Plant\\PlantBlueprint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Player\\Movement\\CameraHandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -149,6 +149,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\test_config.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\test_config.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\Plot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0397B0FF-2C6B-3363-2E1F-168E76565F81}|Assembly-CSharp.csproj|solutionrelative:Assets\\Scripts\\Plant\\Plot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -158,37 +162,46 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GameScene.cs",
-              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\SceneBehaviour\\GameScene.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\SceneBehaviour\\GameScene.cs",
-              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\SceneBehaviour\\GameScene.cs",
-              "RelativeToolTip": "Assets\\Scripts\\SceneBehaviour\\GameScene.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAhwCsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "PlantBlueprint.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlantBlueprint.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\PlantBlueprint.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlantBlueprint.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Plant\\PlantBlueprint.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T09:09:43.968Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T09:30:53.356Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "PlotSettings.cs",
-              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlotSettings.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\PlotSettings.cs",
-              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlotSettings.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Plant\\PlotSettings.cs",
+              "Title": "ClockSettings.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Timing\\ClockSettings.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Timing\\ClockSettings.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Timing\\ClockSettings.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Timing\\ClockSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T09:08:43.797Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T09:28:01.037Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
+              "Title": "Clock.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Timing\\Clock.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Timing\\Clock.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Timing\\Clock.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Timing\\Clock.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAuwBsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T09:28:02.214Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "DispersalSettings.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\DispersalSettings.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\DispersalSettings.cs",
@@ -196,50 +209,69 @@
               "RelativeToolTip": "Assets\\Scripts\\Plant\\DispersalSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T09:08:28.219Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T09:08:28.219Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PlotSettings.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlotSettings.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\PlotSettings.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlotSettings.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Plant\\PlotSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T09:08:43.797Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "Plot.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\Plot.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\Plot.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\Plot.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Plant\\Plot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T09:30:31.877Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MaterialScroller.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\MaterialScroller.cs",
+              "RelativeDocumentMoniker": "Assets\\MaterialScroller.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\MaterialScroller.cs",
+              "RelativeToolTip": "Assets\\MaterialScroller.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T09:34:35.466Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GameManager.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\GameManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\GameManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAkwDoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-05T09:25:26.896Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PlantSpawner.cs",
-              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlantSpawner.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\PlantSpawner.cs",
-              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlantSpawner.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Plant\\PlantSpawner.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T09:07:58.504Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
               "Title": "SoilUnit.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\SoilUnit.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\SoilUnit.cs",
               "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\SoilUnit.cs",
               "RelativeToolTip": "Assets\\Scripts\\Plant\\SoilUnit.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-11T09:01:20.08Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-11T09:01:20.08Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "IPlantSpawner.cs",
-              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\IPlantSpawner.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\IPlantSpawner.cs",
-              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\IPlantSpawner.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Plant\\IPlantSpawner.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T09:32:03.011Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "Plant.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\Plant.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\Plant.cs",
@@ -251,43 +283,55 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "PlantBlueprint.cs",
-              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlantBlueprint.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\PlantBlueprint.cs",
-              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlantBlueprint.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Plant\\PlantBlueprint.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBUAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 24,
+              "Title": "IPlantSpawner.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\IPlantSpawner.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\IPlantSpawner.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\IPlantSpawner.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Plant\\IPlantSpawner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T09:30:53.356Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Plot.cs",
-              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\Plot.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\Plot.cs",
-              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\Plot.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Plant\\Plot.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T09:30:31.877Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-05T09:32:03.011Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "MaterialScroller.cs",
-              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\MaterialScroller.cs",
-              "RelativeDocumentMoniker": "Assets\\MaterialScroller.cs",
-              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\MaterialScroller.cs",
-              "RelativeToolTip": "Assets\\MaterialScroller.cs",
+              "Title": "PlantSpawner.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlantSpawner.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Plant\\PlantSpawner.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Plant\\PlantSpawner.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Plant\\PlantSpawner.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T09:34:35.466Z"
+              "WhenOpened": "2025-06-11T09:07:58.504Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 6,
+              "Title": "GameScene.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\SceneBehaviour\\GameScene.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SceneBehaviour\\GameScene.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\SceneBehaviour\\GameScene.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SceneBehaviour\\GameScene.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAhwEYAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T09:09:43.968Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Sprinkler.cs",
+              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Upgrades\\Sprinkler.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Upgrades\\Sprinkler.cs",
+              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Upgrades\\Sprinkler.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Upgrades\\Sprinkler.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAzwBwAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-11T09:34:32.674Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "MouseMovement.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Player\\Movement\\MouseMovement.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\Movement\\MouseMovement.cs",
@@ -299,7 +343,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "ForcesMovement.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Player\\Movement\\ForcesMovement.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\Movement\\ForcesMovement.cs",
@@ -323,7 +367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "Hand.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Hand.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Hand.cs",
@@ -346,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "TestingFeatures.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Player\\TestingFeatures.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\TestingFeatures.cs",
@@ -358,7 +402,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "PlayerSettings.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Player\\PlayerSettings.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player\\PlayerSettings.cs",
@@ -382,7 +426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 18,
               "Title": "ScoreMenuDecorator.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\SceneBehaviour\\ScoreMenuDecorator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SceneBehaviour\\ScoreMenuDecorator.cs",
@@ -394,7 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 19,
               "Title": "SceneSetup.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\SceneBehaviour\\SceneSetup.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SceneBehaviour\\SceneSetup.cs",
@@ -406,7 +450,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 16,
               "Title": "SceneBehaviour.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\SceneBehaviour\\SceneBehaviour.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SceneBehaviour\\SceneBehaviour.cs",
@@ -418,7 +462,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "NextSceneHandler.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\SceneBehaviour\\NextSceneHandler.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SceneBehaviour\\NextSceneHandler.cs",
@@ -442,7 +486,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 17,
               "Title": "IMenuDecorator.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\SceneBehaviour\\IMenuDecorator.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\SceneBehaviour\\IMenuDecorator.cs",
@@ -466,31 +510,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Clock.cs",
-              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Timing\\Clock.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Timing\\Clock.cs",
-              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Timing\\Clock.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Timing\\Clock.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAQwAgAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T09:28:02.214Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "ClockSettings.cs",
-              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Timing\\ClockSettings.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Timing\\ClockSettings.cs",
-              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Timing\\ClockSettings.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Timing\\ClockSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T09:28:01.037Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "Timer.cs",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\Timing\\Timer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Timing\\Timer.cs",
@@ -511,18 +531,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-05T09:27:36.655Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "GameManager.cs",
-              "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\GameManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\GameManager.cs",
-              "ToolTip": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\Scripts\\GameManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\GameManager.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAAAwwBoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-05T09:25:26.896Z"
             },
             {
               "$type": "Document",
@@ -562,7 +570,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "writings.txt",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\writings.txt",
               "RelativeDocumentMoniker": "Assets\\writings.txt",
@@ -598,7 +606,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "config.txt",
               "DocumentMoniker": "C:\\Users\\Dan-Mechanics\\Development\\GITHUB\\IntegratedGameplaySystem\\IntegratedGameplaySystem\\Assets\\config.txt",
               "RelativeDocumentMoniker": "Assets\\config.txt",

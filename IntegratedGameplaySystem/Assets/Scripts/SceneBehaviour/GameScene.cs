@@ -62,9 +62,9 @@ namespace IntegratedGameplaySystem
             {
                 plot.SetPlotIndex(i);
                 plantSpawner.SetPlant(plantsFlyweights[i]);
-
-                Plant[] soilUnits = plantSpawner.SpawnPlants(components);
-                strat.PlacePlants(soilUnits);
+                
+                Plant[] plants = plantSpawner.SpawnPlants(components);
+                strat.PlacePlants(plants);
 
                 Vector3 plotCenter = plot.GetWorldCenter();
 

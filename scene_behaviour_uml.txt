@@ -43,7 +43,10 @@ interface IMenuDecorator
 {
     + void Decorate(components: List<object>, canvas: Transform)
 }
+
+
 note "GameScene is the context class of the game, so it creates A LOT of classes." as Note
+Note -- MostThingsInTheGame
 
 NextSceneHandler ..* SceneBehaviour
 NextSceneHandler ..> EventManager
@@ -58,4 +61,3 @@ GameScene ..> ServiceLocator
 GameScene ..> IAssetService
 GameScene ..> MostThingsInTheGame
 
-Note -- MostThingsInTheGame

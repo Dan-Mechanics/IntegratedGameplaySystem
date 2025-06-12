@@ -1,6 +1,6 @@
 # IntegratedGameplaySystem
 
-Conventions: https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/Conventions.cs\
+Conventions: https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/Conventions.cs \
 Activity Diagram:
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/UML/activity_diagram.png)
 

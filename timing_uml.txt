@@ -1,0 +1,33 @@
+class Clock implements IStartable, IFixedUpdatable
+{
+    + void Start()
+    + void FixedUpdate()
+}
+
+class ClockSettings extends ScriptableObject
+{
+    + interval: float
+}
+
+interface IScoreService
+{
+    + float GetScore()
+}
+
+class Score implements IFixedUpdatable, IScoreService, IChangeTracker<float>
+{
+    + OnChange: event Action<float>
+    + void FixedUpdate()
+    + float GetScore()
+}
+
+class Timer 
+{
+    + value: float
+    + bool Tick(interval: float) 
+    + SetValue(value: float) 
+    + DisableUntilSet() 
+}
+
+Timer --* Clock
+EventManager --* Clock

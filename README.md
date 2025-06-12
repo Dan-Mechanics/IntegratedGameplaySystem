@@ -25,9 +25,6 @@ Interaction
 Items
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/UML/items_img.png)
 
-Interaction
-![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/UML/interaction_img.png)
-
 Money
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/UML/money_img.png)
 

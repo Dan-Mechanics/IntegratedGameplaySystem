@@ -1,0 +1,34 @@
+Display ..> Items
+
+Input ..> Decoupling
+
+Interaction ..> Decoupling
+Interaction ..> Display
+Interaction ..> Input
+Interaction ..> AssetSourcing
+
+Items ..> Decoupling
+Items ..> Display
+
+Money ..> Decoupling
+Money ..> Display
+Money ..> AssetSourcing
+
+Plant ..> Interaction
+Plant ..> Items
+Plant ..> Decoupling
+Plant ..> ObjectPool
+
+Player ..> Decoupling
+Player ..> Input
+Player ..> AssetSourcing
+Player ..> Display
+
+Timing ..> Decoupling
+Timing ..> Display
+
+Upgrades ..> Items
+Upgrades ..> Interaction
+Upgrades ..> Plant
+Upgrades ..> Player
+Upgrades ..> Decoupling

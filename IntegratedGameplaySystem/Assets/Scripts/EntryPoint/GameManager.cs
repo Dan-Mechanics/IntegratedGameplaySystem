@@ -30,7 +30,7 @@ namespace IntegratedGameplaySystem
 
             ServiceLocator<IAssetService>.Provide(inspectorAssets);
 
-            if (!ServiceLocator<IInputService>.HasBeenProvided())
+            if (!ServiceLocator<IWorldService>.HasBeenProvided())
             {
                 ServiceLocator<IWorldService>.Provide(new GameWorld());
             }

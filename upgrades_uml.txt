@@ -1,6 +1,7 @@
 class Bag implements IUpgradeBehaviour
 {
     + upgrade: UpgradeCommonality
+    
     + void Start()
     + void Dispose()
 }
@@ -8,6 +9,7 @@ class Bag implements IUpgradeBehaviour
 class Grenade implements IUpgradeBehaviour
 {
     + upgrade: UpgradeCommonality
+    
     + void Start()
     + void Dispose()
     - void HarvestAll()
@@ -16,6 +18,7 @@ class Grenade implements IUpgradeBehaviour
 class RunningShoes implements IUpgradeBehaviour
 {
     + upgrade: UpgradeCommonality
+    
     + void Start()
     + void Dispose()
 }
@@ -23,6 +26,7 @@ class RunningShoes implements IUpgradeBehaviour
 class Sprinkler implements IUpgradeBehaviour
 {
     + upgrade: UpgradeCommonality
+    
     + void Start()
     + void Dispose()
     - void LateTick()
@@ -53,18 +57,64 @@ interface IUpgradeValues
     + offset: Vector3
 }
 
+abstract class OverlapNonAlloc
+{
+    + mask: LayerMask
+    + interaction: QueryTriggerInteraction
+    + colliders: Collider[]
+    
+    + void Setup(maxExpectedColliders: int)
+    + abstract int GetColliderCount(position: Vector3)
+}
+
+class SphereAOE extends OverlapNonAlloc
+{
+    + range: float
+    + override int GetColliderCount(position: Vector3)
+}
+
+class BoxAOE extends OverlapNonAlloc
+{
+    + halfExtents: Vector3
+    + override int GetColliderCount(position: Vector3)
+}
+
+class BagSettings extends ScriptableObject implements IUpgradeValues, IMaxStackSource
+{
+    + bagMaxItems: int
+    + int GetMaxStack()
+}
+
+class RunningShoesSettings extends ScriptableObject implements IUpgradeValues, ISpeedSource
+{
+    + runninShoesOnSpeed: float
+    + float GetSpeed()
+}
+
+class GrenadeSettings extends ScriptableObject implements IUpgradeValues
+{
+    + overlapSphere: SphereAOE
+    + grenadeEffect: GameObject
+}
+
+class SprinklerSettings extends ScriptableObject implements IUpgradeValues
+{
+    + overlapSphere: BoxAOE
+    + rainEffect: GameObject
+}
+
 
 Hand --* Bag
 BagSettings --* Bag
-UpgradeCommonality --* Bag
 
 IWorldService --* Grenade
 GrenadeSettings --* Grenade
-UpgradeCommonality --* Grenade
 
 IWorldService --* Sprinkler
 SprinklerSettings --* Sprinkler
-UpgradeCommonality --* Sprinkler
 Sprinkler ..> EventManager
+
+ForcesMovement --* RunningShoes
+RunningShoesSettings --* RunningShoes
 
 UpgradeCommonality --* IUpgradeBehaviour

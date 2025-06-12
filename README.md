@@ -30,7 +30,7 @@ Items
 Money
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/money_img.png)
 
-Object Pool\n
+Object Pool\
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/object_pool_img.png)
 
 Plant

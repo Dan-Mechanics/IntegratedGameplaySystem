@@ -1,5 +1,8 @@
 # IntegratedGameplaySystem
-Convention: https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/Conventions.cs
+
+Conventions: https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/Conventions.cs
+
+# UML
 
 Asset Sourcing
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/asset_sourcing_img.png)
@@ -27,7 +30,7 @@ Items
 Money
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/money_img.png)
 
-Object Pool
+Object Pool\n
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/object_pool_img.png)
 
 Plant

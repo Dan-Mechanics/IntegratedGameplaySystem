@@ -1,13 +1,12 @@
 # IntegratedGameplaySystem
 
 Conventions: https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/Conventions.cs
-
-Activity Diagram
+Activity Diagram:
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/UML/activity_diagram.png)
 
 # UML
 
-EVERYTHING\
+ALTOGETHER\
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/UML/all_img.png)
 
 Asset Sourcing\

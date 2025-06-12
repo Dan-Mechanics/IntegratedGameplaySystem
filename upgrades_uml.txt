@@ -1,0 +1,70 @@
+class Bag implements IUpgradeBehaviour
+{
+    + upgrade: UpgradeCommonality
+    + void Start()
+    + void Dispose()
+}
+
+class Grenade implements IUpgradeBehaviour
+{
+    + upgrade: UpgradeCommonality
+    + void Start()
+    + void Dispose()
+    - void HarvestAll()
+}
+
+class RunningShoes implements IUpgradeBehaviour
+{
+    + upgrade: UpgradeCommonality
+    + void Start()
+    + void Dispose()
+}
+
+class Sprinkler implements IUpgradeBehaviour
+{
+    + upgrade: UpgradeCommonality
+    + void Start()
+    + void Dispose()
+    - void LateTick()
+}
+
+interface IUpgradeBehaviour extends IStartable, IDisposable
+{
+    + upgrade: UpgradeCommonality
+}
+
+class UpgradeCommonality extends IInteractable, IHoverable
+{
+    + position: Vector3
+    + hasBeenBought: bool
+    + OnBuy: event Action
+    + OnCanBuy: event Func<int, bool>
+    + string GetHoverTitle()
+    + void Interact()
+}
+
+interface IUpgradeValues
+{
+    + name: string
+    + cost: int
+    + singlePurchase: bool
+    + buttonPrefab: GameObject
+    + color: Color
+    + offset: Vector3
+}
+
+
+Hand --* Bag
+BagSettings --* Bag
+UpgradeCommonality --* Bag
+
+IWorldService --* Grenade
+GrenadeSettings --* Grenade
+UpgradeCommonality --* Grenade
+
+IWorldService --* Sprinkler
+SprinklerSettings --* Sprinkler
+UpgradeCommonality --* Sprinkler
+Sprinkler ..> EventManager
+
+UpgradeCommonality --* IUpgradeBehaviour

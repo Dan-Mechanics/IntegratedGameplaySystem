@@ -1,0 +1,142 @@
+class PlantSpawner
+{
+    + void SetPlant(flyweight: PlantFlyweight)
+    + PlantUnit[] SpawnPlants(List<object> components)
+}
+
+class PlantFlyweight extends ScriptableObject implements IItemArchitype
+{
+    + sprite: Sprite
+    + itemTint: Color
+    + monetaryValue: int
+    + dryGrowPercentage: float 
+    + wateredGrowGrowPercentage: float
+    + drySoil: Material
+    + wetSoil Material
+    + plantPrefab: GameObject
+    + materials: Material[] 
+}
+
+class Plot extends PlantDistribution implements IPlantPlacementStrategy
+{
+    + override Vector3 GetWorldCenter() 
+    + override int GetPlantCount()
+    + override Vector3 GetWorldPosition()
+    + void SetPlotIndex(index: int)
+    + void PlacePlants(plants: PlantUnit[])
+    
+}
+
+interface IPlantPlacementStrategy
+{
+    void PlacePlants(units: PlantUnit[])
+}
+
+class Dispersal extends PlantDistribution implements IPlantPlacementStrategy
+{
+    + override Vector3 GetWorldCenter() 
+    + override int GetPlantCount()
+    + override Vector3 GetWorldPosition()
+    + void SetPlotIndex(index: int)
+    + void PlacePlants(plants: PlantUnit[])
+    
+}
+
+interface IPlantState implements IInteractable, IHoverable, IWaterable, IHarvestable
+{
+    + plant: PlantUnit
+    + void Tick()
+}
+
+interface IWaterable
+{
+    + void Water()
+}
+
+interface IHarvestable
+{
+    + void Harvest()
+}
+
+abstract class PlantDistribution
+{
+    + abstract Vector3 GetWorldPosition();
+    + abstract int GetPlantCount();
+    + abstract Vector3 GetWorldCenter();
+}
+
+class PlotSettings extends ScriptableObject
+{
+    + width: int
+    + spacing: float
+}
+
+class DispersalSettings extends ScriptableObject
+{
+    + plantCount: int
+    + dispersal: float 
+    + offset: Vector3 
+}
+
+class SoilState implements IPlantState
+{
+    + plant: PlantUnit 
+    + string GetHoverTitle()
+    + void Interact()
+    + void Water() 
+}
+
+class HarvestableState implements IPlantState
+{
+    + plant: PlantUnit 
+    + string GetHoverTitle()
+    + void Interact()
+    + void Water() 
+    + void Harvest()
+}
+
+class GrowingState implements IPlantState
+{
+    + plant: PlantUnit 
+    + string GetHoverTitle()
+    + void Interact()
+    + void Tick()
+    + void Water() 
+}
+
+class PlantUnit implements IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
+{
+    + lowered_collider_height: const float
+    + progress: int
+    + isWatered: bool
+
+    + gameObject: readonly GameObject
+    + transform: readonly Transform
+    + flyweight: readonly PlantFlyweight
+    
+    + void Start()
+    + void Dispose()
+    + void Grow()
+    + void RefreshMaterials()
+    + void RefreshRainEffect()
+    + void Tick(
+    + void Interact()
+    + string GetHoverTitle()
+    + void Harvest()
+    + void Water()
+    + void SetState(type: System.Type) 
+    + void SetWatered(value: bool)
+    + void SetColliderHeight(y: float)
+}
+
+PlantDistribution ..* PlantSpawner
+PlantFlyweight ..* PlantSpawner
+PlotSettings ..* Plot
+DispersalSettings ..* Dispersal
+PlantUnit -- SoilState
+PlantUnit -- GrowingState
+PlantUnit -- HarvestableState
+IPlantState ..* PlantUnit
+IPoolService ..* PlantUnit
+PoolableParticle ..* PlantUnit
+IPlantPlacementStrategy ..> PlantUnit

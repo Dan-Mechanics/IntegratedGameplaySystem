@@ -1,0 +1,102 @@
+
+class InputHandler implements IInputService
+{
+    + void AddBinding(binding: Binding)
+    + void RemoveBinding(binding: Binding)
+    + void RemoveByKey(key: KeyCode)
+    + void RemoveByPlayerAction(playerAction: PlayerAction)
+    + void Update()
+    + InputSource GetInputSource(playerAction: PlayerAction)
+    + void Dispose()
+}
+
+enum PlayerAction
+{
+    None 
+    Interact 
+    Forward
+    Backward 
+    Left
+    Right 
+    Reload 
+    Escape 
+    Up 
+    Down 
+}
+
+class RestrictiveBindingRules implements INewBindingRules
+{
+    + bool AllowBinding(alreadyBound: List<Binding>, newBinding: Binding)
+}
+
+class ChillBindingRules implements INewBindingRules
+{
+    + bool AllowBinding(alreadyBound: List<Binding>, newBinding: Binding)
+}
+
+interface INewBindingRules
+{
+    + bool AllowBinding(alreadyBound: List<Binding>, newBinding: Binding)
+}
+
+class Binding
+{
+    + playerAction: PlayerAction
+    + keyString: string
+    + keyCode: KeyCode
+    + void ProcessKeyString() 
+}
+
+interface IPlayerInput
+{
+    + float GetVertical()
+    + float GetHorizontal()
+    + Vector2 GetLookingInput()
+}
+
+class KeyboardSource implements IPlayerInput
+{
+    + float GetVertical()
+    + float GetHorizontal()
+    + Vector2 GetLookingInput()
+}
+
+class InputSource
+{
+    + isPressed: bool
+    + OnChange: event Action<bool>
+    + onDown: Action
+    + onUp: Action
+}
+
+interface IBindingsSource
+{
+    List<Binding> GetBindings()
+}
+
+interface IInputService implements IUpdatable, IDisposable
+{
+    InputSource GetInputSource(playerAction: PlayerAction)
+}
+
+class BindingsConfig extends ScriptableObject implements IBindingsSource
+{
+    + bindings: List<Binding>
+    + List<Binding> GetBindings()
+}
+
+class ConfigTextFile extends IBindingsSource
+{
+    + List<Binding> GetBindings()
+}
+
+IBindingsSource ..* InputHandler
+INewBindingRules ..* InputHandler
+Binding ..* InputHandler
+InputHandler ..> InputSource
+InputHandler ..> PlayerAction
+ChillBindingRules ..* RestrictiveBindingRules
+RestrictiveBindingRules ..> Binding
+ChillBindingRules ..> Binding
+KeyboardSource ..> IInputService
+IBindingsSource ..> Binding

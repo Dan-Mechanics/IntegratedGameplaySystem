@@ -1,0 +1,56 @@
+abstract class SceneBehaviour extends ScriptableObject implements IStartable, IDisposable
+{
+    + sceneHandler: NextSceneHandler
+    + virtual void Start()
+    + virtual List<object> GetSceneComponents()
+    + virtual void Dispose()
+}
+
+class GameScene extends SceneBehaviour
+{
+    + override List<object> GetSceneComponents()
+    + override void Dispose()
+}
+
+class NextSceneHandler implements IStartable, IDisposable
+{
+    + void Start()
+    + void GoNextScene()
+    + void Dispose()
+}
+
+class SceneSetup extends ScriptableObject
+{
+    + maxFPS: int
+    + fixedUpdatesPerSecond: float
+    + mouseLocked: bool
+}
+
+class MenuScene implements SceneBehaviour
+{
+    decorators: UnityEngine.Object[]
+    + override void Start()
+    + override List<object> GetSceneComponents()
+    + override void Dispose()
+}
+
+class ScoreMenuDecorator extends ScriptableObject implements IMenuDecorator
+{
+    + void Decorate(components: List<object>, canvas: Transform)
+}
+
+interface IMenuDecorator
+{
+    + void Decorate(components: List<object>, canvas: Transform)
+}
+
+NextSceneHandler ..* SceneBehaviour
+NextSceneHandler ..> EventManager
+MenuScene ..> UnityEngine.Object
+ScoreMenuDecorator ..> ServiceLocator
+ScoreMenuDecorator ..> IScoreService
+ScoreMenuDecorator ..> Display
+ScoreMenuDecorator ..> EasyRect
+GameScene ..> BasicallyEverything
+IUpgradeBehaviour ..* GameScene
+MoneyCentral ..* GameScene

@@ -1,0 +1,21 @@
+class GameManager extends MonoBehaviour
+{
+    - void Start() 
+    - void Update()
+    - void OnDisable() 
+    - void OnApplicationQuit() 
+}
+
+SceneBehaviour ..* GameManager
+SceneSetup ..* GameManager
+InspectorAssets..* GameManager
+Heart ..* GameManager
+
+GameManager ..> EventManager
+GameManager ..> ServiceLocator
+GameManager ..> IInputService
+GameManager ..> IWorldService
+GameManager ..> GameWorld
+GameManager ..> ChillBindingRules
+GameManager ..> ConfigTextFile
+GameManager ..> TestingFeatures

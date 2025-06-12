@@ -2,6 +2,8 @@
 
 Conventions: https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/Conventions.cs
 
+![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/UML/activity_diagram.png)
+
 # UML
 
 All\

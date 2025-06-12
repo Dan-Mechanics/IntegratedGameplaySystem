@@ -4,7 +4,7 @@ Conventions: https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main
 
 # UML
 
-Asset Sourcing
+All\
 ![UML IMAGE.](https://github.com/Dan-Mechanics/IntegratedGameplaySystem/blob/main/UML/all_img.png)
 
 Asset Sourcing\

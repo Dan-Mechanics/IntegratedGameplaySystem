@@ -8,12 +8,12 @@ namespace IntegratedGameplaySystem
     [CreateAssetMenu(menuName = "ScriptableObjects/" + nameof(DisplaySettings), fileName = "New " + nameof(DisplaySettings))]
     public class DisplaySettings : ScriptableObject
     {
-        public GameObject canvas;
+        public GameObject canvasPrefab;
+        public GameObject textPrefab;
+        public GameObject imagePrefab;
 
         public Sprite defaultSprite;
         public string defaultText;
-        public GameObject text;
-        public GameObject image;
         public Sprite pixel;
     }
 }

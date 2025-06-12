@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce43a24ea734093409d47823fcdfed2d, type: 3}
   m_Name: display_settings
   m_EditorClassIdentifier: 
-  canvas: {fileID: 3798425744015788190, guid: 4649b9385cedad54a924bf9e83ee7526, type: 3}
+  canvasPrefab: {fileID: 3798425744015788190, guid: 4649b9385cedad54a924bf9e83ee7526, type: 3}
+  textPrefab: {fileID: 2118756706629037042, guid: 6d7533ae40270ac41b038abdce0878ec, type: 3}
+  imagePrefab: {fileID: 2587457369834098796, guid: c1131e1628d62bf49b61d88b835360bd, type: 3}
   defaultSprite: {fileID: 21300000, guid: 4c86fea8c6b5a644681c5acc55d2474c, type: 3}
   defaultText: +
-  text: {fileID: 2118756706629037042, guid: 6d7533ae40270ac41b038abdce0878ec, type: 3}
-  image: {fileID: 2587457369834098796, guid: c1131e1628d62bf49b61d88b835360bd, type: 3}
   pixel: {fileID: 21300000, guid: 9d9ca8acaaf5a8f42856bbc5082a3295, type: 3}

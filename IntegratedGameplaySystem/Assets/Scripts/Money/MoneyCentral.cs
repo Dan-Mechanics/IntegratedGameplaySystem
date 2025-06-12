@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace IntegratedGameplaySystem
 {
-    public class MoneyCentral :  IStartable, IInteractable, IHoverable, IDisposable, IChangeTracker<IntWithMax>
+    public class MoneyCentral : IStartable, IInteractable, IHoverable, IDisposable, IChangeTracker<IntWithMax>
     {
         public event Action<IntWithMax> OnChange;
 
@@ -79,13 +79,13 @@ namespace IntegratedGameplaySystem
             int count = 0;
 
             ItemStack[] stacks = itemHolder.GetItems();
-            ItemStack stack;
+            ItemStack currStack;
 
             for (int i = 0; i < stacks.Length; i++)
             {
-                stack = stacks[i];
-                if (stack.item != null)
-                    count += stack.count;
+                currStack = stacks[i];
+                if (currStack.item != null)
+                    count += currStack.count;
             }
 
             return count > 0;

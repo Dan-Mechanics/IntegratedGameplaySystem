@@ -1,0 +1,102 @@
+class DataChannel<T1, T2> implements IDisposable
+{
+    + OnChange: event Action<T1, T2>
+    + ui: T2
+    - void Combine(value: T1)
+    + void Dispose()
+}
+
+class Display implements IDisposable
+{
+    + disposables: List<IDisposable>
+    + settings: DisplaySettings
+    + canvas: Transform
+    + void Dispose()
+    + void SettingsStrIntoText(str: string, text: Text)
+    + void AddFillImage()
+    + static void StringIntoText(str: string, text: Text)
+    + static void RangeIntoText(range: IntWithMax, text: Text)
+    + static void FloatIntoText(value: float, text: Text)
+    + static void RangeIntoFillImage(range: IntWithMax, fillImg: Image)
+    + static void IntIntoText(value: int, text: Text)
+    + static void SpriteIntoImage(sprite: Sprite, image: Image)
+    + static void BoolIntoRedText(isRed: bool, text: Text)
+    + static void ItemStackIntoSlot(stack: ItemStack, slot: ItemSlot)
+    + static void AddToCanvas<T>(canvas: Transform, prefab: GameObject)
+}
+
+class EasyRect
+{
+    + void Set(rect: RectTransform)
+    + void SnapTo(snap: Snap)
+    + void SnapTo(snap: Snap, offset: Vector3)
+    + void SnapToLeft()
+    + void SnapToRight()
+    + void SnapToBottom()
+    + void SnapToTop()
+    + void SnapToCenter()
+    + void SetOffset(offset: Vector3)
+    + void SetSize(x: float, y: float)
+    + float GetHeight()
+    + float GetWidth()
+}
+
+interface IChangeTracker<T>
+{
+    + OnChange: event Action<T>
+}
+
+struct IntWithMax
+{
+    + value: int
+    + max: int
+    + void Set(value: int, max: int)
+    + void Clamp()
+}
+
+class DisplaySettings extends ScriptableObject
+{
+    + canvasPrefab: GameObject
+    + textPrefab: GameObject
+    + imagePrefab: GameObject
+    + defaultSprite: Sprite
+    + defaultText: string
+    + pixel: Sprite
+}
+
+struct ItemSlot
+{
+    + image: Image
+    + text: Text
+}
+
+class FarmingFrenzyDisplay implements IStartable, IDispoable
+{
+    + void Start()
+    + void Dispose()
+    - void InitializeUI()
+}
+
+enum Snap
+{
+   Center
+   Left 
+   Right 
+   Bottom 
+   Top
+}
+
+EasyRect ..> Snap
+IChangeTracker --* DataChannel
+DisplaySettings --* Display
+Display --* FarmingFrenzyDisplay
+DataChannel --* FarmingFrenzyDisplay
+EasyRect --* FarmingFrenzyDisplay
+Display ..> IAssetService
+Display ..> ItemSlot
+Display ..> ItemStack
+Display ..> IntWithMax
+
+FarmingFrenzyDisplay ..> ItemSlot
+FarmingFrenzyDisplay ..> ItemStack
+FarmingFrenzyDisplay ..> IntWithMax

@@ -1,0 +1,15 @@
+interface IAssetService
+{
+    + T GetAssetByType<T>()
+    + List<T> GetAllAssetsOfType<T>()
+}
+
+class InspectorAssets implements IAssetService
+{
+    - assets: List<UnityEngine.Object>
+    + T GetAssetByType<T>()
+    + List<T> GetAllAssetsOfType<T>()
+}
+
+InspectorAssets ..> UnityEngine.Object
+IAssetService ..> UnityEngine.Object

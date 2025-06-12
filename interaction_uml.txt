@@ -1,0 +1,57 @@
+interface IWorldService
+{
+    + T GetComponent<T>(transform: Transform)
+    + void Add(transform: Transform)
+    + void Remove(transform: Transform)
+    + void Reset()
+}
+
+class GameWorld implements IWorldService
+{
+    - world: readonly Dictionary<Transform, object>
+    + T GetComponent<T>(transform: Transform)
+    + void Add(transform: Transform)
+    + void Remove(transform: Transform)
+    + void Reset()
+}
+
+interface IInteractable
+{
+    + void Interact()
+}
+
+interface IHoverable
+{
+    + string GetHoverTitle()
+}
+
+class Raycaster
+{
+    + bool Raycast(pos: Vector3, dir: Vector3, hitTransform: out Transform)
+}
+
+class RaycastSettings extends ScriptableObject
+{
+    + range: float
+    + mask: LayerMask
+    + interaction: QueryTriggerInteraction
+    + tags: List<string>
+}
+
+class Interactor implements IStartable, IFixedUpdatable, IDisposable, IChangeTracker<string>
+{
+    + OnChange: event Action<string>
+    + void Start()
+    + void FixedUpdate()
+    + void Dispose()
+}
+
+
+Raycaster ..* Interactor
+IInputService ..* Interactor
+IWorldService ..* Interactor
+Interactor ..> ServiceLocator
+Interactor ..> IAssetService
+Interactor ..> IHoverable
+Interactor ..> IInteractable
+RaycastSettings ..* Raycaster

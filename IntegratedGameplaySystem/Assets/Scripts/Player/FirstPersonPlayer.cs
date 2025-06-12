@@ -11,7 +11,7 @@ namespace IntegratedGameplaySystem
         private readonly MouseMovement mouseMovement;
         private readonly CameraExtrapolation cameraHandler;
 
-        private CameraMotionSnapshot snapshot;
+        private ExtrapolationSnapshot snapshot;
 
         public FirstPersonPlayer(IPlayerInput playerInput, Sensitivity sensitivity)
         {
@@ -33,7 +33,7 @@ namespace IntegratedGameplaySystem
         {
             mouseMovement.Update(playerInput.GetLookingInput());
 
-            cameraHandler.UpdateRot(eyes.rotation);
+            cameraHandler.UpdateCameraRotation(eyes.rotation);
             cameraHandler.Update();
         }
 

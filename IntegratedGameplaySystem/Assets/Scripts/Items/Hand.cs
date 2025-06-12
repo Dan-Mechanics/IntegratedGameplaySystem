@@ -8,8 +8,8 @@ namespace IntegratedGameplaySystem
     public class Hand : IStartable, IDisposable, IItemHolder, IChangeTracker<ItemStack>
     {
         public event Action<ItemStack> OnChange;
-        public Action<int> OnCountChange;
-        public Action<bool> AtMaxCapacity;
+        public Action<int> onCountChange;
+        public Action<bool> atMaxCapacity;
 
         private ItemStack heldItem;
         private IMaxStackSource maxStackSource;

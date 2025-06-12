@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dryGrowPercentage: 2.5
   wateredGrowGrowPercentage: 12.5
-  monetaryValue: 40
+  monetaryValue: 55
   itemTint: {r: 1, g: 1, b: 1, a: 1}
   drySoil: {fileID: 2100000, guid: 263f9410b85a56346b8acb451803eb23, type: 2}
   wetSoil: {fileID: 2100000, guid: 375937fa0783a2a49bd795041997cb9e, type: 2}

@@ -1,0 +1,94 @@
+class FirstPersonPlayer implements IUpdatable, IFixedUpdatable, ILateFixedUpdatable
+{
+    + movement: ForcesMovement
+    + void Update()
+    + void FixedUpdate()
+    + void LateFixedUpdate()
+}
+
+class PlayerSettings extends ScriptableObject implements ISpeedSource
+{
+    + prefab: GameObject 
+    + speed: float 
+    + movAccel: float 
+    + accelMult: float 
+    + mask: LayerMask 
+    + radius: float 
+    + reach: float 
+    + maxAngle: float
+    + sens: float 
+    + eyesHeight: float
+    + float GetSpeed()
+}
+
+class TestingFeatures implements IStartable, IDisposable
+{
+    + void Start()
+    + void Dispose()
+}
+
+class CameraExtrapolation
+{
+    + void Update()
+    + void UpdateCameraRotation(rot: Quaternion)
+    + void SetSnapshot(snapshot: ExtrapolationSnapshot)
+}
+
+struct ExtrapolationSnapshot
+{
+    + pos: Vector3
+    + vel: Vector3
+    + time: float
+    
+    + void Set(pos: Vector3, vel: Vector3, time: float)
+    + Vector3 ExtrapolatePosition()
+}
+
+class Sensitivity implements IStartable, IDisposable, IChangeTracker<float>
+{
+    + defaultSens: const float
+    + OnChange: event Action<float>
+    + value: float
+    + void Start()
+    + void Dispose()
+}
+
+class MouseMovement
+{
+    + void Update(mouseDirectionChange: Vector3)
+}
+
+interface ISpeedSource
+{
+    + float GetSpeed()
+}
+
+interface IPlayerInput
+{
+    
+}
+
+class ForcesMovement
+{
+    + SetSpeedSource(speedSource: ISpeedSource)
+    + void DoMovement(vertical: float, horizontal: float)
+    + void GetClampedSnapshot(eyesPos: out Vector3, velocity: out Vector3, time: out float)
+}
+
+ForcesMovement ..* FirstPersonPlayer
+IPlayerInput ..* FirstPersonPlayer
+MouseMovement ..* FirstPersonPlayer
+CameraExtrapolation ..* FirstPersonPlayer
+ExtrapolationSnapshot ..* FirstPersonPlayer
+FirstPersonPlayer ..> Sensitivity
+IInputService ..* TestingFeatures
+TestingFeatures ..> UnityEngine.SceneManager
+ExtrapolationSnapshot ..* CameraExtrapolation
+FirstPersonPlayer ..> ServiceLocator
+FirstPersonPlayer ..> IAssetService
+FirstPersonPlayer ..> PlayerSettings
+Sensitivity ..> ServiceLocator
+Sensitivity ..> IInputService
+Sensitivity ..* MouseMovement
+ISpeedSource ..* ForcesMovement
+PlayerSettings ..* ForcesMovement

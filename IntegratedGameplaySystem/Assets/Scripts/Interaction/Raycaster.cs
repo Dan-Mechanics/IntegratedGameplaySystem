@@ -15,7 +15,7 @@ namespace IntegratedGameplaySystem
         {
             hitTransform = null;
             
-            if (!Physics.Raycast(pos, dir, out RaycastHit hit, settings.range, settings.mask, settings.triggerInteraction))
+            if (!Physics.Raycast(pos, dir, out RaycastHit hit, settings.range, settings.mask, settings.interaction))
                 return false;
 
             if (!settings.tags.Contains(hit.transform.tag))

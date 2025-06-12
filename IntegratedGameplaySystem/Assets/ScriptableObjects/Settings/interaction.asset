@@ -16,7 +16,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 65
-  triggerInteraction: 1
+  interaction: 1
   tags:
   - Plant
   - Untagged

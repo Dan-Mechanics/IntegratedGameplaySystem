@@ -23,12 +23,12 @@ namespace IntegratedGameplaySystem
 
         public void SetSpeedSource(ISpeedSource speedSource) => this.speedSource = speedSource;
 
-        public void DoMovement(float vert, float hori)
+        public void DoMovement(float vertical, float horizontal)
         {
             isGrounded = GetIsGrounded();
 
             float accel = isGrounded ? settings.movAccel : settings.movAccel * settings.accelMult;
-            Vector3 mov = GetMovementDirection(vert, hori, trans);
+            Vector3 mov = GetMovementDirection(vertical, horizontal, trans);
 
             Vector3 flatVel = rb.velocity;
             flatVel.y = 0f;
@@ -52,12 +52,12 @@ namespace IntegratedGameplaySystem
             time = Time.time;
         }
 
-        private Vector3 GetMovementDirection(float vert, float hori, Transform trans) 
+        private Vector3 GetMovementDirection(float vertical, float horizontal, Transform transform) 
         {
             Vector3 mov = Vector3.zero;
 
-            mov += trans.right * hori;
-            mov += trans.forward * vert;
+            mov += transform.right * horizontal;
+            mov += transform.forward * vertical;
             mov.Normalize();
 
             return mov;

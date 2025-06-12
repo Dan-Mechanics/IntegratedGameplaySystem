@@ -15,7 +15,7 @@ namespace IntegratedGameplaySystem
         private readonly DataChannel<float, Text> sensitivity;
 
         public FarmingFrenzyDisplay(IChangeTracker<string> interactor, IChangeTracker<IntWithMax> money, IChangeTracker<float> score, 
-            IChangeTracker<ItemStack> hand, Sensitivity sensitivity) 
+            IChangeTracker<ItemStack> hand, IChangeTracker<float> sensitivity) 
         {
             display = new Display();
 
@@ -44,17 +44,17 @@ namespace IntegratedGameplaySystem
         /// </summary>
         private void InitializeUI(DisplaySettings settings, Transform canvas) 
         {
-            interactor.ui = Display.AddToCanvas<Text>(canvas, settings.text);
+            interactor.ui = Display.AddToCanvas<Text>(canvas, settings.textPrefab);
             EasyRect rect = new EasyRect(interactor.ui.rectTransform);
             rect.SetSize(500f, rect.GetHeight());
             rect.SnapTo(Snap.Center);
 
-            score.ui = Display.AddToCanvas<Text>(canvas, settings.text);
+            score.ui = Display.AddToCanvas<Text>(canvas, settings.textPrefab);
             rect.Set(score.ui.rectTransform);
             rect.SetSize(200, 30f);
             rect.SnapTo(Snap.Bottom, 200f * Vector2.right + (15f * Vector2.up));
 
-            moneyBar.ui = Display.AddToCanvas<Image>(canvas, settings.image);
+            moneyBar.ui = Display.AddToCanvas<Image>(canvas, settings.imagePrefab);
             rect.Set(moneyBar.ui.rectTransform);
             moneyBar.ui.color = Color.black;
             rect.SetSize(200, 30f);
@@ -66,27 +66,27 @@ namespace IntegratedGameplaySystem
             rect.SetSize(200f, 30f);
             rect.SnapTo(Snap.Bottom, 200f * Vector2.left + (15f * Vector2.up));
 
-            moneyText.ui = Display.AddToCanvas<Text>(canvas, settings.text);
+            moneyText.ui = Display.AddToCanvas<Text>(canvas, settings.textPrefab);
             rect.Set(moneyText.ui.rectTransform);
             moneyText.ui.color = Color.white;
             rect.SetSize(200, 30f);
             rect.SnapTo(Snap.Bottom, 200f * Vector2.left + (15f * Vector2.up));
             
-            hand.ui.image = Display.AddToCanvas<Image>(canvas, settings.image);
+            hand.ui.image = Display.AddToCanvas<Image>(canvas, settings.imagePrefab);
             rect.Set(hand.ui.image.rectTransform);
             rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
 
-            hand.ui.text = Display.AddToCanvas<Text>(canvas, settings.text);
+            hand.ui.text = Display.AddToCanvas<Text>(canvas, settings.textPrefab);
             hand.ui.text.color = Color.white;
             hand.ui.text.fontSize = 40;
             rect.Set(hand.ui.text.rectTransform);
             rect.SnapTo(Snap.Bottom, Vector2.up * 15f);
 
-            sensitivity.ui = Display.AddToCanvas<Text>(canvas, settings.text);
+            sensitivity.ui = Display.AddToCanvas<Text>(canvas, settings.textPrefab);
             rect.Set(sensitivity.ui.rectTransform);
             rect.SnapToTop();
 
-            Image overlay = Display.AddToCanvas<Image>(canvas, settings.image);
+            Image overlay = Display.AddToCanvas<Image>(canvas, settings.imagePrefab);
             overlay.sprite = settings.defaultSprite;
             overlay.color = Color.black;
             rect.Set(overlay.rectTransform);

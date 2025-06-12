@@ -1,0 +1,23 @@
+class MoneyCentral implements IStartable, IInteractable, IHoverable, IDisposable, IChangeTracker<IntWithMax>
+{
+    + OnChange: event Action<IntWithMax>
+    - void LoseMoney(amount: int)
+    - void EarnMoney(amount: int)
+    + string GetHoverTitle()
+    + void Start()
+    + bool CanAfford(cost: int)
+    + void Interact()
+    + bool CanInteract()
+    + int GetEarnings()
+    + void Dispose()
+}
+
+class MoneyCentralSettings extends ScriptableObject
+{
+    + prefab: GameObject
+    + moneyToWin: int
+}
+
+IItemHolder --* MoneyCentral
+IntWithMax --* MoneyCentral
+MoneyCentral ..> EventManager

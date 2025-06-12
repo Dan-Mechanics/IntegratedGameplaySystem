@@ -20,7 +20,7 @@ namespace IntegratedGameplaySystem
             disposables.Add(this);
         }
 
-        private void Combine(T1 a) => OnChange?.Invoke(a, ui);
+        private void Combine(T1 value) => OnChange?.Invoke(value, ui);
         public void Dispose() => changeTracker.OnChange -= Combine;
     }
 }

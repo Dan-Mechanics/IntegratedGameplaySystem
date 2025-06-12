@@ -1,0 +1,48 @@
+interface IPoolService<T>
+{
+    + AllocateNew: event Func<T>
+    + void Give(input: T)
+    + T Get()
+    + void Flush()
+}
+
+interface IPoolable
+{
+    + void Enable()
+    + void Disable()
+    + void Flush()
+}
+
+class PoolableParticle implements IPoolable
+{
+    + void Place(pos: Vector3)
+    + void Enable()
+    + void Disable()
+    + void Flush()
+}
+
+class ObjectPool<T> implements IPoolService<T>
+{
+    - inactivePool: readonly List<T>
+    - activePool: readonly List<T>
+    + AllocateNew: event Func<T>
+    + void Give(input: T)
+    + T Get()
+    + void Flush()
+}
+
+class FastPool<T> implements IPoolService<T>
+{
+    - pool: T[]
+    - index: int
+    + AllocateNew: event Func<T>
+    + void Populate()
+    + void Give(input: T)
+    + T Get()
+    + void Flush()
+}
+
+ParticleSystem --* PoolableParticle
+IPoolService ..> IPoolable
+ObjectPool ..> IPoolable
+FastPool ..> IPoolable

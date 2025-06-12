@@ -70,7 +70,9 @@ namespace IntegratedGameplaySystem
         public void Update()
         {
             for (int i = updatables.Count - 1; i >= 0; i--)
+            {
                 updatables[i].Update();
+            }
 
             timer += Time.deltaTime;
             while (timer >= Time.fixedDeltaTime)
@@ -78,12 +80,16 @@ namespace IntegratedGameplaySystem
                 timer -= Time.fixedDeltaTime;
 
                 for (int i = fixedUpdatables.Count - 1; i >= 0; i--)
+                {
                     fixedUpdatables[i].FixedUpdate();
+                }
 
                 Physics.Simulate(Time.fixedDeltaTime);
 
                 for (int i = lateFixedUpdatables.Count - 1; i >= 0; i--)
+                {
                     lateFixedUpdatables[i].LateFixedUpdate();
+                }
             }
         }
 

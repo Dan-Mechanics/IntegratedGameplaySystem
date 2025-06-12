@@ -8,7 +8,7 @@ namespace IntegratedGameplaySystem
     {
         public float range;
         public LayerMask mask;
-        public QueryTriggerInteraction triggerInteraction;
+        public QueryTriggerInteraction interaction;
         public List<string> tags;
     }
 }

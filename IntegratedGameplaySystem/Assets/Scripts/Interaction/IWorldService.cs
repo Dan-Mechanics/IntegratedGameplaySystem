@@ -4,9 +4,9 @@ namespace IntegratedGameplaySystem
 {
     public interface IWorldService
     {
-        T GetComponent<T>(Transform trans);
-        void Add(Transform go, object obj);
-        void Remove(Transform go);
+        T GetComponent<T>(Transform transform);
+        void Add(Transform transform, object obj);
+        void Remove(Transform transform);
         void Reset();
     }
 }

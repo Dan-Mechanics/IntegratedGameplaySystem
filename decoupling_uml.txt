@@ -1,0 +1,84 @@
+class ServiceLocator<T>
+{
+    - instance: static T
+    + static T Locate()
+    + static bool HasBeenProvided()
+    + static void Provide(T service)
+}
+
+class EventManager
+{
+    + static void RaiseEvent(occasian: Occasion)
+    + static void AddListener(occasian: Occasion, listener: Action)
+    + static void RemoveListener(occasion: Occasian, listener: Action)
+}
+
+class EventManagerGeneric<T>
+{
+    + static void RaiseEvent(occasian: Occasion, t: T)
+    + static void AddListener(occasian: Occasion, listener: Action<T>)
+    + static void RemoveListener(occasion: Occasian, listener: Action<T>)
+}
+
+enum Occasion
+{
+    CloseGame
+    GameOver 
+    Tick 
+    EarnMoney 
+    PickupItem 
+    LoseMoney 
+    LateTick 
+}
+
+interface IStartable
+{
+    + void Start()
+}
+
+interface IDisposable
+{
+    + void Dispose()
+}
+
+interface IFixedUpdatable
+{
+    + void FixedUpdate()
+}
+
+interface IUpdatable
+{
+    + void Update()
+}
+
+interface IDestroyable
+{
+    + OnDestroy: event Action<object, GameObject>
+    + void Destroy()
+}
+
+interface ILateFixedUpdatable
+{
+    + void LateFixedUpdate()
+}
+
+class Heart
+{
+    - updatables: readonly List<IUpdatable>
+    - fixedUpdatables: readonly List<IFixedUpdatable> 
+    - lateFixedUpdatables: readonly List<ILateFixedUpdatable>
+    - disposables: readonly List<IDisposable>
+    + void Setup(components: List<object>)
+    + void Update()
+    + void Dispose()
+}
+
+Heart ..> IStartable
+IDisposable --* Heart
+IFixedUpdatable --* Heart
+IUpdatable --* Heart
+Heart ..> IDestroyable
+ILateFixedUpdatable --* Heart
+
+EventManagerGeneric ..> Occasion
+EventManager ..> Occasion

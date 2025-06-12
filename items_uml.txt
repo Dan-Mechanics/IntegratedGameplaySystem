@@ -1,0 +1,49 @@
+class Hand implements IStartable, IDisposable, IItemHolder, IChangeTracker<ItemStack>
+{
+    + OnChange: event Action<ItemStack>
+    + OnCountChange: event Action<int>
+    + AtMaxCapacity: event Action<bool>
+    - void PickupItem(newItem: IItemArchitype)
+    + void Start()
+    + void SetMaxStackSource(maxStackSource: IMaxStackSource)
+    + void Dispose()
+    + ItemStack[] GetItems()
+    + void Clear()
+}
+
+class HandSettings extends ScriptableObject implements IMaxStackSource
+{
+    + maxStack: int
+    + int GetMaxStack()
+}
+
+interface IItemArchitype
+{
+    + sprite: Sprite
+    + itemTint: Color
+    + monetaryValue: int
+}
+
+interface IItemHolder
+{
+    + ItemStack[] GetItems()
+    + void Clear()
+}
+
+interface IMaxStackSource
+{
+    + int GetMaxStack()
+}
+
+struct ItemStack
+{
+    + item: IItemArchitype
+    + count: int
+    + isAtCapacity: bool
+    + void Clamp(max: int)
+}
+
+IItemArchitype --* ItemStack
+ItemStack --* Hand
+IMaxStackSource --* Hand
+Hand ..> EventManager

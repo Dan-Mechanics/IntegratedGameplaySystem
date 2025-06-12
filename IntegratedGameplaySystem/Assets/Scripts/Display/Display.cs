@@ -17,7 +17,7 @@ namespace IntegratedGameplaySystem
         {
             Disposables = new List<IDisposable>();
             Settings = ServiceLocator<IAssetService>.Locate().GetAssetByType<DisplaySettings>();
-            Canvas = Utils.SpawnPrefab(Settings.canvas).transform;
+            Canvas = Utils.SpawnPrefab(Settings.canvasPrefab).transform;
         }
 
         public void Dispose()
@@ -25,14 +25,27 @@ namespace IntegratedGameplaySystem
             Disposables.ForEach(x => x.Dispose());
         }
 
-        public static void StringIntoText(string str, Text text) 
-        {
-            text.text = Utils.IsStringValid(str) ? str : string.Empty;
-        }
-
         public void SettingsStrIntoText(string str, Text text)
         {
             text.text = Utils.IsStringValid(str) ? str : Settings.defaultText;
+        }
+
+        public Image AddFillImage()
+        {
+            Image image = AddToCanvas<Image>(Canvas, Settings.imagePrefab);
+            image.sprite = Settings.pixel;
+
+            image.type = Image.Type.Filled;
+            image.fillAmount = 0f;
+            image.fillOrigin = 0;
+            image.fillMethod = Image.FillMethod.Horizontal;
+
+            return image;
+        }
+
+        public static void StringIntoText(string str, Text text) 
+        {
+            text.text = Utils.IsStringValid(str) ? str : string.Empty;
         }
 
         public static void RangeIntoText(IntWithMax range, Text text) => text.text = $"({range.value} / {range.max})";
@@ -65,19 +78,6 @@ namespace IntegratedGameplaySystem
             transform.SetParent(canvas);
             transform.localPosition = Vector3.zero;
             return transform.GetComponent<T>();
-        }
-
-        public Image AddFillImage()
-        {
-            Image image = AddToCanvas<Image>(Canvas, Settings.image);
-            image.sprite = Settings.pixel;
-
-            image.type = Image.Type.Filled;
-            image.fillAmount = 0f;
-            image.fillOrigin = 0;
-            image.fillMethod = Image.FillMethod.Horizontal;
-
-            return image;
         }
     }
 }

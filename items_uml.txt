@@ -1,8 +1,8 @@
 class Hand implements IStartable, IDisposable, IItemHolder, IChangeTracker<ItemStack>
 {
     + OnChange: event Action<ItemStack>
-    + OnCountChange: event Action<int>
-    + AtMaxCapacity: event Action<bool>
+    + onCountChange: Action<int>
+    + atMaxCapacity: Action<bool>
     - void PickupItem(newItem: IItemArchitype)
     + void Start()
     + void SetMaxStackSource(maxStackSource: IMaxStackSource)

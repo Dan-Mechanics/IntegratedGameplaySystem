@@ -46,7 +46,7 @@ struct ExtrapolationSnapshot
 
 class Sensitivity implements IStartable, IDisposable, IChangeTracker<float>
 {
-    + defaultSens: const float
+    + DEFAULT_SENS: const float
     + OnChange: event Action<float>
     + value: float
     + void Start()

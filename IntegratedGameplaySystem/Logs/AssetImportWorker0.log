@@ -2026,3 +2026,12 @@ AssetImportParameters requested are different than current active one (requested
   custom:scripting/precompiled-assembly-types:Assembly-CSharp: 1e359a8fdad3214fcabc0958eedc856a -> 72f5ef004030e239e78e136174079a89
   custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
   custom:scripting/monoscript/fileName/ExtrapolationSnapshot.cs: 57d71903c1dcd9f332e0a1e8b4668cc2 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 10727.925318 seconds.
+  path: Assets/Scripts/EntryPoint/GameManager.cs
+  artifactKey: Guid(4da7425478963aa4e9c3c96d28dde1ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/EntryPoint/GameManager.cs using Guid(4da7425478963aa4e9c3c96d28dde1ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+ -> (artifact id: 'b549d771fade88f3e4a1178c62078fe8') in 0.017336 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0

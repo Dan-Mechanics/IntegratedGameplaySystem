@@ -106,7 +106,7 @@ class GrowingState implements IPlantState
 
 class PlantUnit implements IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
 {
-    + lowered_collider_height: const float
+    + LOWERED_COLLIDER_HEIGHT: const float
     + progress: int
     + isWatered: bool
 

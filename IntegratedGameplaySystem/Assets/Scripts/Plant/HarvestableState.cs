@@ -1,36 +1,22 @@
 ﻿namespace IntegratedGameplaySystem
 {
-    public class HarvestableState : IPlantState
+    public class HarvestableState : PlantState
     {
-        public PlantUnit Plant { get; set; }
+        public override string GetHoverTitle() => plant.flyweight.name;
 
-        public string GetHoverTitle()
+        public override void Harvest() 
         {
-            return Plant.flyweight.name;
+            plant.Progress = 0;
+            EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, plant.flyweight);
+
+            plant.SetColliderHeight(PlantUnit.LOWERED_COLLIDER_HEIGHT);
+
+            plant.SetState(typeof(SoilState));
+            plant.RefreshMaterials();
+            plant.SetWatered(false);
         }
 
-        public void Harvest() 
-        {
-            Plant.Progress = 0;
-            EventManager<IItemArchitype>.RaiseEvent(Occasion.PickupItem, Plant.flyweight);
-
-            Plant.SetColliderHeight(PlantUnit.LOWERED_COLLIDER_HEIGHT);
-
-            Plant.SetState(typeof(SoilState));
-            Plant.RefreshMaterials();
-            Plant.SetWatered(false);
-        }
-
-        public void Interact()
-        {
-            Harvest();
-        }
-
-        public void Tick() { }
-
-        public void Water()
-        {
-            Plant.SetWatered(true);
-        }
+        public override void Interact() => Harvest();
+        public override void Water() => plant.SetWatered(true);
     }
 }

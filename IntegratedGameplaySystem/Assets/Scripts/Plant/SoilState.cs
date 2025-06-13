@@ -1,27 +1,15 @@
 ﻿namespace IntegratedGameplaySystem
 {
-    public class SoilState : IPlantState
+    public class SoilState : PlantState
     {
-        public PlantUnit Plant { get; set; }
+        public override string GetHoverTitle() => $"barren {plant.flyweight.name} soil";
 
-        public string GetHoverTitle()
+        public override void Interact()
         {
-            return $"barren {Plant.flyweight.name} soil";
+            plant.SetState(typeof(GrowingState));
+            plant.RefreshMaterials();
         }
 
-        public void Harvest() { }
-
-        public void Tick() { }
-
-        public void Interact()
-        {
-            Plant.SetState(typeof(GrowingState));
-            Plant.RefreshMaterials();
-        }
-
-        public void Water() 
-        {
-            Plant.SetWatered(true);
-        }
+        public override void Water() => plant.SetWatered(true);
     }
 }

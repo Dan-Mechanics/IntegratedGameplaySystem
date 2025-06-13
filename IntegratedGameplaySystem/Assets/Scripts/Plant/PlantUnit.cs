@@ -19,11 +19,11 @@ namespace IntegratedGameplaySystem
         private readonly SphereCollider sphereCollider;
         private readonly IPoolService<PoolableParticle> pool;
 
-        private readonly Dictionary<Type, IPlantState> states = new();
+        private readonly Dictionary<Type, PlantState> states = new();
         private MeshRenderer soilRend;
         private bool prevIsWatered;
         private PoolableParticle rainParticles;
-        private IPlantState currentState;
+        private PlantState currentState;
 
         public PlantUnit(PlantFlyweight flyweight)
         {
@@ -46,9 +46,9 @@ namespace IntegratedGameplaySystem
             states.Add(typeof(GrowingState), new GrowingState());
             states.Add(typeof(HarvestableState), new HarvestableState());
 
-            foreach (var item in states)
+            foreach (var state in states)
             {
-                item.Value.Plant = this;
+                state.Value.PassPlant(this);
             }
 
             currentState = states[typeof(SoilState)];

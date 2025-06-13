@@ -1,35 +1,24 @@
 ﻿namespace IntegratedGameplaySystem
 {
-    public class GrowingState : IPlantState
+    public class GrowingState : PlantState
     {
-        public PlantUnit Plant { get; set; }
-
-        public string GetHoverTitle()
+        public override string GetHoverTitle()
         {
-            if (!Plant.IsWatered)
-                return $"dry {Plant.flyweight.name}";
+            if (!plant.IsWatered)
+                return $"dry {plant.flyweight.name}";
 
-            return Plant.flyweight.name;
+            return plant.flyweight.name;
         }
 
-        public void Tick() 
+        public override void Tick() 
         {
-            if (!Utils.RandomWithPercentage(Plant.IsWatered ? Plant.flyweight.wateredGrowGrowPercentage : Plant.flyweight.dryGrowPercentage))
+            if (!Utils.RandomWithPercentage(plant.IsWatered ? plant.flyweight.wateredGrowGrowPercentage : plant.flyweight.dryGrowPercentage))
                 return;
 
-            Plant.Grow();
+            plant.Grow();
         }
 
-        public void Harvest() { }
-
-        public void Interact()
-        {
-            Water();
-        }
-
-        public void Water()
-        {
-            Plant.SetWatered(true);
-        }
+        public override void Interact() => Water();
+        public override void Water() => plant.SetWatered(true);
     }
 }

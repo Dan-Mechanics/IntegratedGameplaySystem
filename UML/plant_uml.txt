@@ -42,10 +42,15 @@ class Dispersal extends PlantDistribution implements IPlantPlacementStrategy
     
 }
 
-interface IPlantState implements IInteractable, IHoverable, IWaterable, IHarvestable
+abstract class PlantState implements IInteractable, IHoverable, IWaterable, IHarvestable
 {
-    + plant: PlantUnit
-    + void Tick()
+    + void PassPlant(plant: PlantUnit)
+    + virtual string GetHoverTitle() 
+    + virtual void Harvest() 
+    + virtual void Interact()
+    + virtual void Tick() 
+    + virtual void Water() 
+    
 }
 
 interface IWaterable
@@ -78,30 +83,27 @@ class DispersalSettings extends ScriptableObject
     + offset: Vector3 
 }
 
-class SoilState implements IPlantState
+class SoilState extends PlantState
 {
-    + plant: PlantUnit 
-    + string GetHoverTitle()
-    + void Interact()
-    + void Water() 
+    + override string GetHoverTitle()
+    + override void Interact()
+    + override void Water() 
 }
 
-class HarvestableState implements IPlantState
+class HarvestableState extends PlantState
 {
-    + plant: PlantUnit 
-    + string GetHoverTitle()
-    + void Interact()
-    + void Water() 
-    + void Harvest()
+    + override string GetHoverTitle()
+    + override void Harvest()
+    + override void Interact()
+    + override void Water() 
 }
 
-class GrowingState implements IPlantState
+class GrowingState extends PlantState
 {
-    + plant: PlantUnit 
-    + string GetHoverTitle()
-    + void Interact()
-    + void Tick()
-    + void Water() 
+    + override string GetHoverTitle()
+    + override void Tick()
+    + override void Interact()
+    + override void Water() 
 }
 
 class PlantUnit implements IStartable, IInteractable, IHoverable, IDisposable, IHarvestable, IWaterable
@@ -136,7 +138,7 @@ DispersalSettings ..* Dispersal
 PlantUnit -- SoilState
 PlantUnit -- GrowingState
 PlantUnit -- HarvestableState
-IPlantState ..* PlantUnit
+PlantState ..* PlantUnit
 IPoolService ..* PlantUnit
 PoolableParticle ..* PlantUnit
 IPlantPlacementStrategy ..> PlantUnit
